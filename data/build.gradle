@@ -1,0 +1,89 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+def final schemeApp = "baseapp"
+def final BOOLEAN = "boolean"
+def final TRUE = "true"
+def final FALSE = "false"
+
+def final API_LIVE = "https://reportapi.nowpos.vn/"
+def final API_DEMO = "http://sandbox.foodypos.vn:8086/"
+
+def versionNameRequestHeader = rootProject.ext.versionNameRequestHeader as String
+def flavorDimensionsValue = rootProject.ext.flavorDimensions as String
+
+android {
+    flavorDimensions flavorDimensionsValue
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        DEMO_ {
+
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", FALSE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+            buildConfigField "String", "END_POINT", '"' + API_DEMO + '"'
+        }
+
+        PRODUCTION_ {
+
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", TRUE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+            buildConfigField "String", "END_POINT", '"' + API_LIVE + '"'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'org.koin:koin-android:1.0.1'
+    //db paper
+    implementation 'io.paperdb:paperdb:2.6'
+
+    //Retrofit(Remote)
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //Stetho
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+}

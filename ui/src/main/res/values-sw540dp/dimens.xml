@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="width_height_icon_small_menu">20dp</dimen>
+    <dimen name="width_height_icon_medium_menu">26dp</dimen>
+    <dimen name="width_height_icon_large_menu">30dp</dimen>
+</resources>

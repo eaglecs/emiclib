@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ========================== Md component size ========================================== -->
+    <dimen name="md_toolbar_height">64dp</dimen>
+    <!-- ========================== Md default Text size ======================================= -->
+    <!-- https://material.io/guidelines/style/typography.html#typography-styles -->
+    <dimen name="md_text_size_headline_1_light">97sp</dimen>
+    <dimen name="md_text_size_headline_2_light">61sp</dimen>
+    <dimen name="md_text_size_headline_3_regular">49sp</dimen>
+    <dimen name="md_text_size_headline_4_regular">35sp</dimen>
+    <dimen name="md_text_size_headline_5_regular">25sp</dimen>
+    <dimen name="md_text_size_headline_6_medium">21sp</dimen>
+
+    <dimen name="md_text_subtitle_1_regular">17sp</dimen>
+    <dimen name="md_text_subtitle_2_medium">15sp</dimen>
+    <dimen name="md_text_body_1_regular">17sp</dimen>
+    <dimen name="md_text_body_2_regular">15sp</dimen>
+    <dimen name="md_text_button_medium">15sp</dimen>
+    <dimen name="md_text_caption_regular">13sp</dimen>
+    <dimen name="md_text_overline_regular">11sp</dimen>
+
+
+    <!-- ========================== Material default Text size ======================================= -->
+    <!-- https://material.io/guidelines/style/typography.html#typography-styles -->
+    <dimen name="material_text_size_headline_1_light">97sp</dimen>
+    <dimen name="material_text_size_headline_2_light">61sp</dimen>
+    <dimen name="material_text_size_headline_3_regular">49sp</dimen>
+    <dimen name="material_text_size_headline_4_regular">35sp</dimen>
+    <dimen name="material_text_size_headline_5_regular">25sp</dimen>
+    <dimen name="material_text_size_headline_6_medium">21sp</dimen>
+</resources>

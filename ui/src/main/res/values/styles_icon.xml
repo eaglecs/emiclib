@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ============================= Icon ==================================================== -->
+    <style name="IconClick">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_width">@dimen/md_icon_touch_size</item>
+        <item name="android:layout_height">@dimen/md_icon_touch_size</item>
+        <item name="android:padding">@dimen/md_icon_touch_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="IconClick.LargeTouch">
+        <item name="android:layout_width">@dimen/md_icon_touch_size_large</item>
+        <item name="android:layout_height">@dimen/md_icon_touch_size_large</item>
+        <item name="android:padding">@dimen/md_icon_touch_padding_large</item>
+    </style>
+
+    <style name="IconClickSmall">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_width">@dimen/md_icon_touch_size_small</item>
+        <item name="android:layout_height">@dimen/md_icon_touch_size_small</item>
+        <item name="android:padding">@dimen/md_icon_touch_padding_small</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="IconClick.BlackActive">
+        <item name="android:tint">@color/md_icon_color_active_light_theme</item>
+    </style>
+
+    <style name="IconClick.BlackInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_light_theme</item>
+    </style>
+
+    <style name="IconClick.BlackDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_light_theme</item>
+    </style>
+
+
+    <style name="IconClick.WhiteActive">
+        <item name="android:tint">@color/md_icon_color_active_dark_theme</item>
+    </style>
+
+    <style name="IconClick.WhiteInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_dark_theme</item>
+    </style>
+
+    <style name="IconClick.WhiteDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_dark_theme</item>
+    </style>
+
+
+    <style name="IconClick.LargeTouch.BlackActive">
+        <item name="android:tint">@color/md_icon_color_active_light_theme</item>
+    </style>
+
+    <style name="IconClick.LargeTouch.BlackInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_light_theme</item>
+    </style>
+
+    <style name="IconClick.LargeTouch.BlackDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_light_theme</item>
+    </style>
+
+
+    <style name="IconClick.LargeTouch.WhiteActive">
+        <item name="android:tint">@color/md_icon_color_active_dark_theme</item>
+    </style>
+
+    <style name="IconClick.LargeTouch.WhiteInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_dark_theme</item>
+    </style>
+
+    <style name="IconClick.LargeTouch.WhiteDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_dark_theme</item>
+    </style>
+
+
+    <style name="IconClickSmall.BlackActive">
+        <item name="android:tint">@color/md_icon_color_active_light_theme</item>
+    </style>
+
+    <style name="IconClickSmall.BlackInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_light_theme</item>
+    </style>
+
+    <style name="IconClickSmall.BlackDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_light_theme</item>
+    </style>
+
+
+    <style name="IconClickSmall.WhiteActive">
+        <item name="android:tint">@color/md_icon_color_active_dark_theme</item>
+    </style>
+
+    <style name="IconClickSmall.WhiteInActive">
+        <item name="android:tint">@color/md_icon_color_inactive_dark_theme</item>
+    </style>
+
+    <style name="IconClickSmall.WhiteDisabled">
+        <item name="android:tint">@color/md_icon_color_disabled_dark_theme</item>
+    </style>
+
+
+</resources>

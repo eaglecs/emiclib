@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="switch_tabs">
+        <item>@string/ACTION_NO</item>
+        <item>@string/ACTION_YES</item>
+    </array>
+</resources>

@@ -1,0 +1,155 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def final API_LIVE = "https://reportapi.nowpos.vn/"
+def final API_DEMO = "http://sandbox.foodypos.vn:8086/"
+
+def final schemeApp = "baseapp"
+def final BOOLEAN = "boolean"
+def final TRUE = "true"
+def final FALSE = "false"
+
+def versionNameRequestHeader = rootProject.ext.versionNameRequestHeader as String
+def compileSdkVersionValue = rootProject.ext.compileSdkVersion as Integer
+def versionNameValue = rootProject.ext.versionName as String
+def flavorDimensionsValue = rootProject.ext.flavorDimensions as String
+def minSdkVersionValue = rootProject.ext.minSdkVersion as Integer
+def targetSdkVersionValue = rootProject.ext.targetSdkVersion as Integer
+def testInstrumentationRunnerValue = rootProject.ext.testInstrumentationRunner as String
+
+android {
+    flavorDimensions flavorDimensionsValue
+    compileSdkVersion compileSdkVersionValue
+    defaultConfig {
+        minSdkVersion minSdkVersionValue
+        targetSdkVersion targetSdkVersionValue
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner testInstrumentationRunnerValue
+    }
+
+    buildTypes {
+        debug {
+            resValue("string", "version_app", "Version ${versionNameValue}")
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("string", "version_app", "Version ${versionNameValue}")
+        }
+    }
+
+    productFlavors {
+        DEMO_ {
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", FALSE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+            buildConfigField "String", "END_POINT", '"' + API_DEMO + '"'
+        }
+
+        PRODUCTION_ {
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", TRUE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+            buildConfigField "String", "END_POINT", '"' + API_LIVE + '"'
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res-login'
+            ]
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':presentation')
+    implementation project(':domain')
+
+    //Support
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:28.0.0'
+
+
+    // Koin DI for Kotlin
+    implementation 'org.koin:koin-core:1.0.1'
+    implementation 'org.koin:koin-android:1.0.1'
+
+    //view base conductor(Single Activity)
+    implementation 'com.bluelinelabs:conductor:2.1.5'
+    implementation 'com.bluelinelabs:conductor-support:2.1.5'
+    implementation 'com.bluelinelabs:conductor-archlifecycle:2.1.5'
+    implementation 'android.arch.lifecycle:runtime:1.1.1'
+    kapt 'android.arch.lifecycle:compiler:1.1.1'
+    api "android.arch.lifecycle:extensions:1.1.1"
+
+    //Timber - log
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+    //RxKotlin
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+
+    //Design
+    implementation 'com.github.vivchar:RendererRecyclerViewAdapter:2.5.1'
+
+    //Anko
+    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
+    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.5'
+    implementation 'org.jetbrains.anko:anko-design:0.10.5'
+    implementation 'org.jetbrains.anko:anko-percent:0.10.5'
+
+    // YoYo View Animations
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    // change language
+    implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
+
+    // SwitchButton
+    implementation 'lib.kingja.switchbutton:switchbutton:1.1.7'
+
+    // Show hide password.
+    implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
+
+    //EasySwipeMenuLayout
+    implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
+
+    //RequestPermission
+    implementation 'com.karumi:dexter:5.0.0'
+
+    // SwitchButton Circle.
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+    // Toast
+    implementation 'com.github.GrenderG:Toasty:1.3.0'
+
+    // Spinner
+    implementation 'com.jaredrummler:material-spinner:1.2.5'
+
+    // Scan QRCode
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+
+    //zip
+    implementation 'com.github.ghost1372:Mzip-Android:0.4.0'
+
+    implementation 'com.android.support:percent:28.0.0'
+    implementation 'com.zhy:percent-support-extends:1.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

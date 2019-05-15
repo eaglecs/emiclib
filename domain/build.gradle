@@ -1,0 +1,14 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Koin DI for Kotlin
+    implementation 'org.koin:koin-core:1.0.1'
+    //RxKotlin
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+}
