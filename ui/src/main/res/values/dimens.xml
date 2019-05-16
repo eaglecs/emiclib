@@ -11,4 +11,5 @@
     <dimen name="width_height_icon_large_menu">26dp</dimen>
     <dimen name="width_dialog_alert">220dp</dimen>
     <dimen name="height_dialog_alert">170dp</dimen>
+    <dimen name="min_height_tab_home">40dp</dimen>
 </resources>

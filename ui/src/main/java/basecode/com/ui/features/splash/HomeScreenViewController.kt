@@ -37,7 +37,7 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.On
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.popup_select_ranked_option_revenue_by_group_topping, container, false)
+        return inflater.inflate(R.layout.screen_home, container, false)
     }
 
     override fun onClick(v: View?) {
