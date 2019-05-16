@@ -1,6 +1,5 @@
-package basecode.com.ui.features.splash
+package basecode.com.ui.features.home.tab
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,39 +7,28 @@ import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
-import basecode.com.ui.base.extra.BundleExtraLong
-import basecode.com.ui.base.extra.BundleOptionsCompanion
+import kotlinx.android.synthetic.main.layout_tab_home.view.*
 import org.koin.standalone.inject
 
-class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.OnClickListener, HomeContract.View {
-    private var resId: Long = 0
+class HomeViewController() : ViewController(bundle = null), HomeContract.View {
+
     private val presenter: HomeContract.Presenter by inject()
 
-    object BundleOption {
-        var Bundle.resId by BundleExtraLong("currentOptionReceive")
-        fun create(resId: Long) = Bundle().apply {
-            this.resId = resId
-        }
-    }
-
-    companion object : BundleOptionsCompanion<HomeScreenViewController.BundleOption>(HomeScreenViewController.BundleOption)
-
-    init {
-        bundle.options { options ->
-            resId = options.resId
-        }
+    constructor(targetController: ViewController) : this() {
+        setTargetController(targetController)
     }
 
     override fun initPostCreateView(view: View) {
+        loadData()
+    }
+
+    private fun loadData() {
         presenter.attachView(this)
         presenter.getListNewBook(NewEBookRequest(numberItem = 10, pageIndex = 1, pageSize = 10))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.screen_home, container, false)
-    }
-
-    override fun onClick(v: View?) {
+        return inflater.inflate(R.layout.layout_tab_home, container, false)
     }
 
     override fun getListNewEBookSuccess() {
@@ -50,9 +38,15 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.On
     }
 
     override fun showLoading() {
+        view?.let { view ->
+            view.vgLoading.show()
+        }
     }
 
     override fun hideLoading() {
+        view?.let { view ->
+            view.vgLoading.show()
+        }
     }
 
     override fun onDestroyView(view: View) {
