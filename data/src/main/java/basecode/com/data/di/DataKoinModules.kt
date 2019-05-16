@@ -6,6 +6,7 @@ import basecode.com.data.remote.HeaderInterceptor
 import basecode.com.data.repositoryiml.ApiServiceImpl
 import basecode.com.domain.repository.network.AppRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
@@ -42,7 +43,7 @@ object DataKoinModules {
         }
 
         single {
-            HeaderInterceptor(context = get())
+            HeaderInterceptor(context = get()) as Interceptor
         }
 
         single {

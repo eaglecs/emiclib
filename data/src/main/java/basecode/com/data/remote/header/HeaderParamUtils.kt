@@ -17,17 +17,17 @@ class HeaderParamUtils {
             val randomKey = getRandomString()
             val timeStamp = getTimeStamp()
             val headers = mutableMapOf<String, String>()
-            headers[HeaderConst.KEY_X_CONTENT_TYPE] = HeaderConst.VALUE_X_CONTENT_TYPE
-            headers[HeaderConst.KEY_ACCEPT_LANGUAGE] = HeaderConst.VALUE_ACCEPT_LANGUAGE
-            headers[HeaderConst.KEY_COOKIE] = HeaderConst.VALUE_COOKIE
-            headers[HeaderConst.KEY_X_CONTENT_TYPE] = HeaderConst.VALUE_X_CONTENT_TYPE
-            headers[HeaderConst.KEY_ACCEPT] = HeaderConst.VALUE_ACCEPT
-            headers[HeaderConst.KEY_FOODY_CLIENT_VERSION] = BuildConfig.VERSION_NAME_REQUEST_HEADER
-            headers[HeaderConst.KEY_FOODY_CLIENT_TYPE] = HeaderConst.VALUE_FOODY_CLIENT_TYPE
-            headers[HeaderConst.KEY_FOODY_CLIENT_NAME] = HeaderConst.VALUE_FOODY_CLIENT_NAME
-            headers[HeaderConst.KEY_FOODY_ACCESS_TIMESTAMP] = timeStamp
-            headers[HeaderConst.KEY_FOODY_RANDOM_KEY] = randomKey
-            headers[HeaderConst.KEY_FOODY_UDID] = UDIDUtil.getUDID(context)
+//            headers[HeaderConst.KEY_X_CONTENT_TYPE] = HeaderConst.VALUE_X_CONTENT_TYPE
+//            headers[HeaderConst.KEY_ACCEPT_LANGUAGE] = HeaderConst.VALUE_ACCEPT_LANGUAGE
+//            headers[HeaderConst.KEY_COOKIE] = HeaderConst.VALUE_COOKIE
+//            headers[HeaderConst.KEY_X_CONTENT_TYPE] = HeaderConst.VALUE_X_CONTENT_TYPE
+//            headers[HeaderConst.KEY_ACCEPT] = HeaderConst.VALUE_ACCEPT
+//            headers[HeaderConst.KEY_FOODY_CLIENT_VERSION] = BuildConfig.VERSION_NAME_REQUEST_HEADER
+//            headers[HeaderConst.KEY_FOODY_CLIENT_TYPE] = HeaderConst.VALUE_FOODY_CLIENT_TYPE
+//            headers[HeaderConst.KEY_FOODY_CLIENT_NAME] = HeaderConst.VALUE_FOODY_CLIENT_NAME
+//            headers[HeaderConst.KEY_FOODY_ACCESS_TIMESTAMP] = timeStamp
+//            headers[HeaderConst.KEY_FOODY_RANDOM_KEY] = randomKey
+//            headers[HeaderConst.KEY_FOODY_UDID] = UDIDUtil.getUDID(context)
 
 //            val loginUserConfigModel = ConfigUtil.currentLoginUserConfigModel
 //            if(loginUserConfigModel.isLogin) {
@@ -36,10 +36,10 @@ class HeaderParamUtils {
 //                    headers[HeaderConst.KEY_FOODY_USER_TOKEN] = userToken
 //                }
 //            }
-            try {
-                headers[HeaderConst.KEY_FOODY_ACCESS_TOKEN] = getAccessToken(timeStamp, randomKey, method, url, requestBody)
-            } catch (e: Exception) {
-            }
+//            try {
+//                headers[HeaderConst.KEY_FOODY_ACCESS_TOKEN] = getAccessToken(timeStamp, randomKey, method, url, requestBody)
+//            } catch (e: Exception) {
+//            }
             return headers
         }
 

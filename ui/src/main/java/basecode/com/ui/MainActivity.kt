@@ -3,7 +3,7 @@ package basecode.com.ui
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import basecode.com.ui.features.splash.SplashScreenViewController
+import basecode.com.ui.features.splash.HomeScreenViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() { // KoinComponent(add inject)
         setContentView(R.layout.layout_main)
         router = Conductor.attachRouter(this, this.controllerContainer, savedInstanceState)
         if (!router.hasRootController()) {
-            val bundle = SplashScreenViewController.BundleOption.create(resId = 1)
-            router.setRoot(RouterTransaction.with(SplashScreenViewController(bundle)))
+            val bundle = HomeScreenViewController.BundleOption.create(resId = 1)
+            router.setRoot(RouterTransaction.with(HomeScreenViewController(bundle)))
         }
     }
 }

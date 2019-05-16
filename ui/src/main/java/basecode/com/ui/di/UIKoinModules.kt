@@ -1,5 +1,7 @@
 package basecode.com.ui.di
 
+import basecode.com.domain.usecase.base.UseCaseExecution
+import basecode.com.ui.base.executor.AndroidUseCaseExecution
 import basecode.com.ui.util.DoubleTouchPrevent
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
@@ -12,6 +14,9 @@ object UIKoinModules {
     private val uiModule = module {
         factory {
             DoubleTouchPrevent()
+        }
+        single {
+            AndroidUseCaseExecution() as UseCaseExecution
         }
     }
 }
