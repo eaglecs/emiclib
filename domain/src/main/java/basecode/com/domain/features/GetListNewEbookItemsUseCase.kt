@@ -10,7 +10,7 @@ import io.reactivex.Observable
 
 class GetListNewEbookItemsUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<NewEBookRequest, NewEBookResponse, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(input: NewEBookRequest): Observable<NewEBookResponse> {
-        return appRepository.getListNewEBookItems(input)
+        return appRepository.getListNewEBookItems(numberItem = input.numberItem, pageIndex = input.pageIndex, pageSize = input.pageSize)
     }
 
     override fun createFailOutput(throwable: Throwable): ErrorResponse {
