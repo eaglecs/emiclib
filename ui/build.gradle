@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def final API_LIVE = "https://reportapi.nowpos.vn/"
-def final API_DEMO = "http://sandbox.foodypos.vn:8086/"
+def final API_LIVE = "http://apinet.emiclib.com/"
+def final API_DEMO = "http://apinet.emiclib.com/"
 
 def final schemeApp = "baseapp"
 def final BOOLEAN = "boolean"

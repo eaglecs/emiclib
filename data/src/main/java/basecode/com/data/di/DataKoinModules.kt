@@ -3,6 +3,8 @@ package basecode.com.data.di
 import basecode.com.data.BuildConfig
 import basecode.com.data.remote.ApiService
 import basecode.com.data.remote.HeaderInterceptor
+import basecode.com.data.repositoryiml.ApiServiceImpl
+import basecode.com.domain.repository.network.AppRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.Module
@@ -49,6 +51,10 @@ object DataKoinModules {
 
         single {
             provideOkClient()
+        }
+
+        single {
+            ApiServiceImpl(apiServiceApp = get()) as AppRepository
         }
     }
 }

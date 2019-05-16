@@ -6,11 +6,11 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-def final applicationId_Live = "com.basecode"
-def final applicationId_Demo = "com.basecodedemo"
+def final applicationId_Live = "com.emiclib"
+def final applicationId_Demo = "com.emiclibdemo"
 
-def final APP_NAME_DEMO = "App Demo"
-def final APP_NAME_LIVE = "App Live"
+def final APP_NAME_DEMO = "EmicLib"
+def final APP_NAME_LIVE = "EmicLib"
 
 def targetSdkVersionValue = rootProject.ext.targetSdkVersion as Integer
 def compileSdkVersionValue = rootProject.ext.compileSdkVersion as Integer

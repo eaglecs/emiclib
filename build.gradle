@@ -36,5 +36,6 @@ ext {
     versionName ="1.0.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     flavorDimensions = "flavor_name"
-    nameApp = "BaseApp"
+    nameApp = "EmicLib"
+
 }

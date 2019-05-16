@@ -1,7 +1,13 @@
 package basecode.com.data.remote
 
+import basecode.com.domain.model.network.request.NewEBookRequest
+import basecode.com.domain.model.network.response.NewEBookResponse
+import io.reactivex.Observable
+import retrofit2.http.Body
+import retrofit2.http.POST
+
 interface ApiService {
-    //1.1 Login
-//    @POST("/api/report_api/user/login")
-//    fun login(@Body loginRequest: LoginRequest): Single<LoginResponse>
+    //4 GetListNewEBookItems
+    @POST("/api/Item/GetListNewEBookItems")
+    fun getListNewEBookItems(@Body newEBookRequest: NewEBookRequest): Observable<NewEBookResponse>
 }
