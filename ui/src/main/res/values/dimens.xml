@@ -12,4 +12,5 @@
     <dimen name="width_dialog_alert">220dp</dimen>
     <dimen name="height_dialog_alert">170dp</dimen>
     <dimen name="min_height_tab_home">40dp</dimen>
+    <dimen name="height_toolbar">50dp</dimen>
 </resources>

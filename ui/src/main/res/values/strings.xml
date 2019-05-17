@@ -5,4 +5,6 @@
     <string name="ACTION_YES">YES</string>
     <string name="ACTION_NO">NO</string>
     <string name="msg_error_get_info">Get information app false.</string>
+    <string name="text_new_book">Tài liệu mới</string>
+    <string name="text_view_more">Xem Thêm</string>
 </resources>
