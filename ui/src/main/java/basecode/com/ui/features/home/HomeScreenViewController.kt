@@ -118,6 +118,7 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.On
             }
         }
         view.vpHome.adapter = pagerAdapter
+        view.vpHome.offscreenPageLimit = pageHomeSize
         view.vpHome.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }

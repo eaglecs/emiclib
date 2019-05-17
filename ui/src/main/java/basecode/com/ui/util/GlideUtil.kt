@@ -16,7 +16,6 @@ class GlideUtil: AppGlideModule() {
                     .load(url)
                     .fitCenter()
                     .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
-                    .centerCrop()
                     .error(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
                     .into(imageView)
         }

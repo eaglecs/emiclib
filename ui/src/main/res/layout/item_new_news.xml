@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bannerSlider"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="160dp"
     app:slider_animateIndicators="true"
     app:slider_indicatorSize="8dp"
     app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"

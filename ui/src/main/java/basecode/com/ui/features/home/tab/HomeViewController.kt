@@ -10,6 +10,9 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
+import basecode.com.ui.features.home.renderer.NewBookRenderer
+import basecode.com.ui.features.home.renderer.NewEBookRenderer
 import basecode.com.ui.features.home.renderer.NewNewsRenderer
 import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
@@ -40,6 +43,20 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         rvController.addViewRenderer(NewNewsRenderer { newsId ->
 
         })
+        rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
+
+        }, onActionReadMore = {
+
+        }))
+        rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
+
+        }, onActionReadMore = {
+
+        }))
+        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+
+        })
+
     }
 
     private fun loadData() {
@@ -54,12 +71,12 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     override fun getListNewEBookSuccess(data: InfoHomeResponse) {
         val newNewsViewHolderModel = NewNewsViewHolderModel(lstNewNews = data.lstNewNews)
         rvController.addItem(newNewsViewHolderModel)
-//        val newBookViewHolderModel = NewBookViewHolderModel(lstNewBook = data.lstNewBook)
-//        rvController.addItem(newBookViewHolderModel)
-//        val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
-//        rvController.addItem(newEBookViewHolderModel)
-//        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
-//        rvController.addItem(newCollectionRecommendViewHolderModel)
+        val newBookViewHolderModel = NewBookViewHolderModel(lstNewBook = data.lstNewBook)
+        rvController.addItem(newBookViewHolderModel)
+        val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
+        rvController.addItem(newEBookViewHolderModel)
+        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
+        rvController.addItem(newCollectionRecommendViewHolderModel)
         rvController.notifyDataChanged()
         hideLoading()
     }

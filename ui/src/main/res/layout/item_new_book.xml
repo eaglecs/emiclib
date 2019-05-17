@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding_margin"
-            android:text="@string/text_new_book" />
+            android:text="@string/text_new_book"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tvReadMore"
@@ -34,8 +36,9 @@
         android:background="@color/md_grey200" />
 
     <android.support.v7.widget.RecyclerView
+        android:minHeight="@dimen/default_padding_margin"
         android:id="@+id/rvNewBook"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
