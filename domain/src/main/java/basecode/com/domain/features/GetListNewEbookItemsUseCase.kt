@@ -8,9 +8,9 @@ import basecode.com.domain.usecase.base.UseCase
 import basecode.com.domain.usecase.base.UseCaseExecution
 import io.reactivex.Observable
 
-class GetListNewEbookItemsUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<NewEBookRequest, NewEBookResponse, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: NewEBookRequest): Observable<NewEBookResponse> {
-        return appRepository.getListNewEBookItems(numberItem = input.numberItem, pageIndex = input.pageIndex, pageSize = input.pageSize)
+class GetListNewEbookItemsUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<NewEBookRequest, List<NewEBookResponse>, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: NewEBookRequest): Observable<List<NewEBookResponse>> {
+        return appRepository.getListNewEBookItemsObservable(numberItem = input.numberItem, pageIndex = input.pageIndex, pageSize = input.pageSize)
     }
 
     override fun createFailOutput(throwable: Throwable): ErrorResponse {

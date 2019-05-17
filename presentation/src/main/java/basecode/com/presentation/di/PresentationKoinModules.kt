@@ -12,7 +12,7 @@ object PresentationKoinModules {
 
     private val homeModule = module {
         factory {
-            HomePresenter(getListNewEbookItemsUseCase = get()) as HomeContract.Presenter
+            HomePresenter(getInfoHomeUseCase = get()) as HomeContract.Presenter
         }
     }
 }

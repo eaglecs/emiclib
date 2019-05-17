@@ -1,36 +1,34 @@
 package basecode.com.presentation.features.home
 
-import basecode.com.domain.features.GetListNewEbookItemsUseCase
-import basecode.com.domain.model.network.request.NewEBookRequest
+import basecode.com.domain.features.GetInfoHomeUseCase
 import basecode.com.domain.model.network.response.ErrorResponse
-import basecode.com.domain.model.network.response.NewEBookResponse
+import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.domain.usecase.base.ResultListener
 
-class HomePresenter(private val getListNewEbookItemsUseCase: GetListNewEbookItemsUseCase) : HomeContract.Presenter() {
-    override fun getListNewBook(newEBookRequest: NewEBookRequest) {
+class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase) : HomeContract.Presenter() {
+    override fun getListNewBook() {
         view?.let { view ->
             view.showLoading()
-            getListNewEbookItemsUseCase.cancel()
-            getListNewEbookItemsUseCase.executeAsync(object : ResultListener<NewEBookResponse, ErrorResponse> {
-                override fun success(data: NewEBookResponse) {
-                    view.getListNewEBookSuccess()
+            getInfoHomeUseCase.cancel()
+            getInfoHomeUseCase.executeAsync(object : ResultListener<InfoHomeResponse, ErrorResponse> {
+                override fun success(data: InfoHomeResponse) {
+                    view.getListNewEBookSuccess(data)
                 }
 
                 override fun fail(error: ErrorResponse) {
+                    view.hideLoading()
                     view.showErrorGetListNewEbook()
                 }
 
-                override fun done() {
-                    view.hideLoading()
-                }
+                override fun done() {}
 
-            }, newEBookRequest)
+            })
         }
 
     }
 
     override fun onDetachView() {
-        getListNewEbookItemsUseCase.cancel()
+        getInfoHomeUseCase.cancel()
         super.onDetachView()
     }
 }
