@@ -9,4 +9,5 @@
     <string name="text_view_more">Xem Thêm</string>
     <string name="text_collection_recommend">Tài liệu khuyên đọc</string>
     <string name="text_ebook_new">Tài liệu điện tử mới</string>
+    <string name="msg_error_get_list_book">Lấy thông tin danh sách sách thất bại bạn làm ơn kiểm tra lại</string>
 </resources>

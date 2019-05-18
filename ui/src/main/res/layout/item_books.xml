@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="220dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/bg_rec_line_book_detail"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/default_padding_margin">
+    android:padding="@dimen/default_padding_margin"
+    tools:layout_margin="@dimen/default_padding_margin_x">
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/ivCollection"
+        android:id="@+id/ivPhotoBooks"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:background="@color/md_grey500" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tvTitleCollection"
+        android:id="@+id/tvTitleBooks"
         style="@style/TextPrimarySubtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding_margin"
-        android:gravity="center"
         android:lines="2"
-        android:textStyle="bold"
         tools:text="Ngay xua co 1 con bo to that to" />
 </LinearLayout>

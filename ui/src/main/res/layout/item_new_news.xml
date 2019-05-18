@@ -6,7 +6,7 @@
     android:layout_height="160dp"
     app:slider_animateIndicators="true"
     app:slider_indicatorSize="8dp"
-    app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"
-    app:slider_unselectedSlideIndicator="@drawable/indicator_circle_unselected"
     app:slider_interval="5000"
-    app:slider_loopSlides="true" />
+    app:slider_loopSlides="true"
+    app:slider_selectedSlideIndicator="@drawable/indicator_selected"
+    app:slider_unselectedSlideIndicator="@drawable/indicator_normal" />

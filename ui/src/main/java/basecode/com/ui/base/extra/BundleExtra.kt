@@ -1,6 +1,7 @@
 package basecode.com.ui.base.extra
 
 import android.os.Bundle
+import basecode.com.domain.extention.valueOrFalse
 import java.io.Serializable
 import kotlin.reflect.KProperty
 
@@ -26,6 +27,17 @@ class BundleExtraString(private val name: String) {
         bundle.putString(name, value)
     }
 }
+
+class BundleExtraBoolean(private val name: String) {
+
+    operator fun getValue(bundle: Bundle, property: KProperty<*>): Boolean? =
+            bundle.getBoolean(name)
+
+    operator fun setValue(bundle: Bundle, property: KProperty<*>, value: Boolean?) {
+        bundle.putBoolean(name, value.valueOrFalse())
+    }
+}
+
 class BundleExtraCharSequence(private val name: String) {
 
     operator fun getValue(bundle: Bundle, property: KProperty<*>): CharSequence? =

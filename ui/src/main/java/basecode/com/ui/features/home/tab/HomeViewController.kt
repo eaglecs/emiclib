@@ -7,9 +7,11 @@ import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.books.BooksViewController
 import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
 import basecode.com.ui.features.home.renderer.NewBookRenderer
 import basecode.com.ui.features.home.renderer.NewEBookRenderer
@@ -18,6 +20,7 @@ import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
+import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_home.view.*
 import org.koin.standalone.inject
@@ -46,12 +49,20 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
 
         }, onActionReadMore = {
+            targetController?.let { targetController ->
+                val bundle = BooksViewController.BundleOptions.create(isEbook = false)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
+            }
         }))
         rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
 
         }, onActionReadMore = {
+            targetController?.let { targetController ->
+                val bundle = BooksViewController.BundleOptions.create(isEbook = true)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
+            }
         }))
         rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
 

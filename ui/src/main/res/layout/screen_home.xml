@@ -28,7 +28,7 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_logo" />

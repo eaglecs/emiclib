@@ -4,9 +4,10 @@ import android.content.Context
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ProgressBar
+import android.widget.FrameLayout
+import basecode.com.ui.R
 
-class ContentLoadingProgressBar : ProgressBar {
+class ContentLoadingProgressBar : FrameLayout {
     companion object {
         const val MIN_SHOW_TIME = 500L // ms
         const val MIN_DELAY = 500L // ms
@@ -26,11 +27,21 @@ class ContentLoadingProgressBar : ProgressBar {
     var onViewHideEvent: (() -> Unit)? = null
     var mIsAttachedToWindow: Boolean = false
 
+    constructor(context: Context?) : super(context) {
+        initView(context)
+    }
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0) {
+        initView(context)
+    }
+
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         mIsShown = visibility == View.VISIBLE
+        initView(context)
+    }
+
+    private fun initView(context: Context?) {
+        inflate(context, R.layout.layout_progress_bar_of_app, this)
     }
 
     override fun onAttachedToWindow() {
@@ -60,15 +71,15 @@ class ContentLoadingProgressBar : ProgressBar {
             }
             val diff = SystemClock.uptimeMillis() - mStartTime
             if (mStartTime == -1L || diff >= MIN_SHOW_TIME) {
-                // The progress spinner has been shown long enough
+                // The progress spinner has been shown lng enough
                 // OR was not shown yet. If it wasn't shown yet,
                 // it will just never be shown.
                 visibility = View.GONE
                 mStartTime = -1L
             } else {
-                // The progress spinner is shown, but not long enough,
+                // The progress spinner is shown, but not lng enough,
                 // so put a delayed message in to hide it when its been
-                // shown long enough.
+                // shown lng enough.
                 postDelayed(mDelayedHide, MIN_SHOW_TIME - diff)
             }
         }

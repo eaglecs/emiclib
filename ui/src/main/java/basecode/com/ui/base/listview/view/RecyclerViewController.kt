@@ -89,6 +89,11 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
         viewAdapter.setItems(this.items)
     }
 
+    fun <T : ViewHolderModel> addItems(item: List<T>) {
+        this.items.addAll(item)
+        viewAdapter.setItems(this.items)
+    }
+
     fun getItem(position: Int): ViewHolderModel {
         return viewAdapter.getItem(position)
     }
