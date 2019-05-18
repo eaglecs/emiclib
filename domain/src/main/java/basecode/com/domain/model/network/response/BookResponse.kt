@@ -3,7 +3,7 @@ package basecode.com.domain.model.network.response
 import com.google.gson.annotations.SerializedName
 
 
-data class NewBookResponse(
+data class BookResponse(
         @SerializedName("Author")
         val author: String?,
         @SerializedName("Content")

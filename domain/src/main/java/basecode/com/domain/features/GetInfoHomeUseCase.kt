@@ -26,13 +26,15 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             }
             listNewBooks?.let {
                 listNewBooks.forEach { newBook ->
-                    val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(), coverPicture = newBook.coverPicture.valueOrEmpty())
+                    val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
+                            coverPicture = newBook.coverPicture.valueOrEmpty(), author = newBook.author.valueOrEmpty())
                     infoHomeResponse.lstNewBook.add(newBooksModel)
                 }
             }
             listNewEBooks?.let {
                 listNewEBooks.forEach { eBook ->
-                    val newEBooksModel = NewEBookModel(id = eBook.id.valueOrZero(), title = eBook.title.valueOrEmpty(), coverPicture = eBook.coverPicture.valueOrEmpty())
+                    val newEBooksModel = NewEBookModel(id = eBook.id.valueOrZero(), title = eBook.title.valueOrEmpty(),
+                            coverPicture = eBook.coverPicture.valueOrEmpty(), author = eBook.author.valueOrEmpty())
                     infoHomeResponse.lstNewEBook.add(newEBooksModel)
                 }
             }

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_toolbar">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivBackBookDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/default_padding_margin"
+            app:srcCompat="@drawable/ic_back" />
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_book_detail"
+            android:textColor="@color/md_blue800"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey200" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding_margin"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/ivBookDetail"
+                    android:layout_width="150dp"
+                    android:layout_height="180dp"
+                    tools:background="@color/md_grey300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding_margin"
+                    android:layout_marginLeft="@dimen/default_padding_margin"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tvBookName"
+                        style="@style/TextPrimarySubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:textColor="@color/md_blue500"
+                        android:textStyle="bold"
+                        tools:text="Ngay xua co mot con bo ..." />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tvBookAuthor"
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_padding_margin"
+                        tools:text="Ngay xua co mot con bo ..." />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvHandleBook"
+                style="@style/ButtonStyle.Active.Largest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_padding_margin"
+                android:layout_marginBottom="@dimen/default_padding_margin"
+                android:paddingLeft="@dimen/default_padding_margin_huge"
+                android:paddingTop="@dimen/default_padding_margin"
+                android:paddingRight="@dimen/default_padding_margin_huge"
+                android:paddingBottom="@dimen/default_padding_margin"
+                tools:text="Đặt mượn" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/md_blue800"
+                android:padding="@dimen/default_padding_margin"
+                android:text="@string/text_book_related" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/md_grey200" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvBookRelated"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <basecode.com.ui.base.loading.LoadingLayout
+            android:id="@+id/vgLoadingBookDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+</LinearLayout>

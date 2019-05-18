@@ -40,7 +40,7 @@ class NewEBookRenderer(private val onActionClickBook: (NewBookItemViewHolderMode
         }
         val lstBookVHM = mutableListOf<NewBookItemViewHolderModel>()
         model.lstNewEBook.forEach { newBook ->
-            val newBookItemViewHolderModel = NewBookItemViewHolderModel(id = newBook.id, title = newBook.title, coverPicture = newBook.coverPicture)
+            val newBookItemViewHolderModel = NewBookItemViewHolderModel(id = newBook.id, title = newBook.title, coverPicture = newBook.coverPicture, author = newBook.author)
             lstBookVHM.add(newBookItemViewHolderModel)
         }
         rvController.setItems(lstBookVHM)

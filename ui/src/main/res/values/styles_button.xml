@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonStyle.Active.Small" parent="TextLightStyle.Small">
+        <item name="android:background">@drawable/selector_btn_corner_blue</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ButtonStyle.Active.Medium" parent="TextLightStyle.Medium">
+        <item name="android:background">@drawable/selector_btn_corner_blue</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ButtonStyle.Active.Largest" parent="TextLightStyle.Large">
+        <item name="android:background">@drawable/selector_btn_corner_blue</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">@dimen/default_padding_margin_xx</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TextLightStyle.Small" parent="TextWithPaddingStyle.Small">
+        <item name="android:textColor">@color/md_grey100</item>
+    </style>
+
+    <style name="TextLightStyle.Medium" parent="TextWithPaddingStyle.Medium">
+        <item name="android:textColor">@color/md_grey100</item>
+    </style>
+
+    <style name="TextLightStyle.Large" parent="TextWithPaddingStyle.Large">
+        <item name="android:textColor">@color/md_grey100</item>
+    </style>
+
+    <style name="TextWithPaddingStyle.Small" parent="TextSmallStyle">
+        <item name="android:textSize">@dimen/md_text_caption_regular</item>
+        <item name="android:paddingLeft">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingRight">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingTop">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingBottom">@dimen/default_padding_margin_small</item>
+    </style>
+
+
+    <style name="TextWithPaddingStyle.Medium" parent="TextMediumStyle">
+        <item name="android:paddingLeft">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingRight">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingTop">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingBottom">@dimen/default_padding_margin_small</item>
+    </style>
+
+    <style name="TextWithPaddingStyle.Large" parent="TextLargeStyle">
+        <item name="android:paddingLeft">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingRight">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingTop">@dimen/default_padding_margin_small</item>
+        <item name="android:paddingBottom">@dimen/default_padding_margin_small</item>
+    </style>
+
+    <style name="TextSmallStyle">
+        <item name="android:textSize">@dimen/md_text_caption_regular</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextSmallestStyle">
+        <item name="android:textSize">@dimen/md_text_overline_regular</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextMediumStyle">
+        <item name="android:textSize">@dimen/md_text_button_medium</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextLargeStyle">
+        <item name="android:textSize">@dimen/md_text_subtitle_1_regular</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+</resources>

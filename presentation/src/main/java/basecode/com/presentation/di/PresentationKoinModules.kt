@@ -1,5 +1,7 @@
 package basecode.com.presentation.di
 
+import basecode.com.presentation.features.bookdetail.BookDetailContract
+import basecode.com.presentation.features.bookdetail.BookDetailPresenter
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
 import basecode.com.presentation.features.home.HomeContract
@@ -19,6 +21,9 @@ object PresentationKoinModules {
         factory {
             BooksPresenter(getListNewBookUseCase = get(),
                     getListNewEbookUseCase = get()) as BooksContract.Presenter
+        }
+        factory {
+            BookDetailPresenter(getListBookRelatedUseCase = get()) as BookDetailContract.Presenter
         }
     }
 }

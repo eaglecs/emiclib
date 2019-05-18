@@ -1,6 +1,7 @@
 package basecode.com.domain.di
 
 import basecode.com.domain.features.GetInfoHomeUseCase
+import basecode.com.domain.features.GetListBookRelatedUseCase
 import basecode.com.domain.features.GetListNewBookUseCase
 import basecode.com.domain.features.GetListNewEbookUseCase
 import org.koin.dsl.module.Module
@@ -24,6 +25,10 @@ object DomainKoinModules {
 
         factory {
             GetListNewBookUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
+        factory {
+            GetListBookRelatedUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
     }

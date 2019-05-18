@@ -6,7 +6,7 @@ import basecode.com.domain.features.GetListNewBookUseCase
 import basecode.com.domain.features.GetListNewEbookUseCase
 import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.domain.model.network.response.ErrorResponse
-import basecode.com.domain.model.network.response.NewBookResponse
+import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.NewEBookResponse
 import basecode.com.domain.usecase.base.ResultListener
 
@@ -34,8 +34,8 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
             }
 
             getListNewBookUseCase.cancel()
-            getListNewBookUseCase.executeAsync(object : ResultListener<List<NewBookResponse>, ErrorResponse> {
-                override fun success(data: List<NewBookResponse>) {
+            getListNewBookUseCase.executeAsync(object : ResultListener<List<BookResponse>, ErrorResponse> {
+                override fun success(data: List<BookResponse>) {
                     if (data.size < pageSize) {
                         isLoadMoreNewBook = false
                     } else {
@@ -43,7 +43,8 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     }
                     val lstResult = mutableListOf<BookVewModel>()
                     data.forEach { newbook ->
-                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty())
+                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
+                                author = newbook.author.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)
@@ -79,7 +80,8 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     }
                     val lstResult = mutableListOf<BookVewModel>()
                     data.forEach { newbook ->
-                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty())
+                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
+                                photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)

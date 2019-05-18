@@ -1,9 +1,6 @@
 package basecode.com.data.remote
 
-import basecode.com.domain.model.network.response.CollectionRecomand
-import basecode.com.domain.model.network.response.NewEBookResponse
-import basecode.com.domain.model.network.response.NewNewsResponse
-import basecode.com.domain.model.network.response.NewBookResponse
+import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -12,11 +9,15 @@ import retrofit2.http.Query
 interface ApiService {
     //4 GetListNewItems
     @GET("/api/Item/GetListNewItems")
-    fun getListNewItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewBookResponse>>
+    fun getListNewItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<BookResponse>>
 
     //4.1 GetListNewEBookItems
     @GET("/api/Item/GetListNewEBookItems")
     fun getListNewEBookItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewEBookResponse>>
+
+    //5 GetListBookRelated
+    @GET("/api/Item/GetRelationItems")
+    fun getListBookRelated(@Query("itemId") itemId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<BookResponse>>
 
     //13 GetCollectionRecomand
     @GET("/api/Cat/GetCollectionRecomand")
@@ -29,7 +30,7 @@ interface ApiService {
 
     //4 GetListNewItems
     @GET("/api/Item/GetListNewItems")
-    fun getListNewItemsObservable(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewBookResponse>>
+    fun getListNewItemsObservable(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<BookResponse>>
 
     //4.1 GetListNewEBookItems
     @GET("/api/Item/GetListNewEBookItems")

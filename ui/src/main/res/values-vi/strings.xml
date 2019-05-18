@@ -10,4 +10,9 @@
     <string name="text_collection_recommend">Tài liệu khuyên đọc</string>
     <string name="text_ebook_new">Tài liệu điện tử mới</string>
     <string name="msg_error_get_list_book">Lấy thông tin danh sách sách thất bại bạn làm ơn kiểm tra lại</string>
+    <string name="title_book_detail">Chi tiết sách</string>
+    <string name="msg_error_get_list_book_related">Lấy danh sách sách liên quan thất bại</string>
+    <string name="text_read_book">Đọc sách</string>
+    <string name="text_borrow">Đặt mượn</string>
+    <string name="text_book_related">Sách liên quan</string>
 </resources>

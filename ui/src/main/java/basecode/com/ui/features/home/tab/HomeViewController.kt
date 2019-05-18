@@ -3,7 +3,6 @@ package basecode.com.ui.features.home.tab
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
@@ -11,6 +10,7 @@ import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.books.BooksViewController
 import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
 import basecode.com.ui.features.home.renderer.NewBookRenderer
@@ -47,7 +47,11 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
         })
         rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
-
+            targetController?.let { targetController ->
+                val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
+                        author = bookItem.author)
+                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
         }, onActionReadMore = {
             targetController?.let { targetController ->
                 val bundle = BooksViewController.BundleOptions.create(isEbook = false)
@@ -56,7 +60,11 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             }
         }))
         rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
-
+            targetController?.let { targetController ->
+                val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
+                        author = bookItem.author)
+                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
         }, onActionReadMore = {
             targetController?.let { targetController ->
                 val bundle = BooksViewController.BundleOptions.create(isEbook = true)

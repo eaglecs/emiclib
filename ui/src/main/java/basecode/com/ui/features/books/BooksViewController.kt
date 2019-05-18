@@ -104,7 +104,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     override fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean) {
         val lstData = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
-            val booksViewHolderModel = BooksViewHolderModel(id = book.id, photo = book.photo, title = book.name)
+            val booksViewHolderModel = BooksViewHolderModel(id = book.id, photo = book.photo, title = book.name, author = book.author)
             lstData.add(booksViewHolderModel)
         }
         if (refresh) {
