@@ -1,5 +1,6 @@
 package basecode.com.ui.features.home.renderer
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import basecode.com.ui.R
@@ -14,7 +15,7 @@ import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 import org.koin.standalone.inject
 
-class NewBookRenderer(private val onActionClickBook: (NewBookItemViewHolderModel) -> Unit, private val onActionReadMore: () -> Unit) : ViewHolderRenderer<NewBookViewHolderModel>() {
+class NewBookRenderer(private val context: Context, private val onActionClickBook: (NewBookItemViewHolderModel) -> Unit, private val onActionReadMore: () -> Unit) : ViewHolderRenderer<NewBookViewHolderModel>() {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     override fun getLayoutId(): Int = R.layout.item_new_book
 
@@ -25,7 +26,7 @@ class NewBookRenderer(private val onActionClickBook: (NewBookItemViewHolderModel
         val input = LinearRenderConfigFactory.Input(context = rvNewBook.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         val rvController = RecyclerViewController(rvNewBook, renderConfig)
-        rvController.addViewRenderer(NewBookItemRenderer())
+        rvController.addViewRenderer(NewBookItemRenderer(context))
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is NewBookItemViewHolderModel) {

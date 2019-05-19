@@ -1,5 +1,6 @@
 package basecode.com.ui.features.home.renderer
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import basecode.com.ui.R
@@ -12,7 +13,7 @@ import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolder
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 
-class CollectionRecommendRenderer(private val onActionClickRecommend: (CollectionRecommentItemViewHolderModel) -> Unit): ViewHolderRenderer<NewCollectionRecommendViewHolderModel>() {
+class CollectionRecommendRenderer(private val context: Context, private val onActionClickRecommend: (CollectionRecommentItemViewHolderModel) -> Unit) : ViewHolderRenderer<NewCollectionRecommendViewHolderModel>() {
     override fun getLayoutId(): Int = R.layout.item_collection_recommend
 
     override fun getModelClass(): Class<NewCollectionRecommendViewHolderModel> = NewCollectionRecommendViewHolderModel::class.java
@@ -22,7 +23,7 @@ class CollectionRecommendRenderer(private val onActionClickRecommend: (Collectio
         val input = LinearRenderConfigFactory.Input(context = rvCollectionRecommend.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         val rvController = RecyclerViewController(rvCollectionRecommend, renderConfig)
-        rvController.addViewRenderer(CollectionRecommendItemRenderer())
+        rvController.addViewRenderer(CollectionRecommendItemRenderer(context))
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is CollectionRecommentItemViewHolderModel) {

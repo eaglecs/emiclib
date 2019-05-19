@@ -62,7 +62,7 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
         }
     }
 
-    private fun hideLoadMore() {
+    fun hideLoadMore() {
         recyclerView.post {
             isShowingLoadMore = false
             viewAdapter.hideLoadMore()

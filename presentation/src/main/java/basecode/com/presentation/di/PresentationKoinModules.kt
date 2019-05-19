@@ -6,6 +6,8 @@ import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.presentation.features.home.HomePresenter
+import basecode.com.presentation.features.newnews.NewNewsContract
+import basecode.com.presentation.features.newnews.NewNewsPresenter
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
@@ -24,6 +26,9 @@ object PresentationKoinModules {
         }
         factory {
             BookDetailPresenter(getListBookRelatedUseCase = get()) as BookDetailContract.Presenter
+        }
+        factory {
+            NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter
         }
     }
 }

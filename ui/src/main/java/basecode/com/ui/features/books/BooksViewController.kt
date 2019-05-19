@@ -81,7 +81,9 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
         val input = GridRenderConfigFactory.Input(context = view.context, loadMoreConfig = loadMoreConfig, spanCount = 2)
         val renderConfig = GridRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookDetail, renderConfig)
-        rvController.addViewRenderer(BooksRenderer())
+        activity?.let { activity ->
+            rvController.addViewRenderer(BooksRenderer(activity))
+        }
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
@@ -102,6 +104,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     }
 
     override fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean) {
+        rvController.hideLoadMore()
         val lstData = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
             val booksViewHolderModel = BooksViewHolderModel(id = book.id, photo = book.photo, title = book.name, author = book.author)
@@ -117,6 +120,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     }
 
     override fun showErrorGetListNewBook() {
+        rvController.hideLoadMore()
         activity?.let { activity ->
             Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book)).show()
         }
