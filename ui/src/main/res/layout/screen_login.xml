@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_grey100"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_grey100"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextPrimaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_login"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtUserName"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_margin_x"
+            android:background="@drawable/bg_rec_line_login"
+            android:hint="@string/text_user_name"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtPasswork"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:background="@drawable/bg_rec_line_login"
+            android:hint="@string/text_password"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvForgotPass"
+            style="@style/TextPrimaryBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_h"
+            android:text="@string/text_forgot_password"
+            android:textColor="@color/md_red500" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/btnLogin"
+            style="@style/ButtonStyle.Active.Largest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_margin_huge"
+            android:paddingLeft="@dimen/default_padding_margin_huge"
+            android:paddingTop="@dimen/default_padding_margin"
+            android:paddingRight="@dimen/default_padding_margin_huge"
+            android:paddingBottom="@dimen/default_padding_margin"
+            android:text="@string/text_login"
+            android:textColor="@color/md_white" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvRegister"
+        style="@style/TextPrimaryBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="@dimen/default_padding_margin_h"
+        android:paddingLeft="@dimen/default_padding_margin_huge"
+        android:paddingTop="@dimen/default_padding_margin_h"
+        android:paddingRight="@dimen/default_padding_margin_huge"
+        android:paddingBottom="@dimen/default_padding_margin_h"
+        android:text="@string/text_register"
+        android:textColor="@color/md_blue500" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivCloseLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding_margin_h"
+        app:srcCompat="@drawable/ic_back" />
+</FrameLayout>

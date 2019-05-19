@@ -17,4 +17,9 @@
     <string name="text_book_related">Sách liên quan</string>
     <string name="msg_error_get_list_new_news">Lấy danh sách tin tức thất bại. Banj làm ơn kiểm tra lại.</string>
     <string name="title_news_detail">Tin tức</string>
+    <string name="text_login">Đăng nhập</string>
+    <string name="text_user_name">Tên đăng nhập</string>
+    <string name="text_password">Mật khẩu</string>
+    <string name="text_forgot_password">Quên mật khẩu</string>
+    <string name="text_register">Đăng ký</string>
 </resources>
