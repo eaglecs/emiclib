@@ -20,7 +20,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
             newNewsResponse?.let {
                 newNewsResponse.forEach { newNews ->
-                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty())
+                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty())
                     infoHomeResponse.lstNewNews.add(newNewsModel)
                 }
             }

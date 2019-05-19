@@ -8,6 +8,7 @@ import basecode.com.domain.extention.valueOrFalse
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraBoolean
 import basecode.com.ui.base.extra.BundleOptionsCompanion
@@ -15,7 +16,9 @@ import basecode.com.ui.base.listview.view.GridRenderConfigFactory
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 import es.dmoral.toasty.Toasty
@@ -88,7 +91,9 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
-
+                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo, titleBook = dataItem.title,
+                                author = dataItem.author)
+                        router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
             }
@@ -101,9 +106,15 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
                 router.popController(this)
             }
         }
+        view.vgRefreshBooks.setOnRefreshListener {
+            if (doubleTouchPrevent.check("vgRefreshBooks")) {
+                loadData()
+            }
+        }
     }
 
     override fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean) {
+        view?.vgRefreshBooks?.isRefreshing = false
         rvController.hideLoadMore()
         val lstData = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
@@ -120,6 +131,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     }
 
     override fun showErrorGetListNewBook() {
+        view?.vgRefreshBooks?.isRefreshing = false
         rvController.hideLoadMore()
         activity?.let { activity ->
             Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book)).show()

@@ -8,12 +8,15 @@ import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.NewNewsResponse
 import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.home.renderer.NewNewsItemRenderer
 import basecode.com.ui.features.home.viewholder.NewNewsItemViewHolderModel
+import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
+import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 import es.dmoral.toasty.Toasty
@@ -52,7 +55,10 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is NewNewsItemViewHolderModel) {
-
+                    targetController?.let { targetController ->
+                        val bundle = NewsDetailViewController.BundleOptions.create(title = dataItem.title, photo = dataItem.photo, content = dataItem.content)
+                        targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                    }
                 }
             }
 
@@ -73,10 +79,7 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
         rvController.hideLoadMore()
         val lstData = mutableListOf<NewNewsItemViewHolderModel>()
         data.forEach { news ->
-            var detail = news.details.valueOrEmpty()
-            if (detail.length > 100) {
-                detail.substring(0, 100)
-            }
+            val detail = news.details.valueOrEmpty()
             val newNewsItemViewHolderModel = NewNewsItemViewHolderModel(id = news.id.valueOrZero(), title = news.title.valueOrEmpty(), content = detail, photo = news.picture.valueOrEmpty())
             lstData.add(newNewsItemViewHolderModel)
         }

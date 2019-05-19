@@ -20,6 +20,8 @@ import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
+import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
+import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_home.view.*
@@ -28,6 +30,7 @@ import org.koin.standalone.inject
 class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     private val presenter: HomeContract.Presenter by inject()
+    private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private lateinit var rvController: RecyclerViewController
 
     constructor(targetController: ViewController) : this() {
@@ -35,8 +38,18 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     override fun initPostCreateView(view: View) {
+        presenter.attachView(this)
         initView(view)
+        handleView(view)
         loadData()
+    }
+
+    private fun handleView(view: View) {
+        view.vgRefreshInfo.setOnRefreshListener {
+            if (doubleTouchPrevent.check("vgRefreshInfo")) {
+                loadData()
+            }
+        }
     }
 
     private fun initView(view: View) {
@@ -44,7 +57,11 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvHome, renderConfig)
         activity?.let { activity ->
-            rvController.addViewRenderer(NewNewsRenderer(activity) { newsId ->
+            rvController.addViewRenderer(NewNewsRenderer(activity) { newsModel ->
+                targetController?.let { targetController ->
+                    val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.picture, content = newsModel.content)
+                    targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
             })
 
 
@@ -82,7 +99,6 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     private fun loadData() {
-        presenter.attachView(this)
         presenter.getListNewBook()
     }
 
@@ -91,6 +107,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     override fun getListNewEBookSuccess(data: InfoHomeResponse) {
+        view?.vgRefreshInfo?.isRefreshing = false
         val newNewsViewHolderModel = NewNewsViewHolderModel(lstNewNews = data.lstNewNews)
         rvController.addItem(newNewsViewHolderModel)
         val newBookViewHolderModel = NewBookViewHolderModel(lstNewBook = data.lstNewBook)
@@ -105,6 +122,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     override fun showErrorGetListNewEbook() {
         view?.let { view ->
+            view.vgRefreshInfo.isRefreshing = false
             Toasty.error(view.context, view.context.getString(R.string.msg_error_get_info)).show()
         }
     }
