@@ -9,10 +9,15 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
+import basecode.com.ui.extension.formatHtml
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
 import kotlinx.android.synthetic.main.screen_news_detail.view.*
 import org.koin.standalone.inject
+import android.widget.ProgressBar
+import android.webkit.WebView
+import android.webkit.WebChromeClient
+
 
 class NewsDetailViewController(bundle: Bundle) : ViewController(bundle) {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -51,9 +56,17 @@ class NewsDetailViewController(bundle: Bundle) : ViewController(bundle) {
     }
 
     private fun initView(view: View) {
-        GlideUtil.loadImage(photo, view.ivNewNews, view.context)
+        view.vgLoading.show()
+        GlideUtil.loadImageNews(photo, view.ivNewNews, view.context)
         view.tvTitleNews.text = title
-        view.tvContent.text = content
+        view.wvContent.loadData(content, "text/html", "UTF-8")
+        view.wvContent.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(webView: WebView, progress: Int) {
+                if (progress == 100) {
+                    view.vgLoading.hide()
+                }
+            }
+        }
     }
 
     private fun handleOnClick(view: View) {

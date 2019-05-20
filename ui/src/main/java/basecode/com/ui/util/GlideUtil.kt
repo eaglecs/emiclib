@@ -25,19 +25,18 @@ class GlideUtil : AppGlideModule(), KoinComponent {
             GlideApp.with(context)
                     .load(url)
                     .fitCenter()
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            onActionRequestFail?.invoke()
-                            return false
-                        }
-
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            return false
-                        }
-
-                    })
                     .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
                     .error(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
+                    .into(imageView)
+        }
+
+        @JvmStatic
+        fun loadImageNews(url: String, imageView: ImageView, context: Context) {
+            GlideApp.with(context)
+                    .load(url)
+                    .fitCenter()
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_item_news))
+                    .error(ContextCompat.getDrawable(context, R.drawable.ic_item_news))
                     .into(imageView)
         }
 
