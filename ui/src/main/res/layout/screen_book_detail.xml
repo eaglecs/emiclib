@@ -56,7 +56,9 @@
                     android:id="@+id/ivBookDetail"
                     android:layout_width="150dp"
                     android:layout_height="180dp"
-                    tools:background="@color/md_grey300" />
+                    android:adjustViewBounds="true"
+                    tools:background="@color/md_grey300"
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,10 +106,10 @@
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/md_blue800"
                 android:padding="@dimen/default_padding_margin"
-                android:text="@string/text_book_related" />
+                android:text="@string/text_book_related"
+                android:textColor="@color/md_blue800"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
