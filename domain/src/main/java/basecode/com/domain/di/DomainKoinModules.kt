@@ -32,5 +32,8 @@ object DomainKoinModules {
             GetListNewNewsUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
+        factory {
+            GetUserTokenUseCase(useCaseExecution = get(), cacheRespository = get())
+        }
     }
 }

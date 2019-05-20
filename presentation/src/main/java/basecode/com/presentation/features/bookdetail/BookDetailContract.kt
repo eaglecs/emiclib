@@ -9,9 +9,11 @@ class BookDetailContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun getListBookRelatedSuccess(data: List<BookVewModel>)
         fun showErrorGetListBookRelated()
+        fun handleAfterCheckLogin(isLogin: Boolean)
     }
 
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun getListBookRelated(bookId: Int)
+        abstract fun getStatusLogin()
     }
 }

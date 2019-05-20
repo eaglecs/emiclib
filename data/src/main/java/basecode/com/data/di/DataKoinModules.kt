@@ -4,6 +4,8 @@ import basecode.com.data.BuildConfig
 import basecode.com.data.remote.ApiService
 import basecode.com.data.remote.HeaderInterceptor
 import basecode.com.data.repositoryiml.ApiServiceImpl
+import basecode.com.data.repositoryiml.CacheServiceImpl
+import basecode.com.domain.repository.CacheRespository
 import basecode.com.domain.repository.network.AppRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
@@ -56,6 +58,10 @@ object DataKoinModules {
 
         single {
             ApiServiceImpl(apiServiceApp = get()) as AppRepository
+        }
+
+        single {
+            CacheServiceImpl() as CacheRespository
         }
     }
 }

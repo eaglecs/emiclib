@@ -3,12 +3,14 @@ package basecode.com.presentation.features.bookdetail
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.features.GetListBookRelatedUseCase
+import basecode.com.domain.features.GetUserTokenUseCase
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.usecase.base.ResultListener
 import basecode.com.presentation.features.books.BookVewModel
 
-class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase) : BookDetailContract.Presenter() {
+class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
+                          private val getUserTokenUseCase: GetUserTokenUseCase) : BookDetailContract.Presenter() {
     override fun getListBookRelated(bookId: Int) {
         view?.let { view ->
             view.showLoading()
@@ -34,8 +36,29 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         }
     }
 
+    override fun getStatusLogin() {
+        view?.let { view ->
+            getUserTokenUseCase.cancel()
+            getUserTokenUseCase.executeAsync(object : ResultListener<String, ErrorResponse> {
+                override fun success(data: String) {
+                    view.handleAfterCheckLogin(true)
+                }
+
+                override fun fail(error: ErrorResponse) {
+                    view.handleAfterCheckLogin(false)
+                }
+
+                override fun done() {
+                    view.hideLoading()
+                }
+
+            })
+        }
+    }
+
     override fun onDetachView() {
         getListBookRelatedUseCase.cancel()
+        getUserTokenUseCase.cancel()
         super.onDetachView()
     }
 }

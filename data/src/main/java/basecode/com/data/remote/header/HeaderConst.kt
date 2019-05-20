@@ -18,6 +18,7 @@ class HeaderConst {
         const val KEY_X_CONTENT_TYPE = "Content-Type"
         const val KEY_ACCEPT_LANGUAGE = "Accept-Language"
         const val KEY_COOKIE = "Cookie"
+        const val KEY_AUTHORIZATION  = "Authorization"
 
 
         // value

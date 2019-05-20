@@ -1,13 +1,15 @@
 package basecode.com.data.cache.pager
 
+import basecode.com.domain.extention.valueOrEmpty
+
 object ConfigUtil {
-    fun getName(): String {
+    fun getUserToken(): String {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
-        return configSaver.get(ConfigSaver.CONFIG_NAME)
+        return configSaver.get<String>(ConfigSaver.CONFIG_USER_TOKEN).valueOrEmpty()
     }
 
-    fun saveName(name: String) {
+    fun saveUserToken(userToken: String) {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
-        configSaver.save(ConfigSaver.CONFIG_NAME, name)
+        configSaver.save(ConfigSaver.CONFIG_NAME, userToken)
     }
 }

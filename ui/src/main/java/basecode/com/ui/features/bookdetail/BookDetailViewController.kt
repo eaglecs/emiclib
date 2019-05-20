@@ -21,6 +21,7 @@ import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
+import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
 import com.bluelinelabs.conductor.RouterTransaction
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View {
+
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private var isEBook = false
@@ -118,9 +120,21 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 if (isEBook) {
 
                 } else {
-
+                    presenter.getStatusLogin()
                 }
             }
+        }
+    }
+
+    override fun handleAfterCheckLogin(isLogin: Boolean) {
+        if (isLogin) {
+            if (isEBook) {
+
+            } else {
+
+            }
+        } else {
+            router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
         }
     }
 
