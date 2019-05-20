@@ -12,6 +12,7 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.books.BooksViewController
+import basecode.com.ui.features.home.HomeScreenViewController
 import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
 import basecode.com.ui.features.home.renderer.NewBookRenderer
 import basecode.com.ui.features.home.renderer.NewEBookRenderer
@@ -20,6 +21,7 @@ import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
+import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
@@ -32,6 +34,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     private val presenter: HomeContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private lateinit var rvController: RecyclerViewController
+    private var isLogin = false
 
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
@@ -48,6 +51,17 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         view.vgRefreshInfo.setOnRefreshListener {
             if (doubleTouchPrevent.check("vgRefreshInfo")) {
                 loadData()
+            }
+        }
+        view.ivLogin.setOnClickListener {
+            if (doubleTouchPrevent.check("ivLogin")) {
+                if (isLogin) {
+
+                } else {
+                    targetController?.let { targetController ->
+                        targetController.router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                }
             }
         }
     }
@@ -124,6 +138,17 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         view?.let { view ->
             view.vgRefreshInfo.isRefreshing = false
             Toasty.error(view.context, view.context.getString(R.string.msg_error_get_info)).show()
+        }
+    }
+
+    override fun handleAfterCheckLogin(isLogin: Boolean) {
+        this.isLogin = isLogin
+        view?.let { view ->
+            if (isLogin) {
+                view.ivLogin.setImageResource(R.drawable.ic_person)
+            } else {
+                view.ivLogin.setImageResource(R.drawable.ic_login)
+            }
         }
     }
 

@@ -18,14 +18,15 @@ object PresentationKoinModules {
 
     private val homeModule = module {
         factory {
-            HomePresenter(getInfoHomeUseCase = get()) as HomeContract.Presenter
+            HomePresenter(getInfoHomeUseCase = get(),
+                    getUserTokenUseCase = get()) as HomeContract.Presenter
         }
         factory {
             BooksPresenter(getListNewBookUseCase = get(),
                     getListNewEbookUseCase = get()) as BooksContract.Presenter
         }
         factory {
-            BookDetailPresenter(getListBookRelatedUseCase = get()) as BookDetailContract.Presenter
+            BookDetailPresenter(getListBookRelatedUseCase = get(), getUserTokenUseCase = get()) as BookDetailContract.Presenter
         }
         factory {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter

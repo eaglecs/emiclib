@@ -21,7 +21,7 @@ import com.bluelinelabs.conductor.support.RouterPagerAdapter
 import kotlinx.android.synthetic.main.screen_home.view.*
 import org.koin.standalone.inject
 
-class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.OnClickListener {
+class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     private var resId: Long = 0
 
 
@@ -140,8 +140,5 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle), View.On
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_home, container, false)
-    }
-
-    override fun onClick(v: View?) {
     }
 }
