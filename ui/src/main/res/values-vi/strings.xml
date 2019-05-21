@@ -22,4 +22,6 @@
     <string name="text_password">Mật khẩu</string>
     <string name="text_forgot_password">Quên mật khẩu</string>
     <string name="text_register">Đăng ký</string>
+    <string name="text_skip">Bỏ qua</string>
+    <string name="msg_error_login">Đăng nhập thất bại. Bạn làm ơn kiểm tra lại.</string>
 </resources>

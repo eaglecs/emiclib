@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_grey100"
+    android:background="#cfdeee"
     android:clickable="true"
     android:focusable="true">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_grey100"
-        android:clickable="true"
-        android:focusable="true"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -32,23 +29,32 @@
             android:layout_marginTop="@dimen/default_padding_margin_x"
             android:background="@drawable/bg_rec_line_login"
             android:hint="@string/text_user_name"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="50"
+            android:nextFocusDown="@+id/edtPassword"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin"
             android:paddingRight="@dimen/default_padding_margin"
             android:paddingBottom="@dimen/default_padding_margin" />
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edtPasswork"
+            android:id="@+id/edtPassword"
             style="@style/TextPrimarySubtitle"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding_margin"
             android:background="@drawable/bg_rec_line_login"
             android:hint="@string/text_password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLength="50"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin"
             android:paddingRight="@dimen/default_padding_margin"
-            android:paddingBottom="@dimen/default_padding_margin" />
+            android:paddingBottom="@dimen/default_padding_margin"
+            tools:text="nmnm,cnvm,nmxncmvnxcmvnm,xnvmnxm,vnmx,ncvm," />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tvForgotPass"
@@ -75,23 +81,18 @@
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tvRegister"
-        style="@style/TextPrimaryBody"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvCloseLogin"
+        style="@style/TextPrimarySubtitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginTop="@dimen/default_padding_margin_h"
-        android:paddingLeft="@dimen/default_padding_margin_huge"
-        android:paddingTop="@dimen/default_padding_margin_h"
-        android:paddingRight="@dimen/default_padding_margin_huge"
-        android:paddingBottom="@dimen/default_padding_margin_h"
-        android:text="@string/text_register"
+        android:layout_gravity="center|bottom"
+        android:gravity="center"
+        android:padding="@dimen/default_padding_margin_h"
+        android:text="@string/text_skip"
         android:textColor="@color/md_blue500" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/ivCloseLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding_margin_h"
-        app:srcCompat="@drawable/ic_back" />
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoadingLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

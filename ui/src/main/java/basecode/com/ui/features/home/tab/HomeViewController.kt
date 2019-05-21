@@ -3,6 +3,8 @@ package basecode.com.ui.features.home.tab
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
@@ -43,8 +45,16 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
         initView(view)
+        initEventBus(view)
         handleView(view)
         loadData()
+    }
+
+    private fun initEventBus(view: View) {
+        KBus.subscribe<LoginSuccessEventBus>(this) {
+            isLogin = true
+            view.ivLogin.setImageResource(R.drawable.ic_person)
+        }
     }
 
     private fun handleView(view: View) {

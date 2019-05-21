@@ -12,4 +12,14 @@ object ConfigUtil {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
         configSaver.save(ConfigSaver.CONFIG_NAME, userToken)
     }
+
+    fun saveLoginType(loginType: String) {
+        val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
+        configSaver.save(ConfigSaver.CONFIG_LOGIN_TYPE, loginType)
+    }
+
+    fun getLoginType(): String{
+        val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
+        return configSaver.get<String>(ConfigSaver.CONFIG_LOGIN_TYPE).valueOrEmpty()
+    }
 }

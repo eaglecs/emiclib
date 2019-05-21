@@ -35,5 +35,11 @@ object DomainKoinModules {
         factory {
             GetUserTokenUseCase(useCaseExecution = get(), cacheRespository = get())
         }
+        factory {
+            LoginUseCase(useCaseExecution = get(), appRepository = get())
+        }
+        factory {
+            SaveInfoLoginUseCase(useCaseExecution = get(), cacheRespository = get())
+        }
     }
 }

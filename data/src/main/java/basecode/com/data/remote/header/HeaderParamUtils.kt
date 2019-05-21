@@ -17,8 +17,9 @@ class HeaderParamUtils {
         fun getListHeader(context: Context, method: String, url: String, requestBody: String?): Map<String, String> {
             val headers = mutableMapOf<String, String>()
             val userToken = ConfigUtil.getUserToken()
+            val loginType = ConfigUtil.getLoginType()
             if (userToken.isNotEmpty()) {
-                headers[HeaderConst.KEY_AUTHORIZATION] = "bearer\n$userToken"
+                headers[HeaderConst.KEY_AUTHORIZATION] = "$loginType $userToken"
             }
             return headers
         }

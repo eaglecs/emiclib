@@ -1,9 +1,7 @@
 package basecode.com.domain.repository.network
 
-import basecode.com.domain.model.network.response.CollectionRecomand
-import basecode.com.domain.model.network.response.NewEBookResponse
-import basecode.com.domain.model.network.response.NewNewsResponse
-import basecode.com.domain.model.network.response.BookResponse
+import basecode.com.domain.model.network.request.LoginRequest
+import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -20,4 +18,5 @@ interface AppRepository {
     fun getListNewNewsObservable(numberItem: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
 
     fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>>
+    fun login(loginRequest: LoginRequest): Observable<LoginResponse>
 }

@@ -1,15 +1,17 @@
 package basecode.com.data.repositoryiml
 
 import basecode.com.data.remote.ApiService
-import basecode.com.domain.model.network.response.CollectionRecomand
-import basecode.com.domain.model.network.response.NewEBookResponse
-import basecode.com.domain.model.network.response.NewNewsResponse
-import basecode.com.domain.model.network.response.BookResponse
+import basecode.com.domain.model.network.request.LoginRequest
+import basecode.com.domain.model.network.response.*
 import basecode.com.domain.repository.network.AppRepository
 import io.reactivex.Observable
 import io.reactivex.Single
 
 class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
+    override fun login(loginRequest: LoginRequest): Observable<LoginResponse> {
+        return apiServiceApp.login(loginRequest)
+    }
+
     override fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {
         return apiServiceApp.getListBookRelated(itemId, pageIndex, pageSize)
     }

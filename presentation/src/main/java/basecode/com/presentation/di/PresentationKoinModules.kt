@@ -6,6 +6,8 @@ import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.presentation.features.home.HomePresenter
+import basecode.com.presentation.features.login.LoginContract
+import basecode.com.presentation.features.login.LoginPresenter
 import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.presentation.features.newnews.NewNewsPresenter
 import org.koin.dsl.module.Module
@@ -30,6 +32,9 @@ object PresentationKoinModules {
         }
         factory {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter
+        }
+        factory {
+            LoginPresenter(loginUseCase = get(), saveInfoLoginUseCase = get()) as LoginContract.Presenter
         }
     }
 }
