@@ -19,7 +19,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                 override fun success(data: List<BookResponse>) {
                     val lstResult = mutableListOf<BookVewModel>()
                     data.forEach { book ->
-                        val bookVewModel = BookVewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(), author = book.author.valueOrEmpty())
+                        val bookVewModel = BookVewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(),
+                                author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListBookRelatedSuccess(data = lstResult)

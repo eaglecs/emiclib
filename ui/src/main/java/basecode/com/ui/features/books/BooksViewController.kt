@@ -22,6 +22,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.layout_tab_category_book.view.*
 import kotlinx.android.synthetic.main.screen_books.view.*
 import org.koin.standalone.inject
 
@@ -111,6 +112,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
                 loadData()
             }
         }
+
     }
 
     override fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean) {

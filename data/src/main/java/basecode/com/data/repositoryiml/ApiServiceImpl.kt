@@ -49,7 +49,11 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     }
 
     override fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>> {
-        return apiServiceApp.findBook(docType, pageIndex, pageSize, searchText)
+        return if (searchText.isNotEmpty()) {
+            apiServiceApp.findBook(docType, pageIndex, pageSize, searchText)
+        } else {
+            apiServiceApp.findBook(docType, pageIndex, pageSize)
+        }
     }
 
     override fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: Int, author: Int, language: Int): Observable<List<BookResponse>> {

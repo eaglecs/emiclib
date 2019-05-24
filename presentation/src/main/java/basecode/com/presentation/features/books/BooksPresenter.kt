@@ -44,7 +44,7 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     val lstResult = mutableListOf<BookVewModel>()
                     data.forEach { newbook ->
                         val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
-                                author = newbook.author.valueOrEmpty())
+                                author = newbook.author.valueOrEmpty(), publishedYear = newbook.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)
@@ -81,7 +81,8 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     val lstResult = mutableListOf<BookVewModel>()
                     data.forEach { newbook ->
                         val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
-                                photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty())
+                                photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty(),
+                                publishedYear = newbook.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)

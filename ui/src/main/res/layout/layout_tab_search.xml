@@ -67,7 +67,7 @@
             app:srcCompat="@drawable/ic_search" />
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edtSearchPlace"
+            android:id="@+id/edtSearchBook"
             style="@style/TextPrimaryBody"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_toolbar"
         app:tabIndicatorColor="@color/md_blue700"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/md_blue600"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/md_grey700" />

@@ -31,5 +31,6 @@
     <string name="text_speak_book">Sách nói</string>
     <string name="text_movie">Phim ảnh</string>
     <string name="text_picture">Hình ảnh</string>
+    <string name="text_no_result">Không tìm thấy cuốn sách nào.</string>
 
 </resources>
