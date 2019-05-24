@@ -10,7 +10,7 @@ import io.reactivex.Observable
 
 class LoginUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<LoginRequest, LoginResponse, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(input: LoginRequest): Observable<LoginResponse> {
-        return appRepository.login(input)
+        return appRepository.login(username = input.username, password = input.password)
     }
 
     override fun createFailOutput(throwable: Throwable): ErrorResponse {

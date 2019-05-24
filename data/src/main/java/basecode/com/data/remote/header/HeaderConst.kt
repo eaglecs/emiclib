@@ -25,7 +25,7 @@ class HeaderConst {
         const val VALUE_FOODY_CLIENT_TYPE = "Android"
         const val VALUE_FOODY_CLIENT_NAME = "FoodyPOSApp_Android"
         const val VALUE_ACCEPT = "application/json"
-        const val VALUE_X_CONTENT_TYPE = "application/json"
+        const val VALUE_X_CONTENT_TYPE = "application/x-www-form-urlencoded"
 
         const val VALUE_ACCEPT_LANGUAGE = "en-us"
         const val VALUE_COOKIE = "flg=vn"

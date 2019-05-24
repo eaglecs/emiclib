@@ -150,7 +150,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     override fun showErrorGetListBookRelated() {
         activity?.let { activity ->
-            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book_related))
+            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book_related)).show()
         }
     }
 

@@ -85,7 +85,7 @@ class LoginViewController : ViewController(bundle = null), LoginContract.View {
             router.popController(this)
         } else {
             activity?.let { activity ->
-                Toasty.error(activity, activity.getString(R.string.msg_error_login))
+                Toasty.error(activity, activity.getString(R.string.msg_error_login)).show()
             }
         }
     }

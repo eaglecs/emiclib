@@ -8,8 +8,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
-    override fun login(loginRequest: LoginRequest): Observable<LoginResponse> {
-        return apiServiceApp.login(loginRequest)
+    override fun login(username: String, password: String): Observable<LoginResponse> {
+        return apiServiceApp.login(username = username, password = password)
     }
 
     override fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {

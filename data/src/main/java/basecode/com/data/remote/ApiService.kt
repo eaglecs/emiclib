@@ -4,15 +4,13 @@ import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
     //Login
+    @FormUrlEncoded
     @POST("/Api/Login")
-    fun login(@Body loginRequest: LoginRequest): Observable<LoginResponse>
+    fun login(@Field("username") username: String, @Field("password") password: String, @Field("grant_type") grantType: String = "password"): Observable<LoginResponse>
     //4 GetListNewItems
     @GET("/api/Item/GetListNewItems")
     fun getListNewItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<BookResponse>>

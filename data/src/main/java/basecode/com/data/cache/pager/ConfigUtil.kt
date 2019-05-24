@@ -10,7 +10,7 @@ object ConfigUtil {
 
     fun saveUserToken(userToken: String) {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
-        configSaver.save(ConfigSaver.CONFIG_NAME, userToken)
+        configSaver.save(ConfigSaver.CONFIG_USER_TOKEN, userToken)
     }
 
     fun saveLoginType(loginType: String) {
