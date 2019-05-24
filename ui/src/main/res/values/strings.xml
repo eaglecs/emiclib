@@ -24,5 +24,12 @@
     <string name="text_register">Đăng ký</string>
     <string name="text_skip">Bỏ qua</string>
     <string name="msg_error_login">Đăng nhập thất bại. Bạn làm ơn kiểm tra lại.</string>
+    <string name="text_search">Tìm sách…</string>
+    <string name="text_search_title">Tìm kiếm</string>
+    <string name="text_book">Sách</string>
+    <string name="text_ebook">Sách điện tử</string>
+    <string name="text_speak_book">Sách nói</string>
+    <string name="text_movie">Phim ảnh</string>
+    <string name="text_picture">Hình ảnh</string>
 
 </resources>

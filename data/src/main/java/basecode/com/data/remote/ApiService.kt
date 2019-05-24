@@ -25,6 +25,15 @@ interface ApiService {
     @GET("/api/Item/GetRelationItems")
     fun getListBookRelated(@Query("itemId") itemId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<BookResponse>>
 
+    //7 Find Book
+    @GET("/api/Item/Search")
+    fun findBook(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String): Observable<List<BookResponse>>
+
+    //8 Find Book Advance
+    @GET("/api/Item/ SearchAdvance")
+    fun findBookAdvance(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String,
+                        @Query("title") title: Int, @Query("author") author: Int, @Query("language") language: Int) : Observable<List<BookResponse>>
+
     //13 GetCollectionRecomand
     @GET("/api/Cat/GetCollectionRecomand")
     fun getCollectionRecomand(): Single<List<CollectionRecomand>>

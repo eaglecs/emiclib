@@ -1,12 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.AppCompatTextView
-        style="@style/TextPrimarySubtitle"
-        android:text="Coming soon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:background="@color/md_grey100"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_padding_margin">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivScanQRCode"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/default_padding_margin"
+            android:tint="@color/md_blue500"
+            app:srcCompat="@drawable/ic_qr_code" />
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextPrimaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/text_search_title"
+            android:textColor="@color/md_blue500"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivLogin"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/default_padding_margin"
+            android:tint="@color/md_blue500"
+            tools:srcCompat="@drawable/ic_filter" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey200" />
+
+    <LinearLayout
+        android:id="@+id/ChooseDestination"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_toolbar"
+        android:layout_margin="@dimen/default_padding_margin"
+        android:background="@drawable/bg_corner_blue_grey"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivSearchPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/default_padding_margin"
+            app:srcCompat="@drawable/ic_search" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtSearchPlace"
+            style="@style/TextPrimaryBody"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/text_search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/btnClearTextSearchPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding_margin_small"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/default_padding_margin"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_close"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tlCategoryBook"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_toolbar"
+        app:tabIndicatorColor="@color/md_blue700"
+        app:tabSelectedTextColor="@color/md_blue600"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabTextColor="@color/md_grey700" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpBook"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

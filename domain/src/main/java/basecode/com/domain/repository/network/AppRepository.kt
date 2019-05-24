@@ -19,4 +19,6 @@ interface AppRepository {
 
     fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>>
     fun login(loginRequest: LoginRequest): Observable<LoginResponse>
+    fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
+    fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: Int, author: Int, language: Int): Observable<List<BookResponse>>
 }
