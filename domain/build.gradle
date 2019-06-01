@@ -7,6 +7,7 @@ targetCompatibility = 1.7
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/skyepub.jar')
     // Koin DI for Kotlin
     implementation 'org.koin:koin-core:1.0.1'
     //RxKotlin

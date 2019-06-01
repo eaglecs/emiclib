@@ -9,6 +9,7 @@ import basecode.com.data.di.DataKoinModules
 import basecode.com.domain.di.DomainKoinModules
 import basecode.com.presentation.di.PresentationKoinModules
 import basecode.com.ui.di.UIKoinModules
+import basecode.com.domain.model.epub.SkySetting
 import com.franmontiel.localechanger.LocaleChanger
 import io.paperdb.Paper
 import org.koin.dsl.module.Module
@@ -17,6 +18,18 @@ import timber.log.Timber
 import java.util.*
 
 class App : MultiDexApplication() {
+//    var message = "We are the world."
+//    var bis: ArrayList<BookInformation> = arrayListOf()
+//    var setting: SkySetting? = null
+//    var sd: SkyDatabase? = null
+//    var sortType = 0
+//    var keyManager: SkyKeyManager? = null
+
+    fun getApplicationName(): String {
+        val stringId = this.applicationInfo.labelRes
+        return this.getString(stringId)
+    }
+
     private val SUPPORTED_LOCALES = Arrays.asList(
             LOCALE_US,
             LOCALE_VN
@@ -42,6 +55,11 @@ class App : MultiDexApplication() {
         initLogger()
         initChangeLanguge()
         initLogActivity()
+
+        val appName = this.getApplicationName()
+        if (SkySetting.getStorageDirectory() == null) {
+            SkySetting.setStorageDirectory(filesDir.absolutePath, appName)
+        }
     }
 
     private fun initLogActivity() {

@@ -32,5 +32,15 @@
     <string name="text_movie">Phim ảnh</string>
     <string name="text_picture">Hình ảnh</string>
     <string name="text_no_result">Không tìm thấy cuốn sách nào.</string>
+    <string name="searchhint">Điền từ để tìm</string>
+    <string name="cancel">Hủy</string>
+    <string name="searchmore">Tìm Thêm</string>
+    <string name="searchfound">Tìm</string>
+    <string name="searchfinished">Tìm kiếm kết thúc</string>
+    <string name="contents" translatable="false">Nội dung</string>
+    <string name="chara" translatable="false">A</string>
+    <string name="bookmark" translatable="false">đánh dấu</string>
+    <string name="highlight" translatable="false">tô đậm</string>
+    <string name="delete" translatable="false">xóa</string>
 
 </resources>

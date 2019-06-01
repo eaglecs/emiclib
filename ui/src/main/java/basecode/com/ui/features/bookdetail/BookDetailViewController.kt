@@ -1,6 +1,10 @@
 package basecode.com.ui.features.bookdetail
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +26,7 @@ import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
+import basecode.com.ui.features.readbook.test.BookViewActivity
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
 import com.bluelinelabs.conductor.RouterTransaction
@@ -40,6 +45,17 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var titleBook = ""
     private var author = ""
     private lateinit var rvController: RecyclerViewController
+    private val mConnection: ServiceConnection  = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            if(service is LocalBinder){
+
+            }
+        }
+
+    }
 
     object BundleOptions {
         var Bundle.isEBook by BundleExtraBoolean("BooksViewController.isEBook")
@@ -118,7 +134,12 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         view.tvHandleBook.setOnClickListener {
             if (doubleTouchPrevent.check("tvHandleBook")) {
                 if (isEBook) {
+                    activity?.let { activity ->
 
+
+                        val intent = Intent(activity, BookViewActivity::class.java)
+                        activity.startActivity(intent)
+                    }
                 } else {
                     presenter.getStatusLogin()
                 }

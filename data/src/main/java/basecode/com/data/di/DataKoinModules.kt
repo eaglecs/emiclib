@@ -1,13 +1,17 @@
 package basecode.com.data.di
 
 import basecode.com.data.BuildConfig
+import basecode.com.data.epub.SkyDatabase
+import basecode.com.data.epub.SkyDatabaseImpl
 import basecode.com.data.remote.ApiService
 import basecode.com.data.remote.HeaderInterceptor
 import basecode.com.data.repositoryiml.ApiServiceImpl
 import basecode.com.data.repositoryiml.CacheServiceImpl
 import basecode.com.domain.repository.CacheRespository
+import basecode.com.domain.repository.epub.SkyDatabaseRepository
 import basecode.com.domain.repository.network.AppRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.skytree.epub.SkyKeyManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.Module
@@ -20,7 +24,21 @@ import java.util.concurrent.TimeUnit
 object DataKoinModules {
     @JvmStatic
     fun modules(): List<Module> {
-        return listOf(remoteModule)
+        return listOf(remoteModule, epubModule)
+    }
+
+    private val epubModule = module {
+        single {
+            SkyDatabase(get())
+        }
+
+        single {
+            SkyKeyManager("A3UBZzJNCoXmXQlBWD4xNo", "zfZl40AQXu8xHTGKMRwG69")
+        }
+
+        single {
+            SkyDatabaseImpl(sd = get()) as SkyDatabaseRepository
+        }
     }
 
     private val remoteModule = module {

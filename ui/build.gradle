@@ -71,12 +71,15 @@ android {
         }
     }
 
+    useLibrary 'org.apache.http.legacy'
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':presentation')
     implementation project(':domain')
+    implementation files('libs/skyepub.jar')
 
     //Support
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
