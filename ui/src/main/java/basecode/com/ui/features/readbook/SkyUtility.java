@@ -1,14 +1,17 @@
-package basecode.com.ui.features.readbook.test;
+package basecode.com.ui.features.readbook;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +38,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+
+import basecode.com.domain.model.epub.SkySetting;
 
 public class SkyUtility {
 	Context context;
@@ -325,72 +330,72 @@ public class SkyUtility {
 	
 
 	
-//	public boolean makeDirectory(String dirName) {
-//		boolean res;
-//		String filePath = new String(SkySetting.getStorageDirectory() + "/"+dirName);
-//		debug(filePath);
-//		File file = new File(filePath);
-//		if (!file.exists()) {
-//			res = file.mkdirs();
-//		}else {
-//			res = false;
-//		}
-//		return res;
-//	}
-//
-//	public void copyImageToDevice(String fileName) {
-//		try
-//		{
-//			String path = SkySetting.getStorageDirectory() + "/images/"+fileName;
-//			File file = new File(path);
-//			if (file.exists()) return;
-//			InputStream localInputStream = context.getAssets().open("images/"+fileName);
-//			FileOutputStream localFileOutputStream = new FileOutputStream(SkySetting.getStorageDirectory() + "/images/"+fileName);
-//
-//			byte[] arrayOfByte = new byte[1024];
-//			int offset;
-//			while ((offset = localInputStream.read(arrayOfByte))>0)
-//			{
-//				localFileOutputStream.write(arrayOfByte, 0, offset);
-//			}
-//			localFileOutputStream.close();
-//			localInputStream.close();
-//			Log.d(TAG, fileName+" copied to phone");
-//		}
-//		catch (IOException localIOException)
-//		{
-//			localIOException.printStackTrace();
-//			Log.d(TAG, "failed to copy");
-//			return;
-//		}
-//	}
-//
-//	public void copyFontToDevice(String fileName) {
-//		try
-//		{
-//			String path = SkySetting.getStorageDirectory()+ "/books/fonts/"+fileName;
-//			File file = new File(path);
-//			if (file.exists()) return;
-//			InputStream localInputStream = context.getAssets().open("fonts/"+fileName);
-//			FileOutputStream localFileOutputStream = new FileOutputStream(SkySetting.getStorageDirectory() + "/books/fonts/"+fileName);
-//
-//			byte[] arrayOfByte = new byte[1024];
-//			int offset;
-//			while ((offset = localInputStream.read(arrayOfByte))>0)
-//			{
-//				localFileOutputStream.write(arrayOfByte, 0, offset);
-//			}
-//			localFileOutputStream.close();
-//			localInputStream.close();
-//			Log.d(TAG, fileName+" copied to phone");
-//		}
-//		catch (IOException localIOException)
-//		{
-//			localIOException.printStackTrace();
-//			Log.d(TAG, "failed to copy");
-//			return;
-//		}
-//	}
+	public boolean makeDirectory(String dirName) {
+		boolean res;		
+		String filePath = new String(SkySetting.getStorageDirectory() + "/"+dirName);
+		debug(filePath);
+		File file = new File(filePath);
+		if (!file.exists()) {
+			res = file.mkdirs();
+		}else {
+			res = false;		
+		}
+		return res;	
+	}
+	
+	public void copyImageToDevice(String fileName) {
+		try
+		{
+			String path = SkySetting.getStorageDirectory() + "/images/"+fileName;
+			File file = new File(path);
+			if (file.exists()) return;
+			InputStream localInputStream = context.getAssets().open("images/"+fileName);
+			FileOutputStream localFileOutputStream = new FileOutputStream(SkySetting.getStorageDirectory() + "/images/"+fileName);
+
+			byte[] arrayOfByte = new byte[1024];
+			int offset;
+			while ((offset = localInputStream.read(arrayOfByte))>0)
+			{
+				localFileOutputStream.write(arrayOfByte, 0, offset);	              
+			}
+			localFileOutputStream.close();
+			localInputStream.close();
+			Log.d(TAG, fileName+" copied to phone");
+		}
+		catch (IOException localIOException)
+		{
+			localIOException.printStackTrace();
+			Log.d(TAG, "failed to copy");
+			return;
+		}
+	}
+	
+	public void copyFontToDevice(String fileName) {
+		try
+		{
+			String path = SkySetting.getStorageDirectory()+ "/books/fonts/"+fileName;
+			File file = new File(path);
+			if (file.exists()) return;
+			InputStream localInputStream = context.getAssets().open("fonts/"+fileName);
+			FileOutputStream localFileOutputStream = new FileOutputStream(SkySetting.getStorageDirectory() + "/books/fonts/"+fileName);
+
+			byte[] arrayOfByte = new byte[1024];
+			int offset;
+			while ((offset = localInputStream.read(arrayOfByte))>0)
+			{
+				localFileOutputStream.write(arrayOfByte, 0, offset);	              
+			}
+			localFileOutputStream.close();
+			localInputStream.close();
+			Log.d(TAG, fileName+" copied to phone");
+		}
+		catch (IOException localIOException)
+		{
+			localIOException.printStackTrace();
+			Log.d(TAG, "failed to copy");
+			return;
+		}
+	}
 	
     public static String getLastPathComponent(String filePath) {
         String[] segments = filePath.split("/");
@@ -421,66 +426,66 @@ public class SkyUtility {
 	}
 
 	
-//	public void makeSetup() {
-//		if (this.isSetup()) return;
-//
-//		if (!this.makeDirectory("scripts")) {
-//        	debug("faild to make scripts directory");
-//        }
-//
-//        if (!this.makeDirectory("images")) {
-//        	debug("faild to make images directory");
-//        }
-//
-//        if (!this.makeDirectory("covers")) {
-//        	debug("faild to make covers directory");
-//        }
-//
-//        if (!this.makeDirectory("caches")) {
-//        	debug("faild to make caches directory");
-//        }
-//
-//        copyImageToDevice("PagesCenter.png");
-//        copyImageToDevice("PagesCenter1.png");
-//        copyImageToDevice("PagesCenter2.png");
-//        copyImageToDevice("PagesStack.png");
-//
-//        copyImageToDevice("Phone-Landscape-White.png");
-//        copyImageToDevice("Phone-Landscape-Double-White.png");
-//        copyImageToDevice("Phone-Portrait-White.png");
-//        copyImageToDevice("phone_portrait.png");
-//
-//        copyImageToDevice("Phone-Landscape-Brown.png");
-//        copyImageToDevice("Phone-Landscape-Double-Brown.png");
-//        copyImageToDevice("Phone-Portrait-Brown.png");
-//
-//        copyImageToDevice("Phone-Landscape-Black.png");
-//        copyImageToDevice("Phone-Landscape-Double-Black.png");
-//        copyImageToDevice("Phone-Portrait-Black.png");
-//
-//        copyImageToDevice("Phone-Landscape-Alpha.png");
-//        copyImageToDevice("Phone-Landscape-Double-Alpha.png");
-//        copyImageToDevice("Phone-Portrait-Alpha.png");
-//
-//
-//        if (!this.makeDirectory("downloads")) {
-//        	debug("faild to make downloads directory");
-//        }
-////
-//        if (!this.makeDirectory("books")) {
-//        	debug("faild to make books directory");
-//        }
-//
-//        if (!this.makeDirectory("books/fonts")) {
-//        	debug("faild to make fonts directory");
-//        }
-//
-//        SharedPreferences pref = this.context.getSharedPreferences("EPubTest",0);
-//        SharedPreferences.Editor edit = pref.edit();
-//
-//        edit.putBoolean("isSetup", true);
-//        edit.commit();
-//	}
+	public void makeSetup() {
+		if (this.isSetup()) return;
+
+		if (!this.makeDirectory("scripts")) {
+        	debug("faild to make scripts directory");
+        }
+        
+        if (!this.makeDirectory("images")) {
+        	debug("faild to make images directory");
+        }
+        
+        if (!this.makeDirectory("covers")) {
+        	debug("faild to make covers directory");
+        }
+        
+        if (!this.makeDirectory("caches")) {
+        	debug("faild to make caches directory");
+        }
+        
+        copyImageToDevice("PagesCenter.png");
+        copyImageToDevice("PagesCenter1.png");
+        copyImageToDevice("PagesCenter2.png");
+        copyImageToDevice("PagesStack.png");
+
+        copyImageToDevice("Phone-Landscape-White.png");
+        copyImageToDevice("Phone-Landscape-Double-White.png");
+        copyImageToDevice("Phone-Portrait-White.png");
+        copyImageToDevice("phone_portrait.png");
+
+        copyImageToDevice("Phone-Landscape-Brown.png");
+        copyImageToDevice("Phone-Landscape-Double-Brown.png");
+        copyImageToDevice("Phone-Portrait-Brown.png");
+
+        copyImageToDevice("Phone-Landscape-Black.png");
+        copyImageToDevice("Phone-Landscape-Double-Black.png");
+        copyImageToDevice("Phone-Portrait-Black.png");
+
+        copyImageToDevice("Phone-Landscape-Alpha.png");
+        copyImageToDevice("Phone-Landscape-Double-Alpha.png");
+        copyImageToDevice("Phone-Portrait-Alpha.png");
+
+        
+        if (!this.makeDirectory("downloads")) {
+        	debug("faild to make downloads directory");
+        }
+//        
+        if (!this.makeDirectory("books")) {
+        	debug("faild to make books directory");
+        }
+        
+        if (!this.makeDirectory("books/fonts")) {
+        	debug("faild to make fonts directory");
+        }
+
+        SharedPreferences pref = this.context.getSharedPreferences("EPubTest",0);
+        SharedPreferences.Editor edit = pref.edit();
+        
+        edit.putBoolean("isSetup", true);        
+        edit.commit();
+	}
 	
 	public static void DownloadFileFromUrl(String URL, String fileName) {
 		try {
@@ -544,4 +549,43 @@ public class SkyUtility {
 	}
 }
 
+
+class SkyDrawable extends ShapeDrawable {
+    private final Paint fillpaint, strokepaint;
+    public SkyDrawable(Shape s, int fillColor, int strokeColor, int strokeWidth) {
+        super(s);
+        fillpaint = new Paint(this.getPaint());
+        fillpaint.setColor(fillColor);
+        strokepaint = new Paint(fillpaint);
+        strokepaint.setStyle(Paint.Style.STROKE);
+        strokepaint.setStrokeWidth(strokeWidth);
+        strokepaint.setColor(strokeColor);
+    }
+ 
+    @Override
+    protected void onDraw(Shape shape, Canvas canvas, Paint paint) {
+        shape.draw(canvas, fillpaint);
+        shape.draw(canvas, strokepaint);
+    }
+}
+
+class CustomFont {
+	public String fontFaceName;
+	public String fontFileName;
+
+	CustomFont(String faceName, String fileName) {
+		this.fontFaceName = faceName;
+		this.fontFileName = fileName;
+	}
+	
+	public String getFullName() {
+		String fullName = "";
+		if (fontFileName==null || fontFileName.isEmpty()) {
+			fullName = this.fontFaceName;
+		}else {
+			fullName = this.fontFaceName+"!!!/fonts/"+this.fontFileName;
+		}
+		return fullName;	
+	}
+}
 

@@ -91,7 +91,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
             rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
                             author = bookItem.author)
                     targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }

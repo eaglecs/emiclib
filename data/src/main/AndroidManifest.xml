@@ -1,8 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="basecode.com.data">
-    <application>
-        <service
-            android:name=".epub.LocalService"
-            android:enabled="true"/>
-    </application>
-</manifest>
+<manifest package="basecode.com.data" />

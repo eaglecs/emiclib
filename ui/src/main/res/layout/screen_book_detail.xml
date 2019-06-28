@@ -57,8 +57,8 @@
                     android:layout_width="150dp"
                     android:layout_height="180dp"
                     android:adjustViewBounds="true"
-                    tools:background="@color/md_grey300"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    tools:background="@color/md_grey300" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -120,6 +120,40 @@
                 android:id="@+id/rvBookRelated"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvProcessDownloadEBook"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_black"
+                tools:text="80/100" />
+
+            <ProgressBar
+                android:id="@+id/pbDownloadEBook"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_padding_margin"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/default_padding_margin_huge"
+                android:layout_marginTop="@dimen/default_padding_margin"
+                android:layout_marginRight="@dimen/default_padding_margin_huge"
+                android:layout_marginBottom="@dimen/default_padding_margin_small"
+                android:indeterminate="false"
+                android:max="100"
+                android:maxHeight="@dimen/default_padding_margin_small"
+                android:minHeight="@dimen/default_padding_margin_small"
+                android:progress="80"
+                android:progressDrawable="@drawable/progress_limit"
+                android:secondaryProgress="100" />
         </LinearLayout>
 
         <basecode.com.ui.base.loading.LoadingLayout

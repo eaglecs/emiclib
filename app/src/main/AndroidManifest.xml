@@ -31,9 +31,12 @@
         </activity>
 
         <activity
-            android:name="basecode.com.ui.features.readbook.test.BookViewActivity"
+            android:name="basecode.com.ui.features.readbook.BookViewActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="BookView" />
+        <service
+            android:name="basecode.com.ui.features.readbook.LocalService"
+            android:enabled="true" />
 
     </application>
 
