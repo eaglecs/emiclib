@@ -24,6 +24,8 @@ import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.extension.view.gone
+import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
@@ -94,6 +96,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun initPostCreateView(view: View) {
+        presenter.attachView(this)
         doBindService()
         initView(view)
         handleOnClick(view)
@@ -148,14 +151,21 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         view.tvHandleBook.setOnClickListener {
             if (doubleTouchPrevent.check("tvHandleBook")) {
                 if (isEBook) {
-                    activity?.let { activity ->
-                        val intent = Intent(activity, BookViewActivity::class.java)
-                        activity.startActivity(intent)
-                    }
+                    presenter.getBookInfo(bookId)
                 } else {
                     presenter.getStatusLogin()
                 }
             }
+        }
+    }
+
+    override fun getBookInfoSuccess(path: String) {
+        ls?.startDownload(path, "", titleBook, author)
+    }
+
+    override fun getBookInfoFail(msgError: String) {
+        activity?.let { activity ->
+            Toasty.error(activity, msgError).show()
         }
     }
 
@@ -227,6 +237,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     private fun refreshPieView(bookCode: Int, percent: Double) {
         view?.let { view ->
+            if (percent < 100) {
+                view.pbDownloadEBook.visible()
+                view.tvProcessDownloadEBook.visible()
+            } else {
+                view.pbDownloadEBook.gone()
+                view.tvProcessDownloadEBook.gone()
+            }
             val percentInt = percent.toInt()
             view.pbDownloadEBook.progress = percentInt
             view.tvProcessDownloadEBook.text = "$percentInt/100"

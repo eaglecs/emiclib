@@ -10,10 +10,13 @@ class BookDetailContract {
         fun getListBookRelatedSuccess(data: List<BookVewModel>)
         fun showErrorGetListBookRelated()
         fun handleAfterCheckLogin(isLogin: Boolean)
+        fun getBookInfoSuccess(path: String)
+        fun getBookInfoFail(msgError: String)
     }
 
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun getListBookRelated(bookId: Int)
         abstract fun getStatusLogin()
+        abstract fun getBookInfo(bookId: Int)
     }
 }

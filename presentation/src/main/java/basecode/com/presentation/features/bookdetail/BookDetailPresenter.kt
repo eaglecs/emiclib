@@ -2,15 +2,18 @@ package basecode.com.presentation.features.bookdetail
 
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.features.GetInfoBookUseCase
 import basecode.com.domain.features.GetListBookRelatedUseCase
 import basecode.com.domain.features.GetUserTokenUseCase
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
+import basecode.com.domain.model.network.response.InfoBookResponse
 import basecode.com.domain.usecase.base.ResultListener
 import basecode.com.presentation.features.books.BookVewModel
 
 class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
-                          private val getUserTokenUseCase: GetUserTokenUseCase) : BookDetailContract.Presenter() {
+                          private val getUserTokenUseCase: GetUserTokenUseCase,
+                          private val getInfoBookUseCase: GetInfoBookUseCase) : BookDetailContract.Presenter() {
     override fun getListBookRelated(bookId: Int) {
         view?.let { view ->
             view.showLoading()
@@ -57,9 +60,37 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         }
     }
 
+    override fun getBookInfo(bookId: Int) {
+        view?.let { view ->
+            view.showLoading()
+            getInfoBookUseCase.cancel()
+            getInfoBookUseCase.executeAsync(object : ResultListener<InfoBookResponse, ErrorResponse> {
+                override fun success(data: InfoBookResponse) {
+                    var path = ""
+                    data.lstPath?.let { lstPath ->
+                        if (lstPath.isNotEmpty()) {
+                            path = lstPath.first().valueOrEmpty()
+                        }
+                    }
+                    view.getBookInfoSuccess(path)
+                }
+
+                override fun fail(error: ErrorResponse) {
+                    view.getBookInfoFail(error.msgError)
+                }
+
+                override fun done() {
+                    view.hideLoading()
+                }
+
+            }, bookId)
+        }
+    }
+
     override fun onDetachView() {
         getListBookRelatedUseCase.cancel()
         getUserTokenUseCase.cancel()
+        getInfoBookUseCase.cancel()
         super.onDetachView()
     }
 }
