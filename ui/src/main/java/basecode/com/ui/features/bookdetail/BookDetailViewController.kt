@@ -1,11 +1,14 @@
 package basecode.com.ui.features.bookdetail
 
+import android.Manifest
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Message
+import android.support.v4.app.ActivityCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,8 +99,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun initPostCreateView(view: View) {
-        presenter.attachView(this)
         doBindService()
+        val filter = IntentFilter(PROGRESS_ACTION)
+        activity?.registerReceiver(receiver, filter)
+        presenter.attachView(this)
         initView(view)
         handleOnClick(view)
         presenter.getListBookRelated(bookId)
@@ -159,8 +164,34 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
+    private val permissionsCode = 1000
+    private var pathBook = ""
     override fun getBookInfoSuccess(path: String) {
-        ls?.startDownload(path, "", titleBook, author)
+        pathBook = path
+        activity?.let { activity ->
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                ls?.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+            } else {
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), permissionsCode)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == permissionsCode) {
+            if (permissions.isNotEmpty() && grantResults.isNotEmpty() && permissions.size == grantResults.size) {
+                var isGrantAll = true
+                loop@ for (i in 0 until grantResults.size) {
+                    val grantResult = grantResults[i]
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        isGrantAll = false
+                        break@loop
+                    }
+                }
+                ls?.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+            }
+        }
     }
 
     override fun getBookInfoFail(msgError: String) {
@@ -210,8 +241,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    internal val PROGRESS_ACTION = "com.skytree.android.intent.action.PROGRESS"
-
+    private val PROGRESS_ACTION = "com.skytree.android.intent.action.PROGRESS"
     inner class SkyReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == PROGRESS_ACTION) {
@@ -250,28 +280,12 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    private var receiver: SkyReceiver? = null
-
-    override fun onActivityResumed(activity: Activity) {
-        super.onActivityResumed(activity)
-        val filter = IntentFilter(PROGRESS_ACTION)
-        receiver = SkyReceiver()
-        activity.registerReceiver(receiver, filter)
-    }
-
-    override fun onActivityPaused(activity: Activity) {
-        super.onActivityPaused(activity)
-        receiver?.let {
-            activity.unregisterReceiver(receiver)
-        }
-    }
+    private var receiver: SkyReceiver = SkyReceiver()
 
 
     override fun onDestroyView(view: View) {
-        presenter.detachView()
-        activity?.let { activity ->
-            activity.unbindService(mConnection)
-        }
+        activity?.unbindService(mConnection)
+        activity?.unregisterReceiver(receiver)
         super.onDestroyView(view)
     }
 }
