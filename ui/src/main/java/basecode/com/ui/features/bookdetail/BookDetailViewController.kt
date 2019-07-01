@@ -4,10 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
-import android.os.Bundle
-import android.os.Handler
-import android.os.IBinder
-import android.os.Message
+import android.os.*
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -34,13 +32,18 @@ import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.readbook.BookViewActivity
 import basecode.com.ui.features.readbook.LocalService
+import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
+import basecode.com.ui.util.PermissionUtil
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
+import android.provider.Settings.System.canWrite
+import android.support.annotation.RequiresApi
+
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View {
 
@@ -166,14 +169,63 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     private val permissionsCode = 1000
     private var pathBook = ""
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun getBookInfoSuccess(path: String) {
         pathBook = path
-        activity?.let { activity ->
-            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                ls?.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+        if (PermissionUtil.hasPermissions(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            val settingsCanWrite = Settings.System.canWrite(activity)
+            if (settingsCanWrite) {
+                readBook()
             } else {
-                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), permissionsCode)
+                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                startActivity(intent)
             }
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), permissionsCode)
+        }
+    }
+
+    private fun readBook() {
+        activity?.let { activity ->
+            ls?.let {
+                if (it.isDownloaded("http://scs.skyepub.net/samples/Doctor.epub")) {
+                    val skyDatabase = SkyDatabase(activity)
+                    val fetchBookInformations = skyDatabase.fetchBookInformations(0, "")
+                    val setting = skyDatabase.fetchSetting()
+                    fetchBookInformations?.let { lstBook ->
+                        if (lstBook.isNotEmpty()) {
+                            val bi = lstBook.first()
+                            bi?.let {
+                                if (!bi.isDownloaded) return
+                                val intent = Intent(activity, BookViewActivity::class.java)
+                                intent.putExtra("BOOKCODE", bi.bookCode)
+                                intent.putExtra("TITLE", bi.title)
+                                intent.putExtra("AUTHOR", bi.creator)
+                                intent.putExtra("BOOKNAME", bi.fileName)
+                                if (bi.position < 0.0f) {
+                                    intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
+                                } else {
+                                    intent.putExtra("POSITION", bi.position)
+                                }
+                                intent.putExtra("THEMEINDEX", setting.theme)
+                                intent.putExtra("DOUBLEPAGED", setting.doublePaged)
+                                intent.putExtra("transitionType", setting.transitionType)
+                                intent.putExtra("GLOBALPAGINATION", setting.globalPagination)
+                                intent.putExtra("RTL", bi.isRTL)
+                                intent.putExtra("VERTICALWRITING", bi.isVerticalWriting)
+
+                                intent.putExtra("SPREAD", bi.spread)
+                                intent.putExtra("ORIENTATION", bi.orientation)
+
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                } else {
+                    it.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+                }
+            }
+
         }
     }
 
@@ -189,9 +241,12 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                         break@loop
                     }
                 }
-                ls?.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+                if (isGrantAll) {
+                    readBook()
+                }
             }
         }
+
     }
 
     override fun getBookInfoFail(msgError: String) {
@@ -242,6 +297,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private val PROGRESS_ACTION = "com.skytree.android.intent.action.PROGRESS"
+
     inner class SkyReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == PROGRESS_ACTION) {
