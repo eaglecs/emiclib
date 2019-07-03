@@ -28,6 +28,7 @@
         android:hapticFeedbackEnabled="false"
         android:hardwareAccelerated="true"
         tools:node="replace">
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity android:name="basecode.com.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

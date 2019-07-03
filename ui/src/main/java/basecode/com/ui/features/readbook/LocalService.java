@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import basecode.com.domain.eventbus.KBus;
+import basecode.com.domain.model.bus.DownloadFailEventBus;
 import basecode.com.domain.model.epub.SkySetting;
 
 public class LocalService extends Service {
@@ -169,9 +171,11 @@ public class LocalService extends Service {
         intent.putExtra("BYTES_DONWLOADED", bytes_downloaded);
         intent.putExtra("BYTES_TOTAL", bytes_total);
         intent.putExtra("PERCENT", percent);
-
-//		debug("Sender   BookCode:"+bookCode+" "+percent);
         this.sendBroadcast(intent);
+    }
+
+    public void sendDownLoadFail(String reasonText) {
+        KBus.INSTANCE.post(new DownloadFailEventBus(reasonText));
     }
 
     public void sendReload() {
@@ -304,9 +308,12 @@ public class LocalService extends Service {
         }
 
         Handler cancelHandler = new Handler() {
-            public void handleMessage(Message m) {
+            public void handleMessage(Message msg) {
+                String reasonText = msg.getData().getString("REASON_ERROR");
                 deleteBook(bookCode);
                 reloadBookInformations();
+                sendDownLoadFail(reasonText);
+
             }
         };
 
@@ -317,10 +324,13 @@ public class LocalService extends Service {
             q.setFilterById(downloadId);
             Cursor cursor = downloadManager.query(q);
             cursor.moveToFirst();
-            boolean ret = checkStatus(cursor);
-            if (ret == false) {
+            ResultDownload resultDownload = checkStatus(cursor);
+            if (!resultDownload.ret) {
                 cancel();
                 Message msg = new Message();
+                Bundle b = new Bundle();
+                b.putString("REASON_ERROR", resultDownload.reasonText);
+                msg.setData(b);
                 cancelHandler.sendMessage(msg);
             }
             int bytes_downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
@@ -504,7 +514,7 @@ public class LocalService extends Service {
         this.reloadBookInformations();
     }
 
-    private boolean checkStatus(Cursor cursor) {
+    private ResultDownload checkStatus(Cursor cursor) {
         boolean ret = true;
         //column for status
         int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
@@ -514,7 +524,7 @@ public class LocalService extends Service {
         int reason = cursor.getInt(columnReason);
 
         String statusText = "";
-        String reasonText = "";
+        String reasonText = reason + "";
 
         switch (status) {
             case DownloadManager.STATUS_FAILED:
@@ -579,7 +589,18 @@ public class LocalService extends Service {
         }
 
 //		debug(statusText+"  "+reasonText);
-        return ret;
+        return new ResultDownload(ret, reasonText);
+    }
+
+    class ResultDownload {
+        Boolean ret;
+        String reasonText;
+
+        ResultDownload(Boolean ret, String reasonText) {
+            this.ret = ret;
+            this.reasonText = reasonText;
+
+        }
     }
 
 

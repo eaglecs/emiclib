@@ -1,6 +1,5 @@
 package basecode.com.data.remote
 
-import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single

@@ -1,18 +1,19 @@
 package basecode.com.ui.features.bookdetail
 
 import android.Manifest
-import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.*
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
+import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
+import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.ui.R
@@ -41,8 +42,6 @@ import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
-import android.provider.Settings.System.canWrite
-import android.support.annotation.RequiresApi
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View {
@@ -55,6 +54,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var titleBook = ""
     private var author = ""
     internal var isBound = false
+    private var receiver: SkyReceiver = SkyReceiver()
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -107,8 +107,20 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         activity?.registerReceiver(receiver, filter)
         presenter.attachView(this)
         initView(view)
+
+        initEventBus(view)
         handleOnClick(view)
         presenter.getListBookRelated(bookId)
+    }
+
+    private fun initEventBus(view: View) {
+        KBus.subscribe<DownloadFailEventBus>(this) { reasonText ->
+            view.vgLoadingDownloadBook?.gone()
+            activity?.let { activity ->
+                isLoadingFinished = true
+                Toasty.error(activity, "${activity.resources.getString(R.string.msg_error_download_book)} ${reasonText.reasonText}").show()
+            }
+        }
     }
 
     private fun doBindService() {
@@ -188,7 +200,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private fun readBook() {
         activity?.let { activity ->
             ls?.let {
-                if (it.isDownloaded("http://scs.skyepub.net/samples/Doctor.epub")) {
+                if (it.isDownloaded(pathBook)) {
                     val skyDatabase = SkyDatabase(activity)
                     val fetchBookInformations = skyDatabase.fetchBookInformations(0, "")
                     val setting = skyDatabase.fetchSetting()
@@ -222,11 +234,35 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                         }
                     }
                 } else {
-                    it.startDownload("http://scs.skyepub.net/samples/Doctor.epub", "", titleBook, author)
+                    isLoadingFinished = false
+                    updateProgress()
+                    it.startDownload(pathBook, "", titleBook, author)
                 }
             }
 
         }
+    }
+
+    var percent = 0
+    var isLoadingFinished = false
+
+    private fun updateProgress() {
+        view?.let { view ->
+            view.vgLoadingDownloadBook.visible()
+        }
+        if (isLoadingFinished) {
+            view?.vgLoadingDownloadBook?.gone()
+            return
+        }
+        percent += if (percent < 60) {
+            2
+        } else if (percent < 99) {
+            1
+        } else {
+            return
+        }
+        refreshPieView(percent)
+        Handler().postDelayed({ updateProgress() }, 1000)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -258,9 +294,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     override fun handleAfterCheckLogin(isLogin: Boolean) {
         if (isLogin) {
             if (isEBook) {
-                ls?.startDownload("http://scs.skyepub.net/samples/Alice.epub", "", "Alice's Adventures", "Lewis Carroll")
+                readBook()
             } else {
-
+                //TODO
             }
         } else {
             router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
@@ -297,6 +333,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private val PROGRESS_ACTION = "com.skytree.android.intent.action.PROGRESS"
+    private val downloadFail = "com.skytree.android.intent.action.FAIL"
 
     inner class SkyReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -311,9 +348,19 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 msg.data = b
                 val handler = object : Handler() {
                     override fun handleMessage(msg: Message) {
-                        val bookCode = msg.data.getInt("BOOKCODE")
-                        val percent = msg.data.getDouble("PERCENT")
-                        refreshPieView(bookCode, percent)
+                        isLoadingFinished = true
+                        refreshPieView(100)
+                    }
+                }
+                handler.sendMessage(msg)
+            } else if (intent.action == downloadFail) {
+                val msg = Message()
+                val handler = object : Handler() {
+                    override fun handleMessage(msg: Message) {
+                        view?.vgLoadingDownloadBook?.gone()
+                        activity?.let { activity ->
+                            Toasty.error(activity, activity.resources.getString(R.string.msg_error_download_book)).show()
+                        }
                     }
                 }
                 handler.sendMessage(msg)
@@ -321,25 +368,22 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    private fun refreshPieView(bookCode: Int, percent: Double) {
+    private fun refreshPieView(percent: Int) {
         view?.let { view ->
-            if (percent < 100) {
-                view.pbDownloadEBook.visible()
-                view.tvProcessDownloadEBook.visible()
-            } else {
-                view.pbDownloadEBook.gone()
-                view.tvProcessDownloadEBook.gone()
+            if (percent == 100) {
+                view.vgLoadingDownloadBook.gone()
             }
-            val percentInt = percent.toInt()
-            view.pbDownloadEBook.progress = percentInt
-            view.tvProcessDownloadEBook.text = "$percentInt/100"
+            view.pbDownloadEBook.progress = percent
+            view.tvProcessDownloadEBook.text = "$percent/100"
         }
     }
 
-    private var receiver: SkyReceiver = SkyReceiver()
-
+    override fun handleBack(): Boolean {
+        return false
+    }
 
     override fun onDestroyView(view: View) {
+        KBus.unsubscribe(this)
         activity?.unbindService(mConnection)
         activity?.unregisterReceiver(receiver)
         super.onDestroyView(view)

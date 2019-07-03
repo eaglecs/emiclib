@@ -123,10 +123,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/vgLoadingDownloadBook"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@color/default_color_black_alpha_30"
             android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
@@ -135,9 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_black"
-                android:visibility="gone"
-                tools:text="80/100"
-                tools:visibility="visible" />
+                tools:text="80/100"/>
 
             <ProgressBar
                 android:id="@+id/pbDownloadEBook"
@@ -155,9 +157,7 @@
                 android:minHeight="@dimen/default_padding_margin_small"
                 android:progress="80"
                 android:progressDrawable="@drawable/progress_limit"
-                android:secondaryProgress="100"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:secondaryProgress="100"/>
         </LinearLayout>
 
         <basecode.com.ui.base.loading.LoadingLayout

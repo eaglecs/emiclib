@@ -42,5 +42,6 @@
     <string name="bookmark" translatable="false">đánh dấu</string>
     <string name="highlight" translatable="false">tô đậm</string>
     <string name="delete" translatable="false">xóa</string>
+    <string name="msg_error_download_book">Tải sách thất bại</string>
 
 </resources>

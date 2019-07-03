@@ -37,4 +37,5 @@
     <string name="searchmore">Tìm Thêm</string>
     <string name="searchfound">Tìm</string>
     <string name="searchfinished">Tìm kiếm kết thúc</string>
+    <string name="msg_error_download_book">Tải sách thất bại</string>
 </resources>
