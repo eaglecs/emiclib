@@ -52,5 +52,10 @@
     <string name="text_infomation">Thông tin</string>
     <string name="msg_error_get_user_info">Lấy thông tin người dùng thất bại</string>
     <string name="msg_error_logout">Đăng xuất thất bại</string>
+    <string name="text_search_advance">Tìm kiếm nâng cao</string>
+    <string name="text_nhan_de">Nhan để</string>
+    <string name="text_tact_gia">Tác giả</string>
+    <string name="text_tu_khoa">Từ khóa</string>
+    <string name="text_ngon_ngu">Ngôn ngữ</string>
 
 </resources>

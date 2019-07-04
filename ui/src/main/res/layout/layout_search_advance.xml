@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Space
+        android:layout_width="@dimen/default_padding_margin_huge"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_grey300" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextPrimaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:text="@string/text_search_advance"
+            android:textColor="@color/md_blue800" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtTitle"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginTop="@dimen/default_padding_margin_huge_xxx"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:background="@drawable/bg_rec_grey_line_transparent"
+            android:hint="@string/text_nhan_de"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin_x"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin_x" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtAuthor"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginTop="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:background="@drawable/bg_rec_grey_line_transparent"
+            android:hint="@string/text_tact_gia"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin_x"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin_x" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtKeyword"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginTop="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:background="@drawable/bg_rec_grey_line_transparent"
+            android:hint="@string/text_tu_khoa"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin_x"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin_x" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtLanguage"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginTop="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:background="@drawable/bg_rec_grey_line_transparent"
+            android:hint="@string/text_ngon_ngu"
+            android:paddingLeft="@dimen/default_padding_margin"
+            android:paddingTop="@dimen/default_padding_margin_x"
+            android:paddingRight="@dimen/default_padding_margin"
+            android:paddingBottom="@dimen/default_padding_margin_x" />
+    </LinearLayout>
+
+
+</LinearLayout>
