@@ -46,4 +46,5 @@
     <string name="text_muon_tra">Mượn trả</string>
     <string name="text_infomation">Thông tin</string>
     <string name="msg_error_get_user_info">Lấy thông tin người dùng thất bại</string>
+    <string name="msg_error_logout">Đăng xuất thất bại</string>
 </resources>

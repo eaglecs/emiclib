@@ -46,7 +46,8 @@ object PresentationKoinModules {
             SearchBookPresenter(findAdvanceBookUseCase = get(), searchBookUseCase = get()) as SearchBookContract.Presenter
         }
         factory {
-            UserPresenter(getInfoUserUseCase = get()) as UserContract.Presenter
+            UserPresenter(getInfoUserUseCase = get(),
+                    saveInfoLoginUseCase = get()) as UserContract.Presenter
         }
     }
 }

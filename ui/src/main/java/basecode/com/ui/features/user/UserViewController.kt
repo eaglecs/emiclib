@@ -3,6 +3,8 @@ package basecode.com.ui.features.user
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.network.response.InfoUserResponse
 import basecode.com.presentation.features.user.UserContract
 import basecode.com.ui.R
@@ -35,7 +37,7 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
         }
         view.ivLogout.setOnClickListener {
             if (doubleTouchPrevent.check("ivLogout")) {
-
+                presenter.logout()
             }
         }
     }
@@ -55,6 +57,17 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
             Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_user_info))
         }
         hideLoading()
+    }
+
+    override fun logoutFail() {
+        activity?.let { activity ->
+            Toasty.error(activity, activity.resources.getString(R.string.msg_error_logout))
+        }
+    }
+
+    override fun logoutSuccess() {
+        KBus.post(LogoutSuccessEventBus())
+        router.popController(this)
     }
 
     override fun showLoading() {

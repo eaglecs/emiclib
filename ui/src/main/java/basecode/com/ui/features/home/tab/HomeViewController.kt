@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
@@ -55,6 +56,10 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             view.ivLogin.setImageResource(R.drawable.ic_person)
+        }
+        KBus.subscribe<LogoutSuccessEventBus>(this){
+            isLogin = true
+            view.ivLogin.setImageResource(R.drawable.ic_login)
         }
     }
 

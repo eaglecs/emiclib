@@ -9,9 +9,12 @@ class UserContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun getUserInfoSuccess(infoUserResponse: InfoUserResponse)
         fun getUserInfoFail()
+        fun logoutSuccess()
+        fun logoutFail()
     }
 
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun getUserInfo()
+        abstract fun logout()
     }
 }
