@@ -22,4 +22,5 @@ interface AppRepository {
     fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
     fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: Int, author: Int, language: Int): Observable<List<BookResponse>>
     fun getInfoBook(itemId: Int): Observable<InfoBookResponse>
+    fun getInfoUser(): Observable<InfoUserResponse>
 }

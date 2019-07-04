@@ -25,6 +25,7 @@ import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
+import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
@@ -66,7 +67,9 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         view.ivLogin.setOnClickListener {
             if (doubleTouchPrevent.check("ivLogin")) {
                 if (isLogin) {
-
+                    targetController?.let { targetController ->
+                        targetController.router.pushController(RouterTransaction.with(UserViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
                 } else {
                     targetController?.let { targetController ->
                         targetController.router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
@@ -131,6 +134,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     override fun getListNewEBookSuccess(data: InfoHomeResponse) {
+        rvController.clear()
         view?.vgRefreshInfo?.isRefreshing = false
         val newNewsViewHolderModel = NewNewsViewHolderModel(lstNewNews = data.lstNewNews)
         rvController.addItem(newNewsViewHolderModel)

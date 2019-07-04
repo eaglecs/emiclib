@@ -12,6 +12,8 @@ import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.presentation.features.newnews.NewNewsPresenter
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.presentation.features.searchbook.SearchBookPresenter
+import basecode.com.presentation.features.user.UserContract
+import basecode.com.presentation.features.user.UserPresenter
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
@@ -42,6 +44,9 @@ object PresentationKoinModules {
         }
         factory {
             SearchBookPresenter(findAdvanceBookUseCase = get(), searchBookUseCase = get()) as SearchBookContract.Presenter
+        }
+        factory {
+            UserPresenter(getInfoUserUseCase = get()) as UserContract.Presenter
         }
     }
 }

@@ -57,6 +57,10 @@ interface ApiService {
     fun getListNewNewsObservable(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
 
     //6 Get Information book
-    @GET(" /api/Item/GetItemContents")
+    @GET("/api/Item/GetItemContents")
     fun getInfoBook(@Query("itemId") itemId: Int): Observable<InfoBookResponse>
+
+    //2 Get Information user
+    @GET("/api/user/GetUserInfor")
+    fun getInfoUser(): Observable<InfoUserResponse>
 }

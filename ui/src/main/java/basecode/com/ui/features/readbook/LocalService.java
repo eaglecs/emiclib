@@ -223,6 +223,7 @@ public class LocalService extends Service {
             downloadTimer.schedule(new DownloadTask(bookCode, downloadId), 0, 100);
             reloadBookInformations();
         } catch (Exception e) {
+            sendDownLoadFail("");
             deleteBook(bookCode);
             e.printStackTrace();
         }

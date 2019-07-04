@@ -63,4 +63,8 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     override fun getInfoBook(itemId: Int): Observable<InfoBookResponse> {
         return apiServiceApp.getInfoBook(itemId)
     }
+
+    override fun getInfoUser(): Observable<InfoUserResponse> {
+        return apiServiceApp.getInfoUser()
+    }
 }

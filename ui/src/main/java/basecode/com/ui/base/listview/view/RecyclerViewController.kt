@@ -84,6 +84,10 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
         viewAdapter.setItems(this.items)
     }
 
+    fun clear() {
+        this.items.clear()
+    }
+
     fun <T : ViewHolderModel> addItem(item: T) {
         this.items.add(item)
         viewAdapter.setItems(this.items)

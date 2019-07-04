@@ -296,7 +296,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             if (isEBook) {
                 readBook()
             } else {
-                //TODO
+                presenter
             }
         } else {
             router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
@@ -372,6 +372,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         view?.let { view ->
             if (percent == 100) {
                 view.vgLoadingDownloadBook.gone()
+                readBook()
             }
             view.pbDownloadEBook.progress = percent
             view.tvProcessDownloadEBook.text = "$percent/100"

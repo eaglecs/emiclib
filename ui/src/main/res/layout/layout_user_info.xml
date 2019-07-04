@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/ivBackBookDetail"
+                android:layout_width="@dimen/height_toolbar"
+                android:layout_height="@dimen/height_toolbar"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/default_padding_margin"
+                app:srcCompat="@drawable/ic_back" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextPrimaryTitle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_toolbar"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/text_infomation"
+                android:textColor="@color/md_blue800" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/ivLogout"
+                android:layout_width="@dimen/height_toolbar"
+                android:layout_height="@dimen/height_toolbar"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/default_padding_margin"
+                android:tint="@color/md_blue800"
+                app:srcCompat="@drawable/ic_login" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/md_grey300" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivAvatarProfile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/user_default" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvUserName"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/default_padding_margin"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:layout_marginRight="@dimen/default_padding_margin"
+            android:lines="1"
+            android:textColor="@color/md_black"
+            android:textStyle="bold"
+            tools:text="Nguyễn Thành Trung" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_padding_margin_small_x"
+            android:layout_margin="@dimen/default_padding_margin_h"
+            android:background="@color/md_grey300" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã thẻ:"
+                android:textColor="@color/md_black" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvCodeCard"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding_margin"
+                android:layout_marginRight="@dimen/default_padding_margin"
+                tools:text="33333" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời hạn:"
+                android:textColor="@color/md_black" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_padding_margin"
+                android:layout_marginRight="@dimen/default_padding_margin"
+                tools:text="15/01/2014 - 15/01/2019" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

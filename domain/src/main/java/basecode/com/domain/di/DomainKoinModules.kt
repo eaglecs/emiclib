@@ -50,5 +50,8 @@ object DomainKoinModules {
         factory {
             GetInfoBookUseCase(useCaseExecution = get(), appRepository = get())
         }
+        factory {
+            GetInfoUserUseCase(appRepository = get(), useCaseExecution = get())
+        }
     }
 }
