@@ -10,7 +10,7 @@ import basecode.com.domain.usecase.base.ResultListener
 import basecode.com.presentation.features.books.BookVewModel
 
 class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, private val findAdvanceBookUseCase: FindAdvanceBookUseCase) : SearchBookContract.Presenter() {
-    override fun searchBookAdvance(docType: Int, searchText: String, title: Int, author: Int, language: Int) {
+    override fun searchBookAdvance(docType: Int, searchText: String, title: String, author: String, language: String) {
         view?.let { view ->
             view.showLoading()
             val input = FindAdvanceBookUseCase.Input(docType = docType, author = author, searchText = searchText, title = title, language = language)

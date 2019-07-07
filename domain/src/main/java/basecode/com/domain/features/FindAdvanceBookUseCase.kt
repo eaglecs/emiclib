@@ -17,5 +17,5 @@ class FindAdvanceBookUseCase(useCaseExecution: UseCaseExecution, private val app
         return ErrorResponse("")
     }
 
-    class Input(val docType: Int, val pageIndex: Int = 1, val pageSize: Int = 20, val searchText: String, val title: Int, val author: Int, val language: Int)
+    class Input(val docType: Int, val pageIndex: Int = 1, val pageSize: Int = 20, val searchText: String, val title: String, val author: String, val language: String)
 }

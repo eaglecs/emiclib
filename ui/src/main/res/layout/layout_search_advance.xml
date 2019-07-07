@@ -40,6 +40,7 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:background="@drawable/bg_rec_grey_line_transparent"
             android:hint="@string/text_nhan_de"
+            android:lines="1"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
@@ -55,6 +56,7 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:background="@drawable/bg_rec_grey_line_transparent"
             android:hint="@string/text_tact_gia"
+            android:lines="1"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
@@ -70,6 +72,7 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:background="@drawable/bg_rec_grey_line_transparent"
             android:hint="@string/text_tu_khoa"
+            android:lines="1"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
@@ -85,10 +88,30 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:background="@drawable/bg_rec_grey_line_transparent"
             android:hint="@string/text_ngon_ngu"
+            android:lines="1"
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
             android:paddingBottom="@dimen/default_padding_margin_x" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/btnSearch"
+            style="@style/ButtonStyle.Active.Largest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/default_padding_margin_h"
+            android:paddingLeft="@dimen/default_padding_margin_huge"
+            android:paddingTop="@dimen/default_padding_margin_h"
+            android:paddingRight="@dimen/default_padding_margin_huge"
+            android:paddingBottom="@dimen/default_padding_margin_h"
+            android:text="@string/txt_search_advance"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

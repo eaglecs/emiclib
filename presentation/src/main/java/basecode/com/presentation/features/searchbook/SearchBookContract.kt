@@ -12,7 +12,7 @@ class SearchBookContract {
     }
 
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun searchBookAdvance(docType: Int, searchText: String, title: Int, author: Int, language: Int)
+        abstract fun searchBookAdvance(docType: Int, searchText: String, title: String, author: String, language: String)
         abstract fun searchBook(docType: Int, searchText: String)
     }
 }

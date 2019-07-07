@@ -27,9 +27,9 @@ interface ApiService {
     fun findBook(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String? = null): Observable<List<BookResponse>>
 
     //8 Find Book Advance
-    @GET("/api/Item/ SearchAdvance")
+    @GET("/api/Item/SearchAdvance")
     fun findBookAdvance(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String,
-                        @Query("title") title: Int, @Query("author") author: Int, @Query("language") language: Int) : Observable<List<BookResponse>>
+                        @Query("title") title: String, @Query("author") author: String, @Query("language") language: String) : Observable<List<BookResponse>>
 
     //13 GetCollectionRecomand
     @GET("/api/Cat/GetCollectionRecomand")

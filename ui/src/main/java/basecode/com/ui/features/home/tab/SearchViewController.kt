@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
-import basecode.com.domain.eventbus.SearchBookWithKeyEventBus
+import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
+import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.hideKeyboard
 import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.home.viewholder.CategoryBookViewModel
+import basecode.com.ui.features.search.SearchAdvanceViewController
 import basecode.com.ui.features.searchbook.TabBookCategoryViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.Controller
@@ -24,7 +27,8 @@ import kotlinx.android.synthetic.main.layout_tab_search.view.*
 import org.koin.standalone.inject
 import java.util.*
 
-class SearchViewController() : ViewController(bundle = null) {
+class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewController.Action {
+
     private val lstCategoryBook = mutableListOf<CategoryBookViewModel>()
     private var timer: Timer? = null
     private var categoryIdCurrent = 0
@@ -76,6 +80,18 @@ class SearchViewController() : ViewController(bundle = null) {
                 KBus.post(SearchBookWithKeyEventBus(categoryIdCurrent, textSearch))
             }
         }
+        view.ivSearchAdvance.setOnClickListener {
+            if (doubleTouchPrevent.check("ivSearchAdvance")) {
+                router.pushController(RouterTransaction.with(SearchAdvanceViewController(targetController = this))
+                        .pushChangeHandler(HorizontalChangeHandler(false))
+                        .popChangeHandler(HorizontalChangeHandler()))
+            }
+        }
+    }
+
+    override fun searchAdvanceBook(title: String, author: String, keyword: String, language: String) {
+        KBus.post(SearchAdvanceBookEventBus(categoryId = categoryIdCurrent, title = title, author = author,
+                language = language, keyword = keyword))
     }
 
     private fun handleSearchBookWithText(textSearch: String) {

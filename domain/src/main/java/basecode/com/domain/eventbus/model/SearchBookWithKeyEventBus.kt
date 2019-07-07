@@ -1,3 +1,3 @@
-package basecode.com.domain.eventbus
+package basecode.com.domain.eventbus.model
 
 class SearchBookWithKeyEventBus(val categoryId: Int, val textSearch: String)

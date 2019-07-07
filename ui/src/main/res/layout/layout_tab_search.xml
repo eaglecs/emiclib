@@ -34,14 +34,14 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/ivLogin"
+            android:id="@+id/ivSearchAdvance"
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
             android:padding="@dimen/default_padding_margin"
             android:tint="@color/md_blue500"
-            tools:srcCompat="@drawable/ic_filter" />
+            app:srcCompat="@drawable/ic_filter" />
     </FrameLayout>
 
     <View

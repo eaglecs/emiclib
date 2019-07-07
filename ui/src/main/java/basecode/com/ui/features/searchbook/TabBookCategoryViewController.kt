@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
-import basecode.com.domain.eventbus.SearchBookWithKeyEventBus
+import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
+import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.presentation.features.searchbook.SearchBookContract
@@ -71,6 +72,14 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
             if (categoryId == searchBookWithKeyEventBus.categoryId) {
                 searchText = searchBookWithKeyEventBus.textSearch
                 loadData()
+            }
+        }
+        KBus.subscribe<SearchAdvanceBookEventBus>(this) { model ->
+            val categoryIdSearchAdvance = model.categoryId
+            if (categoryIdSearchAdvance == categoryId) {
+                presenter.searchBookAdvance(docType = categoryId, language = model.language,
+                        author = model.author, title = model.title,
+                        searchText = searchText)
             }
         }
     }
