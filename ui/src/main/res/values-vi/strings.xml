@@ -53,4 +53,6 @@
     <string name="text_tu_khoa">Từ khóa</string>
     <string name="text_ngon_ngu">Ngôn ngữ</string>
     <string name="txt_search_advance">Tìm Kiếm</string>
+    <string name="msg_reservation_success">Mượn sách thành công.</string>
+    <string name="msg_reservation_fail">Số thẻ đã bị hết hạn.</string>
 </resources>

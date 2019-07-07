@@ -12,11 +12,14 @@ class BookDetailContract {
         fun handleAfterCheckLogin(isLogin: Boolean)
         fun getBookInfoSuccess(path: String)
         fun getBookInfoFail(msgError: String)
+        fun reservationBookSuccess()
+        fun reservationBookFail(msgError: String)
     }
 
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun getListBookRelated(bookId: Int)
         abstract fun getStatusLogin()
         abstract fun getBookInfo(bookId: Int)
+        abstract fun reservationBook(bookId: Int)
     }
 }

@@ -296,10 +296,22 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             if (isEBook) {
                 readBook()
             } else {
-                presenter
+                presenter.reservationBook(bookId)
             }
         } else {
             router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+        }
+    }
+
+    override fun reservationBookSuccess() {
+        activity?.let { activity ->
+            Toasty.success(activity, activity.getString(R.string.msg_reservation_success)).show()
+        }
+    }
+
+    override fun reservationBookFail(msgError: String) {
+        activity?.let { activity ->
+            Toasty.error(activity, activity.getString(R.string.msg_reservation_fail)).show()
         }
     }
 

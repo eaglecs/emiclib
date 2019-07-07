@@ -5,6 +5,7 @@ import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.features.GetInfoBookUseCase
 import basecode.com.domain.features.GetListBookRelatedUseCase
 import basecode.com.domain.features.GetUserTokenUseCase
+import basecode.com.domain.features.ReservationBookUseCase
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoBookResponse
@@ -13,7 +14,33 @@ import basecode.com.presentation.features.books.BookVewModel
 
 class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
                           private val getUserTokenUseCase: GetUserTokenUseCase,
-                          private val getInfoBookUseCase: GetInfoBookUseCase) : BookDetailContract.Presenter() {
+                          private val getInfoBookUseCase: GetInfoBookUseCase,
+                          private val reservationBookUseCase: ReservationBookUseCase) : BookDetailContract.Presenter() {
+    override fun reservationBook(bookId: Int) {
+        view?.let { view ->
+            view.showLoading()
+            reservationBookUseCase.cancel()
+            reservationBookUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
+                override fun success(data: Int) {
+                    if (data == 1) {
+                        view.reservationBookSuccess()
+                    } else {
+                        view.reservationBookFail("")
+                    }
+                }
+
+                override fun fail(error: ErrorResponse) {
+                    view.reservationBookFail(error.msgError)
+                }
+
+                override fun done() {
+                    view.hideLoading()
+                }
+
+            }, bookId)
+        }
+    }
+
     override fun getListBookRelated(bookId: Int) {
         view?.let { view ->
             view.showLoading()
@@ -89,6 +116,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
 
     override fun onDetachView() {
         getListBookRelatedUseCase.cancel()
+        reservationBookUseCase.cancel()
         getUserTokenUseCase.cancel()
         getInfoBookUseCase.cancel()
         super.onDetachView()

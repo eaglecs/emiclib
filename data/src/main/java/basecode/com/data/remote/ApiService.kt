@@ -10,6 +10,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/Api/Login")
     fun login(@Field("username") username: String, @Field("password") password: String, @Field("grant_type") grantType: String = "password"): Observable<LoginResponse>
+
     //4 GetListNewItems
     @GET("/api/Item/GetListNewItems")
     fun getListNewItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<BookResponse>>
@@ -29,7 +30,7 @@ interface ApiService {
     //8 Find Book Advance
     @GET("/api/Item/SearchAdvance")
     fun findBookAdvance(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String,
-                        @Query("title") title: String, @Query("author") author: String, @Query("language") language: String) : Observable<List<BookResponse>>
+                        @Query("title") title: String, @Query("author") author: String, @Query("language") language: String): Observable<List<BookResponse>>
 
     //13 GetCollectionRecomand
     @GET("/api/Cat/GetCollectionRecomand")
@@ -63,4 +64,10 @@ interface ApiService {
     //2 Get Information user
     @GET("/api/user/GetUserInfor")
     fun getInfoUser(): Observable<InfoUserResponse>
+
+    //Login
+    @POST("/api/Reservation/Reservation")
+    fun reservationBook(@Query("itemId") bookId: Int): Observable<Int>
+
+
 }
