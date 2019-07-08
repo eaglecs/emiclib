@@ -55,4 +55,5 @@
     <string name="txt_search_advance">Tìm Kiếm</string>
     <string name="msg_reservation_success">Mượn sách thành công.</string>
     <string name="msg_reservation_fail">Số thẻ đã bị hết hạn.</string>
+    <string name="msg_download_book_success">Tải sách thành công</string>
 </resources>

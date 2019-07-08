@@ -24,4 +24,5 @@ interface AppRepository {
     fun getInfoBook(itemId: Int): Observable<InfoBookResponse>
     fun getInfoUser(): Observable<InfoUserResponse>
     fun reservationBook(bookId: Int): Observable<Int>
+    fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
 }

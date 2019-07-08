@@ -39,6 +39,7 @@ import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.PermissionUtil
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
+import com.skytree.epub.BookInformation
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
@@ -187,7 +188,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         if (PermissionUtil.hasPermissions(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             val settingsCanWrite = Settings.System.canWrite(activity)
             if (settingsCanWrite) {
-                readBook()
+                readEBook()
             } else {
                 val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
                 startActivity(intent)
@@ -197,7 +198,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    private fun readBook() {
+    private fun readEBook() {
         activity?.let { activity ->
             ls?.let {
                 if (it.isDownloaded(pathBook)) {
@@ -205,32 +206,37 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     val fetchBookInformations = skyDatabase.fetchBookInformations(0, "")
                     val setting = skyDatabase.fetchSetting()
                     fetchBookInformations?.let { lstBook ->
-                        if (lstBook.isNotEmpty()) {
-                            val bi = lstBook.first()
-                            bi?.let {
-                                if (!bi.isDownloaded) return
-                                val intent = Intent(activity, BookViewActivity::class.java)
-                                intent.putExtra("BOOKCODE", bi.bookCode)
-                                intent.putExtra("TITLE", bi.title)
-                                intent.putExtra("AUTHOR", bi.creator)
-                                intent.putExtra("BOOKNAME", bi.fileName)
-                                if (bi.position < 0.0f) {
-                                    intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
-                                } else {
-                                    intent.putExtra("POSITION", bi.position)
-                                }
-                                intent.putExtra("THEMEINDEX", setting.theme)
-                                intent.putExtra("DOUBLEPAGED", setting.doublePaged)
-                                intent.putExtra("transitionType", setting.transitionType)
-                                intent.putExtra("GLOBALPAGINATION", setting.globalPagination)
-                                intent.putExtra("RTL", bi.isRTL)
-                                intent.putExtra("VERTICALWRITING", bi.isVerticalWriting)
+                        var bi: BookInformation? = null
 
-                                intent.putExtra("SPREAD", bi.spread)
-                                intent.putExtra("ORIENTATION", bi.orientation)
-
-                                startActivity(intent)
+                        lstBook.forEach { book ->
+                            if (book.url == pathBook) {
+                                bi = book
                             }
+                        }
+
+                        bi?.let { bi ->
+                            if (!bi.isDownloaded) return
+                            val intent = Intent(activity, BookViewActivity::class.java)
+                            intent.putExtra("BOOKCODE", bi.bookCode)
+                            intent.putExtra("TITLE", bi.title)
+                            intent.putExtra("AUTHOR", bi.creator)
+                            intent.putExtra("BOOKNAME", bi.fileName)
+                            if (bi.position < 0.0f) {
+                                intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
+                            } else {
+                                intent.putExtra("POSITION", bi.position)
+                            }
+                            intent.putExtra("THEMEINDEX", setting.theme)
+                            intent.putExtra("DOUBLEPAGED", setting.doublePaged)
+                            intent.putExtra("transitionType", setting.transitionType)
+                            intent.putExtra("GLOBALPAGINATION", setting.globalPagination)
+                            intent.putExtra("RTL", bi.isRTL)
+                            intent.putExtra("VERTICALWRITING", bi.isVerticalWriting)
+
+                            intent.putExtra("SPREAD", bi.spread)
+                            intent.putExtra("ORIENTATION", bi.orientation)
+
+                            startActivity(intent)
                         }
                     }
                 } else {
@@ -278,7 +284,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     }
                 }
                 if (isGrantAll) {
-                    readBook()
+                    readEBook()
                 }
             }
         }
@@ -294,7 +300,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     override fun handleAfterCheckLogin(isLogin: Boolean) {
         if (isLogin) {
             if (isEBook) {
-                readBook()
+                readEBook()
             } else {
                 presenter.reservationBook(bookId)
             }
@@ -384,7 +390,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         view?.let { view ->
             if (percent == 100) {
                 view.vgLoadingDownloadBook.gone()
-                readBook()
+                Toasty.success(view.context, view.context.getString(R.string.msg_download_book_success)).show()
             }
             view.pbDownloadEBook.progress = percent
             view.tvProcessDownloadEBook.text = "$percent/100"

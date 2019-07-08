@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
+import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
@@ -57,7 +58,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             isLogin = true
             view.ivLogin.setImageResource(R.drawable.ic_person)
         }
-        KBus.subscribe<LogoutSuccessEventBus>(this){
+        KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = true
             view.ivLogin.setImageResource(R.drawable.ic_login)
         }
@@ -87,6 +88,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     private fun initView(view: View) {
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
+        view.rvHome.setItemViewCacheSize(10)
         rvController = RecyclerViewController(view.rvHome, renderConfig)
         activity?.let { activity ->
             rvController.addViewRenderer(NewNewsRenderer(activity) { newsModel ->
@@ -105,7 +107,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                 }
             }, onActionReadMore = {
                 targetController?.let { targetController ->
-                    val bundle = BooksViewController.BundleOptions.create(isEbook = false)
+                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
                     targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
                 }
@@ -118,13 +120,18 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                 }
             }, onActionReadMore = {
                 targetController?.let { targetController ->
-                    val bundle = BooksViewController.BundleOptions.create(isEbook = true)
+                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
                     targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
                 }
             }))
             rvController.addViewRenderer(CollectionRecommendRenderer(activity) { collectionRecommend ->
-
+                targetController?.let { targetController ->
+                    val title = collectionRecommend.title
+                    val id = collectionRecommend.id
+                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
+                    targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
             })
         }
 

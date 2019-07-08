@@ -58,5 +58,10 @@ object DomainKoinModules {
             ReservationBookUseCase(appRepository = get(),
                     useCaseExecution = get())
         }
+
+        factory {
+            GetItemInCollectionRecomandUseCase(appRepository = get(),
+                    useCaseExecution = get())
+        }
     }
 }

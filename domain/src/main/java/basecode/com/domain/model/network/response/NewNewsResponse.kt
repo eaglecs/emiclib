@@ -13,5 +13,13 @@ data class NewNewsResponse(
         @SerializedName("Summary")
         val summary: String?,
         @SerializedName("Title")
-        val title: String?
+        val title: String?,
+        @SerializedName("CoverPicture")
+        val coverPicture: String?,
+        @SerializedName("PublishedYear")
+        val publishedYear: String?,
+        @SerializedName("Publisher")
+        val publisher: String?,
+        @SerializedName("Author")
+        val author: String?
 )

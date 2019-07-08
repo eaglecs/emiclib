@@ -65,9 +65,15 @@ interface ApiService {
     @GET("/api/user/GetUserInfor")
     fun getInfoUser(): Observable<InfoUserResponse>
 
-    //Login
+    //Reservation Book
     @POST("/api/Reservation/Reservation")
     fun reservationBook(@Query("itemId") bookId: Int): Observable<Int>
+
+    //Load List book GetItemInCollectionRecomand
+    @GET("/Api/Item/GetItemInCollectionRecomand")
+    fun getItemInCollectionRecomand(@Query("collectionId") collectionId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
+
+
 
 
 }

@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
+import basecode.com.domain.model.network.BookType
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraBoolean
+import basecode.com.ui.base.extra.BundleExtraInt
+import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.GridRenderConfigFactory
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
@@ -28,14 +33,20 @@ import org.koin.standalone.inject
 
 class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContract.View {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
-    private var isEBook = false
+    private var bookType: Int = BookType.BOOK.value
     private lateinit var rvController: RecyclerViewController
     private val presenter: BooksContract.Presenter by inject()
+    private var collectionId = 0
+    private var collectionName = ""
 
     object BundleOptions {
-        var Bundle.isEBook by BundleExtraBoolean("BooksViewController.isEBook")
-        fun create(isEbook: Boolean) = Bundle().apply {
-            this.isEBook = isEbook
+        var Bundle.bookType by BundleExtraInt("BooksViewController.bookType")
+        var Bundle.collectionId by BundleExtraInt("BooksViewController.collectionId")
+        var Bundle.collectionName by BundleExtraString("BooksViewController.collectionName")
+        fun create(bookType: Int, collectionId: Int = 0, collectionName: String = "") = Bundle().apply {
+            this.bookType = bookType
+            this.collectionId = collectionId
+            this.collectionName = collectionName
         }
     }
 
@@ -43,7 +54,9 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
 
     init {
         bundle.options { options ->
-            isEBook = options.isEBook.valueOrFalse()
+            bookType = options.bookType.valueOrZero()
+            collectionId = options.collectionId.valueOrZero()
+            collectionName = options.collectionName.valueOrEmpty()
         }
     }
 
@@ -59,26 +72,48 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     }
 
     private fun loadData() {
-        if (isEBook) {
-            presenter.getListNewEBook(true)
-        } else {
-            presenter.getListNewBook(true)
+        when (bookType) {
+            BookType.BOOK.value -> {
+                presenter.getListNewBook(true)
+            }
+            BookType.E_BOOK.value -> {
+                presenter.getListNewEBook(true)
+            }
+            BookType.COLLECTION.value -> {
+                presenter.getItemInCollectionRecomand(isRefresh = true, collectionId = collectionId)
+            }
         }
     }
 
     private fun initView(view: View) {
-        if (isEBook) {
-            view.tvTitleBookDetail.text = view.context.getString(R.string.text_ebook_new)
-        } else {
-            view.tvTitleBookDetail.text = view.context.getString(R.string.text_new_book)
+
+        val textTitle = when (bookType) {
+            BookType.BOOK.value -> {
+                view.context.getString(R.string.text_new_book)
+            }
+            BookType.E_BOOK.value -> {
+                view.context.getString(R.string.text_ebook_new)
+            }
+            else -> {
+                collectionName
+            }
         }
+        view.tvTitleBookDetail.text = textTitle
+
         val loadMoreConfig = RecyclerViewController.LoadMoreConfig(viewRenderer = LoadMoreViewBinder(R.layout.item_load_more)) {
-            if (presenter.isShowLoadMore(isEBook)) {
+            if (presenter.isShowLoadMore(bookType = bookType)) {
                 rvController.showLoadMore()
-                if (isEBook) {
-                    presenter.getListNewEBook(false)
-                } else {
-                    presenter.getListNewBook(false)
+
+                when (bookType) {
+                    BookType.BOOK.value -> {
+                        presenter.getListNewBook(false)
+                    }
+                    BookType.E_BOOK.value -> {
+                        presenter.getListNewEBook(false)
+                    }
+                    BookType.COLLECTION.value -> {
+                        presenter.getItemInCollectionRecomand(isRefresh = false, collectionId = collectionId)
+                    }
                 }
             }
         }
@@ -92,6 +127,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
+                        val isEBook = bookType == BookType.E_BOOK.value
                         val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo, titleBook = dataItem.title,
                                 author = dataItem.author)
                         router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
