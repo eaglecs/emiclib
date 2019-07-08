@@ -56,4 +56,9 @@
     <string name="msg_reservation_success">Mượn sách thành công.</string>
     <string name="msg_reservation_fail">Số thẻ đã bị hết hạn.</string>
     <string name="msg_download_book_success">Tải sách thành công</string>
+    <string name="text_borrow_book">Mượn trả</string>
+    <string name="text_dang_muon">Đang mượn</string>
+    <string name="text_da_muon">Đã mượn</string>
+    <string name="msg_error_get_list_book_borrow">Lấy thông tin danh sách mượn thất bại</string>
+    <string name="text_khong_co_cuon_sach_nao">Không có cuốn sách nào</string>
 </resources>

@@ -1,5 +1,7 @@
 package basecode.com.presentation.di
 
+import basecode.com.presentation.features.bookborrow.BookBorrowContract
+import basecode.com.presentation.features.bookborrow.BookBorrowPresenter
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.bookdetail.BookDetailPresenter
 import basecode.com.presentation.features.books.BooksContract
@@ -50,6 +52,10 @@ object PresentationKoinModules {
         factory {
             UserPresenter(getInfoUserUseCase = get(),
                     saveInfoLoginUseCase = get()) as UserContract.Presenter
+        }
+        factory {
+            BookBorrowPresenter(getLoanHoldingCurrentUseCase = get(),
+                    getLoanHoldingHistoryUseCase = get()) as BookBorrowContract.Presenter
         }
     }
 }

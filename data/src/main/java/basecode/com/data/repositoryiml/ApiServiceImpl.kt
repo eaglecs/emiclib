@@ -75,4 +75,12 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     override fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>> {
         return apiServiceApp.getItemInCollectionRecomand(collectionId, pageIndex, pageSize)
     }
+
+    override fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>> {
+        return apiServiceApp.getLoanHoldingCurrent()
+    }
+
+    override fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>> {
+        return apiServiceApp.getLoanHoldingHistory()
+    }
 }

@@ -63,5 +63,15 @@ object DomainKoinModules {
             GetItemInCollectionRecomandUseCase(appRepository = get(),
                     useCaseExecution = get())
         }
+
+        factory {
+            GetLoanHoldingCurrentUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
+
+        factory {
+            GetLoanHoldingHistoryUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
     }
 }

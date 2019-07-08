@@ -73,7 +73,12 @@ interface ApiService {
     @GET("/Api/Item/GetItemInCollectionRecomand")
     fun getItemInCollectionRecomand(@Query("collectionId") collectionId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
 
+    //Sach dang muon
+    @GET("/api/cir/GetLoanHoldingCurrent")
+    fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>
 
-
+    //Sach da muon
+    @GET("/api/cir/GetLoanHoldingHistory")
+    fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
 
 }
