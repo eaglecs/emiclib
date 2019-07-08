@@ -14,6 +14,7 @@ import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
 import basecode.com.domain.model.bus.DownloadFailEventBus
+import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.ui.R
@@ -56,6 +57,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var author = ""
     internal var isBound = false
     private var receiver: SkyReceiver = SkyReceiver()
+    private var isCheckLogin = false
+    private var isLogin = false
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -122,6 +125,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 Toasty.error(activity, "${activity.resources.getString(R.string.msg_error_download_book)} ${reasonText.reasonText}").show()
             }
         }
+        KBus.subscribe<LoginSuccessEventBus>(this) {
+            isLogin = true
+        }
     }
 
     private fun doBindService() {
@@ -171,8 +177,16 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         view.tvHandleBook.setOnClickListener {
             if (doubleTouchPrevent.check("tvHandleBook")) {
-                if (isEBook) {
-                    presenter.getBookInfo(bookId)
+                if (isCheckLogin) {
+                    if (isLogin) {
+                        if (isEBook) {
+                            readEBook()
+                        } else {
+                            presenter.reservationBook(bookId)
+                        }
+                    } else {
+                        router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
                 } else {
                     presenter.getStatusLogin()
                 }
@@ -298,6 +312,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun handleAfterCheckLogin(isLogin: Boolean) {
+        isCheckLogin = true
+        this.isLogin = isLogin
         if (isLogin) {
             if (isEBook) {
                 readEBook()

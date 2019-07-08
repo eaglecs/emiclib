@@ -72,7 +72,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             getUserTokenUseCase.cancel()
             getUserTokenUseCase.executeAsync(object : ResultListener<String, ErrorResponse> {
                 override fun success(data: String) {
-                    view.handleAfterCheckLogin(true)
+                    val isLogin = data.isNotEmpty()
+                    view.handleAfterCheckLogin(isLogin)
                 }
 
                 override fun fail(error: ErrorResponse) {

@@ -99,6 +99,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
     private fun initView(view: View) {
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
+        view.rvCategoryBook.setItemViewCacheSize(20)
         rvController = RecyclerViewController(view.rvCategoryBook, renderConfig)
         rvController.addViewRenderer(BookCategoryRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
