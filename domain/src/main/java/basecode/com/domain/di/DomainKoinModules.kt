@@ -73,5 +73,13 @@ object DomainKoinModules {
             GetLoanHoldingHistoryUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
+        factory {
+            ReadMessageUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
+        factory {
+            GetListMessageUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
     }
 }

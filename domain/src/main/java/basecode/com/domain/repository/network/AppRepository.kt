@@ -27,4 +27,6 @@ interface AppRepository {
     fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
     fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>
     fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
+    fun getListMessage(): Observable<List<MessageResponse>>
+    fun readMessage(id: Long): Observable<Any>
 }

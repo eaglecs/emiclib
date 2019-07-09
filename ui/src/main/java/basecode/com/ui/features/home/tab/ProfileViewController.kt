@@ -7,6 +7,7 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
+import basecode.com.ui.features.notify.NotifyViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
@@ -50,7 +51,10 @@ class ProfileViewController() : ViewController(bundle = null) {
 
         view.vgNotify.setOnClickListener {
             if (doubleTouchPrevent.check("vgNotify")) {
-
+                targetController?.let { targetController ->
+                    targetController.router.pushController(RouterTransaction.with(NotifyViewController())
+                            .pushChangeHandler(FadeChangeHandler(false)))
+                }
             }
         }
 

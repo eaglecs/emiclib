@@ -66,6 +66,9 @@
     <string name="text_da_muon">Đã mượn</string>
     <string name="msg_error_get_list_book_borrow">Lấy thông tin danh sách mượn thất bại</string>
     <string name="text_khong_co_cuon_sach_nao">Không có cuốn sách nào</string>
+    <string name="msg_error_read_message_fail">Cập nhật trạng thái đã đọc thất bại.</string>
+    <string name="text_no_message">Bạn không có thông báo</string>
+    <string name="check_double_click_exit_app">Nhấn nút Back hai lần để thoát ứng dụng.</string>
 
 
 </resources>

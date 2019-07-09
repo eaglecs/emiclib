@@ -1,7 +1,6 @@
 package basecode.com.data.repositoryiml
 
 import basecode.com.data.remote.ApiService
-import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.*
 import basecode.com.domain.repository.network.AppRepository
 import io.reactivex.Observable
@@ -82,5 +81,13 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
 
     override fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>> {
         return apiServiceApp.getLoanHoldingHistory()
+    }
+
+    override fun getListMessage(): Observable<List<MessageResponse>> {
+        return apiServiceApp.getListMessage()
+    }
+
+    override fun readMessage(id: Long): Observable<Any> {
+        return apiServiceApp.readMessage(id)
     }
 }

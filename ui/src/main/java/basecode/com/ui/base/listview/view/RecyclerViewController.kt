@@ -7,6 +7,7 @@ import android.view.View
 import basecode.com.ui.base.listview.model.ViewHolderModel
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.extension.view.afterMeasuredSize
+import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 
 class RecyclerViewController(private val recyclerView: RecyclerView, private val renderConfig: RenderConfig) {
@@ -108,6 +109,10 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
 
     fun setPadding(padding: Int) {
         recyclerView.setPadding(padding, padding, padding, padding)
+    }
+
+    fun getItems(): MutableList<ViewHolderModel> {
+        return items
     }
 
     class RenderConfig(val layoutManager: RecyclerView.LayoutManager, val itemAnimator: RecyclerView.ItemAnimator? = null, val viewHolderSizer: ViewSizer? = null, val itemDecoration: RecyclerView.ItemDecoration? = null, val loadMoreConfig: LoadMoreConfig? = null)

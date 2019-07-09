@@ -12,6 +12,8 @@ import basecode.com.presentation.features.login.LoginContract
 import basecode.com.presentation.features.login.LoginPresenter
 import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.presentation.features.newnews.NewNewsPresenter
+import basecode.com.presentation.features.notify.NotifyContract
+import basecode.com.presentation.features.notify.NotifyPresenter
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.presentation.features.searchbook.SearchBookPresenter
 import basecode.com.presentation.features.user.UserContract
@@ -56,6 +58,10 @@ object PresentationKoinModules {
         factory {
             BookBorrowPresenter(getLoanHoldingCurrentUseCase = get(),
                     getLoanHoldingHistoryUseCase = get()) as BookBorrowContract.Presenter
+        }
+        factory {
+            NotifyPresenter(getListMessageUseCase = get(),
+                    readMessageUseCase = get()) as NotifyContract.Presenter
         }
     }
 }

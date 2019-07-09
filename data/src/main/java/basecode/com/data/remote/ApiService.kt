@@ -81,4 +81,13 @@ interface ApiService {
     @GET("/api/cir/GetLoanHoldingHistory")
     fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
 
+    // Get list notify
+    @GET("/api/User/GetMessages")
+    fun getListMessage(): Observable<List<MessageResponse>>
+
+    // Read Message
+    @FormUrlEncoded
+    @POST("/api/User/UpdateMessagesIsRead")
+    fun readMessage(@Field("Id") id: Long): Observable<Any>
+
 }
