@@ -29,4 +29,14 @@ interface AppRepository {
     fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
     fun getListMessage(): Observable<List<MessageResponse>>
     fun readMessage(id: Long): Observable<Any>
+    fun changePass(newPassword: String, oldPassword: String): Observable<Int>
+    fun feedback(content: String, email: String,
+                 mobilePhone: String, title: String,
+                 userFullName: String): Observable<Int>
+
+    fun getListFQA(): Observable<List<QAResponse>>
+
+    fun getListReserveQueue(): Observable<List<ReserveResponse>>
+
+    fun getListReserveRequest(): Observable<List<ReserveResponse>>
 }

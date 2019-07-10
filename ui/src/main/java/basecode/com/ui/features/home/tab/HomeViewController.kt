@@ -59,7 +59,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             view.ivLogin.setImageResource(R.drawable.ic_person)
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
-            isLogin = true
+            isLogin = false
             view.ivLogin.setImageResource(R.drawable.ic_login)
         }
     }

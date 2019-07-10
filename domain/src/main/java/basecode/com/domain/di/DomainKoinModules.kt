@@ -81,5 +81,25 @@ object DomainKoinModules {
             GetListMessageUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
+        factory {
+            ChangePassUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
+        factory {
+            GetListFQAUseCase(appRepository = get(),
+                    useCaseExecution = get())
+        }
+        factory {
+            GetListReserveRequestUseCase(appRepository = get(),
+                    useCaseExecution = get())
+        }
+        factory {
+            GetListReserveQueueUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
+        factory {
+            FeedbackUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
     }
 }

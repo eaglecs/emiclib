@@ -6,6 +6,8 @@ import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.bookdetail.BookDetailPresenter
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
+import basecode.com.presentation.features.changepass.ChangePassContract
+import basecode.com.presentation.features.changepass.ChangePassPresenter
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.presentation.features.home.HomePresenter
 import basecode.com.presentation.features.login.LoginContract
@@ -62,6 +64,9 @@ object PresentationKoinModules {
         factory {
             NotifyPresenter(getListMessageUseCase = get(),
                     readMessageUseCase = get()) as NotifyContract.Presenter
+        }
+        factory {
+            ChangePassPresenter( changePassUseCase = get()) as ChangePassContract.Presenter
         }
     }
 }

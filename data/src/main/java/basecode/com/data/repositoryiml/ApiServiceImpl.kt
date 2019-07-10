@@ -90,4 +90,24 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     override fun readMessage(id: Long): Observable<Any> {
         return apiServiceApp.readMessage(id)
     }
+
+    override fun changePass(newPassword: String, oldPassword: String): Observable<Int> {
+        return apiServiceApp.changePass(newPassword, oldPassword)
+    }
+
+    override fun feedback(content: String, email: String, mobilePhone: String, title: String, userFullName: String): Observable<Int> {
+        return apiServiceApp.feedback(content, email, mobilePhone, title, userFullName)
+    }
+
+    override fun getListFQA(): Observable<List<QAResponse>> {
+        return apiServiceApp.getListFQA()
+    }
+
+    override fun getListReserveQueue(): Observable<List<ReserveResponse>> {
+        return apiServiceApp.getListReserveQueue()
+    }
+
+    override fun getListReserveRequest(): Observable<List<ReserveResponse>> {
+        return apiServiceApp.getListReserveRequest()
+    }
 }

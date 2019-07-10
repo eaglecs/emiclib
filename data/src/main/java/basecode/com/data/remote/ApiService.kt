@@ -90,4 +90,33 @@ interface ApiService {
     @POST("/api/User/UpdateMessagesIsRead")
     fun readMessage(@Field("Id") id: Long): Observable<Any>
 
+    // Change Pass
+    @FormUrlEncoded
+    @POST("Api/User/UpdatePassword")
+    fun changePass(@Field("NewPassword") newPassword: String, @Field("OldPassword") oldPassword: String): Observable<Int>
+
+    // Feedback
+    @FormUrlEncoded
+    @POST("/api/Contact/Insert")
+    fun feedback(@Field("Content") content: String, @Field("Email") email: String,
+                 @Field("MobilePhone") mobilePhone: String, @Field("Title") title: String,
+                 @Field("UserFullName") userFullName: String): Observable<Int>
+
+    // GetListFQA
+    @GET("api/FQA/GetListFQA")
+    fun getListFQA(): Observable<List<QAResponse>>
+
+    // Dat muon
+    @GET("api/Cir/GetListReserveQueue")
+    fun getListReserveQueue(): Observable<List<ReserveResponse>>
+
+    // Dat cho
+    @GET("api/Cir/GetListReserveRequest")
+    fun getListReserveRequest(): Observable<List<ReserveResponse>>
+
+
+
+
+
+
 }
