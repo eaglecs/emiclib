@@ -8,6 +8,10 @@ import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
 import basecode.com.presentation.features.changepass.ChangePassContract
 import basecode.com.presentation.features.changepass.ChangePassPresenter
+import basecode.com.presentation.features.feedback.FeedbackContract
+import basecode.com.presentation.features.feedback.FeedbackPresenter
+import basecode.com.presentation.features.fqa.FQAContract
+import basecode.com.presentation.features.fqa.FQAPresenter
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.presentation.features.home.HomePresenter
 import basecode.com.presentation.features.login.LoginContract
@@ -16,10 +20,11 @@ import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.presentation.features.newnews.NewNewsPresenter
 import basecode.com.presentation.features.notify.NotifyContract
 import basecode.com.presentation.features.notify.NotifyPresenter
+import basecode.com.presentation.features.renew.RenewContract
+import basecode.com.presentation.features.renew.RenewPresenter
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.presentation.features.searchbook.SearchBookPresenter
-import basecode.com.presentation.features.user.UserContract
-import basecode.com.presentation.features.user.UserPresenter
+import basecode.com.presentation.features.user.*
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
@@ -66,7 +71,28 @@ object PresentationKoinModules {
                     readMessageUseCase = get()) as NotifyContract.Presenter
         }
         factory {
-            ChangePassPresenter( changePassUseCase = get()) as ChangePassContract.Presenter
+            ChangePassPresenter(changePassUseCase = get()) as ChangePassContract.Presenter
+        }
+
+        factory {
+            RenewPresenter(getLoanHoldingRenewUseCase = get(),
+                    loanRenewUseCase = get()) as RenewContract.Presenter
+        }
+
+        factory {
+            ReserveRequestPresenter(getListReserveRequestUseCase = get()) as ReserveRequestContract.Presenter
+        }
+
+        factory {
+            ReserveQueuePresenter(getListReserveQueueUseCase = get()) as ReserveQueueContract.Presenter
+        }
+
+        factory {
+            FQAPresenter(getListFQAUseCase = get()) as FQAContract.Presenter
+        }
+
+        factory {
+            FeedbackPresenter(feedbackUseCase = get()) as FeedbackContract.Presenter
         }
     }
 }

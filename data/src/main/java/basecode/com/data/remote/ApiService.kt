@@ -114,6 +114,17 @@ interface ApiService {
     @GET("api/Cir/GetListReserveRequest")
     fun getListReserveRequest(): Observable<List<ReserveResponse>>
 
+    //Get danh sach gia han
+    @GET("/api/cir/GetLoanHoldingRenew")
+    fun getLoanHoldingRenew(): Observable<List<NewNewsResponse>>
+
+    // Gia han
+    @FormUrlEncoded
+    @POST("/api/cir/LoanRenew")
+    fun loanRenew(@Field("coppynumber") coppynumber: String): Observable<Int>
+
+
+
 
 
 

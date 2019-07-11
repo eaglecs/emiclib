@@ -11,10 +11,15 @@ class ChangePassPresenter(private val changePassUseCase: ChangePassUseCase) : Ch
             changePassUseCase.cancel()
             changePassUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
                 override fun success(data: Int) {
-                    view.changePassSuccess()
+                    if(data == 1){
+                        view.changePassSuccess()
+                    } else {
+                        view.changePassFail()
+                    }
                 }
 
                 override fun fail(error: ErrorResponse) {
+                    view.hideLoading()
                     view.changePassFail()
                 }
 

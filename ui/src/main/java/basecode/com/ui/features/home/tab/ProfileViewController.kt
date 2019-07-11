@@ -7,7 +7,9 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
+import basecode.com.ui.features.changepass.ChangePassViewController
 import basecode.com.ui.features.notify.NotifyViewController
+import basecode.com.ui.features.renew.RenewViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
@@ -58,9 +60,11 @@ class ProfileViewController() : ViewController(bundle = null) {
             }
         }
 
-        view.vgDelayUser.setOnClickListener {
+        view.vgRenew.setOnClickListener {
             if (doubleTouchPrevent.check("vgDelayUser")) {
-
+                targetController?.let { targetController ->
+                    targetController.router.pushController(RouterTransaction.with(RenewViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                }
             }
         }
 
@@ -72,7 +76,9 @@ class ProfileViewController() : ViewController(bundle = null) {
 
         view.vgChangePass.setOnClickListener {
             if (doubleTouchPrevent.check("vgChangePass")) {
-
+                targetController?.let { targetController ->
+                    targetController.router.pushController(RouterTransaction.with(ChangePassViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                }
             }
         }
     }

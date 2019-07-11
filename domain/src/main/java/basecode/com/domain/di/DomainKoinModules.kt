@@ -101,5 +101,13 @@ object DomainKoinModules {
             FeedbackUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
+        factory {
+            LoanRenewUseCase(appRepository = get(),
+                    useCaseExecution = get())
+        }
+        factory {
+            GetLoanHoldingRenewUseCase(appRepository = get(),
+                    useCaseExecution = get())
+        }
     }
 }

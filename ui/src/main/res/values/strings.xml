@@ -83,5 +83,13 @@
         <p>info@dgsoft.vn</p>
     </string>
 
+    <string name="msg_warning_confirm_pass_fail">Xác nhận mật khẩu mới sai</string>
+    <string name="msg_change_pass_success">Thay đổi mật khẩu thành công</string>
+    <string name="msg_change_pass_fail">Thay đổi mật khẩu thất bại</string>
+    <string name="text_renew">Gia hạn</string>
+    <string name="msg_change_get_list_book_renew_fail">Lấy danh sách gia hạn thất bại</string>
+    <string name="msg_change_renew_success">Gia hạn thành công</string>
+    <string name="msg_change_renew_fail">Gia hạn thất bại</string>
+
 
 </resources>

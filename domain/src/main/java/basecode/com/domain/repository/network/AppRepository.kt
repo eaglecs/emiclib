@@ -39,4 +39,6 @@ interface AppRepository {
     fun getListReserveQueue(): Observable<List<ReserveResponse>>
 
     fun getListReserveRequest(): Observable<List<ReserveResponse>>
+    fun getLoanHoldingRenew(): Observable<List<NewNewsResponse>>
+    fun loanRenew(coppynumber: String): Observable<Int>
 }

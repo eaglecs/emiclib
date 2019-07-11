@@ -1,0 +1,104 @@
+package basecode.com.ui.features.renew
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import basecode.com.domain.model.network.response.NewNewsResponse
+import basecode.com.presentation.features.renew.RenewContract
+import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
+import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
+import basecode.com.ui.base.listview.view.OnItemRvClickedListener
+import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.searchbook.BookViewHolderModel
+import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
+import basecode.com.ui.util.DoubleTouchPrevent
+import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.layout_renew.view.*
+import org.koin.standalone.inject
+
+class RenewViewController : ViewController(null), RenewContract.View {
+    private val presenter: RenewContract.Presenter by inject()
+    private lateinit var rvController: RecyclerViewController
+
+    private val doubleTouchPrevent: DoubleTouchPrevent by inject()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(R.layout.layout_renew, container, false)
+    }
+
+    override fun initPostCreateView(view: View) {
+        presenter.attachView(this)
+        initView(view)
+        handleView(view)
+        presenter.getListLoanRenew()
+    }
+
+    private fun initView(view: View) {
+        val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
+        val renderConfig = LinearRenderConfigFactory(input).create()
+        rvController = RecyclerViewController(view.rvRenewBook, renderConfig)
+        rvController.addViewRenderer(BookCategoryRenderer())
+        rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
+            override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
+                if (dataItem is BookViewHolderModel) {
+                    presenter.renew(dataItem.id.toString())
+                }
+            }
+        })
+    }
+
+    private fun handleView(view: View) {
+        view.ivBack.setOnClickListener {
+            if (doubleTouchPrevent.check("ivBack")) {
+                router.popController(this)
+            }
+        }
+    }
+
+    override fun getListLoanRenewSuccess(lstBook: List<NewNewsResponse>) {
+        val lstBook = mutableListOf<BookViewHolderModel>()
+        lstBook.forEach { book ->
+            val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear)
+            lstBook.add(bookViewHolderModel)
+        }
+        rvController.setItems(lstBook)
+        rvController.notifyDataChanged()
+    }
+
+    override fun getListLoanRenewFail(msgError: String) {
+        view?.let { view ->
+            Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_get_list_book_renew_fail)).show()
+        }
+    }
+
+    override fun renewSuccess() {
+        view?.let { view ->
+            Toasty.success(view.context, view.context.resources.getString(R.string.msg_change_renew_success)).show()
+        }
+    }
+
+    override fun renewfail() {
+        view?.let { view ->
+            Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_renew_fail)).show()
+        }
+    }
+
+    override fun showLoading() {
+        view?.let { view ->
+            view.vgLoading.show()
+        }
+    }
+
+    override fun hideLoading() {
+        view?.let { view ->
+            view.vgLoading.hide()
+        }
+    }
+
+    override fun onDestroyView(view: View) {
+        presenter.detachView()
+        super.onDestroyView(view)
+    }
+}

@@ -1,13 +1,19 @@
 package basecode.com.presentation.features.user
 
 import basecode.com.domain.features.GetInfoUserUseCase
+import basecode.com.domain.features.GetListReserveQueueUseCase
+import basecode.com.domain.features.GetListReserveRequestUseCase
 import basecode.com.domain.features.SaveInfoLoginUseCase
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoUserResponse
+import basecode.com.domain.model.network.response.ReserveResponse
 import basecode.com.domain.usecase.base.ResultListener
 
 class UserPresenter(private val getInfoUserUseCase: GetInfoUserUseCase,
-                    private val saveInfoLoginUseCase: SaveInfoLoginUseCase) : UserContract.Presenter() {
+                    private val saveInfoLoginUseCase: SaveInfoLoginUseCase
+
+) : UserContract.Presenter() {
+
     override fun getUserInfo() {
         view?.let { view ->
             view.showLoading()
