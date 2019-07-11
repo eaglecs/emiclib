@@ -90,6 +90,11 @@
     <string name="msg_change_get_list_book_renew_fail">Lấy danh sách gia hạn thất bại</string>
     <string name="msg_change_renew_success">Gia hạn thành công</string>
     <string name="msg_change_renew_fail">Gia hạn thất bại</string>
+    <string name="text_more">Nhiều hơn</string>
+    <string name="text_feedback">Phản hồi</string>
+    <string name="text_setting">Cài đặt</string>
+    <string name="fqa">FQA</string>
+    <string name="text_about_me">Về chúng tôi</string>
 
 
 </resources>

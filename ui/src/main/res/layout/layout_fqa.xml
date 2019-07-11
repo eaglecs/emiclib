@@ -30,7 +30,7 @@
             android:layout_height="@dimen/height_toolbar"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/text_about"
+            android:text="@string/fqa"
             android:textColor="@color/md_blue800" />
 
         <android.support.v7.widget.AppCompatImageView
@@ -46,13 +46,10 @@
         android:layout_height="1dp"
         android:background="@color/md_grey200" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tvAbout"
-        style="@style/TextPrimaryBody"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFQA"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/default_padding_margin"
-        tools:text="@string/text_content_about" />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
