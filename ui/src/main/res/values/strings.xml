@@ -69,6 +69,19 @@
     <string name="msg_error_read_message_fail">Cập nhật trạng thái đã đọc thất bại.</string>
     <string name="text_no_message">Bạn không có thông báo</string>
     <string name="check_double_click_exit_app">Nhấn nút Back hai lần để thoát ứng dụng.</string>
+    <string name="text_change_pass">Thay đổi mật khẩu</string>
+    <string name="text_confirm_pass">Xác nhận mật khẩu</string>
+    <string name="text_new_pass">Mật khẩu mới</string>
+    <string name="text_old_pass">Mật khẩu cũ</string>
+    <string name="text_about">About</string>
+    <string name="text_content_about" translatable="false">
+        <h2> DGSoft Technologies JSC © Emiclib 2017. All Rights Reserved</h2>
+        <br/>
+        <p>Tầng M Tòa nhà VTC, Số 132 Cộng Hòa - Phường 4 - Quận Tân Bình - Tp. Hồ Chí Minh.</p>
+        <p>Văn phòng: 138/7 Duy Tân, Phường 15, Quận Phú Nhuận, TP Hồ Chí Minh.</p>
+        <p>(84-8 3 847 5821)</p>
+        <p>info@dgsoft.vn</p>
+    </string>
 
 
 </resources>

@@ -64,4 +64,9 @@
     <string name="msg_error_read_message_fail">Cập nhật trạng thái đã đọc thất bại.</string>
     <string name="text_no_message">Bạn không có thông báo</string>
     <string name="check_double_click_exit_app">Nhấn nút Back hai lần để thoát ứng dụng.</string>
+    <string name="text_change_pass">Thay đổi mật khẩu</string>
+    <string name="text_confirm_pass">Xác nhận mật khẩu</string>
+    <string name="text_new_pass">Mật khẩu mới</string>
+    <string name="text_old_pass">Mật khẩu cũ</string>
+    <string name="text_about">About</string>
 </resources>
