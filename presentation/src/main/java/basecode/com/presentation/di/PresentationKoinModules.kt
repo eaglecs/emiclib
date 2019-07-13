@@ -80,11 +80,8 @@ object PresentationKoinModules {
         }
 
         factory {
-            ReserveRequestPresenter(getListReserveRequestUseCase = get()) as ReserveRequestContract.Presenter
-        }
-
-        factory {
-            ReserveQueuePresenter(getListReserveQueueUseCase = get()) as ReserveQueueContract.Presenter
+            ReserveQueueRequestPresenter(getListReserveQueueUseCase = get(),
+                    getListReserveRequestUseCase = get()) as ReserveQueueRequestContract.Presenter
         }
 
         factory {

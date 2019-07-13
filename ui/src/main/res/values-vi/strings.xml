@@ -81,4 +81,16 @@
     <string name="text_setting">Cài đặt</string>
     <string name="fqa">FQA</string>
     <string name="text_about_me">Về chúng tôi</string>
+    <string name="msg_error_get_list_fqa">Lấy danh sách câu hỏi và trả lời thất bại.</string>
+    <string name="text_title">Tiêu đề</string>
+    <string name="text_email">Email</string>
+    <string name="text_user_name_hint">Tên của bạn</string>
+    <string name="text_phone_number">Số điện thoại</string>
+    <string name="text_content">Nội dung</string>
+    <string name="msg_error_feedback">Gửi phản hồi thất  bại.</string>
+    <string name="msg_send_feedback_success">Gửi phản hồi thành công. Cảm ơn bạn về phản hổi này</string>
+    <string name="msg_warning_email_empty">Bạn chưa điền email cho phản hồi</string>
+    <string name="msg_warning_content_empty">Bạn chưa điền nội dung cho phản hồi</string>
+    <string name="text_dat_cho">Đặt chỗ</string>
+    <string name="text_dat_muon">Đặt mượn</string>
 </resources>

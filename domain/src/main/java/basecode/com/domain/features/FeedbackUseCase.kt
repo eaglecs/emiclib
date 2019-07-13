@@ -11,12 +11,15 @@ import io.reactivex.Observable
 
 class FeedbackUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<FeedbackUseCase.Input, Int, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(input: FeedbackUseCase.Input): Observable<Int> {
-        return appRepository.changePass(newPassword = input.newPassword, oldPassword = input.oldPassword)
+        return appRepository.feedback(content = input.content, email = input.email, title = input.title,
+                mobilePhone = input.mobilePhone, userFullName = input.userFullName)
     }
 
     override fun createFailOutput(throwable: Throwable): ErrorResponse {
         return ErrorResponse("")
     }
 
-    class Input(val newPassword: String, val oldPassword: String)
+    class Input(val content: String, val email: String,
+                val mobilePhone: String, val title: String,
+                val userFullName: String)
 }

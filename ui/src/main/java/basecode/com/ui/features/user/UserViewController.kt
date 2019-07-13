@@ -9,7 +9,12 @@ import basecode.com.domain.model.network.response.InfoUserResponse
 import basecode.com.presentation.features.user.UserContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.features.user.tab.TabUserBookBorrowViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.support.RouterPagerAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_user_info.view.*
 import org.koin.standalone.inject
@@ -26,7 +31,32 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
         presenter.getUserInfo()
+        initView(view)
         handleOnClickView(view)
+    }
+
+    private fun initView(view: View) {
+        val pagerAdapter = object : RouterPagerAdapter(this) {
+            override fun configureRouter(router: Router, position: Int) {
+                if (!router.hasRootController()) {
+                    val bundle = TabUserBookBorrowViewController.BundleOptions.create(position = position)
+                    val page: Controller = TabUserBookBorrowViewController(targetController = this@UserViewController, bundle = bundle)
+                    router.setRoot(RouterTransaction.with(page).tag("TabUserBookBorrowViewController$position"))
+                }
+            }
+
+            override fun getCount() = 2
+            override fun getPageTitle(position: Int): String {
+                return if (position == 0) {
+                    view.context.getString(R.string.text_dat_cho)
+                } else {
+                    view.context.getString(R.string.text_dat_muon)
+                }
+            }
+        }
+        view.vpUserBorrowBook.adapter = pagerAdapter
+        view.vpUserBorrowBook.offscreenPageLimit = 2
+        view.tlUserBorrowBook.setupWithViewPager(view.vpUserBorrowBook)
     }
 
     private fun handleOnClickView(view: View) {
@@ -83,7 +113,7 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
     }
 
     override fun onDestroyView(view: View) {
-        super.onDestroyView(view)
         presenter.detachView()
+        super.onDestroyView(view)
     }
 }

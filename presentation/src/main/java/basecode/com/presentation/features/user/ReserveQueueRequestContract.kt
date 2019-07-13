@@ -5,12 +5,13 @@ import basecode.com.presentation.base.mvp.PresenterMvp
 import basecode.com.presentation.base.mvp.ViewMvp
 import basecode.com.presentation.base.mvp.view.ViewSupportLoading
 
-class ReserveRequestContract {
+class ReserveQueueRequestContract {
     interface View : ViewMvp, ViewSupportLoading {
-        fun getListBookReserveRequestSuccess(data: List<ReserveResponse>)
-        fun getListBookReserveRequestFail()
+        fun getListBookSuccess(data: List<ReserveResponse>)
+        fun getListBookFail()
     }
     abstract class Presenter : PresenterMvp<View>() {
+        abstract fun getListBookReserveQueue()
         abstract fun getListBookReserveRequest()
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding_margin">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvQuestion"
+        style="@style/TextPrimarySubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/md_blue800"
+        android:textStyle="bold"
+        tools:text="@string/fqa" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAnswer"
+        style="@style/TextPrimarySubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/text_content_about" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+</LinearLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_white"
@@ -46,10 +45,20 @@
         android:layout_height="1dp"
         android:background="@color/md_grey200" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvFQA"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFQA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <basecode.com.ui.base.loading.LoadingLayout
+            android:id="@+id/vgLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
 
 
 </LinearLayout>
