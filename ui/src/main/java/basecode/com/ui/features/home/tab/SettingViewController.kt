@@ -11,6 +11,7 @@ import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.about.AboutViewController
 import basecode.com.ui.features.feedback.FeedbackViewController
 import basecode.com.ui.features.fqa.FQAViewController
+import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_setting.view.*

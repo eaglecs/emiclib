@@ -109,5 +109,13 @@ object DomainKoinModules {
             GetLoanHoldingRenewUseCase(appRepository = get(),
                     useCaseExecution = get())
         }
+        factory {
+            SaveBookUseCase(useCaseExecution = get(),
+                    bookDataService = get())
+        }
+        factory {
+            GetAllBookUseCase(useCaseExecution = get(),
+                    bookDataService = get())
+        }
     }
 }

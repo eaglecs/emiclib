@@ -8,6 +8,7 @@ import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
 import basecode.com.ui.features.changepass.ChangePassViewController
+import basecode.com.ui.features.downloadbook.DownloadBookViewController
 import basecode.com.ui.features.notify.NotifyViewController
 import basecode.com.ui.features.renew.RenewViewController
 import basecode.com.ui.features.user.UserViewController
@@ -70,7 +71,9 @@ class ProfileViewController() : ViewController(bundle = null) {
 
         view.vgDownload.setOnClickListener {
             if (doubleTouchPrevent.check("vgDownload")) {
-
+                targetController?.let { targetController ->
+                    targetController.router.pushController(RouterTransaction.with(DownloadBookViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                }
             }
         }
 

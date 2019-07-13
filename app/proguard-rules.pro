@@ -83,3 +83,10 @@
 -dontwarn sun.misc.Unsafe
 
 #-keep class your.app.data.model.** { *; }
+
+# DbFlow
+-keep class com.foody.pos.database.** { *; }
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
+-keep class * extends com.raizlabs.android.dbflow.structure.BaseModel { *; }
+-keep class com.raizlabs.android.dbflow.config.GeneratedDatabaseHolder
+-keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }
