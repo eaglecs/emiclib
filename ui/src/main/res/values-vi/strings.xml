@@ -93,4 +93,28 @@
     <string name="msg_warning_content_empty">Bạn chưa điền nội dung cho phản hồi</string>
     <string name="text_dat_cho">Đặt chỗ</string>
     <string name="text_dat_muon">Đặt mượn</string>
+    <string name="layout">Layout</string>
+    <string name="doublepaged">Trang đôi</string>
+    <string name="lockrotation">Xoay</string>
+    <string name="globalPagination">Đánh dấu trang</string>
+    <string name="theme">Chủ đề</string>
+    <string name="pagetransitioneffect">Chuyển trang</string>
+    <string name="noneeffect">Không hiệu ứng</string>
+    <string name="slideeffect">Hiệu ứng trượt</string>
+    <string name="curleffect">Hiệu ứng cuộn</string>
+    <string name="voice">Voice</string>
+    <string name="mediaoverlay">MediaOverlay</string>
+    <string name="tts">Text To Speech</string>
+    <string name="autostartplaying">Auto Start Playing</string>
+    <string name="autoloadnewchapter">Auto Load New Chapter</string>
+    <string name="highlighttexttoVoice">Highlight Text To Voice</string>
+    <string name="information">Information</string>
+    <string name="reader">SkyReader version 1.0</string>
+    <string name="skyepub">Powered By SkyEpub for Android</string>
+    <string name="warning">Warning</string>
+
+    <string name="globalpaginationwarning">Global Pagination enables to show the page number for the entire of book.\n
+It may take long time to finish the calculation of pages for whole book.\n
+Whenever font name or font size are changed, Global Pagination tries to calculate the total page number again.\n
+while the Global Pagination is going on, some user interfaces will be restricted to use.</string>
 </resources>

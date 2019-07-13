@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.ui.R
+import basecode.com.ui.SettingActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.about.AboutViewController
@@ -42,7 +43,7 @@ class SettingViewController() : ViewController(bundle = null) {
 
         view.vgSetting.setOnClickListener {
             if (doubleTouchPrevent.check("vgSetting")) {
-
+                openSetting()
             }
         }
 
@@ -65,10 +66,10 @@ class SettingViewController() : ViewController(bundle = null) {
         }
     }
 
-//    fun openSetting() {
-//        activity?.let { activity ->
-//            val intent = Intent(activity, SettingActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
+    private fun openSetting() {
+        activity?.let { activity ->
+            val intent = Intent(activity, SettingActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }
