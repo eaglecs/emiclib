@@ -39,10 +39,11 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         presenter.attachView(this)
         handleOnClick(view)
         iniEventBus(view)
+        presenter.checkLogin()
     }
 
     private fun iniEventBus(view: View) {
-        KBus.subscribe<LoginSuccessEventBus>(this){
+        KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
         }
     }
