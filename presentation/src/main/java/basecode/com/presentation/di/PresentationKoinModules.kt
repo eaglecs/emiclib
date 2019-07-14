@@ -26,6 +26,8 @@ import basecode.com.presentation.features.renew.RenewContract
 import basecode.com.presentation.features.renew.RenewPresenter
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.presentation.features.searchbook.SearchBookPresenter
+import basecode.com.presentation.features.setting.SettingContract
+import basecode.com.presentation.features.setting.SettingPresenter
 import basecode.com.presentation.features.user.*
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
@@ -97,6 +99,10 @@ object PresentationKoinModules {
 
         factory {
             DownloadBookPresenter(getAllBookUseCase = get()) as DownloadBookContract.Presenter
+        }
+
+        factory {
+            SettingPresenter(getUserTokenUseCase = get()) as SettingContract.Presenter
         }
     }
 }

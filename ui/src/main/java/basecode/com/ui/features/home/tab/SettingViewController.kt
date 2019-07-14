@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
+import basecode.com.presentation.features.setting.SettingContract
 import basecode.com.ui.R
 import basecode.com.ui.SettingActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -21,7 +22,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_setting.view.*
 import org.koin.standalone.inject
 
-class SettingViewController() : ViewController(bundle = null) {
+class SettingViewController() : ViewController(bundle = null){
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
 
     constructor(targetController: ViewController) : this() {
@@ -98,6 +99,7 @@ class SettingViewController() : ViewController(bundle = null) {
             startActivity(intent)
         }
     }
+
 
     override fun onDestroyView(view: View) {
         KBus.unsubscribe(this)
