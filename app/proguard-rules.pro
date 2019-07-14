@@ -27,6 +27,10 @@
 -keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }
 
 
+-dontwarn ss.com.**
+
+
+
 # For OkHttp
 -dontwarn okhttp3.**
 -dontwarn okio.**
