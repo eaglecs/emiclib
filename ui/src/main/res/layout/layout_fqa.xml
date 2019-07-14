@@ -53,6 +53,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvNoFQA"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/text_no_question_answer"
+            android:textColor="@color/md_blue800"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <basecode.com.ui.base.loading.LoadingLayout
             android:id="@+id/vgLoading"
             android:layout_width="match_parent"

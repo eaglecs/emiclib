@@ -11,7 +11,7 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.login(username = username, password = password)
     }
 
-    override fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {
+    override fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {
         return apiServiceApp.getListBookRelated(itemId, pageIndex, pageSize)
     }
 
@@ -59,7 +59,7 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.findBookAdvance(docType, pageIndex, pageSize, searchText, title, author, language)
     }
 
-    override fun getInfoBook(itemId: Int): Observable<InfoBookResponse> {
+    override fun getInfoBook(itemId: Long): Observable<InfoBookResponse> {
         return apiServiceApp.getInfoBook(itemId)
     }
 
@@ -67,7 +67,7 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.getInfoUser()
     }
 
-    override fun reservationBook(bookId: Int): Observable<Int> {
+    override fun reservationBook(bookId: Long): Observable<Int> {
         return apiServiceApp.reservationBook(bookId)
     }
 

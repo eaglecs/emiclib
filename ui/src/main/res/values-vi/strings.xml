@@ -117,4 +117,7 @@
 It may take long time to finish the calculation of pages for whole book.\n
 Whenever font name or font size are changed, Global Pagination tries to calculate the total page number again.\n
 while the Global Pagination is going on, some user interfaces will be restricted to use.</string>
+    <string name="text_book_download">Sách tải xuống</string>
+    <string name="msg_error_get_list_book_download">Lấy danh sách sách tải xuống thất bại</string>
+    <string name="text_no_question_answer">Chưa có câu hỏi và trả lời</string>
 </resources>

@@ -11,6 +11,8 @@ import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.extension.view.gone
+import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.searchbook.BookViewHolderModel
 import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
 import basecode.com.ui.util.DoubleTouchPrevent
@@ -58,13 +60,20 @@ class RenewViewController : ViewController(null), RenewContract.View {
     }
 
     override fun getListLoanRenewSuccess(lstBook: List<NewNewsResponse>) {
-        val lstBook = mutableListOf<BookViewHolderModel>()
-        lstBook.forEach { book ->
-            val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear)
-            lstBook.add(bookViewHolderModel)
+        view?.let { view ->
+            if (lstBook.isEmpty()) {
+                view.tvNoBook.visible()
+            } else {
+                view.tvNoBook.gone()
+                val lstBook = mutableListOf<BookViewHolderModel>()
+                lstBook.forEach { book ->
+                    val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear)
+                    lstBook.add(bookViewHolderModel)
+                }
+                rvController.setItems(lstBook)
+                rvController.notifyDataChanged()
+            }
         }
-        rvController.setItems(lstBook)
-        rvController.notifyDataChanged()
     }
 
     override fun getListLoanRenewFail(msgError: String) {

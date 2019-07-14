@@ -2,10 +2,8 @@ package basecode.com.presentation.features.bookdetail
 
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
-import basecode.com.domain.features.GetInfoBookUseCase
-import basecode.com.domain.features.GetListBookRelatedUseCase
-import basecode.com.domain.features.GetUserTokenUseCase
-import basecode.com.domain.features.ReservationBookUseCase
+import basecode.com.domain.features.*
+import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoBookResponse
@@ -15,8 +13,28 @@ import basecode.com.presentation.features.books.BookVewModel
 class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
                           private val getUserTokenUseCase: GetUserTokenUseCase,
                           private val getInfoBookUseCase: GetInfoBookUseCase,
-                          private val reservationBookUseCase: ReservationBookUseCase) : BookDetailContract.Presenter() {
-    override fun reservationBook(bookId: Int) {
+                          private val reservationBookUseCase: ReservationBookUseCase,
+                          private val saveBookUseCase: SaveBookUseCase) : BookDetailContract.Presenter() {
+
+    override fun saveBookDownload(eBookModel: EBookModel) {
+        view?.let { view ->
+            view.showLoading()
+            saveBookUseCase.cancel()
+            saveBookUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse>{
+                override fun success(data: Boolean) {
+                }
+
+                override fun fail(error: ErrorResponse) {
+                }
+
+                override fun done() {
+                    view.hideLoading()
+                }
+
+            }, eBookModel)
+        }
+    }
+    override fun reservationBook(bookId: Long) {
         view?.let { view ->
             view.showLoading()
             reservationBookUseCase.cancel()
@@ -41,7 +59,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         }
     }
 
-    override fun getListBookRelated(bookId: Int) {
+    override fun getListBookRelated(bookId: Long) {
         view?.let { view ->
             view.showLoading()
             getListBookRelatedUseCase.cancel()
@@ -88,7 +106,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         }
     }
 
-    override fun getBookInfo(bookId: Int) {
+    override fun getBookInfo(bookId: Long) {
         view?.let { view ->
             view.showLoading()
             getInfoBookUseCase.cancel()
@@ -116,6 +134,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
     }
 
     override fun onDetachView() {
+        saveBookUseCase.cancel()
         getListBookRelatedUseCase.cancel()
         reservationBookUseCase.cancel()
         getUserTokenUseCase.cancel()

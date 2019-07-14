@@ -420,7 +420,6 @@ public class LocalService extends Service {
         SkyUtility.moveFile(sourceFile, targetFile);
         String coverPath = sd.getCoverPathByBookCode(bookCode);
         String baseDirectory = SkySetting.getStorageDirectory() + "/books";
-        sendProgress(bookCode, 0, 0, 0.9f);
 
         bi = getBookInformation(fileName, baseDirectory, coverPath);
 
@@ -435,6 +434,7 @@ public class LocalService extends Service {
                 reloadBookInformation(tbi.bookCode);
             }
         }, 500);
+        sendProgress(bookCode, 0, 0, 0.9f);
     }
 
 

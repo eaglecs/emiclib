@@ -9,6 +9,8 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.extension.view.gone
+import basecode.com.ui.extension.view.visible
 import basecode.com.ui.util.DoubleTouchPrevent
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_fqa.view.*
@@ -27,6 +29,7 @@ class FQAViewController : ViewController(null), FQAContract.View {
         presenter.attachView(this)
         initView(view)
         handleView(view)
+        presenter.getListFQA()
     }
 
     private fun initView(view: View) {
@@ -46,9 +49,16 @@ class FQAViewController : ViewController(null), FQAContract.View {
     }
 
     override fun getListFQASuccess(lstFQA: List<QAResponse>) {
-        val lstFQAResult = FQAViewHolderModelMapper().mapList(lstFQA)
-        rvController.setItems(lstFQAResult)
-        rvController.notifyDataChanged()
+        view?.let { view ->
+            if (lstFQA.isEmpty()) {
+                view.tvNoFQA.visible()
+            } else {
+                view.tvNoFQA.gone()
+                val lstFQAResult = FQAViewHolderModelMapper().mapList(lstFQA)
+                rvController.setItems(lstFQAResult)
+                rvController.notifyDataChanged()
+            }
+        }
     }
 
     override fun getListFQAFail() {

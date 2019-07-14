@@ -1,3 +1,3 @@
 package basecode.com.presentation.features.books
 
-class BookVewModel(val id: Int, val name: String, val photo: String, val author: String, var publishedYear: String)
+class BookVewModel(val id: Long, val name: String, val photo: String, val author: String, var publishedYear: String)

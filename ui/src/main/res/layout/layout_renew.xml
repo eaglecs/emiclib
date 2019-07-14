@@ -44,10 +44,27 @@
                 android:padding="@dimen/default_padding_margin" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvRenewBook"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvRenewBook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvNoBook"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/text_khong_co_cuon_sach_nao"
+                android:textColor="@color/md_blue800"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+
 
     </LinearLayout>
 

@@ -15,15 +15,13 @@ import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
 import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
+import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
-import basecode.com.ui.base.extra.BundleExtraBoolean
-import basecode.com.ui.base.extra.BundleExtraInt
-import basecode.com.ui.base.extra.BundleExtraString
-import basecode.com.ui.base.extra.BundleOptionsCompanion
+import basecode.com.ui.base.extra.*
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
@@ -51,7 +49,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private var isEBook = false
-    private var bookId: Int = 0
+    private var bookId: Long = 0
     private var photo = ""
     private var titleBook = ""
     private var author = ""
@@ -76,11 +74,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     object BundleOptions {
         var Bundle.isEBook by BundleExtraBoolean("BooksViewController.isEBook")
-        var Bundle.bookId by BundleExtraInt("BooksViewController.bookId")
+        var Bundle.bookId by BundleExtraLong("BooksViewController.bookId")
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
-        fun create(isEbook: Boolean, bookId: Int, titleBook: String, author: String, photo: String) = Bundle().apply {
+        fun create(isEbook: Boolean, bookId: Long, titleBook: String, author: String, photo: String) = Bundle().apply {
             this.isEBook = isEbook
             this.bookId = bookId
             this.author = author
@@ -405,6 +403,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private fun refreshPieView(percent: Int) {
         view?.let { view ->
             if (percent == 100) {
+                val eBookModel = EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
+                presenter.saveBookDownload(eBookModel)
                 view.vgLoadingDownloadBook.gone()
                 Toasty.success(view.context, view.context.getString(R.string.msg_download_book_success)).show()
             }

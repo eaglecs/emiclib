@@ -7,8 +7,8 @@ import basecode.com.domain.usecase.base.UseCase
 import basecode.com.domain.usecase.base.UseCaseExecution
 import io.reactivex.Observable
 
-class GetListBookRelatedUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Int, List<BookResponse>, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: Int): Observable<List<BookResponse>> {
+class GetListBookRelatedUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Long, List<BookResponse>, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: Long): Observable<List<BookResponse>> {
         return appRepository.getListBookRelated(itemId = input, pageSize = 20, pageIndex = 1)
     }
 

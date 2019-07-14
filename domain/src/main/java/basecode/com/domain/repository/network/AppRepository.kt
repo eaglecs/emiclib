@@ -17,13 +17,13 @@ interface AppRepository {
     fun getCollectionRecomandObservable(): Observable<List<CollectionRecomand>>
     fun getListNewNewsObservable(numberItem: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
 
-    fun getListBookRelated(itemId: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>>
+    fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>>
     fun login(username: String, password: String): Observable<LoginResponse>
     fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
     fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: String, author: String, language: String): Observable<List<BookResponse>>
-    fun getInfoBook(itemId: Int): Observable<InfoBookResponse>
+    fun getInfoBook(itemId: Long): Observable<InfoBookResponse>
     fun getInfoUser(): Observable<InfoUserResponse>
-    fun reservationBook(bookId: Int): Observable<Int>
+    fun reservationBook(bookId: Long): Observable<Int>
     fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
     fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>
     fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>

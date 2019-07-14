@@ -10,8 +10,8 @@ import basecode.com.domain.usecase.base.UseCaseExecution
 import basecode.com.domain.usecase.base.UseCaseOutput
 import io.reactivex.Observable
 
-class ReservationBookUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Int, Int, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: Int): Observable<Int> {
+class ReservationBookUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Long, Int, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: Long): Observable<Int> {
         return appRepository.reservationBook(input)
     }
 

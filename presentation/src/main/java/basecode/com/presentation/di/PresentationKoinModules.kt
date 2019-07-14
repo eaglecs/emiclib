@@ -8,6 +8,8 @@ import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
 import basecode.com.presentation.features.changepass.ChangePassContract
 import basecode.com.presentation.features.changepass.ChangePassPresenter
+import basecode.com.presentation.features.downloadboook.DownloadBookContract
+import basecode.com.presentation.features.downloadboook.DownloadBookPresenter
 import basecode.com.presentation.features.feedback.FeedbackContract
 import basecode.com.presentation.features.feedback.FeedbackPresenter
 import basecode.com.presentation.features.fqa.FQAContract
@@ -47,7 +49,8 @@ object PresentationKoinModules {
             BookDetailPresenter(getListBookRelatedUseCase = get(),
                     getUserTokenUseCase = get(),
                     getInfoBookUseCase = get(),
-                    reservationBookUseCase = get()) as BookDetailContract.Presenter
+                    reservationBookUseCase = get(),
+                    saveBookUseCase = get()) as BookDetailContract.Presenter
         }
         factory {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter
@@ -90,6 +93,10 @@ object PresentationKoinModules {
 
         factory {
             FeedbackPresenter(feedbackUseCase = get()) as FeedbackContract.Presenter
+        }
+
+        factory {
+            DownloadBookPresenter(getAllBookUseCase = get()) as DownloadBookContract.Presenter
         }
     }
 }

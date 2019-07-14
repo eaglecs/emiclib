@@ -33,8 +33,8 @@ import org.koin.standalone.inject
 
 class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContract.View {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
-    private var bookType: Int = BookType.BOOK.value
     private lateinit var rvController: RecyclerViewController
+    private var bookType: Int = BookType.BOOK.value
     private val presenter: BooksContract.Presenter by inject()
     private var collectionId = 0
     private var collectionName = ""

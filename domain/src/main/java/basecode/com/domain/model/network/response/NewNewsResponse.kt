@@ -7,7 +7,7 @@ data class NewNewsResponse(
         @SerializedName("Details")
         val details: String?,
         @SerializedName("Id")
-        val id: Int?,
+        val id: Long?,
         @SerializedName("Picture")
         val picture: String?,
         @SerializedName("Summary")

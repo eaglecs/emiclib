@@ -8,8 +8,8 @@ import basecode.com.domain.usecase.base.UseCase
 import basecode.com.domain.usecase.base.UseCaseExecution
 import io.reactivex.Observable
 
-class GetInfoBookUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Int, InfoBookResponse, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: Int): Observable<InfoBookResponse> {
+class GetInfoBookUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Long, InfoBookResponse, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: Long): Observable<InfoBookResponse> {
         return appRepository.getInfoBook(input)
     }
 
