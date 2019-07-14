@@ -54,8 +54,7 @@ class DownloadBookViewController : ViewController(null), DownloadBookContract.Vi
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
                         val isEBook = true
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo, titleBook = dataItem.title,
-                                author = dataItem.author)
+                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo)
                         router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }

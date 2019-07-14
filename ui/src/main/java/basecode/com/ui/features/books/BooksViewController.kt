@@ -128,8 +128,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
                         val isEBook = bookType == BookType.E_BOOK.value
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo, titleBook = dataItem.title,
-                                author = dataItem.author)
+                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = isEBook, bookId = dataItem.id, photo = dataItem.photo)
                         router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }

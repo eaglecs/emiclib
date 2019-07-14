@@ -86,8 +86,7 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
                     targetController?.let { targetController ->
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = dataItem.id, photo = dataItem.photo, author = dataItem.author,
-                                titleBook = dataItem.name)
+                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = dataItem.id, photo = dataItem.photo)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }

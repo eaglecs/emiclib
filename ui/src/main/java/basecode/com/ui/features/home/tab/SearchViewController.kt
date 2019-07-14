@@ -7,18 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.hideKeyboard
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.home.viewholder.CategoryBookViewModel
 import basecode.com.ui.features.search.SearchAdvanceViewController
 import basecode.com.ui.features.searchbook.TabBookCategoryViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -44,7 +48,23 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
 
     override fun initPostCreateView(view: View) {
         initView(view)
+        initEventBus(view)
         handleOnClick(view)
+    }
+
+
+    private fun initEventBus(view: View) {
+        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
+            val contentQRCode = it.contentQRCode
+            val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
+            if (bookInfo.size == 2) {
+                val bookId = bookInfo.first().trim().toLong()
+                targetController?.let { targetController ->
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
+            }
+        }
     }
 
     private fun handleOnClick(view: View) {
@@ -85,6 +105,12 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
                 router.pushController(RouterTransaction.with(SearchAdvanceViewController(targetController = this))
                         .pushChangeHandler(HorizontalChangeHandler(false))
                         .popChangeHandler(HorizontalChangeHandler()))
+            }
+        }
+
+        view.ivScanQRCode.setOnClickListener {
+            if (doubleTouchPrevent.check("ivScanQRCode")) {
+                ScanQRCode.openScreenQRCode(activity, this)
             }
         }
     }
@@ -146,6 +172,7 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
     }
 
     override fun onDestroyView(view: View) {
+        KBus.unsubscribe(this)
         view.edtSearchBook.hideKeyboard()
         super.onDestroyView(view)
     }

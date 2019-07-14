@@ -118,7 +118,9 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                             path = lstPath.first().valueOrEmpty()
                         }
                     }
-                    view.getBookInfoSuccess(path)
+                    val title = data.title.valueOrEmpty()
+                    val author = data.author.valueOrEmpty()
+                    view.getBookInfoSuccess(path, title, author)
                 }
 
                 override fun fail(error: ErrorResponse) {

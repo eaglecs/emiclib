@@ -78,7 +78,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
-        fun create(isEbook: Boolean, bookId: Long, titleBook: String, author: String, photo: String) = Bundle().apply {
+        fun create(isEbook: Boolean, bookId: Long, photo: String) = Bundle().apply {
             this.isEBook = isEbook
             this.bookId = bookId
             this.author = author
@@ -93,8 +93,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         bundle.options { options ->
             isEBook = options.isEBook.valueOrFalse()
             bookId = options.bookId.valueOrZero()
-            author = options.author.valueOrEmpty()
-            titleBook = options.titleBook.valueOrEmpty()
             photo = options.photo.valueOrEmpty()
         }
     }
@@ -112,6 +110,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
         initEventBus(view)
         handleOnClick(view)
+        presenter.getBookInfo(bookId)
         presenter.getListBookRelated(bookId)
     }
 
@@ -137,8 +136,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun initView(view: View) {
-        view.tvBookName.text = titleBook
-        view.tvBookAuthor.text = author
         activity?.let { activity ->
             GlideUtil.loadImage(photo, view.ivBookDetail, activity)
         }
@@ -157,8 +154,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     targetController?.let { targetController ->
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = dataItem.id, photo = dataItem.photo, titleBook = dataItem.title,
-                                author = dataItem.author)
+                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = dataItem.id, photo = dataItem.photo)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -195,18 +191,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private val permissionsCode = 1000
     private var pathBook = ""
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun getBookInfoSuccess(path: String) {
+    override fun getBookInfoSuccess(path: String, title: String, author: String) {
         pathBook = path
-        if (PermissionUtil.hasPermissions(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            val settingsCanWrite = Settings.System.canWrite(activity)
-            if (settingsCanWrite) {
-                readEBook()
-            } else {
-                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), permissionsCode)
+        view?.let { view ->
+            view.tvBookName.text = titleBook
+            view.tvBookAuthor.text = author
         }
     }
 

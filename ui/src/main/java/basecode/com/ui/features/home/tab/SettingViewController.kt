@@ -4,15 +4,19 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.ui.R
 import basecode.com.ui.SettingActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.about.AboutViewController
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.feedback.FeedbackViewController
 import basecode.com.ui.features.fqa.FQAViewController
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_setting.view.*
 import org.koin.standalone.inject
@@ -30,6 +34,21 @@ class SettingViewController() : ViewController(bundle = null) {
 
     override fun initPostCreateView(view: View) {
         handleView(view)
+        initEventBus(view)
+    }
+
+    private fun initEventBus(view: View) {
+        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
+            val contentQRCode = it.contentQRCode
+            val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
+            if (bookInfo.size == 2) {
+                val bookId = bookInfo.first().trim().toLong()
+                targetController?.let { targetController ->
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
+            }
+        }
     }
 
     private fun handleView(view: View) {
@@ -65,6 +84,12 @@ class SettingViewController() : ViewController(bundle = null) {
                 }
             }
         }
+
+        view.ivScanQRCode.setOnClickListener {
+            if (doubleTouchPrevent.check("ivScanQRCode")) {
+                ScanQRCode.openScreenQRCode(activity, this)
+            }
+        }
     }
 
     private fun openSetting() {
@@ -72,5 +97,10 @@ class SettingViewController() : ViewController(bundle = null) {
             val intent = Intent(activity, SettingActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroyView(view: View) {
+        KBus.unsubscribe(this)
+        super.onDestroyView(view)
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.response.InfoHomeResponse
@@ -29,6 +30,7 @@ import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_home.view.*
@@ -62,6 +64,17 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             isLogin = false
             view.ivLogin.setImageResource(R.drawable.ic_login)
         }
+        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
+            val contentQRCode = it.contentQRCode
+            val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
+            if (bookInfo.size == 2) {
+                val bookId = bookInfo.first().trim().toLong()
+                targetController?.let { targetController ->
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
+            }
+        }
     }
 
     private fun handleView(view: View) {
@@ -83,6 +96,12 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                 }
             }
         }
+
+        view.setOnClickListener {
+            if (doubleTouchPrevent.check("ivScanQRCode")) {
+                ScanQRCode.openScreenQRCode(activity, this)
+            }
+        }
     }
 
     private fun initView(view: View) {
@@ -101,8 +120,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
             rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
-                            author = bookItem.author)
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture)
                     targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }, onActionReadMore = {
@@ -114,8 +132,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             }, context = activity))
             rvController.addViewRenderer(NewEBookRenderer(context = activity, onActionClickBook = { bookItem ->
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture, titleBook = bookItem.title,
-                            author = bookItem.author)
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture)
                     targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }, onActionReadMore = {
