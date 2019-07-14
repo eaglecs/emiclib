@@ -153,16 +153,23 @@ public class SettingActivity extends Activity {
                 return;
             }
 
-            int themeIndex = 0;
-            if (arg == themeWhiteButton) {
-                themeIndex = 0;
-            } else if (arg == themeBrownButton) {
-                themeIndex = 1;
-            } else {
-                themeIndex = 2;
+            if(arg == themeWhiteButton){
+                setting.theme = 0;
+                markTheme(setting.theme);
+                return;
             }
-            setting.theme = themeIndex;
-            markTheme(setting.theme);
+
+            if(arg == themeBrownButton){
+                setting.theme = 1;
+                markTheme(setting.theme);
+                return;
+            }
+
+            if(arg == themeBlackButton){
+                setting.theme = 2;
+                markTheme(setting.theme);
+                return;
+            }
 
             if (arg == ivBackSetting) {
                 finish();
