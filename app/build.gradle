@@ -55,16 +55,16 @@ android {
 
     signingConfigs {
         demo {
-            storeFile file("dev_keystore.jks")
-            storePassword "123456a@A"
-            keyAlias "dev_keystore"
-            keyPassword "123456a@A"
+            storeFile file("emiclib.jks")
+            storePassword "emiclib123456a@A"
+            keyAlias "emiclib"
+            keyPassword "emiclib123456a@A"
         }
         live {
-            storeFile file("ductrinh-foody.jks")
-            storePassword "foody\$123"
-            keyAlias "duc"
-            keyPassword "foody\$123"
+            storeFile file("emiclib.jks")
+            storePassword "emiclib123456a@A"
+            keyAlias "emiclib"
+            keyPassword "emiclib123456a@A"
         }
     }
 

@@ -11,8 +11,12 @@ def final BOOLEAN = "boolean"
 def final TRUE = "true"
 def final FALSE = "false"
 
-def final API_LIVE = "http://apinet.emiclib.com/"
-def final API_DEMO = "http://apinet.emiclib.com/"
+//def final API_LIVE = "http://apinet.emiclib.com/"
+//def final API_DEMO = "http://apinet.emiclib.com/"
+
+def final API_LIVE = "http://118.69.60.149:8059/"
+def final API_DEMO = "http://118.69.60.149:8059/"
+
 
 def versionNameRequestHeader = rootProject.ext.versionNameRequestHeader as String
 def flavorDimensionsValue = rootProject.ext.flavorDimensions as String
@@ -25,7 +29,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
