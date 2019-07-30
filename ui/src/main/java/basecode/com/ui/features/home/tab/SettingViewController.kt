@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
+import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.presentation.features.setting.SettingContract
 import basecode.com.ui.R
 import basecode.com.ui.SettingActivity
@@ -15,15 +17,18 @@ import basecode.com.ui.features.about.AboutViewController
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.feedback.FeedbackViewController
 import basecode.com.ui.features.fqa.FQAViewController
+import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.readbook.SkyDatabase
+import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_setting.view.*
 import org.koin.standalone.inject
 
-class SettingViewController() : ViewController(bundle = null){
+class SettingViewController() : ViewController(bundle = null) {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
+    private var isLogin = false
 
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
@@ -39,6 +44,14 @@ class SettingViewController() : ViewController(bundle = null){
     }
 
     private fun initEventBus(view: View) {
+        KBus.subscribe<LoginSuccessEventBus>(this) {
+            isLogin = true
+            view.ivLogin.setImageResource(R.drawable.ic_person)
+        }
+        KBus.subscribe<LogoutSuccessEventBus>(this) {
+            isLogin = false
+            view.ivLogin.setImageResource(R.drawable.ic_login)
+        }
         KBus.subscribe<ResultScanQRCodeEventBus>(this) {
             val contentQRCode = it.contentQRCode
             val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
@@ -89,6 +102,19 @@ class SettingViewController() : ViewController(bundle = null){
         view.ivScanQRCode.setOnClickListener {
             if (doubleTouchPrevent.check("ivScanQRCode")) {
                 ScanQRCode.openScreenQRCode(activity, this)
+            }
+        }
+        view.ivLogin.setOnClickListener {
+            if (doubleTouchPrevent.check("ivLogin")) {
+                if (isLogin) {
+                    targetController?.let { targetController ->
+                        targetController.router.pushController(RouterTransaction.with(UserViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                } else {
+                    targetController?.let { targetController ->
+                        targetController.router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                }
             }
         }
     }

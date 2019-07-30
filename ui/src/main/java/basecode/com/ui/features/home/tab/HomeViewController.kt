@@ -185,6 +185,11 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     override fun handleAfterCheckLogin(isLogin: Boolean) {
+        if(isLogin){
+            KBus.post(LoginSuccessEventBus())
+        } else {
+            KBus.post(LogoutSuccessEventBus())
+        }
         this.isLogin = isLogin
         view?.let { view ->
             if (isLogin) {

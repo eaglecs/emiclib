@@ -43,6 +43,7 @@ class LoginViewController : ViewController(bundle = null), LoginContract.View {
         }
         view.btnLogin.setOnClickListener {
             if (doubleTouchPrevent.check("btnLogin")) {
+                view.edtPassword.hideKeyboard()
                 loginLib(view)
             }
         }
