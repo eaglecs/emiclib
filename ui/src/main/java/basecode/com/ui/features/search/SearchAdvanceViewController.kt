@@ -41,6 +41,11 @@ class SearchAdvanceViewController<T>() : ViewController(bundle = null)
                 router.popController(this)
             }
         }
+        view.vgClose.setOnClickListener {
+            if (doubleTouchPrevent.check("vgClose")) {
+                router.popController(this)
+            }
+        }
     }
 
     override fun onDestroyView(view: View) {

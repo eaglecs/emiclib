@@ -2,10 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal">
 
-    <Space
-        android:layout_width="@dimen/default_padding_margin_huge"
+    <View
+        android:id="@+id/vgClose"
+        android:background="@color/default_color_black_alpha_30"
+        android:layout_width="@dimen/default_padding_margin_huge_xxxx"
         android:layout_height="match_parent" />
 
     <View

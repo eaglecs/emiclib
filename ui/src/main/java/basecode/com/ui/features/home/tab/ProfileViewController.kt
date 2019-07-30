@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.presentation.features.setting.SettingContract
 import basecode.com.ui.R
@@ -45,6 +46,9 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private fun iniEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
+        }
+        KBus.subscribe<LogoutSuccessEventBus>(this){
+            isLogin = false
         }
     }
 

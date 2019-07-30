@@ -74,23 +74,27 @@ class RenewViewController : ViewController(null), RenewContract.View {
                 rvController.notifyDataChanged()
             }
         }
+        hideLoading()
     }
 
     override fun getListLoanRenewFail(msgError: String) {
         view?.let { view ->
             Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_get_list_book_renew_fail)).show()
+            hideLoading()
         }
     }
 
     override fun renewSuccess() {
         view?.let { view ->
             Toasty.success(view.context, view.context.resources.getString(R.string.msg_change_renew_success)).show()
+            hideLoading()
         }
     }
 
     override fun renewfail() {
         view?.let { view ->
             Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_renew_fail)).show()
+            hideLoading()
         }
     }
 

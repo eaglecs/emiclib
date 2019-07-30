@@ -76,11 +76,13 @@ class NotifyViewController : ViewController(null), NotifyContract.View {
             }
 
         }
+        hideLoading()
     }
 
     override fun getListNotifyFail() {
         activity?.let { activity ->
             Toasty.error(activity, activity.resources.getString(R.string.msg_error_read_message_fail)).show()
+            hideLoading()
         }
     }
 

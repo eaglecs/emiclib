@@ -104,6 +104,7 @@ class LoginViewController : ViewController(bundle = null), LoginContract.View {
 
     override fun onDestroyView(view: View) {
         view.hideKeyboard()
+        view.context.hideKeyboard(view)
         presenter.detachView()
         super.onDestroyView(view)
     }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
@@ -124,6 +125,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
+        }
+        KBus.subscribe<LogoutSuccessEventBus>(this){
+            isLogin = false
         }
     }
 

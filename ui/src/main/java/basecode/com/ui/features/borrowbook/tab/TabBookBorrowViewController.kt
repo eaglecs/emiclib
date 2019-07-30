@@ -117,6 +117,7 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
 
     override fun showLoading() {
         view?.let { view ->
+            view.vgRefreshBooksBorrow.isRefreshing = false
             view.vgLoadingBorrowBook.hide()
         }
     }
