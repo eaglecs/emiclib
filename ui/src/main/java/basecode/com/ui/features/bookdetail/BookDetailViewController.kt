@@ -125,8 +125,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
+            if (it.type == LoginSuccessEventBus.Type.HandleBook) {
+                handleBook()
+            }
         }
-        KBus.subscribe<LogoutSuccessEventBus>(this){
+        KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
         }
     }
@@ -177,13 +180,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             if (doubleTouchPrevent.check("tvHandleBook")) {
                 if (isCheckLogin) {
                     if (isLogin) {
-                        if (isEBook) {
-                            readEBook()
-                        } else {
-                            presenter.reservationBook(bookId)
-                        }
+                        handleBook()
                     } else {
-                        router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                        val loginViewController = LoginViewController()
+                        loginViewController.setType(LoginSuccessEventBus.Type.HandleBook)
+                        router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 } else {
                     presenter.getStatusLogin()
@@ -306,13 +307,19 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         isCheckLogin = true
         this.isLogin = isLogin
         if (isLogin) {
-            if (isEBook) {
-                readEBook()
-            } else {
-                presenter.reservationBook(bookId)
-            }
+            handleBook()
         } else {
-            router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+            val loginViewController = LoginViewController()
+            loginViewController.setType(LoginSuccessEventBus.Type.HandleBook)
+            router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+        }
+    }
+
+    private fun handleBook() {
+        if (isEBook) {
+            readEBook()
+        } else {
+            presenter.reservationBook(bookId)
         }
     }
 

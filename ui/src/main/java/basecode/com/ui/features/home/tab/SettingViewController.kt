@@ -112,7 +112,9 @@ class SettingViewController() : ViewController(bundle = null) {
                     }
                 } else {
                     targetController?.let { targetController ->
-                        targetController.router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                        val loginViewController = LoginViewController()
+                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
             }

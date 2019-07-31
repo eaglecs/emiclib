@@ -21,8 +21,13 @@ class LoginViewController : ViewController(bundle = null), LoginContract.View {
 
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private val presenter: LoginContract.Presenter by inject()
+    private var type = LoginSuccessEventBus.Type.Normal
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_login, container, false)
+    }
+
+    fun setType(type: LoginSuccessEventBus.Type) {
+        this.type = type
     }
 
     override fun initPostCreateView(view: View) {
@@ -82,7 +87,7 @@ class LoginViewController : ViewController(bundle = null), LoginContract.View {
 
     override fun resultLogin(isLogin: Boolean) {
         if (isLogin) {
-            KBus.post(LoginSuccessEventBus())
+            KBus.post(LoginSuccessEventBus(type))
             router.popController(this)
         } else {
             activity?.let { activity ->

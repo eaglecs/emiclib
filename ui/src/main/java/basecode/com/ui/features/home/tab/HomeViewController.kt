@@ -91,7 +91,9 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                     }
                 } else {
                     targetController?.let { targetController ->
-                        targetController.router.pushController(RouterTransaction.with(LoginViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                        val loginViewController = LoginViewController()
+                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
             }
@@ -185,8 +187,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     override fun handleAfterCheckLogin(isLogin: Boolean) {
-        if(isLogin){
-            KBus.post(LoginSuccessEventBus())
+        if (isLogin) {
+            KBus.post(LoginSuccessEventBus(LoginSuccessEventBus.Type.Normal))
         } else {
             KBus.post(LogoutSuccessEventBus())
         }

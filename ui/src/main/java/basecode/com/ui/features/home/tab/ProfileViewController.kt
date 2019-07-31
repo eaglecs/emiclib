@@ -46,8 +46,34 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private fun iniEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
+            targetController?.let { targetController ->
+                when (it.type) {
+                    LoginSuccessEventBus.Type.UserInfo -> {
+                        targetController.router.pushController(RouterTransaction.with(UserViewController())
+                                .pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.ChangePass -> {
+                        targetController.router.pushController(RouterTransaction.with(ChangePassViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.DownloadBook -> {
+                        targetController.router.pushController(RouterTransaction.with(DownloadBookViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.Notify -> {
+                        targetController.router.pushController(RouterTransaction.with(NotifyViewController())
+                                .pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.BorrowBook -> {
+                        targetController.router.pushController(RouterTransaction.with(BorrowBookViewController())
+                                .pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.RenewBook -> {
+                        targetController.router.pushController(RouterTransaction.with(RenewViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+
+                }
+            }
         }
-        KBus.subscribe<LogoutSuccessEventBus>(this){
+        KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
         }
     }
@@ -60,7 +86,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                         targetController.router.pushController(RouterTransaction.with(UserViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.UserInfo)
                     }
                 }
             }
@@ -72,7 +98,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                         targetController.router.pushController(RouterTransaction.with(BorrowBookViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.BorrowBook)
                     }
 
                 }
@@ -86,7 +112,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                         targetController.router.pushController(RouterTransaction.with(NotifyViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.Notify)
                     }
                 }
 
@@ -101,7 +127,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(RenewViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.RenewBook)
                     }
                 }
             }
@@ -113,7 +139,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(DownloadBookViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.DownloadBook)
                     }
                 }
             }
@@ -125,15 +151,17 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(ChangePassViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     } else {
-                        gotoScreenLogin(targetController)
+                        gotoScreenLogin(targetController, LoginSuccessEventBus.Type.ChangePass)
                     }
                 }
             }
         }
     }
 
-    private fun gotoScreenLogin(targetController: Controller) {
-        targetController.router.pushController(RouterTransaction.with(LoginViewController())
+    private fun gotoScreenLogin(targetController: Controller, type: LoginSuccessEventBus.Type) {
+        val loginViewController = LoginViewController()
+        loginViewController.setType(type)
+        targetController.router.pushController(RouterTransaction.with(loginViewController)
                 .pushChangeHandler(FadeChangeHandler(false)))
     }
 
