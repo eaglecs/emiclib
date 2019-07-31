@@ -8,14 +8,9 @@
 
     <View
         android:id="@+id/vgClose"
-        android:background="@color/default_color_black_alpha_30"
         android:layout_width="@dimen/default_padding_margin_huge_xxxx"
-        android:layout_height="match_parent" />
-
-    <View
-        android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/md_grey300" />
+        android:background="@color/default_color_black_alpha_20" />
 
     <LinearLayout
         android:layout_width="match_parent"

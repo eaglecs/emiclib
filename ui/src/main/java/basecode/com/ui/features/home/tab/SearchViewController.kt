@@ -104,8 +104,7 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
             if (doubleTouchPrevent.check("ivSearchAdvance")) {
                 targetController?.let { targetController ->
                     targetController.router.pushController(RouterTransaction.with(SearchAdvanceViewController(targetController = this))
-                            .pushChangeHandler(HorizontalChangeHandler(false))
-                            .popChangeHandler(HorizontalChangeHandler()))
+                            .pushChangeHandler(FadeChangeHandler(false)))
 
                 }
             }
