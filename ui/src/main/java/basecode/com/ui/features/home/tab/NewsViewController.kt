@@ -3,8 +3,12 @@ package basecode.com.ui.features.home.tab
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.response.NewNewsResponse
 import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.ui.R
@@ -13,9 +17,14 @@ import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.home.renderer.NewNewsItemRenderer
 import basecode.com.ui.features.home.viewholder.NewNewsItemViewHolderModel
+import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
+import basecode.com.ui.features.user.UserViewController
+import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
@@ -26,8 +35,9 @@ import org.koin.standalone.inject
 class NewsViewController() : ViewController(bundle = null), NewNewsContract.View {
 
     private val presenter: NewNewsContract.Presenter by inject()
+    private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private lateinit var rvController: RecyclerViewController
-
+    private var isLogin = false
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
     }
@@ -35,8 +45,31 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
         initView(view)
+        iniEventBus(view)
         onClickView(view)
         presenter.getListNewNews(isRefresh = true)
+    }
+
+    private fun iniEventBus(view: View) {
+        KBus.subscribe<LoginSuccessEventBus>(this) {
+            isLogin = true
+            view.ivLogin.setImageResource(R.drawable.ic_person)
+        }
+        KBus.subscribe<LogoutSuccessEventBus>(this) {
+            isLogin = false
+            view.ivLogin.setImageResource(R.drawable.ic_login)
+        }
+        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
+            val contentQRCode = it.contentQRCode
+            val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
+            if (bookInfo.size == 2) {
+                val bookId = bookInfo.first().trim().toLong()
+                targetController?.let { targetController ->
+                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                }
+            }
+        }
     }
 
     private fun initView(view: View) {
@@ -68,6 +101,26 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
     private fun onClickView(view: View) {
         view.vgRefreshNewNews.setOnRefreshListener {
             presenter.getListNewNews(isRefresh = true)
+        }
+        view.ivLogin.setOnClickListener {
+            if (doubleTouchPrevent.check("ivLogin")) {
+                if (isLogin) {
+                    targetController?.let { targetController ->
+                        targetController.router.pushController(RouterTransaction.with(UserViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                } else {
+                    targetController?.let { targetController ->
+                        val loginViewController = LoginViewController()
+                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                }
+            }
+        }
+        view.ivScanQRCode.setOnClickListener {
+            if (doubleTouchPrevent.check("ivScanQRCode")) {
+                ScanQRCode.openScreenQRCode(activity, this)
+            }
         }
     }
 

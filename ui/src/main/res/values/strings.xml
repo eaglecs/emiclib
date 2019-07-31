@@ -134,6 +134,8 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_book_download">Sách tải xuống</string>
     <string name="msg_error_get_list_book_download">Lấy danh sách sách tải xuống thất bại</string>
     <string name="text_no_question_answer">Chưa có câu hỏi và trả lời</string>
+    <string name="text_account">Tài khoản</string>
+    <string name="text_news">Tin tức</string>
 
 
 </resources>

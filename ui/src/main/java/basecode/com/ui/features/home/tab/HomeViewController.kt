@@ -99,7 +99,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             }
         }
 
-        view.setOnClickListener {
+        view.ivScanQRCode.setOnClickListener {
             if (doubleTouchPrevent.check("ivScanQRCode")) {
                 ScanQRCode.openScreenQRCode(activity, this)
             }
