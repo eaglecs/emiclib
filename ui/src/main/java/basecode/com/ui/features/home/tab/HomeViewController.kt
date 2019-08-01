@@ -173,8 +173,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         rvController.addItem(newBookViewHolderModel)
         val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
         rvController.addItem(newEBookViewHolderModel)
-        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
-        rvController.addItem(newCollectionRecommendViewHolderModel)
+//        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
+//        rvController.addItem(newCollectionRecommendViewHolderModel)
         rvController.notifyDataChanged()
         hideLoading()
     }
