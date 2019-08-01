@@ -2,8 +2,9 @@ package basecode.com.ui.features.bookdetail
 
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Typeface
 import android.os.*
-import android.support.annotation.RequiresApi
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
+import basecode.com.ui.util.TemplateUtil
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
@@ -56,6 +58,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var receiver: SkyReceiver = SkyReceiver()
     private var isCheckLogin = false
     private var isLogin = false
+    private val permissionsCode = 1000
+    private var pathBook = ""
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -191,14 +195,34 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    private val permissionsCode = 1000
-    private var pathBook = ""
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun getBookInfoSuccess(path: String, title: String, author: String) {
+
+    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String) {
         pathBook = path
         view?.let { view ->
-            view.tvBookName.text = titleBook
-            view.tvBookAuthor.text = author
+            view.tvBookName.text = title
+            if (author.isNotEmpty()) {
+                view.tvBookAuthor.text = author
+            } else {
+                view.vgBookAuthor.gone()
+            }
+
+            if (publisher.isNotEmpty()) {
+                val textPublisher = TemplateUtil.createNewSpanny("")
+                textPublisher.append("Nhà xuất bản: ", StyleSpan(Typeface.BOLD))
+                textPublisher.append(publisher, StyleSpan(Typeface.NORMAL))
+                view.tvPublisher.text = textPublisher
+            } else {
+                view.tvPublisher.gone()
+            }
+
+            if (publishYear.isNotEmpty()) {
+                view.tvPublishYear.text = publishYear
+            } else {
+                view.vgPublishYear.gone()
+            }
+
+            view.tvDescription.text = shortDescription
+
         }
     }
 

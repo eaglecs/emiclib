@@ -20,4 +20,7 @@ public class TemplateUtil {
     public static CharSequence createSpannable(String text, Object... styles) {
         return new Spanny(text, styles);
     }
+    public static Spanny createNewSpanny(String text, Object... styles) {
+        return new Spanny(text, styles);
+    }
 }

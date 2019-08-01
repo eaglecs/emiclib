@@ -75,7 +75,8 @@
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
-            android:paddingBottom="@dimen/default_padding_margin_x" />
+            android:paddingBottom="@dimen/default_padding_margin_x"
+            android:visibility="gone" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/edtLanguage"
@@ -91,7 +92,8 @@
             android:paddingLeft="@dimen/default_padding_margin"
             android:paddingTop="@dimen/default_padding_margin_x"
             android:paddingRight="@dimen/default_padding_margin"
-            android:paddingBottom="@dimen/default_padding_margin_x" />
+            android:paddingBottom="@dimen/default_padding_margin_x"
+            android:visibility="gone" />
 
         <Space
             android:layout_width="match_parent"

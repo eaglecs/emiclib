@@ -20,7 +20,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         view?.let { view ->
             view.showLoading()
             saveBookUseCase.cancel()
-            saveBookUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse>{
+            saveBookUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse> {
                 override fun success(data: Boolean) {
                 }
 
@@ -34,6 +34,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             }, eBookModel)
         }
     }
+
     override fun reservationBook(bookId: Long) {
         view?.let { view ->
             view.showLoading()
@@ -120,7 +121,10 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     }
                     val title = data.title.valueOrEmpty()
                     val author = data.author.valueOrEmpty()
-                    view.getBookInfoSuccess(path, title, author)
+                    val publisher = data.publisher.valueOrEmpty()
+                    val publishYear = data.publishYear.valueOrEmpty()
+                    val shortDescription = data.shortDescription.valueOrEmpty()
+                    view.getBookInfoSuccess(path, title, author, publisher, publishYear, shortDescription)
                 }
 
                 override fun fail(error: ErrorResponse) {

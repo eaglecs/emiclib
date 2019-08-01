@@ -11,7 +11,7 @@ class BookDetailContract {
         fun getListBookRelatedSuccess(data: List<BookVewModel>)
         fun showErrorGetListBookRelated()
         fun handleAfterCheckLogin(isLogin: Boolean)
-        fun getBookInfoSuccess(path: String, title: String, author: String)
+        fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String)
         fun getBookInfoFail(msgError: String)
         fun reservationBookSuccess()
         fun reservationBookFail(errorCode: Int)

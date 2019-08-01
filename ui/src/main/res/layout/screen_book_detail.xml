@@ -77,12 +77,72 @@
                         android:textStyle="bold"
                         tools:text="Ngay xua co mot con bo ..." />
 
+                    <LinearLayout
+                        android:id="@+id/vgBookAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_padding_margin"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/default_padding_margin"
+                            android:layout_marginRight="@dimen/default_padding_margin"
+                            android:text="Tác giả:"
+                            android:textStyle="bold" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tvBookAuthor"
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            tools:text="Ngay xua co mot con bo ..." />
+                    </LinearLayout>
+
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tvBookAuthor"
+                        android:id="@+id/tvPublisher"
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        tools:text="Ngay xua co mot con bo ..." />
+
+
+                    <LinearLayout
+                        android:id="@+id/vgPublishYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/default_padding_margin"
+                            android:layout_marginRight="@dimen/default_padding_margin"
+                            android:text="Năm xuất bản:"
+                            android:textStyle="bold" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tvPublishYear"
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            tools:text="Ngay xua co mot con bo ..." />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tvDescription"
                         style="@style/TextPrimaryBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_padding_margin"
+                        android:maxLines="3"
                         tools:text="Ngay xua co mot con bo ..." />
 
                 </LinearLayout>
@@ -129,9 +189,8 @@
             android:layout_gravity="center"
             android:background="@color/default_color_black_alpha_30"
             android:gravity="center"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvProcessDownloadEBook"
@@ -139,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_black"
-                tools:text="80/100"/>
+                tools:text="80/100" />
 
             <ProgressBar
                 android:id="@+id/pbDownloadEBook"
@@ -157,7 +216,7 @@
                 android:minHeight="@dimen/default_padding_margin_small"
                 android:progress="80"
                 android:progressDrawable="@drawable/progress_limit"
-                android:secondaryProgress="100"/>
+                android:secondaryProgress="100" />
         </LinearLayout>
 
         <basecode.com.ui.base.loading.LoadingLayout
