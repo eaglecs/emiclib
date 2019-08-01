@@ -122,4 +122,12 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_no_question_answer">Chưa có câu hỏi và trả lời</string>
     <string name="text_account">Tài khoản</string>
     <string name="text_news">Tin tức</string>
+    <string name="msg_reservation_fail_number_card">Số thẻ hoặc mật khẩu không hợp lệ.</string>
+    <string name="msg_reservation_fail_request_exist">Yêu cầu này đã tồn tại.</string>
+    <string name="msg_reservation_fail_except">Yêu cầu vượt quá giới hạn được mượn.</string>
+    <string name="msg_reservation_fail_full">Bạn đã hết lượt đăng ký đặt chỗ.</string>
+    <string name="msg_reservation_fail_not_Invalid">Đăng ký cá biệt không hợp lệ.</string>
+    <string name="msg_reservation_fail_free">không có tài liệu rỗi.</string>
+    <string name="msg_reservation_fail_nomal">Đặt mượn sách thất bại.</string>
+    <string name="TITLE_ERROR">Lỗi</string>
 </resources>

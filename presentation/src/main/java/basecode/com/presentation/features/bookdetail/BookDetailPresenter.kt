@@ -40,15 +40,15 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             reservationBookUseCase.cancel()
             reservationBookUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
                 override fun success(data: Int) {
-                    if (data == 1) {
+                    if (data == 0) {
                         view.reservationBookSuccess()
                     } else {
-                        view.reservationBookFail("")
+                        view.reservationBookFail(data)
                     }
                 }
 
                 override fun fail(error: ErrorResponse) {
-                    view.reservationBookFail(error.msgError)
+                    view.reservationBookFail(8)
                 }
 
                 override fun done() {

@@ -1,10 +1,8 @@
 package basecode.com.ui.features.bookdetail
 
-import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.*
-import android.provider.Settings
 import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
@@ -30,13 +28,13 @@ import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
+import basecode.com.ui.features.dialog.DialogOneEventViewController
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.readbook.BookViewActivity
 import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
-import basecode.com.ui.util.PermissionUtil
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
@@ -45,7 +43,7 @@ import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
 
 
-class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View {
+class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View, DialogOneEventViewController.ActionEvent {
 
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -329,9 +327,39 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    override fun reservationBookFail(msgError: String) {
+    override fun reservationBookFail(errorCode: Int) {
         activity?.let { activity ->
-            Toasty.error(activity, activity.getString(R.string.msg_reservation_fail)).show()
+
+            val msgError = when (errorCode) {
+                1 -> {
+                    activity.getString(R.string.msg_reservation_fail_number_card)
+                }
+                2 -> {
+                    activity.getString(R.string.msg_reservation_fail)
+                }
+                3 -> {
+                    activity.getString(R.string.msg_reservation_fail_request_exist)
+                }
+                4 -> {
+                    activity.getString(R.string.msg_reservation_fail_except)
+                }
+                5 -> {
+                    activity.getString(R.string.msg_reservation_fail_full)
+                }
+                6 -> {
+                    activity.getString(R.string.msg_reservation_fail_not_Invalid)
+                }
+                7 -> {
+                    activity.getString(R.string.msg_reservation_fail_free)
+                }
+                else -> {
+                    activity.getString(R.string.msg_reservation_fail_nomal)
+                }
+            }
+
+            val bundle = DialogOneEventViewController.BundleOptions.create(msgError)
+            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
+                    .pushChangeHandler(FadeChangeHandler(false)))
         }
     }
 
@@ -416,6 +444,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     override fun handleBack(): Boolean {
         return false
     }
+
+    override fun onResultAfterHandleDialog() {}
 
     override fun onDestroyView(view: View) {
         KBus.unsubscribe(this)

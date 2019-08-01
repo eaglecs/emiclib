@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_color_black_alpha_60"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/vgDialogAlertWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/default_padding_margin_x"
+        android:layout_marginRight="@dimen/default_padding_margin_x"
+        android:background="@drawable/bg_dialog_alert"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvTitleDialogOneEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/default_padding_margin"
+            android:text="@string/TITLE_ERROR"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextPrimaryTitle"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="@dimen/default_padding_margin_small"
+            android:background="@color/md_grey200" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvMsgError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin_h"
+            android:gravity="center"
+            android:minHeight="@dimen/default_padding_margin_huge_xxxx"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextSecondaryBody"
+            android:textColor="@color/material_black"
+            tools:text="No internet connection detected. Please connect your device to wifi or 3G and try again" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="@dimen/default_padding_margin_small"
+            android:background="@color/md_grey200" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:padding="@dimen/default_padding_margin_x"
+            android:text="@string/ACTION_OK"
+            android:textAppearance="@style/TextPrimaryTitle"
+            android:textColor="@color/md_blue500"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>
