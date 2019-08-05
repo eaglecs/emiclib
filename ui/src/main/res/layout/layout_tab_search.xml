@@ -20,8 +20,7 @@
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
-            android:tint="@color/md_blue500"
+            android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_qr_code" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -39,8 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
-            android:tint="@color/md_blue500"
+            android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_filter" />
     </FrameLayout>
 
@@ -52,7 +50,7 @@
     <LinearLayout
         android:id="@+id/ChooseDestination"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_toolbar"
+        android:layout_height="40dp"
         android:layout_margin="@dimen/default_padding_margin"
         android:background="@drawable/bg_corner_blue_grey"
         android:gravity="center_vertical"
@@ -63,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_small"
             app:srcCompat="@drawable/ic_search" />
 
         <android.support.v7.widget.AppCompatEditText
@@ -85,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding_margin_small"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_small"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_close"
             tools:visibility="visible" />
@@ -94,7 +92,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tlCategoryBook"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_toolbar"
+        android:layout_height="30dp"
         app:tabIndicatorColor="@color/md_blue700"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/md_blue600"

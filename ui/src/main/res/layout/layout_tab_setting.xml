@@ -16,7 +16,7 @@
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_qr_code" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/text_more"
-            android:textColor="@color/md_blue800" />
+            android:textColor="@color/md_blue800"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivLogin"
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_login" />
     </FrameLayout>
 
