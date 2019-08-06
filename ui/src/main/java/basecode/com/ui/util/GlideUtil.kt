@@ -15,7 +15,6 @@ class GlideUtil : AppGlideModule() {
             val context = imageView.context
             GlideApp.with(context)
                     .load(url)
-                    .fitCenter()
                     .centerCrop()
                     .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
                     .error(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
@@ -28,8 +27,8 @@ class GlideUtil : AppGlideModule() {
                     .load(url)
                     .fitCenter()
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_item_news))
-                    .error(ContextCompat.getDrawable(context, R.drawable.ic_item_news))
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.news))
+                    .error(ContextCompat.getDrawable(context, R.drawable.news))
                     .into(imageView)
         }
 

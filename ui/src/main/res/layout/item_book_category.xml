@@ -28,11 +28,11 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvTitleBook"
-                style="@style/TextPrimarySubtitle"
+                style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:textStyle="bold"
+                android:textColor="@color/md_black"
                 tools:text="Sach 1" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -40,6 +40,7 @@
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/md_grey800"
                 tools:text="Tac Gia" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -48,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom|end"
+                android:textColor="@color/md_grey600"
                 tools:text="2018" />
         </LinearLayout>
 

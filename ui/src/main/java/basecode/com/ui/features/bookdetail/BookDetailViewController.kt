@@ -161,7 +161,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     targetController?.let { targetController ->
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = dataItem.id, photo = dataItem.photo)
+                        val bundle = BundleOptions.create(isEbook = true, bookId = dataItem.id, photo = dataItem.photo)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -182,8 +182,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     if (isLogin) {
                         handleBook()
                     } else {
-                        val loginViewController = LoginViewController()
-                        loginViewController.setType(LoginSuccessEventBus.Type.HandleBook)
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
+                        val loginViewController = LoginViewController(bundle)
                         router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 } else {
@@ -329,8 +329,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         if (isLogin) {
             handleBook()
         } else {
-            val loginViewController = LoginViewController()
-            loginViewController.setType(LoginSuccessEventBus.Type.HandleBook)
+            val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
+            val loginViewController = LoginViewController(bundle)
             router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
         }
     }

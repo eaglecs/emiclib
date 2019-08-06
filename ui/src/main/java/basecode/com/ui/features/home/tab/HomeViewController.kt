@@ -89,8 +89,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                     }
                 } else {
                     targetController?.let { targetController ->
-                        val loginViewController = LoginViewController()
-                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
+                        val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -200,6 +200,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     override fun showLoading() {
         view?.let { view ->
+            view.vgRefreshInfo.isRefreshing = false
             view.vgLoading.show()
         }
     }

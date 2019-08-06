@@ -110,8 +110,8 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
                     }
                 } else {
                     targetController?.let { targetController ->
-                        val loginViewController = LoginViewController()
-                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
+                        val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -133,7 +133,8 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
         val lstData = mutableListOf<NewNewsItemViewHolderModel>()
         data.forEach { news ->
             val detail = news.details.valueOrEmpty()
-            val newNewsItemViewHolderModel = NewNewsItemViewHolderModel(id = news.id.valueOrZero(), title = news.title.valueOrEmpty(), content = detail, photo = news.picture.valueOrEmpty())
+            val newNewsItemViewHolderModel = NewNewsItemViewHolderModel(id = news.id.valueOrZero(), title = news.title.valueOrEmpty(),
+                    content = detail, photo = news.picture.valueOrEmpty(), summary = news.summary.valueOrEmpty())
             lstData.add(newNewsItemViewHolderModel)
         }
         if (refresh) {

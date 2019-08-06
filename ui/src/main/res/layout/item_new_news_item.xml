@@ -13,24 +13,13 @@
         android:orientation="horizontal"
         android:padding="@dimen/default_padding_margin">
 
-        <FrameLayout
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivNewNews"
             android:layout_width="100dp"
-            android:layout_height="100dp">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/ivNewNews"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:padding="@dimen/default_padding_margin"
-                android:scaleType="centerCrop" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_rec_line_photo_news_detail" />
-
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/news" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -17,7 +17,7 @@ class NewNewsItemRenderer(private val context: Context) : ViewHolderRenderer<New
 
     override fun bindView(model: NewNewsItemViewHolderModel, viewFinder: ViewFinder) {
         viewFinder.setText(R.id.tvTitleNews, model.title)
-        viewFinder.setText(R.id.tvContent, model.content.formatHtml())
+        viewFinder.setText(R.id.tvContent, model.summary)
         val ivNewNews = viewFinder.find<AppCompatImageView>(R.id.ivNewNews)
         GlideUtil.loadImageNews(model.photo, ivNewNews, context)
         viewFinder.setGone(R.id.tvTitleNews, model.title.isEmpty())

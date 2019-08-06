@@ -1,15 +1,19 @@
 package basecode.com.ui.features.login
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.presentation.features.login.LoginContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.base.extra.BundleExtraInt
+import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.extension.view.hideKeyboard
 import basecode.com.ui.extension.view.shake
 import basecode.com.ui.util.DoubleTouchPrevent
@@ -17,17 +21,51 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_login.view.*
 import org.koin.standalone.inject
 
-class LoginViewController : ViewController(bundle = null), LoginContract.View {
+class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), LoginContract.View {
 
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private val presenter: LoginContract.Presenter by inject()
     private var type = LoginSuccessEventBus.Type.Normal
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.screen_login, container, false)
+
+    object BundleOptions {
+        var Bundle.type by BundleExtraInt("LoginViewController.type")
+        fun create(type: Int) = Bundle().apply {
+            this.type = type
+        }
     }
 
-    fun setType(type: LoginSuccessEventBus.Type) {
-        this.type = type
+    companion object : BundleOptionsCompanion<BundleOptions>(BundleOptions)
+
+    init {
+        bundle.options { options ->
+            type = when(options.type.valueOrZero()){
+                1 -> {
+                    LoginSuccessEventBus.Type.HandleBook
+                }
+                2-> {
+                    LoginSuccessEventBus.Type.UserInfo
+                }
+                3 -> {
+                    LoginSuccessEventBus.Type.BorrowBook
+                }
+                4 -> {
+                    LoginSuccessEventBus.Type.Notify
+                }
+                5 -> {
+                    LoginSuccessEventBus.Type.RenewBook
+                }
+                6 -> {
+                    LoginSuccessEventBus.Type.DownloadBook
+                }
+                else -> {
+                    LoginSuccessEventBus.Type.Normal
+                }
+            }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(R.layout.screen_login, container, false)
     }
 
     override fun initPostCreateView(view: View) {

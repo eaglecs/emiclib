@@ -12,7 +12,6 @@ import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
-import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.hideKeyboard
@@ -132,45 +131,47 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
     }
 
     private fun initView(view: View) {
-        lstCategoryBook.add(CategoryBookViewModel(categoryId = 0, categoryName = view.context.getString(R.string.text_book)))
-        lstCategoryBook.add(CategoryBookViewModel(categoryId = 4, categoryName = view.context.getString(R.string.text_ebook)))
-        lstCategoryBook.add(CategoryBookViewModel(categoryId = 3, categoryName = view.context.getString(R.string.text_speak_book)))
-        lstCategoryBook.add(CategoryBookViewModel(categoryId = 2, categoryName = view.context.getString(R.string.text_movie)))
-        lstCategoryBook.add(CategoryBookViewModel(categoryId = 1, categoryName = view.context.getString(R.string.text_picture)))
-        val pagerAdapter = object : RouterPagerAdapter(this) {
-            override fun configureRouter(router: Router, position: Int) {
-                if (!router.hasRootController()) {
+        targetController?.let { targetController ->
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = 0, categoryName = view.context.getString(R.string.text_book)))
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = 4, categoryName = view.context.getString(R.string.text_ebook)))
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = 3, categoryName = view.context.getString(R.string.text_speak_book)))
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = 2, categoryName = view.context.getString(R.string.text_movie)))
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = 1, categoryName = view.context.getString(R.string.text_picture)))
+            val pagerAdapter = object : RouterPagerAdapter(this) {
+                override fun configureRouter(router: Router, position: Int) {
+                    if (!router.hasRootController() && targetController is ViewController) {
+                        val categoryBookViewModel = lstCategoryBook[position]
+                        val bundle = TabBookCategoryViewController.BundleOptions.create(categoryId = categoryBookViewModel.categoryId)
+                        val page: Controller = TabBookCategoryViewController(targetController = targetController, bundle = bundle)
+                        router.setRoot(RouterTransaction.with(page).tag("PlaceDetail$position"))
+                    }
+                }
+
+                override fun getCount() = lstCategoryBook.size
+                override fun getPageTitle(position: Int): String {
                     val categoryBookViewModel = lstCategoryBook[position]
-                    val bundle = TabBookCategoryViewController.BundleOptions.create(categoryId = categoryBookViewModel.categoryId)
-                    val page: Controller = TabBookCategoryViewController(targetController = this@SearchViewController, bundle = bundle)
-                    router.setRoot(RouterTransaction.with(page).tag("PlaceDetail$position"))
+                    return categoryBookViewModel.categoryName
                 }
             }
+            view.vpBook.adapter = pagerAdapter
+            view.vpBook.offscreenPageLimit = lstCategoryBook.size
+            view.tlCategoryBook.setupWithViewPager(view.vpBook)
 
-            override fun getCount() = lstCategoryBook.size
-            override fun getPageTitle(position: Int): String {
-                val categoryBookViewModel = lstCategoryBook[position]
-                return categoryBookViewModel.categoryName
-            }
+            view.tlCategoryBook.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
+                override fun onTabReselected(p0: TabLayout.Tab?) {}
+
+                override fun onTabUnselected(p0: TabLayout.Tab?) {}
+
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val position = tab.position
+                    if (lstCategoryBook.size > position) {
+                        val categoryBookViewModel = lstCategoryBook[position]
+                        categoryIdCurrent = categoryBookViewModel.categoryId
+                    }
+                }
+
+            })
         }
-        view.vpBook.adapter = pagerAdapter
-        view.vpBook.offscreenPageLimit = lstCategoryBook.size
-        view.tlCategoryBook.setupWithViewPager(view.vpBook)
-
-        view.tlCategoryBook.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
-            override fun onTabReselected(p0: TabLayout.Tab?) {}
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-                if (lstCategoryBook.size > position) {
-                    val categoryBookViewModel = lstCategoryBook[position]
-                    categoryIdCurrent = categoryBookViewModel.categoryId
-                }
-            }
-
-        })
     }
 
     override fun onDestroyView(view: View) {

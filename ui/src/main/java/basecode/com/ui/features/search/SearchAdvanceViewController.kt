@@ -68,10 +68,6 @@ class SearchAdvanceViewController<T>() : ViewController(bundle = null)
         }
     }
 
-    override fun handleBack(): Boolean {
-        router.popController(this)
-        return true
-    }
 
     override fun onDestroyView(view: View) {
         view.context.hideKeyboard()

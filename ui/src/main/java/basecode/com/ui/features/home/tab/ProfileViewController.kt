@@ -185,8 +185,8 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     }
                 } else {
                     targetController?.let { targetController ->
-                        val loginViewController = LoginViewController()
-                        loginViewController.setType(LoginSuccessEventBus.Type.Normal)
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
+                        val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -195,8 +195,8 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     }
 
     private fun gotoScreenLogin(targetController: Controller, type: LoginSuccessEventBus.Type) {
-        val loginViewController = LoginViewController()
-        loginViewController.setType(type)
+        val bundle = LoginViewController.BundleOptions.create(type.value)
+        val loginViewController = LoginViewController(bundle)
         targetController.router.pushController(RouterTransaction.with(loginViewController)
                 .pushChangeHandler(FadeChangeHandler(false)))
     }

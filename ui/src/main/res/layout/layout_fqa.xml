@@ -20,7 +20,7 @@
             android:layout_height="@dimen/height_toolbar"
             android:adjustViewBounds="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="@dimen/default_padding_margin"
+            android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_back" />
 
         <android.support.v7.widget.AppCompatTextView

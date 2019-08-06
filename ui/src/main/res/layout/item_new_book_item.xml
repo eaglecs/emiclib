@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:adjustViewBounds="true"
+        tools:src="@drawable/ic_image_default"
         android:scaleType="centerCrop"
         tools:background="@color/md_grey500" />
 
