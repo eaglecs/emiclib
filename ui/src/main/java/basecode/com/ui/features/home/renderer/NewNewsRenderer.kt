@@ -1,6 +1,5 @@
 package basecode.com.ui.features.home.renderer
 
-import android.content.Context
 import basecode.com.domain.model.network.response.NewNewsModel
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
@@ -12,14 +11,14 @@ import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 import org.koin.standalone.inject
 import ss.com.bannerslider.Slider
 
-class NewNewsRenderer(private val context: Context, private val onActionClickNewNews: (NewNewsModel) -> Unit) : ViewHolderRenderer<NewNewsViewHolderModel>() {
+class NewNewsRenderer(private val onActionClickNewNews: (NewNewsModel) -> Unit) : ViewHolderRenderer<NewNewsViewHolderModel>() {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     override fun getLayoutId(): Int = R.layout.item_new_news
 
     override fun getModelClass(): Class<NewNewsViewHolderModel> = NewNewsViewHolderModel::class.java
 
     override fun bindView(model: NewNewsViewHolderModel, viewFinder: ViewFinder) {
-        Slider.init(GlideImageLoadingService(context))
+        Slider.init(GlideImageLoadingService())
         val slider = viewFinder.find<Slider>(R.id.bannerSlider)
         val lstPhoto = mutableListOf<String>()
         val lstNewNews = model.lstNewNews

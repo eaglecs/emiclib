@@ -14,7 +14,7 @@ class BookCategoryRenderer : ViewHolderRenderer<BookViewHolderModel>() {
 
     override fun bindView(model: BookViewHolderModel, viewFinder: ViewFinder) {
         val ivCoverBook = viewFinder.find<AppCompatImageView>(R.id.ivCoverBook)
-        GlideUtil.loadImage(url = model.photo, context = ivCoverBook.context, imageView = ivCoverBook)
+        GlideUtil.loadImage(url = model.photo, imageView = ivCoverBook)
         viewFinder.setText(R.id.tvTitleBook, model.name)
         viewFinder.setText(R.id.tvAuthor, model.author)
         viewFinder.setText(R.id.tvPublishedYear, model.publishedYear)

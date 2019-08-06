@@ -6,19 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
-import basecode.com.domain.extention.valueOrFalse
 import basecode.com.domain.model.network.BookType
 import basecode.com.presentation.features.books.BookVewModel
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
-import basecode.com.ui.base.extra.BundleExtraBoolean
 import basecode.com.ui.base.extra.BundleExtraInt
 import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.GridRenderConfigFactory
-import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.bookdetail.BookDetailViewController
@@ -27,7 +24,6 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.layout_tab_category_book.view.*
 import kotlinx.android.synthetic.main.screen_books.view.*
 import org.koin.standalone.inject
 
@@ -120,9 +116,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
         val input = GridRenderConfigFactory.Input(context = view.context, loadMoreConfig = loadMoreConfig, spanCount = 2)
         val renderConfig = GridRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookDetail, renderConfig)
-        activity?.let { activity ->
-            rvController.addViewRenderer(BooksRenderer(activity))
-        }
+        rvController.addViewRenderer(BooksRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {

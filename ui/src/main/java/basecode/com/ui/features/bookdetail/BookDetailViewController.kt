@@ -145,9 +145,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun initView(view: View) {
-        activity?.let { activity ->
-            GlideUtil.loadImage(photo, view.ivBookDetail, activity)
-        }
+        GlideUtil.loadImage(photo, view.ivBookDetail)
         if (isEBook) {
             view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
         } else {
@@ -157,7 +155,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookRelated, renderConfig)
         activity?.let { activity ->
-            rvController.addViewRenderer(BooksRenderer(activity))
+            rvController.addViewRenderer(BooksRenderer())
         }
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {

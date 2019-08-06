@@ -46,9 +46,7 @@ class DownloadBookViewController : ViewController(null), DownloadBookContract.Vi
         val input = GridRenderConfigFactory.Input(context = view.context, spanCount = 2)
         val renderConfig = GridRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookDownload, renderConfig)
-        activity?.let { activity ->
-            rvController.addViewRenderer(BooksRenderer(activity))
-        }
+            rvController.addViewRenderer(BooksRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {

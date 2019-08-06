@@ -17,13 +17,11 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.books.BooksViewController
-import basecode.com.ui.features.home.HomeScreenViewController
 import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
 import basecode.com.ui.features.home.renderer.NewBookRenderer
 import basecode.com.ui.features.home.renderer.NewEBookRenderer
 import basecode.com.ui.features.home.renderer.NewNewsRenderer
 import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
-import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
@@ -111,48 +109,46 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvHome.setItemViewCacheSize(10)
         rvController = RecyclerViewController(view.rvHome, renderConfig)
-        activity?.let { activity ->
-            rvController.addViewRenderer(NewNewsRenderer(activity) { newsModel ->
-                targetController?.let { targetController ->
-                    val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.picture, content = newsModel.content)
-                    targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                }
-            })
+        rvController.addViewRenderer(NewNewsRenderer() { newsModel ->
+            targetController?.let { targetController ->
+                val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.picture, content = newsModel.content)
+                targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        })
 
 
-            rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
-                targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture)
-                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                }
-            }, onActionReadMore = {
-                targetController?.let { targetController ->
-                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
-                    targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+        rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
+            targetController?.let { targetController ->
+                val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture)
+                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        }, onActionReadMore = {
+            targetController?.let { targetController ->
+                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
-                }
-            }, context = activity))
-            rvController.addViewRenderer(NewEBookRenderer(context = activity, onActionClickBook = { bookItem ->
-                targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture)
-                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                }
-            }, onActionReadMore = {
-                targetController?.let { targetController ->
-                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
-                    targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        }))
+        rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
+            targetController?.let { targetController ->
+                val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture)
+                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        }, onActionReadMore = {
+            targetController?.let { targetController ->
+                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
 
-                }
-            }))
-            rvController.addViewRenderer(CollectionRecommendRenderer(activity) { collectionRecommend ->
-                targetController?.let { targetController ->
-                    val title = collectionRecommend.title
-                    val id = collectionRecommend.id
-                    val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
-                    targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                }
-            })
-        }
+            }
+        }))
+        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+            targetController?.let { targetController ->
+                val title = collectionRecommend.title
+                val id = collectionRecommend.id
+                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        })
 
     }
 
