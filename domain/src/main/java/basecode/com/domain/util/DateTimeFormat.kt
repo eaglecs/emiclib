@@ -20,5 +20,6 @@ enum class DateTimeFormat(val value: String) {
     DD_MM_YY_FORMAT("dd-MM-yyyy"),
     YY_MM_DD_HHMMSS("yyyy-MM-dd HH:mm:ss"),
     YY_MM_DD_T_HH_MM_SS("yyyy-MM-dd'T'HH:mm:ss"),
+    YY_MM_DD_T_HH_MM_SS_SS("yyyy-MM-dd'T'HH:mm:ss.SSS"),
     YY_MM_DD_HH_MM("yyyy-MM-dd HH:mm")
 }

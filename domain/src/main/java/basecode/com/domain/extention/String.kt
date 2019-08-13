@@ -1,6 +1,8 @@
 package basecode.com.domain.extention
 
+import basecode.com.domain.extention.date.format
 import basecode.com.domain.util.AccentRemover
+import basecode.com.domain.util.DateTimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,13 +39,17 @@ fun String?.valueOrEmpty(): String {
     return this.valueOrDefault("")
 }
 
+fun String.formatTime(formatFrom: DateTimeFormat, formatTo: DateTimeFormat): String {
+    return this.toDate(formatFrom.value).format(formatTo.value)
+}
+
 fun String.toDate(format: String): Date = SimpleDateFormat(format, Locale.US).parse(this)
 
 fun String.parseLong(valueDefault: Long): Long {
     var result = valueDefault
     if (this.trim().isNotEmpty()) {
         try {
-            result = this.replace(",","+").toLong()
+            result = this.replace(",", "+").toLong()
         } catch (e: Exception) {
         }
     }
@@ -54,7 +60,7 @@ fun String.parseInt(valueDefault: Int): Int {
     var result = valueDefault
     if (this.trim().isNotEmpty()) {
         try {
-            result = this.replace(",","+").toInt()
+            result = this.replace(",", "+").toInt()
         } catch (e: Exception) {
         }
     }
@@ -65,7 +71,7 @@ fun String.parseDouble(valueDefault: Double): Double {
     var result = valueDefault
     if (this.trim().isNotEmpty()) {
         try {
-            result = this.replace(",","+").toDouble()
+            result = this.replace(",", "+").toDouble()
         } catch (e: Exception) {
         }
     }
@@ -76,7 +82,7 @@ fun String.parseFloat(valueDefault: Float): Float {
     var result = valueDefault
     if (this.trim().isNotEmpty()) {
         try {
-            result = this.replace(",","+").toFloat()
+            result = this.replace(",", "+").toFloat()
         } catch (e: Exception) {
         }
     }

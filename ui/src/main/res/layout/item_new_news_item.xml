@@ -30,7 +30,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvTitleNews"
-                style="@style/TextPrimarySubtitle"
+                style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -39,7 +39,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvContent"
-                style="@style/TextPrimaryBody"
+                style="@style/TextPrimaryCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="3"

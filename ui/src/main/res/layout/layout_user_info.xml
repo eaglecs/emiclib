@@ -106,6 +106,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding_margin"
                 android:layout_marginRight="@dimen/default_padding_margin"
+                android:textColor="@color/md_blue800"
+                android:textStyle="bold"
                 tools:text="33333" />
         </LinearLayout>
 
@@ -132,6 +134,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding_margin"
                 android:layout_marginRight="@dimen/default_padding_margin"
+                android:textColor="@color/md_blue800"
+                android:textStyle="bold"
                 tools:text="15/01/2014 - 15/01/2019" />
         </LinearLayout>
 
