@@ -6,7 +6,7 @@ import ss.com.bannerslider.ImageLoadingService
 
 class GlideImageLoadingService : ImageLoadingService {
     override fun loadImage(url: String, imageView: ImageView) {
-        GlideUtil.loadImage(url, imageView)
+        GlideUtil.loadImageNews(url, imageView, imageView.context)
     }
 
     override fun loadImage(resource: Int, imageView: ImageView) {
@@ -14,6 +14,6 @@ class GlideImageLoadingService : ImageLoadingService {
     }
 
     override fun loadImage(url: String, placeHolder: Int, errorDrawable: Int, imageView: ImageView) {
-        GlideUtil.loadImage(url, imageView)
+        GlideUtil.loadImageNews(url, imageView, imageView.context)
     }
 }

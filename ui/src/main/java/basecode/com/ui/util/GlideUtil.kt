@@ -16,8 +16,8 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(url)
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
-                    .error(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.img_book_default))
+                    .error(ContextCompat.getDrawable(context, R.drawable.img_book_default))
                     .into(imageView)
         }
 
@@ -38,9 +38,9 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(resource)
                     .fitCenter()
-                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.img_book_default))
                     .centerCrop()
-                    .error(ContextCompat.getDrawable(context, R.drawable.ic_image_default))
+                    .error(ContextCompat.getDrawable(context, R.drawable.img_book_default))
                     .into(imageView)
         }
     }

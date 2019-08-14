@@ -18,7 +18,7 @@
             android:adjustViewBounds="true"
             android:background="@color/md_grey200"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_image_default" />
+            android:src="@drawable/img_book_default" />
 
         <LinearLayout
             android:layout_width="match_parent"
