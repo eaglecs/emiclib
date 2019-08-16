@@ -63,7 +63,7 @@ interface ApiService {
 
     //2 Get Information user
     @GET("/api/user/GetUserInfor")
-    fun getInfoUser(): Observable<InfoUserResponse>
+    fun getInfoUser(): Single<InfoUserResponse>
 
     //Reservation Book
     @POST("/api/Reservation/Reservation")

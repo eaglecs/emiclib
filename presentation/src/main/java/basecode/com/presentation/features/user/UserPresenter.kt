@@ -7,6 +7,7 @@ import basecode.com.domain.features.SaveInfoLoginUseCase
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoUserResponse
 import basecode.com.domain.model.network.response.ReserveResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.domain.usecase.base.ResultListener
 
 class UserPresenter(private val getInfoUserUseCase: GetInfoUserUseCase,
@@ -18,8 +19,8 @@ class UserPresenter(private val getInfoUserUseCase: GetInfoUserUseCase,
         view?.let { view ->
             view.showLoading()
             getInfoUserUseCase.cancel()
-            getInfoUserUseCase.executeAsync(object : ResultListener<InfoUserResponse, ErrorResponse> {
-                override fun success(data: InfoUserResponse) {
+            getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
+                override fun success(data: UserModel) {
                     view.getUserInfoSuccess(data)
                 }
 

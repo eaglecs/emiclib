@@ -32,7 +32,7 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
         }
     }
 
-    companion object : BundleOptionsCompanion<HomeScreenViewController.BundleOption>(HomeScreenViewController.BundleOption)
+    companion object : BundleOptionsCompanion<BundleOption>(BundleOption)
 
     init {
         bundle.options { options ->

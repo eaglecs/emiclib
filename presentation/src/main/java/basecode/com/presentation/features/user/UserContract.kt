@@ -1,14 +1,13 @@
 package basecode.com.presentation.features.user
 
-import basecode.com.domain.model.network.response.InfoUserResponse
-import basecode.com.domain.model.network.response.ReserveResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.presentation.base.mvp.PresenterMvp
 import basecode.com.presentation.base.mvp.ViewMvp
 import basecode.com.presentation.base.mvp.view.ViewSupportLoading
 
 class UserContract {
     interface View : ViewMvp, ViewSupportLoading {
-        fun getUserInfoSuccess(infoUserResponse: InfoUserResponse)
+        fun getUserInfoSuccess(userModel: UserModel)
         fun getUserInfoFail()
         fun logoutSuccess()
         fun logoutFail()

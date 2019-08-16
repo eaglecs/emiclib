@@ -64,7 +64,7 @@ class FQAViewController : ViewController(null), FQAContract.View {
 
     override fun getListFQAFail() {
         activity?.let { activity ->
-            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_fqa)).show()
+//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_fqa)).show()
         }
         hideLoading()
     }

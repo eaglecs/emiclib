@@ -88,7 +88,7 @@ class TabUserBookBorrowViewController(bundle: Bundle) : ViewController(bundle), 
 
     override fun getListBookFail() {
         activity?.let { activity ->
-            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
+//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
         }
     }
 

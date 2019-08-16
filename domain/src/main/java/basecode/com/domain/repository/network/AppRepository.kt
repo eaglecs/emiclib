@@ -22,7 +22,7 @@ interface AppRepository {
     fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
     fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: String, author: String, language: String): Observable<List<BookResponse>>
     fun getInfoBook(itemId: Long): Observable<InfoBookResponse>
-    fun getInfoUser(): Observable<InfoUserResponse>
+    fun getInfoUser(): Single<InfoUserResponse>
     fun reservationBook(bookId: Long): Observable<Int>
     fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
     fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>

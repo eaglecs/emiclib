@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.network.response.InfoUserResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.presentation.features.user.UserContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -72,11 +73,11 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
         }
     }
 
-    override fun getUserInfoSuccess(infoUserResponse: InfoUserResponse) {
+    override fun getUserInfoSuccess(userModel: UserModel) {
         view?.let { view ->
-            view.tvUserName.text = infoUserResponse.patronName
-            view.tvCodeCard.text = infoUserResponse.patronCode
-            val time = "${infoUserResponse.validDate} - ${infoUserResponse.expiredDate}"
+            view.tvUserName.text = userModel.patronName
+            view.tvCodeCard.text = userModel.patronCode
+            val time = "${userModel.validDate} - ${userModel.expiredDate}"
             view.tvTime.text = time
         }
         hideLoading()

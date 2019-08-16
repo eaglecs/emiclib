@@ -14,7 +14,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
     override fun buildUseCaseObservable(): Observable<InfoHomeResponse> {
         return Observable.create { e ->
             val infoHomeResponse = InfoHomeResponse()
-            val newNewsResponse = appRepository.getListNewNews(5, 1, 5).blockingGet()
+            val newNewsResponse = appRepository.getListNewNews(4, 1, 5).blockingGet()
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()

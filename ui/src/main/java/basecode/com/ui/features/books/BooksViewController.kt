@@ -165,7 +165,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
         view?.vgRefreshBooks?.isRefreshing = false
         rvController.hideLoadMore()
         activity?.let { activity ->
-            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book)).show()
+//            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book)).show()
         }
     }
 

@@ -149,7 +149,7 @@ class NewsViewController() : ViewController(bundle = null), NewNewsContract.View
     override fun showErrorGetListNewNews() {
         rvController.hideLoadMore()
         activity?.let { activity ->
-            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_new_news)).show()
+//            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_new_news)).show()
         }
     }
 
