@@ -148,6 +148,7 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="TITLE_ERROR">Lỗi</string>
     <string name="text_title_author_empty">Bạn hãy nhập nhan đề hoặc tác giả để tìm kiếm!</string>
     <string name="msg_warning_link_download_empty">Sách không có đường dẫn tải.</string>
+    <string name="text_download_book">Tải sách</string>
 
 
 </resources>

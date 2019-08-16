@@ -80,5 +80,9 @@ class DialogOneEventViewController<T>(bundle: Bundle?) : ViewController(bundle =
                 targetController.onResultAfterHandleDialog()
             }
         }
+
+        view.vgRoot.setOnClickListener {
+            router.popController(this)
+        }
     }
 }

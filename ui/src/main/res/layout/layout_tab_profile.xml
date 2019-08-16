@@ -145,29 +145,6 @@
                 android:layout_marginTop="@dimen/default_padding_margin"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/vgDownload"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/icon_user_download" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/TextPrimarySubtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/default_padding_margin"
-                        android:text="@string/text_download"
-                        android:textColor="@color/md_black" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/vgChangePass"
@@ -194,14 +171,39 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="invisible"
+                    android:id="@+id/vgDownload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/icon_user_download" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextPrimarySubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_padding_margin"
+                        android:text="@string/text_download"
+                        android:textColor="@color/md_black" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/vgRenew"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <android.support.v7.widget.AppCompatImageView
                         android:layout_width="80dp"

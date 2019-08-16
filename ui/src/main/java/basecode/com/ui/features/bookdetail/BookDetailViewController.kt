@@ -143,7 +143,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         KBus.subscribe<ProgressDownloadBook>(this) {
             if (it.percentValue == 100) {
-                if(!isLoadingFinished){
+                if (!isLoadingFinished) {
                     isLoadingFinished = true
                     val eBookModel = EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
                     presenter.saveBookDownload(eBookModel)
@@ -223,6 +223,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
 
     override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String) {
+        titleBook = title
+        this.author = author
         pathBook = path
         view?.let { view ->
             view.tvBookName.text = title
@@ -511,7 +513,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun onResultAfterHandleDialog() {
-        if(isEBook){
+        if (isEBook) {
             handleBook()
         }
     }

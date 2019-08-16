@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -106,7 +107,7 @@ import java.util.ArrayList;
 import basecode.com.domain.model.epub.SkySetting;
 import basecode.com.ui.R;
 
-public class BookViewActivity extends Activity {
+public class BookViewActivity extends AppCompatActivity {
     ReflowableControl rv;
     RelativeLayout ePubView;
     Button debugButton0;
@@ -236,6 +237,7 @@ public class BookViewActivity extends Activity {
     ArrayList<CustomFont> fonts = new ArrayList<CustomFont>();
 
     PageInformation currentPageInformation;
+
 
     public int getDensityDPI() {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -4430,6 +4432,7 @@ public class BookViewActivity extends Activity {
         }
         //	      log("onBackPressed() in BookViewActivity");
     }
+
 }
 
 interface SkyLayoutListener {
