@@ -22,13 +22,13 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             saveBookUseCase.cancel()
             saveBookUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse> {
                 override fun success(data: Boolean) {
+                    view.saveEBookSuccess()
                 }
 
                 override fun fail(error: ErrorResponse) {
                 }
 
                 override fun done() {
-                    view.hideLoading()
                 }
 
             }, eBookModel)

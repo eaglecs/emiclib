@@ -15,6 +15,7 @@ class BookDetailContract {
         fun getBookInfoFail(msgError: String)
         fun reservationBookSuccess()
         fun reservationBookFail(errorCode: Int)
+        fun saveEBookSuccess()
     }
 
     abstract class Presenter : PresenterMvp<View>() {

@@ -9,6 +9,7 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
+import basecode.com.ui.extension.view.gone
 import kotlinx.android.synthetic.main.dialog_one_action.view.*
 
 class DialogOneEventViewController<T>(bundle: Bundle?) : ViewController(bundle = bundle)
@@ -20,18 +21,26 @@ class DialogOneEventViewController<T>(bundle: Bundle?) : ViewController(bundle =
 
     object BundleOptions {
         var Bundle.msg by BundleExtraString("msg")
-        fun create(msg: String) = Bundle().apply {
+        var Bundle.title by BundleExtraString("title")
+        var Bundle.textEvent by BundleExtraString("textEvent")
+        fun create(title: String, msg: String, textEvent: String = "") = Bundle().apply {
+            this.title = title
             this.msg = msg
+            this.textEvent = textEvent
         }
     }
 
     companion object : BundleOptionsCompanion<BundleOptions>(BundleOptions)
 
+    private var title: String = ""
     private var msg: String = ""
+    private var textEvent = ""
 
     init {
         bundle?.options { options ->
+            title = options.title.valueOrEmpty()
             msg = options.msg.valueOrEmpty()
+            textEvent = options.textEvent.valueOrEmpty()
         }
     }
 
@@ -49,7 +58,14 @@ class DialogOneEventViewController<T>(bundle: Bundle?) : ViewController(bundle =
     }
 
     private fun setDataView(view: View) {
+        if (title.isEmpty()) {
+            view.tvTitleDialogOneEvent.gone()
+        }
+        view.tvTitleDialogOneEvent.text = title
         view.tvMsgError.text = msg
+        if (textEvent.isNotEmpty()) {
+            view.tvButton.text = textEvent
+        }
     }
 
     interface ActionEvent {

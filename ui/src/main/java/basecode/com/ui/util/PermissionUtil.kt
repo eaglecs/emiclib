@@ -16,7 +16,7 @@ object PermissionUtil {
         }
         return true
     }
-    val uploadImagePermissions = arrayOf(
+    val readWriteExternalPermissions = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
     val locationPermissions = arrayOf(

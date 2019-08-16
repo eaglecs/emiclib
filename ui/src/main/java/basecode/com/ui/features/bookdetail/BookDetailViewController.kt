@@ -1,10 +1,15 @@
 package basecode.com.ui.features.bookdetail
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.os.*
+import android.provider.Settings
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +41,7 @@ import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
+import basecode.com.ui.util.PermissionUtil
 import basecode.com.ui.util.TemplateUtil
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
@@ -45,7 +51,8 @@ import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
 
 
-class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View, DialogOneEventViewController.ActionEvent {
+class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
+        DialogOneEventViewController.ActionEvent {
 
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -133,6 +140,27 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
+        }
+        KBus.subscribe<ProgressDownloadBook>(this) {
+            if (it.percentValue == 100) {
+                if(!isLoadingFinished){
+                    isLoadingFinished = true
+                    val eBookModel = EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
+                    presenter.saveBookDownload(eBookModel)
+                }
+            }
+        }
+    }
+
+    override fun saveEBookSuccess() {
+        view?.let { view ->
+            view.vgLoadingDownloadBook.gone()
+            val textAction = view.context.getString(R.string.text_read_book)
+            val msg = view.context.getString(R.string.msg_download_book_success)
+            val bundle = DialogOneEventViewController.BundleOptions.create(title = "", msg = msg, textEvent = textAction)
+            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
+                    .pushChangeHandler(FadeChangeHandler(false)))
+            hideLoading()
         }
     }
 
@@ -225,53 +253,77 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun readEBook() {
+        if (pathBook.isEmpty()) {
+            activity?.let {
+                Toasty.warning(it, it.resources.getString(R.string.msg_warning_link_download_empty)).show()
+            }
+            return
+        }
         activity?.let { activity ->
             ls?.let {
                 if (it.isDownloaded(pathBook)) {
-                    val skyDatabase = SkyDatabase(activity)
-                    val fetchBookInformations = skyDatabase.fetchBookInformations(0, "")
-                    val setting = skyDatabase.fetchSetting()
-                    fetchBookInformations?.let { lstBook ->
-                        var bi: BookInformation? = null
-
-                        lstBook.forEach { book ->
-                            if (book.url == pathBook) {
-                                bi = book
-                            }
-                        }
-
-                        bi?.let { bi ->
-                            if (!bi.isDownloaded) return
-                            val intent = Intent(activity, BookViewActivity::class.java)
-                            intent.putExtra("BOOKCODE", bi.bookCode)
-                            intent.putExtra("TITLE", bi.title)
-                            intent.putExtra("AUTHOR", bi.creator)
-                            intent.putExtra("BOOKNAME", bi.fileName)
-                            if (bi.position < 0.0f) {
-                                intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
-                            } else {
-                                intent.putExtra("POSITION", bi.position)
-                            }
-                            intent.putExtra("THEMEINDEX", setting.theme)
-                            intent.putExtra("DOUBLEPAGED", setting.doublePaged)
-                            intent.putExtra("transitionType", setting.transitionType)
-                            intent.putExtra("GLOBALPAGINATION", setting.globalPagination)
-                            intent.putExtra("RTL", bi.isRTL)
-                            intent.putExtra("VERTICALWRITING", bi.isVerticalWriting)
-
-                            intent.putExtra("SPREAD", bi.spread)
-                            intent.putExtra("ORIENTATION", bi.orientation)
-
-                            startActivity(intent)
-                        }
-                    }
+                    openEBook(activity)
                 } else {
+                    showLoading()
                     isLoadingFinished = false
                     updateProgress()
                     it.startDownload(pathBook, "", titleBook, author)
                 }
             }
 
+        }
+    }
+
+    private fun openEBook(activity: Activity) {
+
+        val isWriteSetting = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Settings.System.canWrite(activity)
+        } else {
+            true
+        }
+        if (isWriteSetting) {
+            val skyDatabase = SkyDatabase(activity)
+            val fetchBookInformations = skyDatabase.fetchBookInformations(0, "")
+            val setting = skyDatabase.fetchSetting()
+            fetchBookInformations?.let { lstBook ->
+                var bi: BookInformation? = null
+
+                lstBook.forEach { book ->
+                    if (book.url == pathBook) {
+                        bi = book
+                    }
+                }
+
+                bi?.let { bi ->
+                    if (!bi.isDownloaded) return
+                    val intent = Intent(activity, BookViewActivity::class.java)
+                    intent.putExtra("BOOKCODE", bi.bookCode)
+                    intent.putExtra("TITLE", bi.title)
+                    intent.putExtra("AUTHOR", bi.creator)
+                    intent.putExtra("BOOKNAME", bi.fileName)
+                    if (bi.position < 0.0f) {
+                        intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
+                    } else {
+                        intent.putExtra("POSITION", bi.position)
+                    }
+                    intent.putExtra("THEMEINDEX", setting.theme)
+                    intent.putExtra("DOUBLEPAGED", setting.doublePaged)
+                    intent.putExtra("transitionType", setting.transitionType)
+                    intent.putExtra("GLOBALPAGINATION", setting.globalPagination)
+                    intent.putExtra("RTL", bi.isRTL)
+                    intent.putExtra("VERTICALWRITING", bi.isVerticalWriting)
+
+                    intent.putExtra("SPREAD", bi.spread)
+                    intent.putExtra("ORIENTATION", bi.orientation)
+
+                    startActivity(intent)
+                }
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                startActivity(intent)
+            }
         }
     }
 
@@ -337,7 +389,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     private fun handleBook() {
         if (isEBook) {
-            readEBook()
+            activity?.let {
+                if (PermissionUtil.hasPermissions(it, Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    readEBook()
+                } else {
+                    requestPermissions(PermissionUtil.readWriteExternalPermissions, permissionsCode)
+                }
+            }
         } else {
             presenter.reservationBook(bookId)
         }
@@ -379,7 +438,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 }
             }
 
-            val bundle = DialogOneEventViewController.BundleOptions.create(msgError)
+            val title = activity.getString(R.string.TITLE_ERROR)
+            val bundle = DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
             router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
                     .pushChangeHandler(FadeChangeHandler(false)))
         }
@@ -397,7 +457,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     override fun showErrorGetListBookRelated() {
         activity?.let { activity ->
-//            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book_related)).show()
+            //            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book_related)).show()
         }
     }
 
@@ -416,48 +476,31 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     private val PROGRESS_ACTION = "com.skytree.android.intent.action.PROGRESS"
     private val downloadFail = "com.skytree.android.intent.action.FAIL"
+    val handlerDownloadFail = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            view?.vgLoadingDownloadBook?.gone()
+            activity?.let { activity ->
+                Toasty.error(activity, activity.resources.getString(R.string.msg_error_download_book)).show()
+            }
+        }
+    }
 
     inner class SkyReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == PROGRESS_ACTION) {
                 val bookCode = intent.getIntExtra("BOOKCODE", -1)
                 val percent = intent.getDoubleExtra("PERCENT", 0.0)
-                //	        	debug("Receiver BookCode:"+bookCode+" "+percent);
-                val msg = Message()
-                val b = Bundle()
-                b.putInt("BOOKCODE", bookCode)
-                b.putDouble("PERCENT", percent)
-                msg.data = b
-                val handler = object : Handler() {
-                    override fun handleMessage(msg: Message) {
-                        isLoadingFinished = true
-                        refreshPieView(100)
-                    }
-                }
-                handler.sendMessage(msg)
+                val percentValue = (percent * 100).toInt()
+                KBus.post(ProgressDownloadBook(bookCode, percentValue))
             } else if (intent.action == downloadFail) {
                 val msg = Message()
-                val handler = object : Handler() {
-                    override fun handleMessage(msg: Message) {
-                        view?.vgLoadingDownloadBook?.gone()
-                        activity?.let { activity ->
-                            Toasty.error(activity, activity.resources.getString(R.string.msg_error_download_book)).show()
-                        }
-                    }
-                }
-                handler.sendMessage(msg)
+                handlerDownloadFail.sendMessage(msg)
             }
         }
     }
 
     private fun refreshPieView(percent: Int) {
         view?.let { view ->
-            if (percent == 100) {
-                val eBookModel = EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
-                presenter.saveBookDownload(eBookModel)
-                view.vgLoadingDownloadBook.gone()
-                Toasty.success(view.context, view.context.getString(R.string.msg_download_book_success)).show()
-            }
             view.pbDownloadEBook.progress = percent
             view.tvProcessDownloadEBook.text = "$percent/100"
         }
@@ -467,7 +510,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         return false
     }
 
-    override fun onResultAfterHandleDialog() {}
+    override fun onResultAfterHandleDialog() {
+        if(isEBook){
+            handleBook()
+        }
+    }
 
     override fun onDestroyView(view: View) {
         KBus.unsubscribe(this)
@@ -476,3 +523,5 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         super.onDestroyView(view)
     }
 }
+
+class ProgressDownloadBook(var bookCode: Int, var percentValue: Int)
