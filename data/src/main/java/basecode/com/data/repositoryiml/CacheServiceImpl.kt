@@ -16,6 +16,9 @@ class CacheServiceImpl : CacheRespository {
 
     override fun saveInfoLogin(accessToken: String, loginType: String): Observable<Boolean> {
         return Observable.create { e ->
+            if (accessToken.isEmpty() && loginType.isEmpty()) {
+                ConfigUtil.saveUserModel(null)
+            }
             ConfigUtil.saveUserToken(accessToken)
             ConfigUtil.saveLoginType(loginType)
             e.onNext(true)

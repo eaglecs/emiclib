@@ -24,7 +24,7 @@ object ConfigUtil {
         return configSaver.get<String>(ConfigSaver.CONFIG_LOGIN_TYPE).valueOrEmpty()
     }
 
-    fun saveUserModel(userModel: UserModel) {
+    fun saveUserModel(userModel: UserModel?) {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
         configSaver.save(ConfigSaver.CONFIG_USER_MODEL, userModel)
     }
