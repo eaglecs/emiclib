@@ -7,7 +7,7 @@ import basecode.com.domain.features.FindBookUseCase
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.usecase.base.ResultListener
-import basecode.com.presentation.features.books.BookVewModel
+import basecode.com.presentation.features.books.BookViewModel
 
 class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, private val findAdvanceBookUseCase: FindAdvanceBookUseCase) : SearchBookContract.Presenter() {
     override fun searchBookAdvance(docType: Int, searchText: String, title: String, author: String, language: String) {
@@ -17,9 +17,9 @@ class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, privat
             findAdvanceBookUseCase.cancel()
             findAdvanceBookUseCase.executeAsync(object : ResultListener<List<BookResponse>, ErrorResponse> {
                 override fun success(data: List<BookResponse>) {
-                    val lstBookSearch = mutableListOf<BookVewModel>()
+                    val lstBookSearch = mutableListOf<BookViewModel>()
                     data.forEach { book ->
-                        val bookVewModel = BookVewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
                                 photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
                         lstBookSearch.add(bookVewModel)
                     }
@@ -45,9 +45,9 @@ class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, privat
             searchBookUseCase.cancel()
             searchBookUseCase.executeAsync(object : ResultListener<List<BookResponse>, ErrorResponse> {
                 override fun success(data: List<BookResponse>) {
-                    val lstBookSearch = mutableListOf<BookVewModel>()
+                    val lstBookSearch = mutableListOf<BookViewModel>()
                     data.forEach { book ->
-                        val bookVewModel = BookVewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
                                 photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
                         lstBookSearch.add(bookVewModel)
                     }

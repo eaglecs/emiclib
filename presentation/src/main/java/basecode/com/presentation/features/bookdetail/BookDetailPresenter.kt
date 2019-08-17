@@ -8,7 +8,7 @@ import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoBookResponse
 import basecode.com.domain.usecase.base.ResultListener
-import basecode.com.presentation.features.books.BookVewModel
+import basecode.com.presentation.features.books.BookViewModel
 
 class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
                           private val getUserTokenUseCase: GetUserTokenUseCase,
@@ -66,9 +66,9 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             getListBookRelatedUseCase.cancel()
             getListBookRelatedUseCase.executeAsync(object : ResultListener<List<BookResponse>, ErrorResponse> {
                 override fun success(data: List<BookResponse>) {
-                    val lstResult = mutableListOf<BookVewModel>()
+                    val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { book ->
-                        val bookVewModel = BookVewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(),
                                 author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }

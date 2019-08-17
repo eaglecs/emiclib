@@ -75,11 +75,11 @@ interface ApiService {
 
     //Sach dang muon
     @GET("/api/cir/GetLoanHoldingCurrent")
-    fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>
+    fun getLoanHoldingCurrent(): Observable<List<BookBorrowResponse>>
 
     //Sach da muon
     @GET("/api/cir/GetLoanHoldingHistory")
-    fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
+    fun getLoanHoldingHistory(): Observable<List<BookBorrowResponse>>
 
     // Get list notify
     @GET("/api/User/GetMessages")

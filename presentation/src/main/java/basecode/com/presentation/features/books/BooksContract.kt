@@ -1,13 +1,12 @@
 package basecode.com.presentation.features.books
 
-import basecode.com.domain.model.network.BookType
 import basecode.com.presentation.base.mvp.PresenterMvp
 import basecode.com.presentation.base.mvp.ViewMvp
 import basecode.com.presentation.base.mvp.view.ViewSupportLoading
 
 class BooksContract {
     interface View : ViewMvp, ViewSupportLoading {
-        fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean)
+        fun getListNewBookSuccess(data: List<BookViewModel>, refresh: Boolean)
         fun showErrorGetListNewBook()
     }
 

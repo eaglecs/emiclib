@@ -2,14 +2,12 @@ package basecode.com.ui.features.bookdetail
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.os.*
 import android.provider.Settings
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +20,7 @@ import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.presentation.features.bookdetail.BookDetailContract
-import basecode.com.presentation.features.books.BookVewModel
+import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -447,7 +445,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-    override fun getListBookRelatedSuccess(data: List<BookVewModel>) {
+    override fun getListBookRelatedSuccess(data: List<BookViewModel>) {
         val lstBook = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
             val booksViewHolderModel = BooksViewHolderModel(id = book.id, title = book.name, photo = book.photo, author = book.author)

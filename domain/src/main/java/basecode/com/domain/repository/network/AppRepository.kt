@@ -25,8 +25,8 @@ interface AppRepository {
     fun getInfoUser(): Single<InfoUserResponse>
     fun reservationBook(bookId: Long): Observable<Int>
     fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
-    fun getLoanHoldingCurrent(): Observable<List<NewNewsResponse>>
-    fun getLoanHoldingHistory(): Observable<List<NewNewsResponse>>
+    fun getLoanHoldingCurrent(): Observable<List<BookBorrowResponse>>
+    fun getLoanHoldingHistory(): Observable<List<BookBorrowResponse>>
     fun getListMessage(): Observable<List<MessageResponse>>
     fun readMessage(id: Long): Observable<Any>
     fun changePass(newPassword: String, oldPassword: String): Observable<Int>

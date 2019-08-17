@@ -55,9 +55,9 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     } else {
                         pageIndexCurrent += 1
                     }
-                    val lstResult = mutableListOf<BookVewModel>()
+                    val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { newbook ->
-                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
                                 photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty(),
                                 publishedYear = newbook.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
@@ -95,9 +95,9 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     } else {
                         pageIndexCurrent += 1
                     }
-                    val lstResult = mutableListOf<BookVewModel>()
+                    val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { newbook ->
-                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
                                 author = newbook.author.valueOrEmpty(), publishedYear = newbook.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
@@ -132,9 +132,9 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     } else {
                         pageIndexCurrent += 1
                     }
-                    val lstResult = mutableListOf<BookVewModel>()
+                    val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { newbook ->
-                        val bookVewModel = BookVewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
+                        val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
                                 photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty(),
                                 publishedYear = newbook.publishedYear.valueOrEmpty())
                         lstResult.add(bookVewModel)

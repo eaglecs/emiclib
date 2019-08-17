@@ -8,7 +8,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.domain.extention.number.valueOrZero
-import basecode.com.presentation.features.books.BookVewModel
+import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -115,7 +115,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
     }
 
 
-    override fun searchBookSuccess(lstBookSearch: MutableList<BookVewModel>) {
+    override fun searchBookSuccess(lstBookSearch: MutableList<BookViewModel>) {
         view?.let { view ->
             view.vgNoResult.gone()
             val lstBook = mutableListOf<BookViewHolderModel>()

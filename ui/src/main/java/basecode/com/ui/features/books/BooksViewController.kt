@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.BookType
-import basecode.com.presentation.features.books.BookVewModel
+import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -23,7 +23,6 @@ import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_books.view.*
 import org.koin.standalone.inject
 
@@ -144,7 +143,7 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
 
     }
 
-    override fun getListNewBookSuccess(data: List<BookVewModel>, refresh: Boolean) {
+    override fun getListNewBookSuccess(data: List<BookViewModel>, refresh: Boolean) {
         view?.vgRefreshBooks?.isRefreshing = false
         rvController.hideLoadMore()
         val lstData = mutableListOf<BooksViewHolderModel>()
