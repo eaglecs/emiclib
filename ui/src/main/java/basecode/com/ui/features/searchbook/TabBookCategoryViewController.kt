@@ -120,7 +120,8 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
             view.vgNoResult.gone()
             val lstBook = mutableListOf<BookViewHolderModel>()
             lstBookSearch.forEach { book ->
-                val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear)
+                val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear,
+                        publisher = book.publisher)
                 lstBook.add(bookViewHolderModel)
             }
             rvController.setItems(lstBook)

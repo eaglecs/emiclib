@@ -47,12 +47,12 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
 
     override fun initPostCreateView(view: View) {
         initView(view)
-        initEventBus(view)
+        initEventBus()
         handleOnClick(view)
     }
 
 
-    private fun initEventBus(view: View) {
+    private fun initEventBus() {
         KBus.subscribe<ResultScanQRCodeEventBus>(this) {
             val contentQRCode = it.contentQRCode
             val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")

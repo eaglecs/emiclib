@@ -20,7 +20,7 @@ class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, privat
                     val lstBookSearch = mutableListOf<BookViewModel>()
                     data.forEach { book ->
                         val bookVewModel = BookViewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
-                                photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
+                                photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), publisher = book.publisher.valueOrEmpty())
                         lstBookSearch.add(bookVewModel)
                     }
                     view.searchBookSuccess(lstBookSearch)
@@ -48,7 +48,7 @@ class SearchBookPresenter(private val searchBookUseCase: FindBookUseCase, privat
                     val lstBookSearch = mutableListOf<BookViewModel>()
                     data.forEach { book ->
                         val bookVewModel = BookViewModel(id = book.id.valueOrZero(), author = book.author.valueOrEmpty(), name = book.title.valueOrEmpty(),
-                                photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
+                                photo = book.coverPicture.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), publisher = book.publisher.valueOrEmpty())
                         lstBookSearch.add(bookVewModel)
                     }
                     view.searchBookSuccess(lstBookSearch)

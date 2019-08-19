@@ -36,7 +36,7 @@
                 tools:text="Sach 1" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvAuthor"
+                android:id="@+id/tvPublisher"
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

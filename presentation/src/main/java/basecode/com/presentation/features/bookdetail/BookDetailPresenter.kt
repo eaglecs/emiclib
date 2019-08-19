@@ -69,7 +69,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { book ->
                         val bookVewModel = BookViewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(),
-                                author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty())
+                                author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), publisher = book.publisher.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListBookRelatedSuccess(data = lstResult)

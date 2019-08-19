@@ -59,7 +59,7 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     data.forEach { newbook ->
                         val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
                                 photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty(),
-                                publishedYear = newbook.publishedYear.valueOrEmpty())
+                                publishedYear = newbook.publishedYear.valueOrEmpty(), publisher = newbook.publisher.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)
@@ -98,7 +98,7 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { newbook ->
                         val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
-                                author = newbook.author.valueOrEmpty(), publishedYear = newbook.publishedYear.valueOrEmpty())
+                                author = newbook.author.valueOrEmpty(), publishedYear = newbook.publishedYear.valueOrEmpty(), publisher = newbook.publisher.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)
@@ -136,7 +136,7 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                     data.forEach { newbook ->
                         val bookVewModel = BookViewModel(id = newbook.id.valueOrZero(), name = newbook.title.valueOrEmpty(),
                                 photo = newbook.coverPicture.valueOrEmpty(), author = newbook.author.valueOrEmpty(),
-                                publishedYear = newbook.publishedYear.valueOrEmpty())
+                                publishedYear = newbook.publishedYear.valueOrEmpty(), publisher = newbook.publisher.valueOrEmpty())
                         lstResult.add(bookVewModel)
                     }
                     view.getListNewBookSuccess(lstResult, isRefresh)
