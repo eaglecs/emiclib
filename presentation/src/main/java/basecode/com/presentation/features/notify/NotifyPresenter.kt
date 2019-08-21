@@ -32,9 +32,13 @@ class NotifyPresenter(private val getListMessageUseCase: GetListMessageUseCase,
     override fun readMessage(messageId: Long) {
         view?.let { view ->
             readMessageUseCase.cancel()
-            readMessageUseCase.executeAsync(object : ResultListener<Any, ErrorResponse> {
-                override fun success(data: Any) {
-                    view.readMessageSuccess(messageId)
+            readMessageUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
+                override fun success(data: Int) {
+                    if(data == 1){
+                        view.readMessageSuccess(messageId)
+                    } else {
+                        view.readMessageFail()
+                    }
                 }
 
                 override fun fail(error: ErrorResponse) {

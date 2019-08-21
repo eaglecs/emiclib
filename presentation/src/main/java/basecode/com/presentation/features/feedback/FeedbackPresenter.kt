@@ -11,11 +11,12 @@ class FeedbackPresenter(private val feedbackUseCase: FeedbackUseCase): FeedbackC
             feedbackUseCase.cancel()
             feedbackUseCase.executeAsync(object : ResultListener<Int, ErrorResponse>{
                 override fun success(data: Int) {
-                    if(data == 1){
-                        view.feedbackSuccess()
-                    } else {
-                        view.feedbackFail()
-                    }
+                    view.feedbackSuccess()
+//                    if(data == 1){
+//                        view.feedbackSuccess()
+//                    } else {
+//                        view.feedbackFail()
+//                    }
                 }
 
                 override fun fail(error: ErrorResponse) {

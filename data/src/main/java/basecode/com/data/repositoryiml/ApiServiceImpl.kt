@@ -87,7 +87,7 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.getListMessage()
     }
 
-    override fun readMessage(id: Long): Observable<Any> {
+    override fun readMessage(id: Long): Observable<Int> {
         return apiServiceApp.readMessage(id)
     }
 

@@ -9,8 +9,8 @@ import basecode.com.domain.usecase.base.UseCaseExecution
 import basecode.com.domain.usecase.base.UseCaseOutput
 import io.reactivex.Observable
 
-class ReadMessageUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Long, Any, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: Long): Observable<Any> {
+class ReadMessageUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Long, Int, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: Long): Observable<Int> {
         return appRepository.readMessage(input)
     }
 

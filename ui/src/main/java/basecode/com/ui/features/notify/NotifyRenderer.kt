@@ -17,9 +17,9 @@ class NotifyRenderer(private val onItemClick: (NotifyViewHolderModel) -> Unit) :
         val createDate = model.createDate.formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT)
         viewFinder.setText(R.id.tvCreateDate, createDate)
         if (model.status == 0) {
-            viewFinder.setBackgroundResource(R.id.vgNotify, R.color.md_white)
-        } else {
             viewFinder.setBackgroundResource(R.id.vgNotify, R.color.md_blue100)
+        } else {
+            viewFinder.setBackgroundResource(R.id.vgNotify, R.color.md_white)
         }
 
         viewFinder.setOnClickListener(R.id.vgRoot) {

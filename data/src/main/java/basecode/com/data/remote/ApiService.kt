@@ -86,9 +86,8 @@ interface ApiService {
     fun getListMessage(): Observable<List<MessageResponse>>
 
     // Read Message
-    @FormUrlEncoded
     @POST("/api/User/UpdateMessagesIsRead")
-    fun readMessage(@Field("Id") id: Long): Observable<Any>
+    fun readMessage(@Query("id") id: Long): Observable<Int>
 
     // Change Pass
     @FormUrlEncoded

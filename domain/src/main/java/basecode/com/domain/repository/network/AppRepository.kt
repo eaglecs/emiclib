@@ -28,7 +28,7 @@ interface AppRepository {
     fun getLoanHoldingCurrent(): Observable<List<BookBorrowResponse>>
     fun getLoanHoldingHistory(): Observable<List<BookBorrowResponse>>
     fun getListMessage(): Observable<List<MessageResponse>>
-    fun readMessage(id: Long): Observable<Any>
+    fun readMessage(id: Long): Observable<Int>
     fun changePass(newPassword: String, oldPassword: String): Observable<Int>
     fun feedback(content: String, email: String,
                  mobilePhone: String, title: String,
