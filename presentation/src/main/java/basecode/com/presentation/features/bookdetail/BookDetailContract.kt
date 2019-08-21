@@ -11,7 +11,7 @@ class BookDetailContract {
         fun getListBookRelatedSuccess(data: List<BookViewModel>)
         fun showErrorGetListBookRelated()
         fun handleAfterCheckLogin(isLogin: Boolean)
-        fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String)
+        fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String)
         fun getBookInfoFail(msgError: String)
         fun reservationBookSuccess()
         fun reservationBookFail(errorCode: Int)

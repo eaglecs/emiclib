@@ -114,9 +114,21 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
             getInfoBookUseCase.executeAsync(object : ResultListener<InfoBookResponse, ErrorResponse> {
                 override fun success(data: InfoBookResponse) {
                     var path = ""
+                    var copyNumberResult = ""
                     data.lstPath?.let { lstPath ->
                         if (lstPath.isNotEmpty()) {
                             path = lstPath.first().valueOrEmpty()
+                        }
+                    }
+                    data.lstCopyNumber?.let { copyNumbers ->
+                        copyNumbers.forEach { copyNumber ->
+                            copyNumber?.let {
+                                copyNumberResult = if (copyNumberResult.isNotEmpty()) {
+                                    "$copyNumberResult, $it"
+                                } else {
+                                    "$it"
+                                }
+                            }
                         }
                     }
                     val title = data.title.valueOrEmpty()
@@ -124,7 +136,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val publisher = data.publisher.valueOrEmpty()
                     val publishYear = data.publishYear.valueOrEmpty()
                     val shortDescription = data.shortDescription.valueOrEmpty()
-                    view.getBookInfoSuccess(path, title, author, publisher, publishYear, shortDescription)
+                    view.getBookInfoSuccess(path, title, author, publisher, publishYear, shortDescription, copyNumberResult)
                 }
 
                 override fun fail(error: ErrorResponse) {

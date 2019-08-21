@@ -220,7 +220,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
 
-    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String) {
+    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String) {
         titleBook = title
         this.author = author
         pathBook = path
@@ -248,6 +248,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             view.tvDescription.text = shortDescription
+            if (copyNumberResult.isNotEmpty()) {
+                view.tvCopyNumber.text = copyNumberResult
+            } else {
+                view.vgCopyNumber.gone()
+            }
 
         }
     }
