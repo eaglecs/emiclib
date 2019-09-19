@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def final API_LIVE = "http://apinet.emiclib.com/"
-def final API_DEMO = "http://apinet.emiclib.com/"
+//def final API_LIVE = "http://apinet.emiclib.com/"
+//def final API_DEMO = "http://apinet.emiclib.com/"
 
 def final schemeApp = "baseapp"
 def final BOOLEAN = "boolean"
@@ -48,7 +48,7 @@ android {
             buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
             buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
             buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
-            buildConfigField "String", "END_POINT", '"' + API_DEMO + '"'
+//            buildConfigField "String", "END_POINT", '"' + API_DEMO + '"'
         }
 
         PRODUCTION_ {
@@ -58,7 +58,7 @@ android {
             buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
             buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
             buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
-            buildConfigField "String", "END_POINT", '"' + API_LIVE + '"'
+//            buildConfigField "String", "END_POINT", '"' + API_LIVE + '"'
         }
     }
 
