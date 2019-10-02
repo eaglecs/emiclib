@@ -122,6 +122,22 @@ interface ApiService {
     @POST("/api/cir/LoanRenew")
     fun loanRenew(@Field("coppynumber") coppynumber: String): Observable<Int>
 
+    //Login
+    @FormUrlEncoded
+    @POST("api/Request/Cataloger")
+    fun requestDocument(@Field("FullName") fullName: String,
+              @Field("PatronCode") patronCode: String,
+              @Field("Email") email: String,
+              @Field("Phone") phone: String,
+              @Field("Facebook") facebook: String,
+              @Field("Supplier") supplier: String,
+              @Field("GroupName") groupName: String,
+              @Field("Title") title: String,
+              @Field("Author") author: String,
+              @Field("Publisher") publisher: String,
+              @Field("PublishYear") publishYear: String,
+              @Field("Information") information: String): Observable<Int>
+
 
 
 

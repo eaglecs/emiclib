@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/height_toolbar"
+                android:layout_height="@dimen/height_toolbar"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/default_padding_margin_h"
+                app:srcCompat="@drawable/ic_back" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextPrimaryTitle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_toolbar"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/text_request_document"
+                android:textColor="@color/md_blue800" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/height_toolbar"
+                android:layout_height="@dimen/height_toolbar"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/default_padding_margin" />
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtNameDocument"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_full_name"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtPatronCode"
+                    android:padding="@dimen/default_padding_margin">
+
+                    <requestFocus />
+                </android.support.v7.widget.AppCompatEditText>
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtPatronCode"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_patron_code"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtEmail"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtEmail"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_email"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtPhone"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtPhone"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_phone_number"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtFacebook"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtFacebook"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_facebook"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtSupplier"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSupplier"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_supplier"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtGroupName"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtGroupName"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_groupN_name"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtTitle"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtTitle"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_title"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtAuthor"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtAuthor"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_author"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtPublisher"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtPublisher"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_publisher"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtPublishYear"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtPublishYear"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_publish_year"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:nextFocusDown="@+id/edtInformation"
+                    android:padding="@dimen/default_padding_margin" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtInformation"
+                    style="@style/TextPrimarySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding_margin_h"
+                    android:layout_marginTop="@dimen/default_padding_margin_h"
+                    android:layout_marginRight="@dimen/default_padding_margin_h"
+                    android:background="@drawable/bg_rec_grey_line_transparent"
+                    android:hint="@string/text_information"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:padding="@dimen/default_padding_margin" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/btnRequestDocument"
+            style="@style/ButtonStyle.Active.Largest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_padding_margin_x"
+            android:layout_marginBottom="@dimen/default_padding_margin_h"
+            android:paddingLeft="@dimen/default_padding_margin_huge"
+            android:paddingTop="@dimen/default_padding_margin_h"
+            android:paddingRight="@dimen/default_padding_margin_huge"
+            android:paddingBottom="@dimen/default_padding_margin_h"
+            android:text="@string/btn_text_request_document"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

@@ -10,7 +10,7 @@ import basecode.com.domain.usecase.base.UseCaseOutput
 import io.reactivex.Observable
 
 class ChangePassUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<ChangePassUseCase.Input, Int, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: ChangePassUseCase.Input): Observable<Int> {
+    override fun buildUseCaseObservable(input: Input): Observable<Int> {
         return appRepository.changePass(newPassword = input.newPassword, oldPassword = input.oldPassword)
     }
 

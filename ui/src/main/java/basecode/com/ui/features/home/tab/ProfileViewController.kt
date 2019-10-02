@@ -18,6 +18,7 @@ import basecode.com.ui.features.downloadbook.DownloadBookViewController
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.notify.NotifyViewController
 import basecode.com.ui.features.renew.RenewViewController
+import basecode.com.ui.features.requestdocument.RequestDocumentViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.ScanQRCode
@@ -189,6 +190,14 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                         val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
                     }
+                }
+            }
+        }
+        view.vgRequestDocument.setOnClickListener {
+            if (doubleTouchPrevent.check("vgRequestDocument")) {
+                targetController?.let { targetController ->
+                    targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
+                            .pushChangeHandler(FadeChangeHandler(false)))
                 }
             }
         }

@@ -24,6 +24,8 @@ import basecode.com.presentation.features.notify.NotifyContract
 import basecode.com.presentation.features.notify.NotifyPresenter
 import basecode.com.presentation.features.renew.RenewContract
 import basecode.com.presentation.features.renew.RenewPresenter
+import basecode.com.presentation.features.requestdocument.RequestDocumentContract
+import basecode.com.presentation.features.requestdocument.RequestDocumentPresenter
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.presentation.features.searchbook.SearchBookPresenter
 import basecode.com.presentation.features.setting.SettingContract
@@ -38,6 +40,9 @@ object PresentationKoinModules {
     }
 
     private val homeModule = module {
+        factory {
+            RequestDocumentPresenter( requestDocumentUseCase = get()) as RequestDocumentContract.Presenter
+        }
         factory {
             HomePresenter(getInfoHomeUseCase = get(),
                     getUserTokenUseCase = get()) as HomeContract.Presenter
