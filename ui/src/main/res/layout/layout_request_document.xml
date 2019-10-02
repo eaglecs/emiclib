@@ -113,7 +113,7 @@
                     android:layout_marginRight="@dimen/default_padding_margin_h"
                     android:background="@drawable/bg_rec_grey_line_transparent"
                     android:hint="@string/text_phone_number"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:lines="1"
                     android:nextFocusDown="@+id/edtFacebook"
                     android:padding="@dimen/default_padding_margin" />

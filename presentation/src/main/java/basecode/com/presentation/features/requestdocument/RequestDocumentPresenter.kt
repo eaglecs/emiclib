@@ -1,6 +1,5 @@
 package basecode.com.presentation.features.requestdocument
 
-import basecode.com.domain.features.ChangePassUseCase
 import basecode.com.domain.features.RequestDocumentUseCase
 import basecode.com.domain.model.network.request.RequestDocumentRequest
 import basecode.com.domain.model.network.response.ErrorResponse

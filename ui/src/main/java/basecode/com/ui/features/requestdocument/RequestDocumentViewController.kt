@@ -71,6 +71,7 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
         view?.let { view ->
             Toasty.success(view.context, view.context.resources.getString(R.string.msg_request_document_success)).show()
         }
+        hideLoading()
         router.popController(this)
     }
 
@@ -78,6 +79,7 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
         view?.let { view ->
             Toasty.error(view.context, view.context.resources.getString(R.string.msg_request_document_fail)).show()
         }
+        hideLoading()
     }
 
     override fun showLoading() {
