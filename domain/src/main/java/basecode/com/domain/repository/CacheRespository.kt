@@ -7,5 +7,5 @@ interface CacheRespository {
     fun getUserToken(): Observable<String>
     fun getUserModel(): UserModel?
     fun saveInfoLogin(accessToken: String, loginType: String): Observable<Boolean>
-    fun saveUserModel(result: UserModel)
+    fun saveUserModel(userModel: UserModel)
 }

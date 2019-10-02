@@ -12,6 +12,7 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.user.tab.TabUserBookBorrowViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.GlideUtil
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -77,8 +78,14 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
         view?.let { view ->
             view.tvUserName.text = userModel.patronName
             view.tvCodeCard.text = userModel.patronCode
+
+            view.tvPhone.text = userModel.phone
+            view.tvEmail.text = userModel.email
+            view.tvPatronGroup.text = userModel.patronGroup
+
             val time = "${userModel.validDate} - ${userModel.expiredDate}"
             view.tvTime.text = time
+            GlideUtil.loadImage(url = userModel.linkAvatar, imageView = view.ivAvatarProfile, errorImage = R.drawable.user_default)
         }
         hideLoading()
     }
