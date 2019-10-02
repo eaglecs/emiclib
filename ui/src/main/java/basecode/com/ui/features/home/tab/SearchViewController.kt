@@ -134,6 +134,7 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
         targetController?.let { targetController ->
             lstCategoryBook.add(CategoryBookViewModel(categoryId = 0, categoryName = view.context.getString(R.string.text_book)))
             lstCategoryBook.add(CategoryBookViewModel(categoryId = 4, categoryName = view.context.getString(R.string.text_ebook)))
+            lstCategoryBook.add(CategoryBookViewModel(categoryId = -1, categoryName = view.context.getString(R.string.text_thesis)))
             lstCategoryBook.add(CategoryBookViewModel(categoryId = 3, categoryName = view.context.getString(R.string.text_speak_book)))
             lstCategoryBook.add(CategoryBookViewModel(categoryId = 2, categoryName = view.context.getString(R.string.text_movie)))
             lstCategoryBook.add(CategoryBookViewModel(categoryId = 1, categoryName = view.context.getString(R.string.text_picture)))

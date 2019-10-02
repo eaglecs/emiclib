@@ -13,4 +13,6 @@
     <dimen name="height_dialog_alert">170dp</dimen>
     <dimen name="min_height_tab_home">40dp</dimen>
     <dimen name="height_toolbar">50dp</dimen>
+    <dimen name="height_logo_header">70dp</dimen>
+    <dimen name="height_header_screen">60dp</dimen>
 </resources>

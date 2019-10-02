@@ -7,16 +7,15 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/default_padding_margin">
+        android:layout_height="@dimen/height_header_screen"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivScanQRCode"
-            android:layout_width="@dimen/height_toolbar"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin_h"
+            android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_qr_code" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -30,11 +29,11 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivLogin"
-            android:layout_width="@dimen/height_toolbar"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin_h"
+            android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_login" />
     </FrameLayout>
 
