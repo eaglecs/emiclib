@@ -10,6 +10,7 @@ class LoginSuccessEventBus(val type: Type) {
         RenewBook(5),
         DownloadBook(6),
         ChangePass(7),
-        Normal(8)
+        RequestDocument(8),
+        Normal(-1)
     }
 }

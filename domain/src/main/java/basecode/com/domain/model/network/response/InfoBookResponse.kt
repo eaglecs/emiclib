@@ -9,5 +9,6 @@ class InfoBookResponse (
         @SerializedName("PublishYear") val publishYear: String?,
         @SerializedName("ShortDescription") val shortDescription: String?,
         @SerializedName("ListCopyNumber") val lstCopyNumber: List<String?>?,
+        @SerializedName("Href") val linkShare: String?,
         @SerializedName("Author") val author: String?
 )

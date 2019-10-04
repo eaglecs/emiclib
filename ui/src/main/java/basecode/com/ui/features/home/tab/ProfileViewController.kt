@@ -74,6 +74,10 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     LoginSuccessEventBus.Type.RenewBook -> {
                         targetController.router.pushController(RouterTransaction.with(RenewViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     }
+                    LoginSuccessEventBus.Type.RequestDocument -> {
+                        targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
+                                .pushChangeHandler(FadeChangeHandler(false)))
+                    }
 
                 }
             }
@@ -196,8 +200,14 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         view.vgRequestDocument.setOnClickListener {
             if (doubleTouchPrevent.check("vgRequestDocument")) {
                 targetController?.let { targetController ->
-                    targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
-                            .pushChangeHandler(FadeChangeHandler(false)))
+                    if (isLogin) {
+                        targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
+                                .pushChangeHandler(FadeChangeHandler(false)))
+                    } else {
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.RequestDocument.value)
+                        val loginViewController = LoginViewController(bundle)
+                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+                    }
                 }
             }
         }

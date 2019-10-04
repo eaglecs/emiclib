@@ -57,6 +57,12 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 6 -> {
                     LoginSuccessEventBus.Type.DownloadBook
                 }
+                7-> {
+                    LoginSuccessEventBus.Type.ChangePass
+                }
+                8 -> {
+                    LoginSuccessEventBus.Type.RequestDocument
+                }
                 else -> {
                     LoginSuccessEventBus.Type.Normal
                 }

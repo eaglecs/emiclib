@@ -136,7 +136,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val publisher = data.publisher.valueOrEmpty()
                     val publishYear = data.publishYear.valueOrEmpty()
                     val shortDescription = data.shortDescription.valueOrEmpty()
-                    view.getBookInfoSuccess(path, title, author, publisher, publishYear, shortDescription, copyNumberResult)
+                    val linkShare = data.linkShare.valueOrEmpty()
+                    view.getBookInfoSuccess(path, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare)
                 }
 
                 override fun fail(error: ErrorResponse) {

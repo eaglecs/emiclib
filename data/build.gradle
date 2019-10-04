@@ -17,7 +17,7 @@ def final FALSE = "false"
 //def final API_LIVE = "http://118.69.60.149:8059/"
 //def final API_DEMO = "http://118.69.60.149:8059/"
 def final API_LIVE = "http://api.lib.eiu.edu.vn/"
-def final API_DEMO = "http://api.lib.eiu.edu.vn/"
+def final API_DEMO = "http://118.69.60.149:8059/"
 
 
 def versionNameRequestHeader = rootProject.ext.versionNameRequestHeader as String

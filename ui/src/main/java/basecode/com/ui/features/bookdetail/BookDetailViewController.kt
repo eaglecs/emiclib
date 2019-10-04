@@ -37,10 +37,7 @@ import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.readbook.BookViewActivity
 import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
-import basecode.com.ui.util.DoubleTouchPrevent
-import basecode.com.ui.util.GlideUtil
-import basecode.com.ui.util.PermissionUtil
-import basecode.com.ui.util.TemplateUtil
+import basecode.com.ui.util.*
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
@@ -58,8 +55,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var bookId: Long = 0
     private var photo = ""
     private var titleBook = ""
+    private var linkShare = ""
     private var author = ""
-    internal var isBound = false
+    private var isBound = false
     private var receiver: SkyReceiver = SkyReceiver()
     private var isCheckLogin = false
     private var isLogin = false
@@ -180,9 +178,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookRelated, renderConfig)
-        activity?.let { activity ->
-            rvController.addViewRenderer(BooksRenderer())
-        }
+        rvController.addViewRenderer(BooksRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
@@ -217,10 +213,20 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 }
             }
         }
+        view.ivShareBookDetail.setOnClickListener {
+            if (doubleTouchPrevent.check("ivShareBookDetail")) {
+                val title = "${view.context.getString(R.string.title_share_book)} $titleBook"
+                ShareUtil.shareViaMedia(subject = "", body = linkShare, title = title, controller = this, requestCode = 1000)
+            }
+        }
     }
 
 
-    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String) {
+    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String) {
+        this.linkShare = linkShare
+        if (linkShare.isNotEmpty()) {
+            view?.ivShareBookDetail?.visible()
+        }
         titleBook = title
         this.author = author
         pathBook = path

@@ -22,6 +22,7 @@ import basecode.com.ui.features.home.renderer.NewBookRenderer
 import basecode.com.ui.features.home.renderer.NewEBookRenderer
 import basecode.com.ui.features.home.renderer.NewNewsRenderer
 import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
+import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
 import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
 import basecode.com.ui.features.login.LoginViewController
@@ -169,8 +170,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         rvController.addItem(newBookViewHolderModel)
         val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
         rvController.addItem(newEBookViewHolderModel)
-//        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
-//        rvController.addItem(newCollectionRecommendViewHolderModel)
+        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
+        rvController.addItem(newCollectionRecommendViewHolderModel)
         rvController.notifyDataChanged()
         hideLoading()
     }
