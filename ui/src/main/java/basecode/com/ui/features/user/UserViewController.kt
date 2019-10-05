@@ -85,7 +85,7 @@ class UserViewController : ViewController(bundle = null), UserContract.View {
 
             val time = "${userModel.validDate} - ${userModel.expiredDate}"
             view.tvTime.text = time
-            GlideUtil.loadImage(url = userModel.linkAvatar, imageView = view.ivAvatarProfile, errorImage = R.drawable.user_default)
+            GlideUtil.loadImage(url = userModel.linkAvatar, imageView = view.ivAvatarProfile, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
         }
         hideLoading()
     }

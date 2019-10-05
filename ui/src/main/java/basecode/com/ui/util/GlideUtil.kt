@@ -33,6 +33,17 @@ class GlideUtil : AppGlideModule() {
         }
 
         @JvmStatic
+        fun loadImage(url: String, imageView: ImageView, holderImage: Int, errorImage: Int) {
+            val context = imageView.context
+            GlideApp.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .placeholder(ContextCompat.getDrawable(context, holderImage))
+                    .error(ContextCompat.getDrawable(context, errorImage))
+                    .into(imageView)
+        }
+
+        @JvmStatic
         fun loadImageNews(url: String, imageView: ImageView, context: Context) {
             GlideApp.with(imageView.context)
                     .load(url)

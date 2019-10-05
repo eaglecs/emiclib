@@ -126,6 +126,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             activity?.let { activity ->
                 isLoadingFinished = true
                 Toasty.error(activity, "${activity.resources.getString(R.string.msg_error_download_book)} ${reasonText.reasonText}").show()
+                hideLoading()
             }
         }
         KBus.subscribe<LoginSuccessEventBus>(this) {
@@ -266,6 +267,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private fun readEBook() {
         if (pathBook.isEmpty()) {
             activity?.let {
+                hideLoading()
                 Toasty.warning(it, it.resources.getString(R.string.msg_warning_link_download_empty)).show()
             }
             return
@@ -415,13 +417,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     override fun reservationBookSuccess() {
         activity?.let { activity ->
+            hideLoading()
             Toasty.success(activity, activity.getString(R.string.msg_reservation_success)).show()
         }
     }
 
     override fun reservationBookFail(errorCode: Int) {
         activity?.let { activity ->
-
+            hideLoading()
             val msgError = when (errorCode) {
                 1 -> {
                     activity.getString(R.string.msg_reservation_fail_number_card)
@@ -467,6 +470,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun showErrorGetListBookRelated() {
+        hideLoading()
         activity?.let { activity ->
             //            Toasty.error(activity, activity.getString(R.string.msg_error_get_list_book_related)).show()
         }
@@ -493,6 +497,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             activity?.let { activity ->
                 Toasty.error(activity, activity.resources.getString(R.string.msg_error_download_book)).show()
             }
+            hideLoading()
         }
     }
 
