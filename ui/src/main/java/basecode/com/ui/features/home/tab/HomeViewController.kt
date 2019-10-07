@@ -17,16 +17,11 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.books.BooksViewController
-import basecode.com.ui.features.home.renderer.CollectionRecommendRenderer
-import basecode.com.ui.features.home.renderer.NewBookRenderer
-import basecode.com.ui.features.home.renderer.NewEBookRenderer
-import basecode.com.ui.features.home.renderer.NewNewsRenderer
-import basecode.com.ui.features.home.viewholder.NewBookViewHolderModel
-import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolderModel
-import basecode.com.ui.features.home.viewholder.NewEBookViewHolderModel
-import basecode.com.ui.features.home.viewholder.NewNewsViewHolderModel
+import basecode.com.ui.features.home.renderer.*
+import basecode.com.ui.features.home.viewholder.*
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
+import basecode.com.ui.features.news.ListNewsViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.ScanQRCode
@@ -110,7 +105,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvHome.setItemViewCacheSize(10)
         rvController = RecyclerViewController(view.rvHome, renderConfig)
-        rvController.addViewRenderer(NewNewsRenderer() { newsModel ->
+        rvController.addViewRenderer(NewNewsRenderer { newsModel ->
             targetController?.let { targetController ->
                 val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.picture, content = newsModel.content)
                 targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
@@ -142,14 +137,25 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
             }
         }))
-        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+        rvController.addViewRenderer(NewsBottomRenderer(onActionClickNews = { newsModel ->
             targetController?.let { targetController ->
-                val title = collectionRecommend.title
-                val id = collectionRecommend.id
-                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
-                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.photo, content = newsModel.content)
+                targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
             }
-        })
+        }, onActionReadMore = {
+            targetController?.let { targetController ->
+                targetController.router.pushController(RouterTransaction.with(ListNewsViewController()).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        }))
+
+//        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+//            targetController?.let { targetController ->
+//                val title = collectionRecommend.title
+//                val id = collectionRecommend.id
+//                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
+//                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+//            }
+//        })
 
     }
 
@@ -170,8 +176,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         rvController.addItem(newBookViewHolderModel)
         val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
         rvController.addItem(newEBookViewHolderModel)
-        val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
-        rvController.addItem(newCollectionRecommendViewHolderModel)
+        val newNewsBottomViewHolderModel = NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
+        rvController.addItem(newNewsBottomViewHolderModel)
         rvController.notifyDataChanged()
         hideLoading()
     }

@@ -120,5 +120,10 @@ object DomainKoinModules {
             GetAllBookUseCase(useCaseExecution = get(),
                     bookDataService = get())
         }
+
+        factory {
+            GetListNewsUseCase(useCaseExecution = get(),
+                    appRepository = get())
+        }
     }
 }

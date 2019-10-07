@@ -138,11 +138,11 @@ interface ApiService {
               @Field("PublishYear") publishYear: String,
               @Field("Information") information: String): Observable<Int>
 
-
-
-
-
-
-
+    //4.1 GetListNewEBookItems
+    @GET("/api/News/GetNewsByCategory")
+    fun getListNews(@Query("categoryId") categoryId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewNewsResponse>>
+    //4.1 GetListNewEBookItems
+    @GET("/api/News/GetNewsByCategory")
+    fun getListNewsObservable(@Query("categoryId") categoryId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
 
 }

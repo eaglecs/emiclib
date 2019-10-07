@@ -18,9 +18,10 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
+            val lstNewNews = appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
             newNewsResponse?.let {
                 newNewsResponse.forEach { newNews ->
-                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty())
+                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                     infoHomeResponse.lstNewNews.add(newNewsModel)
                 }
             }
@@ -44,6 +45,14 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                     infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
                 }
             }
+
+            lstNewNews?.let {
+                lstNewNews.forEach { newNews ->
+                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+                    infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
+                }
+            }
+
             e.onNext(infoHomeResponse)
             e.onComplete()
         }
