@@ -79,7 +79,8 @@ object PresentationKoinModules {
         }
         factory {
             BookBorrowPresenter(getLoanHoldingCurrentUseCase = get(),
-                    getLoanHoldingHistoryUseCase = get()) as BookBorrowContract.Presenter
+                    getLoanHoldingHistoryUseCase = get(),
+                    loanRenewUseCase = get()) as BookBorrowContract.Presenter
         }
         factory {
             NotifyPresenter(getListMessageUseCase = get(),

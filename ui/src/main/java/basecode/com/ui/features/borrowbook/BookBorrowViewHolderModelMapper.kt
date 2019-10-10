@@ -6,9 +6,10 @@ import basecode.com.presentation.features.books.BookBorrowViewModel
 class BookBorrowViewHolderModelMapper : Mapper<BookBorrowViewModel, BookBorrowViewHolderModel>() {
     override fun map(input: BookBorrowViewModel): BookBorrowViewHolderModel {
         return BookBorrowViewHolderModel(title = input.title,
-                coppyNumber = input.coppyNumber,
+                copyNumber = input.coppyNumber,
                 dueDate = input.dueDate,
                 checkOutDate = input.checkOutDate,
-                photo = input.photo)
+                photo = input.photo,
+                afterRenewDate = input.afterRenewDate)
     }
 }

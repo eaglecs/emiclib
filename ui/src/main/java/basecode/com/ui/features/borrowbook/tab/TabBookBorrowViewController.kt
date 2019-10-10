@@ -26,6 +26,7 @@ import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_borrow_book.view.*
 import org.koin.standalone.inject
 
@@ -66,6 +67,18 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
         loadData()
     }
 
+    override fun renewSuccess() {
+        loadData()
+        hideLoading()
+    }
+
+    override fun renewfail() {
+        activity?.let {
+            Toasty.error(it, "Gia hạn thất bại. Bạn làm ơn kiểm tra lại!").show()
+        }
+        hideLoading()
+    }
+
     private fun handleView(view: View) {
         view.vgRefreshBooksBorrow.setOnRefreshListener {
             if (doubleTouchPrevent.check("vgRefreshCategoryBooks")) {
@@ -83,7 +96,9 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvBookBorrow.setItemViewCacheSize(20)
         rvController = RecyclerViewController(view.rvBookBorrow, renderConfig)
-        rvController.addViewRenderer(BookBorrowRenderer())
+        rvController.addViewRenderer(BookBorrowRenderer { copyNumberBook ->
+            presenter.renew(copyNumberBook)
+        })
     }
 
     override fun getListBookSuccess(lstBook: List<BookBorrowViewModel>) {
@@ -101,7 +116,7 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
     override fun getListBookFail() {
         hideLoading()
         activity?.let { activity ->
-//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
+            //            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
         }
     }
 

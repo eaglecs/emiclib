@@ -9,6 +9,8 @@ data class BookBorrowResponse(
     val copyNumber: String?,
     @SerializedName("DueDate")
     val dueDate: String?,
+    @SerializedName("AfterRenewDate")
+    val afterRenewDate: String?,
     @SerializedName("ImageCover")
     val imageCover: String?,
     @SerializedName("OverDueDate")

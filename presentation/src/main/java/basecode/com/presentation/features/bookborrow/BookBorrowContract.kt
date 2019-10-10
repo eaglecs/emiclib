@@ -10,9 +10,12 @@ class BookBorrowContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun getListBookSuccess(lstBook: List<BookBorrowViewModel>)
         fun getListBookFail()
+        fun renewSuccess()
+        fun renewfail()
     }
 
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun getListBook(isRefresh: Boolean, isBorrowing: Boolean)
+        abstract fun renew(coppynumber: String)
     }
 }
