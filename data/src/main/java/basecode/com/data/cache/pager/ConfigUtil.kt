@@ -1,6 +1,7 @@
 package basecode.com.data.cache.pager
 
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.UserModel
 
 object ConfigUtil {
@@ -24,6 +25,7 @@ object ConfigUtil {
         return configSaver.get<String>(ConfigSaver.CONFIG_LOGIN_TYPE).valueOrEmpty()
     }
 
+
     fun saveUserModel(userModel: UserModel?) {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
         configSaver.save(ConfigSaver.CONFIG_USER_MODEL, userModel)
@@ -32,5 +34,15 @@ object ConfigUtil {
     fun getUserModel(): UserModel?{
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
         return configSaver.get<UserModel>(ConfigSaver.CONFIG_USER_MODEL)
+    }
+
+    fun saveLoginRequest(loginRequest: LoginRequest) {
+        val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
+        configSaver.save(ConfigSaver.CONFIG_LOGIN_REQUEST, loginRequest)
+    }
+
+    fun getLoginRequest(): LoginRequest?{
+        val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
+        return configSaver.get<LoginRequest>(ConfigSaver.CONFIG_LOGIN_REQUEST)
     }
 }

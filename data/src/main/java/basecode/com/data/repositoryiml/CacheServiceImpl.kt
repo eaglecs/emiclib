@@ -1,11 +1,20 @@
 package basecode.com.data.repositoryiml
 
 import basecode.com.data.cache.pager.ConfigUtil
+import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.UserModel
 import basecode.com.domain.repository.CacheRespository
 import io.reactivex.Observable
 
 class CacheServiceImpl : CacheRespository {
+    override fun saveLoginRequest(loginRequest: LoginRequest) {
+        ConfigUtil.saveLoginRequest(loginRequest)
+    }
+
+    override fun getLoginRequest(): LoginRequest? {
+        return ConfigUtil.getLoginRequest()
+    }
+
     override fun getUserModel(): UserModel? {
         return ConfigUtil.getUserModel()
     }
@@ -25,6 +34,7 @@ class CacheServiceImpl : CacheRespository {
             e.onComplete()
         }
     }
+
 
     override fun getUserToken(): Observable<String> {
         return Observable.create { e ->

@@ -6,6 +6,7 @@ public interface ConfigSaver {
     String CONFIG_USER_TOKEN = "config_user_token";
     String CONFIG_LOGIN_TYPE = "config_login_type";
     String CONFIG_USER_MODEL = "config_user_model";
+    String CONFIG_LOGIN_REQUEST = "config_login_request";
 
 
     void save(String key, Object data);

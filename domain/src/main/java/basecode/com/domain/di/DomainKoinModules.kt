@@ -125,5 +125,12 @@ object DomainKoinModules {
             GetListNewsUseCase(useCaseExecution = get(),
                     appRepository = get())
         }
+        factory {
+            SaveLoginRequestUseCase(useCaseExecution = get(), cacheRespository = get())
+        }
+
+        factory {
+            GetLoginRequestUseCase(useCaseExecution = get(), cacheRespository = get())
+        }
     }
 }
