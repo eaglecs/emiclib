@@ -4,6 +4,7 @@ import basecode.com.data.BuildConfig
 import basecode.com.data.cache.dbflow.BookDataServiceImpl
 import basecode.com.data.remote.ApiService
 import basecode.com.data.remote.HeaderInterceptor
+import basecode.com.data.remote.NullOnEmptyConverterFactory
 import basecode.com.data.repositoryiml.ApiServiceImpl
 import basecode.com.data.repositoryiml.CacheServiceImpl
 import basecode.com.domain.repository.CacheRespository
@@ -41,6 +42,7 @@ object DataKoinModules {
         fun createApiService(): ApiService {
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(BuildConfig.END_POINT)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(NullOnEmptyConverterFactory())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(get())
                     .build()

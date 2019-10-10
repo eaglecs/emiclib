@@ -145,4 +145,8 @@ interface ApiService {
     @GET("/api/News/GetNewsByCategory")
     fun getListNewsObservable(@Query("categoryId") categoryId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
 
+    //Load List book GetItemInCollectionRecomand
+    @GET("api/cir/GetLoanHoldingRenew")
+    fun getLoanHoldingRenew(@Query("coppynumber") coppynumber: String): Observable<Any>
+
 }

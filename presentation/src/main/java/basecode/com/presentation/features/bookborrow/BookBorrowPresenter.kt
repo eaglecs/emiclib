@@ -4,7 +4,7 @@ import basecode.com.domain.extention.formatTime
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.features.GetLoanHoldingCurrentUseCase
 import basecode.com.domain.features.GetLoanHoldingHistoryUseCase
-import basecode.com.domain.features.LoanRenewUseCase
+import basecode.com.domain.features.GetLoanHoldingRenewBookUseCase
 import basecode.com.domain.model.network.response.BookBorrowResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.usecase.base.ResultListener
@@ -12,23 +12,19 @@ import basecode.com.domain.util.DateTimeFormat
 import basecode.com.presentation.features.books.BookBorrowViewModel
 
 class BookBorrowPresenter(private val getLoanHoldingHistoryUseCase: GetLoanHoldingHistoryUseCase,
-                          private val loanRenewUseCase: LoanRenewUseCase,
+                          private val loanRenewUseCase: GetLoanHoldingRenewBookUseCase,
                           private val getLoanHoldingCurrentUseCase: GetLoanHoldingCurrentUseCase) : BookBorrowContract.Presenter() {
     override fun renew(coppynumber: String) {
         view?.let { view ->
             view.showLoading()
             loanRenewUseCase.cancel()
-            loanRenewUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
-                override fun success(data: Int) {
-                    if (data == 1) {
-                        view.renewSuccess()
-                    } else {
-                        view.renewfail()
-                    }
+            loanRenewUseCase.executeAsync(object : ResultListener<Any, ErrorResponse> {
+                override fun success(data: Any) {
+                    view.renewSuccess()
                 }
 
                 override fun fail(error: ErrorResponse) {
-                    view.renewfail()
+                    view.renewSuccess()
                 }
 
                 override fun done() {

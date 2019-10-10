@@ -55,4 +55,5 @@ interface AppRepository {
                         information: String): Observable<Int>
     fun getListNews(categoryId: Int, pageIndex: Int, pageSize: Int): Single<List<NewNewsResponse>>
     fun getListNewsObservable(categoryId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
+    fun getLoanHoldingRenew(coppynumber: String): Observable<Any>
 }

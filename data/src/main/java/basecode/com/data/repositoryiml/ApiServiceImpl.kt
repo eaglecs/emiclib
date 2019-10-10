@@ -7,6 +7,10 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
+    override fun getLoanHoldingRenew(coppynumber: String): Observable<Any> {
+        return apiServiceApp.getLoanHoldingRenew(coppynumber)
+    }
+
     override fun requestDocument(fullName: String, patronCode: String, email: String, phone: String, facebook: String, supplier: String, groupName: String, title: String, author: String, publisher: String, publishYear: String, information: String): Observable<Int> {
         return apiServiceApp.requestDocument(fullName, patronCode, email, phone, facebook, supplier, groupName, title, author, publisher, publishYear, information)
     }
