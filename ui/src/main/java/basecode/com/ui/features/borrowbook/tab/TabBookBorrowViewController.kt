@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.layout_tab_borrow_book.view.*
 import org.koin.standalone.inject
 
 class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), BookBorrowContract.View {
-
     private var position = 0
     private lateinit var rvController: RecyclerViewController
     private val presenter: BookBorrowContract.Presenter by inject()
@@ -71,6 +70,7 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
         loadData()
         hideLoading()
     }
+
 
     override fun renewfail() {
         activity?.let {
