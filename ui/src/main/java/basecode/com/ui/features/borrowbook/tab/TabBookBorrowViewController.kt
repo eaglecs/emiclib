@@ -7,25 +7,18 @@ import android.view.ViewGroup
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.presentation.features.bookborrow.BookBorrowContract
 import basecode.com.presentation.features.books.BookBorrowViewModel
-import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
-import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraInt
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
-import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
-import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.borrowbook.BookBorrowRenderer
+import basecode.com.ui.features.borrowbook.BookBorrowViewHolderModel
 import basecode.com.ui.features.borrowbook.BookBorrowViewHolderModelMapper
-import basecode.com.ui.features.searchbook.BookViewHolderModel
-import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
 import basecode.com.ui.util.DoubleTouchPrevent
-import com.bluelinelabs.conductor.RouterTransaction
-import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_borrow_book.view.*
 import org.koin.standalone.inject
@@ -96,13 +89,20 @@ class TabBookBorrowViewController(bundle: Bundle) : ViewController(bundle), Book
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvBookBorrow.setItemViewCacheSize(20)
         rvController = RecyclerViewController(view.rvBookBorrow, renderConfig)
-        rvController.addViewRenderer(BookBorrowRenderer { copyNumberBook ->
+        rvController.addViewRenderer(BookBorrowRenderer(context = view.context) { copyNumberBook ->
             presenter.renew(copyNumberBook)
         })
     }
 
     override fun getListBookSuccess(lstBook: List<BookBorrowViewModel>) {
-        val lstBookViewModel = BookBorrowViewHolderModelMapper().mapList(lstBook)
+        val isBorrowing = position == 0
+        val lstBookViewModel = mutableListOf<BookBorrowViewHolderModel>()
+        lstBook.forEach { book ->
+            val input= BookBorrowViewHolderModelMapper.Input(isBorrowing = isBorrowing, bookBorrowViewModel = book)
+            val bookViewModel = BookBorrowViewHolderModelMapper().map(input)
+            lstBookViewModel.add(bookViewModel)
+
+        }
         if (lstBook.isEmpty()) {
             view?.tvNoBook?.visible()
         } else {

@@ -1,6 +1,7 @@
 package basecode.com.presentation.features.bookborrow
 
 import basecode.com.domain.extention.formatTime
+import basecode.com.domain.extention.toTimeMilliSecond
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.features.GetLoanHoldingCurrentUseCase
 import basecode.com.domain.features.GetLoanHoldingHistoryUseCase
@@ -50,7 +51,9 @@ class BookBorrowPresenter(private val getLoanHoldingHistoryUseCase: GetLoanHoldi
                             }
 
                             var dueDate = newbook.dueDate.valueOrEmpty()
+                            var timeDueDate: Long = 0
                             if (dueDate.isNotEmpty()) {
+                                timeDueDate = dueDate.toTimeMilliSecond(DateTimeFormat.YY_MM_DD_T_HH_MM_SS.value)
                                 dueDate = dueDate.formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT)
                             }
                             var afterRenewDate = newbook.afterRenewDate.valueOrEmpty()
@@ -58,7 +61,7 @@ class BookBorrowPresenter(private val getLoanHoldingHistoryUseCase: GetLoanHoldi
                                 afterRenewDate = afterRenewDate.formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT)
                             }
                             val bookVewModel = BookBorrowViewModel(title = newbook.title.valueOrEmpty(), coppyNumber = newbook.copyNumber.valueOrEmpty(),
-                                    checkOutDate = checkOutDate, dueDate = dueDate, photo = newbook.imageCover.valueOrEmpty(), afterRenewDate = afterRenewDate)
+                                    checkOutDate = checkOutDate, dueDate = dueDate, photo = newbook.imageCover.valueOrEmpty(), afterRenewDate = afterRenewDate, timeDueDate = timeDueDate)
                             lstResult.add(bookVewModel)
                         }
                         view.getListBookSuccess(lstResult)
@@ -85,11 +88,13 @@ class BookBorrowPresenter(private val getLoanHoldingHistoryUseCase: GetLoanHoldi
                             }
 
                             var dueDate = newbook.dueDate.valueOrEmpty()
+                            var timeDueDate: Long = 0
                             if (dueDate.isNotEmpty()) {
+                                timeDueDate = dueDate.toTimeMilliSecond(DateTimeFormat.YY_MM_DD_T_HH_MM_SS.value)
                                 dueDate = dueDate.formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT)
                             }
                             val bookVewModel = BookBorrowViewModel(title = newbook.title.valueOrEmpty(), coppyNumber = newbook.copyNumber.valueOrEmpty(),
-                                    checkOutDate = checkOutDate, dueDate = dueDate, photo = newbook.imageCover.valueOrEmpty(), afterRenewDate = "")
+                                    checkOutDate = checkOutDate, dueDate = dueDate, photo = newbook.imageCover.valueOrEmpty(), afterRenewDate = "", timeDueDate = timeDueDate)
                             lstResult.add(bookVewModel)
                         }
                         view.getListBookSuccess(lstResult)

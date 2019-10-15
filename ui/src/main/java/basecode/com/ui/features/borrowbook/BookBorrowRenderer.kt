@@ -1,12 +1,14 @@
 package basecode.com.ui.features.borrowbook
 
+import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatImageView
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.util.GlideUtil
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 
-class BookBorrowRenderer(private val onActionReNewBook: (copyNumberBook: String) -> Unit) : ViewHolderRenderer<BookBorrowViewHolderModel>() {
+class BookBorrowRenderer(private val context: Context, private val onActionReNewBook: (copyNumberBook: String) -> Unit) : ViewHolderRenderer<BookBorrowViewHolderModel>() {
     override fun getLayoutId(): Int = R.layout.item_book_borrow
 
     override fun getModelClass(): Class<BookBorrowViewHolderModel> = BookBorrowViewHolderModel::class.java
@@ -22,6 +24,12 @@ class BookBorrowRenderer(private val onActionReNewBook: (copyNumberBook: String)
             viewFinder.setGone(R.id.tvRenewBook, false)
         } else {
             viewFinder.setGone(R.id.tvRenewBook, true)
+        }
+        val timeDueDate = model.timeDueDate
+        if(model.isBorrowing && System.currentTimeMillis() > timeDueDate){
+            viewFinder.setTextColor(R.id.tvTimeBorrow, ContextCompat.getColor(context, R.color.md_red500) )
+        } else {
+            viewFinder.setTextColor(R.id.tvTimeBorrow, ContextCompat.getColor(context, R.color.md_grey600) )
         }
         viewFinder.setOnClickListener(R.id.tvRenewBook) {
             runWithCheckMultiTouch("tvRenewBook"){

@@ -3,13 +3,19 @@ package basecode.com.ui.features.borrowbook
 import basecode.com.domain.mapper.Mapper
 import basecode.com.presentation.features.books.BookBorrowViewModel
 
-class BookBorrowViewHolderModelMapper : Mapper<BookBorrowViewModel, BookBorrowViewHolderModel>() {
-    override fun map(input: BookBorrowViewModel): BookBorrowViewHolderModel {
-        return BookBorrowViewHolderModel(title = input.title,
-                copyNumber = input.coppyNumber,
-                dueDate = input.dueDate,
-                checkOutDate = input.checkOutDate,
-                photo = input.photo,
-                afterRenewDate = input.afterRenewDate)
+class BookBorrowViewHolderModelMapper : Mapper<BookBorrowViewHolderModelMapper.Input, BookBorrowViewHolderModel>() {
+    override fun map(input: Input): BookBorrowViewHolderModel {
+        val bookBorrowViewModel = input.bookBorrowViewModel
+        return BookBorrowViewHolderModel(title = bookBorrowViewModel.title,
+                copyNumber = bookBorrowViewModel.coppyNumber,
+                dueDate = bookBorrowViewModel.dueDate,
+                checkOutDate = bookBorrowViewModel.checkOutDate,
+                photo = bookBorrowViewModel.photo,
+                afterRenewDate = bookBorrowViewModel.afterRenewDate,
+                isBorrowing = input.isBorrowing,
+                timeDueDate = bookBorrowViewModel.timeDueDate
+                )
     }
+
+    class Input(val isBorrowing: Boolean, val bookBorrowViewModel: BookBorrowViewModel)
 }
