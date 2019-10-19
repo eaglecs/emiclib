@@ -6,8 +6,8 @@ import basecode.com.domain.usecase.base.UseCase
 import basecode.com.domain.usecase.base.UseCaseExecution
 import io.reactivex.Observable
 
-class LoanRenewUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<String, Int, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(input: String): Observable<Int> {
+class LoanRenewUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<String, Any, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(input: String): Observable<Any> {
         return appRepository.loanRenew(input)
     }
 

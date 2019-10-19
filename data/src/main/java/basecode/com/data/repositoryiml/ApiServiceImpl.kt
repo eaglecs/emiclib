@@ -131,8 +131,8 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.getLoanHoldingRenew()
     }
 
-    override fun loanRenew(coppynumber: String): Observable<Int> {
-        return apiServiceApp.loanRenew(coppynumber)
+    override fun loanRenew(coppynumber: String): Observable<Any> {
+        return apiServiceApp.getLoanHoldingRenew(coppynumber)
     }
 
     override fun getListNews(categoryId: Int, pageIndex: Int, pageSize: Int): Single<List<NewNewsResponse>> {

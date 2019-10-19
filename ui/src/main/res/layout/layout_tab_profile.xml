@@ -226,8 +226,7 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.AppCompatImageView
                         android:layout_width="80dp"
