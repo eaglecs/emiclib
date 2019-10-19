@@ -188,6 +188,10 @@
                 android:paddingRight="@dimen/default_padding_margin_huge"
                 android:paddingBottom="@dimen/default_padding_margin"
                 tools:text="Đặt mượn" />
+            <com.example.jean.jcplayer.view.JcPlayerView
+                android:id="@+id/playBookAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvDescription"

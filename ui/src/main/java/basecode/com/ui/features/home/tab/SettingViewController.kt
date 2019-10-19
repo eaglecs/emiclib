@@ -58,7 +58,7 @@ class SettingViewController() : ViewController(bundle = null) {
             if (bookInfo.size == 2) {
                 val bookId = bookInfo.first().trim().toLong()
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    val bundle = BookDetailViewController.BundleOptions.create(bookId = bookId, photo = "")
                     targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }

@@ -15,7 +15,6 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
-import basecode.com.domain.extention.valueOrFalse
 import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.dbflow.EBookModel
@@ -24,7 +23,10 @@ import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
-import basecode.com.ui.base.extra.*
+import basecode.com.ui.base.extra.BundleExtraInt
+import basecode.com.ui.base.extra.BundleExtraLong
+import basecode.com.ui.base.extra.BundleExtraString
+import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
@@ -39,6 +41,8 @@ import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.*
 import com.bluelinelabs.conductor.RouterTransaction
+import com.example.jean.jcplayer.model.JcAudio
+import com.example.jean.jcplayer.view.JcPlayerView
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
 import es.dmoral.toasty.Toasty
@@ -47,11 +51,11 @@ import org.koin.standalone.inject
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
-        DialogOneEventViewController.ActionEvent {
+        DialogOneEventViewController.ActionEvent{
 
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
-    private var isEBook = false
+    private var bookType = BookType.BOOK_NORMAL
     private var bookId: Long = 0
     private var photo = ""
     private var titleBook = ""
@@ -63,6 +67,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var isLogin = false
     private val permissionsCode = 1000
     private var pathBook = ""
+    private lateinit var player:JcPlayerView
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -79,13 +84,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     object BundleOptions {
-        var Bundle.isEBook by BundleExtraBoolean("BooksViewController.isEBook")
+        var Bundle.bookType by BundleExtraInt("BooksViewController.bookType")
         var Bundle.bookId by BundleExtraLong("BooksViewController.bookId")
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
-        fun create(isEbook: Boolean, bookId: Long, photo: String) = Bundle().apply {
-            this.isEBook = isEbook
+        fun create(bookType: Int = BookType.BOOK_NORMAL.value, bookId: Long, photo: String) = Bundle().apply {
+            this.bookType = bookType
             this.bookId = bookId
             this.author = author
             this.titleBook = titleBook
@@ -97,7 +102,17 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     init {
         bundle.options { options ->
-            isEBook = options.isEBook.valueOrFalse()
+            bookType = when (options.bookType.valueOrZero()) {
+                BookType.EBOOK.value -> {
+                    BookType.EBOOK
+                }
+                BookType.SPEAK_BOOK.value -> {
+                    BookType.SPEAK_BOOK
+                }
+                else -> {
+                    BookType.BOOK_NORMAL
+                }
+            }
             bookId = options.bookId.valueOrZero()
             photo = options.photo.valueOrEmpty()
         }
@@ -170,11 +185,18 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun initView(view: View) {
+        player = view.playBookAudio
         GlideUtil.loadImage(photo, view.ivBookDetail)
-        if (isEBook) {
-            view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
-        } else {
-            view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
+        when (bookType) {
+            BookType.BOOK_NORMAL -> {
+                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
+            }
+            BookType.EBOOK -> {
+                view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
+            }
+            BookType.SPEAK_BOOK -> {
+                view.tvHandleBook.gone()
+            }
         }
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
@@ -184,7 +206,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     targetController?.let { targetController ->
-                        val bundle = BundleOptions.create(isEbook = true, bookId = dataItem.id, photo = dataItem.photo)
+                        val bundle = BundleOptions.create(bookId = dataItem.id, photo = dataItem.photo)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
@@ -223,15 +245,27 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
 
-    override fun getBookInfoSuccess(path: String, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String) {
+    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String) {
         this.linkShare = linkShare
         if (linkShare.isNotEmpty()) {
             view?.ivShareBookDetail?.visible()
         }
         titleBook = title
         this.author = author
-        pathBook = path
+        if (lstPathResult.isNotEmpty()) {
+            pathBook = lstPathResult.first()
+        }
         view?.let { view ->
+            if (bookType == BookType.SPEAK_BOOK) {
+                if (lstPathResult.isNotEmpty()) {
+                    player.visible()
+                    val jcAudios = ArrayList<JcAudio>()
+                    lstPathResult.forEach { path ->
+                        jcAudios.add(JcAudio.createFromURL(titleBook, path))
+                    }
+                    player.initPlaylist(jcAudios, null)
+                }
+            }
             view.tvBookName.text = title
             if (author.isNotEmpty()) {
                 view.tvBookAuthor.text = author
@@ -351,12 +385,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             view?.vgLoadingDownloadBook?.gone()
             return
         }
-        percent += if (percent < 60) {
-            2
-        } else if (percent < 99) {
-            1
-        } else {
-            return
+        percent += when {
+            percent < 60 -> 2
+            percent < 99 -> 1
+            else -> return
         }
         refreshPieView(percent)
         Handler().postDelayed({ updateProgress() }, 1000)
@@ -401,17 +433,20 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun handleBook() {
-        if (isEBook) {
-            activity?.let {
-                if (PermissionUtil.hasPermissions(it, Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    readEBook()
-                } else {
-                    requestPermissions(PermissionUtil.readWriteExternalPermissions, permissionsCode)
+        when (bookType) {
+            BookType.EBOOK -> {
+                activity?.let {
+                    if (PermissionUtil.hasPermissions(it, Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        readEBook()
+                    } else {
+                        requestPermissions(PermissionUtil.readWriteExternalPermissions, permissionsCode)
+                    }
                 }
             }
-        } else {
-            presenter.reservationBook(bookId)
+            else -> {
+                presenter.reservationBook(bookId)
+            }
         }
     }
 
@@ -527,17 +562,21 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun onResultAfterHandleDialog() {
-        if (isEBook) {
-            handleBook()
-        }
+        handleBook()
     }
 
     override fun onDestroyView(view: View) {
+        player.kill()
         KBus.unsubscribe(this)
         activity?.unbindService(mConnection)
         activity?.unregisterReceiver(receiver)
         super.onDestroyView(view)
     }
+
+    enum class BookType(val value: Int) {
+        BOOK_NORMAL(1), EBOOK(2), SPEAK_BOOK(3)
+    }
+
 }
 
 class ProgressDownloadBook(var bookCode: Int, var percentValue: Int)

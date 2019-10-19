@@ -64,7 +64,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             if (bookInfo.size == 2) {
                 val bookId = bookInfo.first().trim().toLong()
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookId, photo = "")
+                    val bundle = BookDetailViewController.BundleOptions.create(bookId = bookId, photo = "")
                     targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }
@@ -115,7 +115,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
         rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
             targetController?.let { targetController ->
-                val bundle = BookDetailViewController.BundleOptions.create(isEbook = false, bookId = bookItem.id, photo = bookItem.coverPicture)
+                val bundle = BookDetailViewController.BundleOptions.create(bookId = bookItem.id, photo = bookItem.coverPicture)
                 targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
             }
         }, onActionReadMore = {
@@ -127,7 +127,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         }))
         rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
             targetController?.let { targetController ->
-                val bundle = BookDetailViewController.BundleOptions.create(isEbook = true, bookId = bookItem.id, photo = bookItem.coverPicture)
+                val bundle = BookDetailViewController.BundleOptions.create(bookType = BookDetailViewController.BookType.EBOOK.value, bookId = bookItem.id, photo = bookItem.coverPicture)
                 targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
             }
         }, onActionReadMore = {

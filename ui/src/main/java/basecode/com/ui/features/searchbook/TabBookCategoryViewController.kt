@@ -106,7 +106,18 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
                     targetController?.let { targetController ->
-                        val bundle = BookDetailViewController.BundleOptions.create(isEbook = categoryId == 4, bookId = dataItem.id, photo = dataItem.photo)
+                        val type = when(categoryId){
+                            3 -> {
+                               BookDetailViewController.BookType.SPEAK_BOOK.value
+                            }
+                            4 -> {
+                                BookDetailViewController.BookType.EBOOK.value
+                            }
+                            else -> {
+                                BookDetailViewController.BookType.BOOK_NORMAL.value
+                            }
+                        }
+                        val bundle = BookDetailViewController.BundleOptions.create(bookType = type, bookId = dataItem.id, photo = dataItem.photo)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
