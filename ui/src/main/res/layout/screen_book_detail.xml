@@ -190,6 +190,7 @@
                 tools:text="Đặt mượn" />
             <com.example.jean.jcplayer.view.JcPlayerView
                 android:id="@+id/playBookAudio"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
