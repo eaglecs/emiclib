@@ -160,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/default_padding_margin"
                             android:layout_marginRight="@dimen/default_padding_margin"
-                            android:text="No:"
+                            android:text="Ký hiệu:"
                             android:textStyle="bold" />
 
                         <android.support.v7.widget.AppCompatTextView
