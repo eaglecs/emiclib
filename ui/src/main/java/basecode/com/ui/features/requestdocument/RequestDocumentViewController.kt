@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.model.network.request.RequestDocumentRequest
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.presentation.features.requestdocument.RequestDocumentContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -24,8 +25,22 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
 
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
+        presenter.getUserInfo()
         handleView(view)
 
+    }
+
+    override fun getUserInfoSuccess(data: UserModel) {
+        view?.let { view ->
+            view.edtNameDocument.setText(data.patronName)
+            view.edtPatronCode.setText(data.patronCode)
+            if (data.email.isNotEmpty()) {
+                view.edtEmail.setText(data.email)
+            }
+            if (data.phone.isNotEmpty()) {
+                view.edtPhone.setText(data.phone)
+            }
+        }
     }
 
     private fun handleView(view: View) {
@@ -38,19 +53,33 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
         view.btnRequestDocument.setOnClickListener {
             if (doubleTouchPrevent.check("btnChangePass")) {
                 val name = view.edtNameDocument.text.toString()
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     view.edtNameDocument.shake()
                     return@setOnClickListener
                 }
-
                 val patronCode = view.edtPatronCode.text.toString()
+                if (patronCode.isEmpty()) {
+                    view.edtPatronCode.shake()
+                    return@setOnClickListener
+                }
+
                 val email = view.edtEmail.text.toString()
+                if (email.isEmpty()) {
+                    view.edtEmail.shake()
+                    return@setOnClickListener
+                }
+
                 val phone = view.edtPhone.text.toString()
+                if (phone.isEmpty()) {
+                    view.edtPhone.shake()
+                    return@setOnClickListener
+                }
+
                 val facebook = view.edtFacebook.text.toString()
                 val supplier = view.edtSupplier.text.toString()
                 val groupName = view.edtGroupName.text.toString()
                 val title = view.edtTitle.text.toString()
-                if(title.isEmpty()){
+                if (title.isEmpty()) {
                     view.edtTitle.shake()
                     return@setOnClickListener
                 }

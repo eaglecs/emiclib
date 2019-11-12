@@ -83,10 +83,10 @@
     <string name="fqa">FQA</string>
     <string name="text_about_me">Về chúng tôi</string>
     <string name="msg_error_get_list_fqa">Lấy danh sách câu hỏi và trả lời thất bại.</string>
-    <string name="text_title">Tiêu đề</string>
-    <string name="text_email">Email</string>
+    <string name="text_title">Tiêu đề *</string>
+    <string name="text_email">Email *</string>
     <string name="text_user_name_hint">Tên của bạn</string>
-    <string name="text_phone_number">Số điện thoại</string>
+    <string name="text_phone_number">Số điện thoại *</string>
     <string name="text_content">Nội dung</string>
     <string name="msg_error_feedback">Gửi phản hồi thất  bại.</string>
     <string name="msg_send_feedback_success">Gửi phản hồi thành công. Cảm ơn bạn về phản hổi này</string>
@@ -136,8 +136,8 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_download_book">Tải sách</string>
     <string name="text_request_document">Yêu cầu bổ sung tài liệu</string>
     <string name="btn_text_request_document">Yêu cầu</string>
-    <string name="text_full_name">Tên</string>
-    <string name="text_patron_code">PatronCode</string>
+    <string name="text_full_name">Họ và Tên *</string>
+    <string name="text_patron_code">Số thẻ *</string>
     <string name="text_facebook">Facebook</string>
     <string name="text_supplier">Nhà cung cấp</string>
     <string name="text_groupN_name">Tên Nhóm</string>

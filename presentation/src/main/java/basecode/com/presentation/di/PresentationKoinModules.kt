@@ -46,7 +46,8 @@ object PresentationKoinModules {
             NewsPresenter(getListNewsUseCase = get()) as NewsContract.Presenter
         }
         factory {
-            RequestDocumentPresenter( requestDocumentUseCase = get()) as RequestDocumentContract.Presenter
+            RequestDocumentPresenter( requestDocumentUseCase = get(),
+                    getInfoUserUseCase = get()) as RequestDocumentContract.Presenter
         }
         factory {
             HomePresenter(getInfoHomeUseCase = get(),
