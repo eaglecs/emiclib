@@ -17,9 +17,13 @@ import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.extension.view.hideKeyboard
 import basecode.com.ui.extension.view.shake
 import basecode.com.ui.util.DoubleTouchPrevent
+import com.jackandphantom.blurimage.BlurImage
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.screen_login.view.*
 import org.koin.standalone.inject
+import android.content.Intent
+import android.net.Uri
+
 
 class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), LoginContract.View {
 
@@ -38,11 +42,11 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
 
     init {
         bundle.options { options ->
-            type = when(options.type.valueOrZero()){
+            type = when (options.type.valueOrZero()) {
                 1 -> {
                     LoginSuccessEventBus.Type.HandleBook
                 }
-                2-> {
+                2 -> {
                     LoginSuccessEventBus.Type.UserInfo
                 }
                 3 -> {
@@ -57,7 +61,7 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 6 -> {
                     LoginSuccessEventBus.Type.DownloadBook
                 }
-                7-> {
+                7 -> {
                     LoginSuccessEventBus.Type.ChangePass
                 }
                 8 -> {
@@ -81,7 +85,7 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
     }
 
     private fun initView(view: View) {
-
+        BlurImage.with(applicationContext).load(R.drawable.bg_login).intensity(25f).Async(true).into(view.ivLogin)
     }
 
     private fun onHandleView(view: View) {
@@ -98,7 +102,7 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
         }
         view.tvForgotPass.setOnClickListener {
             if (doubleTouchPrevent.check("tvForgotPass")) {
-
+                openWeb()
             }
         }
 
@@ -110,6 +114,13 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
             }
             false
         }
+    }
+
+    private fun openWeb() {
+        val url = "https://lib.eiu.edu.vn/ForgotPassword.aspx"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(i)
     }
 
     private fun loginLib(view: View) {

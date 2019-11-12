@@ -8,6 +8,13 @@
     android:clickable="true"
     android:focusable="true">
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_login" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,65 +24,74 @@
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_logo"
             android:layout_marginBottom="@dimen/default_padding_margin_huge"
-            />
+            android:src="@drawable/ic_logo" />
 
         <android.support.v7.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_login"
+            android:textColor="@color/md_white"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edtUserName"
-            style="@style/TextPrimarySubtitle"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding_margin_x"
-            android:background="@drawable/bg_rec_line_login"
-            android:hint="@string/text_user_name"
-            android:inputType="text"
-            android:lines="1"
-            android:maxLength="50"
-            android:nextFocusDown="@+id/edtPassword"
-            android:paddingLeft="@dimen/default_padding_margin"
-            android:paddingTop="@dimen/default_padding_margin"
-            android:paddingRight="@dimen/default_padding_margin"
-            android:paddingBottom="@dimen/default_padding_margin" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edtPassword"
-            style="@style/TextPrimarySubtitle"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding_margin"
-            android:background="@drawable/bg_rec_line_login"
-            android:hint="@string/text_password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:maxLength="50"
-            android:paddingLeft="@dimen/default_padding_margin"
-            android:paddingTop="@dimen/default_padding_margin"
-            android:paddingRight="@dimen/default_padding_margin"
-            android:paddingBottom="@dimen/default_padding_margin"
-            tools:text="nmnm,cnvm,nmxncmvnxcmvnm,xnvmnxm,vnmx,ncvm," />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tvForgotPass"
-            style="@style/TextPrimaryBody"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding_margin"
-            android:padding="@dimen/default_padding_margin_h"
-            android:text="@string/text_forgot_password"
-            android:textColor="@color/md_red500" />
+            android:orientation="vertical"
+            >
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtUserName"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding_margin_x"
+                android:background="@drawable/bg_rec_line_login"
+                android:hint="@string/text_user_name"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLength="50"
+                android:nextFocusDown="@+id/edtPassword"
+                android:paddingLeft="@dimen/default_padding_margin"
+                android:paddingTop="@dimen/default_padding_margin"
+                android:paddingRight="@dimen/default_padding_margin"
+                android:paddingBottom="@dimen/default_padding_margin" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtPassword"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding_margin"
+                android:background="@drawable/bg_rec_line_login"
+                android:hint="@string/text_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLength="50"
+                android:paddingLeft="@dimen/default_padding_margin"
+                android:paddingTop="@dimen/default_padding_margin"
+                android:paddingRight="@dimen/default_padding_margin"
+                android:paddingBottom="@dimen/default_padding_margin"
+                tools:text="nmnm,cnvm,nmxncmvnxcmvnm,xnvmnxm,vnmx,ncvm," />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvForgotPass"
+                style="@style/TextPrimaryBody"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding_margin"
+                android:padding="@dimen/default_padding_margin_h"
+                android:text="@string/text_forgot_password"
+                android:textColor="@color/md_red500" />
+        </LinearLayout>
+
+
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/btnLogin"
-            style="@style/ButtonStyle.Active.Largest"
+            style="@style/ButtonStyle.Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding_margin_huge"

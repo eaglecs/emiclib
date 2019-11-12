@@ -32,6 +32,8 @@ android {
         versionName versionNameValue
         testInstrumentationRunner testInstrumentationRunnerValue
         multiDexEnabled true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         debug {

@@ -19,6 +19,12 @@
         <item name="android:minHeight">@dimen/default_padding_margin_xx</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="ButtonStyle.Login" parent="TextLightStyle.Large">
+        <item name="android:background">@drawable/selector_btn_corner_login</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">@dimen/default_padding_margin_xx</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="TextLightStyle.Small" parent="TextWithPaddingStyle.Small">
         <item name="android:textColor">@color/md_grey100</item>
     </style>
