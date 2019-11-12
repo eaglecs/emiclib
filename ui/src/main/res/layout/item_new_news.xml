@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ss.com.bannerslider.Slider xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bannerSlider"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    app:slider_animateIndicators="true"
-    app:slider_indicatorSize="8dp"
-    app:slider_interval="5000"
-    app:slider_loopSlides="true"
-    app:slider_selectedSlideIndicator="@drawable/indicator_selected"
-    app:slider_unselectedSlideIndicator="@drawable/indicator_normal" />
+    android:layout_height="wrap_content">
+
+    <ss.com.bannerslider.Slider
+        android:id="@+id/bannerSlider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:slider_animateIndicators="true"
+        app:slider_indicatorSize="8dp"
+        app:slider_interval="5000"
+        app:slider_loopSlides="true"
+        app:slider_selectedSlideIndicator="@drawable/indicator_selected"
+        app:slider_unselectedSlideIndicator="@drawable/indicator_normal" />
+</android.support.constraint.ConstraintLayout>
