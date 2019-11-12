@@ -46,7 +46,7 @@ object PresentationKoinModules {
             NewsPresenter(getListNewsUseCase = get()) as NewsContract.Presenter
         }
         factory {
-            RequestDocumentPresenter( requestDocumentUseCase = get(),
+            RequestDocumentPresenter(requestDocumentUseCase = get(),
                     getInfoUserUseCase = get()) as RequestDocumentContract.Presenter
         }
         factory {
@@ -117,7 +117,8 @@ object PresentationKoinModules {
         }
 
         factory {
-            SettingPresenter(getUserTokenUseCase = get()) as SettingContract.Presenter
+            SettingPresenter(getUserTokenUseCase = get(),
+                    getLoginRequestUseCase = get()) as SettingContract.Presenter
         }
     }
 }

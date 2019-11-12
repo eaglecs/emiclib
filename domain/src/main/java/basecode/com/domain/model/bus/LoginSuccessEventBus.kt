@@ -11,6 +11,7 @@ class LoginSuccessEventBus(val type: Type) {
         DownloadBook(6),
         ChangePass(7),
         RequestDocument(8),
+        BookRoom(9),
         Normal(-1)
     }
 }

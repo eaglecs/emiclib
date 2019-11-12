@@ -1,5 +1,7 @@
 package basecode.com.ui.features.home.tab
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
+import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.presentation.features.setting.SettingContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -77,6 +80,9 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                     LoginSuccessEventBus.Type.RequestDocument -> {
                         targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                    LoginSuccessEventBus.Type.BookRoom -> {
+                        bookRoom()
                     }
 
                 }
@@ -211,6 +217,30 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                 }
             }
         }
+        view.vgBookRoom.setOnClickListener {
+            if (doubleTouchPrevent.check("vgBookRoom")) {
+                if (isLogin) {
+                    bookRoom()
+                } else {
+                    targetController?.let { targetController ->
+                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.BookRoom.value)
+                        val loginViewController = LoginViewController(bundle)
+                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun bookRoom() {
+        presenter.getUserInfo()
+    }
+
+    override fun getUserInfoSuccess(data: LoginRequest) {
+        val url = "https://lib.eiu.edu.vn/ORegisterBooking.aspx?key=eMicLib&uid=${data.username}"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(i)
     }
 
     private fun gotoScreenLogin(targetController: Controller, type: LoginSuccessEventBus.Type) {

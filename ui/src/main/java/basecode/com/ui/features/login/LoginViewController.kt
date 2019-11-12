@@ -67,6 +67,9 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 8 -> {
                     LoginSuccessEventBus.Type.RequestDocument
                 }
+                9 -> {
+                    LoginSuccessEventBus.Type.BookRoom
+                }
                 else -> {
                     LoginSuccessEventBus.Type.Normal
                 }
