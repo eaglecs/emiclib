@@ -264,14 +264,14 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/icon_user_download" />
+                        android:src="@drawable/bg_blue" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/default_padding_margin"
-                        android:text="@string/text_download"
+                        android:text="Đặt Phòng"
                         android:textColor="@color/md_black" />
                 </LinearLayout>
 

@@ -11,9 +11,12 @@ import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.presentation.features.setting.SettingContract
+import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.extension.view.gone
+import basecode.com.ui.extension.view.invisible
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
 import basecode.com.ui.features.changepass.ChangePassViewController
@@ -45,9 +48,17 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
+        initView(view)
         handleOnClick(view)
         iniEventBus(view)
         presenter.checkLogin()
+    }
+
+    private fun initView(view: View) {
+        if(BuildConfig.USE_DATA_OTHER_APP){
+            view.vgBookRoom.gone()
+            view.vgChangePass.invisible()
+        }
     }
 
     private fun iniEventBus(view: View) {

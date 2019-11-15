@@ -11,6 +11,8 @@ def final applicationId_Demo = "com.emiclibdemo"
 
 def final APP_NAME_DEMO = "EmicLib"
 def final APP_NAME_LIVE = "EmicLib"
+def final APP_NAME_TDN = "TdnLib"
+def final APP_NAME_GSL = "GslLib"
 
 def targetSdkVersionValue = rootProject.ext.targetSdkVersion as Integer
 def compileSdkVersionValue = rootProject.ext.compileSdkVersion as Integer
@@ -75,12 +77,28 @@ android {
             signingConfig signingConfigs.demo
             applicationId = applicationId_Demo
             manifestPlaceholders = [nameApp: APP_NAME_DEMO, FABRIC_API_KEY: APP_NAME_DEMO]
+            resValue "string", "name_app", "$APP_NAME_DEMO"
         }
 
         PRODUCTION_ {
             signingConfig signingConfigs.live
             applicationId = applicationId_Live
             manifestPlaceholders = [nameApp: APP_NAME_LIVE, FABRIC_API_KEY: APP_NAME_DEMO]
+            resValue "string", "name_app", "$APP_NAME_LIVE"
+        }
+
+        tdn_ {
+            signingConfig signingConfigs.live
+            applicationId = applicationId_Live
+            manifestPlaceholders = [nameApp: APP_NAME_TDN]
+            resValue "string", "name_app", "$APP_NAME_TDN"
+        }
+
+        gsl_ {
+            signingConfig signingConfigs.live
+            applicationId = applicationId_Live
+            manifestPlaceholders = [nameApp: APP_NAME_GSL]
+            resValue "string", "name_app", "$APP_NAME_GSL"
         }
     }
 }

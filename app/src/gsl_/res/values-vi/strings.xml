@@ -1,0 +1,7 @@
+<resources>
+    <string name="ACTION_RETRY">Thử lại</string>
+    <string name="ACTION_CANCEL">Hủy</string>
+    <string name="ACTION_OK">OK</string>
+    <string name="ACTION_YES">Có</string>
+    <string name="ACTION_NO">Không</string>
+</resources>

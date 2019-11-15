@@ -10,6 +10,7 @@ import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.presentation.features.home.HomeContract
+import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -101,6 +102,16 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     private fun initView(view: View) {
+        if (BuildConfig.USE_DATA_OTHER_APP) {
+            if(BuildConfig.USE_DATA_GSL){
+                view.ivLogo.setImageResource(R.drawable.ic_logo_gsl)
+            } else {
+                view.ivLogo.setImageResource(R.drawable.ic_logo_tdn)
+            }
+        } else {
+            view.ivLogo.setImageResource(R.drawable.ic_logo)
+        }
+
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvHome.setItemViewCacheSize(10)

@@ -60,6 +60,30 @@ android {
             buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
 //            buildConfigField "String", "END_POINT", '"' + API_LIVE + '"'
         }
+
+        tdn_ {
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_OTHER_APP", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_GSL", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_TDN", TRUE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+        }
+
+        gsl_ {
+            buildConfigField BOOLEAN, "USE_DATA_DEMO", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_LIVE", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_OTHER_APP", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_GSL", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_TDN", FALSE
+            buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
+            buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
+            buildConfigField "String", "VERSION_NAME_REQUEST_HEADER", '"' + versionNameRequestHeader + '"'
+        }
     }
 
     sourceSets {

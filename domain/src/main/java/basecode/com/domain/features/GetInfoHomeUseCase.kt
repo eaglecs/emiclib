@@ -18,7 +18,47 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
-            val lstNewNews = appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
+            var lstNewNews: List<NewNewsResponse>? = null
+            try {
+                lstNewNews = appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
+            } catch (ex: Exception){
+                newNewsResponse?.let {
+                    newNewsResponse.forEach { newNews ->
+                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+                        infoHomeResponse.lstNewNews.add(newNewsModel)
+                    }
+                }
+                listNewBooks?.let {
+                    listNewBooks.forEach { newBook ->
+                        val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
+                                coverPicture = newBook.coverPicture.valueOrEmpty(), author = newBook.author.valueOrEmpty())
+                        infoHomeResponse.lstNewBook.add(newBooksModel)
+                    }
+                }
+                listNewEBooks?.let {
+                    listNewEBooks.forEach { eBook ->
+                        val newEBooksModel = NewEBookModel(id = eBook.id.valueOrZero(), title = eBook.title.valueOrEmpty(),
+                                coverPicture = eBook.coverPicture.valueOrEmpty(), author = eBook.author.valueOrEmpty())
+                        infoHomeResponse.lstNewEBook.add(newEBooksModel)
+                    }
+                }
+                collectionRecomand?.let {
+                    collectionRecomand.forEach { collection ->
+                        val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.name.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
+                        infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
+                    }
+                }
+
+                lstNewNews?.let {
+                    lstNewNews.forEach { newNews ->
+                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+                        infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
+                    }
+                }
+
+                e.onNext(infoHomeResponse)
+                e.onComplete()
+            }
             newNewsResponse?.let {
                 newNewsResponse.forEach { newNews ->
                     val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
