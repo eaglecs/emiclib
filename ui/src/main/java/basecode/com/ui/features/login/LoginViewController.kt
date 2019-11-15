@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.screen_login.view.*
 import org.koin.standalone.inject
 import android.content.Intent
 import android.net.Uri
+import basecode.com.ui.BuildConfig
 
 
 class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), LoginContract.View {
@@ -89,6 +90,16 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
 
     private fun initView(view: View) {
         BlurImage.with(applicationContext).load(R.drawable.bg_login).intensity(25f).Async(true).into(view.ivLogin)
+
+        if (BuildConfig.USE_DATA_OTHER_APP) {
+            if(BuildConfig.USE_DATA_GSL){
+                view.ivLogoLogin.setImageResource(R.drawable.ic_logo_gsl)
+            } else {
+                view.ivLogoLogin.setImageResource(R.drawable.ic_logo_tdn)
+            }
+        } else {
+            view.ivLogoLogin.setImageResource(R.drawable.ic_logo)
+        }
     }
 
     private fun onHandleView(view: View) {
