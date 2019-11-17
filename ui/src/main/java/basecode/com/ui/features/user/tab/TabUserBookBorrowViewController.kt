@@ -57,9 +57,9 @@ class TabUserBookBorrowViewController(bundle: Bundle) : ViewController(bundle), 
 
     private fun loadData() {
         if (position == 0) {
-            presenter.getListBookReserveRequest()
-        } else {
             presenter.getListBookReserveQueue()
+        } else {
+            presenter.getListBookReserveRequest()
         }
     }
 
