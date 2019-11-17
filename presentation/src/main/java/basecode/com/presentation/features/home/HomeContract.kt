@@ -9,7 +9,7 @@ class HomeContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun getListNewEBookSuccess(data: InfoHomeResponse)
         fun showErrorGetListNewEbook()
-        fun handleAfterCheckLogin(isLogin: Boolean)
+        fun handleAfterCheckLogin(isLogin: Boolean, linkAvatar: String = "")
     }
 
     abstract class Presenter : PresenterMvp<View>() {

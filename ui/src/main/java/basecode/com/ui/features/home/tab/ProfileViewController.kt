@@ -27,6 +27,7 @@ import basecode.com.ui.features.renew.RenewViewController
 import basecode.com.ui.features.requestdocument.RequestDocumentViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
@@ -64,7 +65,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private fun iniEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
-            view.ivLogin.setImageResource(R.drawable.ic_person)
+            GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
             targetController?.let { targetController ->
                 when (it.type) {
                     LoginSuccessEventBus.Type.UserInfo -> {

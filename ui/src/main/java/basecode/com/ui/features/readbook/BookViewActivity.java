@@ -831,7 +831,7 @@ public class BookViewActivity extends AppCompatActivity {
     public void makeOutsideButton() {
         outsideButton = new Button(this);
         outsideButton.setId(9999);
-        outsideButton.setBackgroundColor(Color.TRANSPARENT);
+        outsideButton.setBackgroundColor(Color.GREEN);
         outsideButton.setOnClickListener(listener);
 //		rv.customView.addView(outsideButton);
         ePubView.addView(outsideButton);
@@ -839,8 +839,8 @@ public class BookViewActivity extends AppCompatActivity {
     }
 
     public void showOutsideButton() {
-        this.setFrame(outsideButton, 0, 0, this.getWidth(), this.getHeight());
-        outsideButton.setVisibility(View.VISIBLE);
+//        this.setFrame(outsideButton, 0, 0, this.getWidth(), this.getHeight());
+//        outsideButton.setVisibility(View.VISIBLE);
     }
 
     public void hideOutsideButton() {
@@ -1400,7 +1400,7 @@ public class BookViewActivity extends AppCompatActivity {
 
         searchResultView = new LinearLayout(this);
         searchResultView.setOrientation(LinearLayout.VERTICAL);
-        searchScrollView.addView(searchResultView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        searchScrollView.addView(searchResultView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 
         this.ePubView.addView(searchBox);
@@ -2554,10 +2554,10 @@ public class BookViewActivity extends AppCompatActivity {
         this.removeControls();
         Theme theme = getCurrentTheme();
 
-        int bs = 38;
+        int bs = 30;
         if (this.isRotationLocked)
-            rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, ps(42), ps(42));
-        else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, ps(42), ps(42));
+            rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, ps(bs), ps(bs));
+        else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, ps(bs), ps(bs));
         listButton = this.makeImageButton(9001, R.drawable.list2x, getPS(bs), getPS(bs));
         fontButton = this.makeImageButton(9002, R.drawable.font2x, getPS(bs), getPS(bs));
         searchButton = this.makeImageButton(9003, R.drawable.search2x, getPS(bs), getPS(bs));

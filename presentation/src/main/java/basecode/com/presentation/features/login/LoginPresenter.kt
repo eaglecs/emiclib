@@ -1,29 +1,47 @@
 package basecode.com.presentation.features.login
 
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.features.GetInfoUserUseCase
 import basecode.com.domain.features.LoginUseCase
 import basecode.com.domain.features.SaveInfoLoginUseCase
 import basecode.com.domain.features.SaveLoginRequestUseCase
 import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.LoginResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.domain.usecase.base.ResultListener
 
 class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInfoLoginUseCase: SaveInfoLoginUseCase,
-                     private val saveLoginRequestUseCase: SaveLoginRequestUseCase) : LoginContract.Presenter() {
+                     private val saveLoginRequestUseCase: SaveLoginRequestUseCase, private val getInfoUserUseCase: GetInfoUserUseCase) : LoginContract.Presenter() {
     override fun requestLogin(loginRequest: LoginRequest) {
         view?.let { view ->
             view.showLoading()
             loginUseCase.cancel()
             loginUseCase.executeAsync(object : ResultListener<LoginResponse, ErrorResponse> {
                 override fun success(data: LoginResponse) {
-                    val accessToken = data.accessToken.valueOrEmpty()
-                    val tokenType = data.tokenType.valueOrEmpty()
-                    if (accessToken.isNotEmpty() && tokenType.isNotEmpty()) {
-                        handleAfterLoginSuccess(accessToken, tokenType, loginRequest)
-                    } else {
-                        view.resultLogin(false)
-                    }
+                    getInfoUserUseCase.cancel()
+                    getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
+                        override fun success(userModel: UserModel) {
+                            val accessToken = data.accessToken.valueOrEmpty()
+                            val tokenType = data.tokenType.valueOrEmpty()
+                            if (accessToken.isNotEmpty() && tokenType.isNotEmpty()) {
+                                handleAfterLoginSuccess(accessToken, tokenType, loginRequest, userModel)
+                            } else {
+                                view.resultLogin(false, userModel)
+                            }
+
+                        }
+
+                        override fun fail(error: ErrorResponse) {
+                            view.resultLogin(false)
+                        }
+
+                        override fun done() {
+                            view.hideLoading()
+                        }
+
+                    })
+
                 }
 
                 override fun fail(error: ErrorResponse) {
@@ -37,7 +55,7 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
         }
     }
 
-    private fun handleAfterLoginSuccess(accessToken: String, tokenType: String, loginRequest: LoginRequest) {
+    private fun handleAfterLoginSuccess(accessToken: String, tokenType: String, loginRequest: LoginRequest, userModel: UserModel) {
         view?.let { view ->
             saveInfoLoginUseCase.cancel()
             saveInfoLoginUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse> {
@@ -45,11 +63,11 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
                     saveLoginRequestUseCase.cancel()
                     saveLoginRequestUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse>{
                         override fun success(data: Boolean) {
-                            view.resultLogin(true)
+                            view.resultLogin(true, userModel)
                         }
 
                         override fun fail(error: ErrorResponse) {
-                            view.resultLogin(false)
+                            view.resultLogin(false, userModel)
                         }
 
                         override fun done() {
@@ -60,7 +78,7 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
 
                 override fun fail(error: ErrorResponse) {
                     view.hideLoading()
-                    view.resultLogin(false)
+                    view.resultLogin(false, userModel)
                 }
 
                 override fun done() {}
@@ -71,6 +89,7 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
 
     override fun onDetachView() {
         loginUseCase.cancel()
+        getInfoUserUseCase.cancel()
         saveLoginRequestUseCase.cancel()
         saveInfoLoginUseCase.cancel()
         super.onDetachView()

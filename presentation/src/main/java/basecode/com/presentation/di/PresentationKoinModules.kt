@@ -54,7 +54,8 @@ object PresentationKoinModules {
                     getUserTokenUseCase = get(),
                     getLoginRequestUseCase = get(),
                     loginUseCase = get(),
-                    saveInfoLoginUseCase = get()) as HomeContract.Presenter
+                    saveInfoLoginUseCase = get(),
+                    getInfoUserUseCase = get()) as HomeContract.Presenter
         }
         factory {
             BooksPresenter(getListNewBookUseCase = get(),
@@ -72,7 +73,7 @@ object PresentationKoinModules {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter
         }
         factory {
-            LoginPresenter(loginUseCase = get(), saveInfoLoginUseCase = get(), saveLoginRequestUseCase = get()) as LoginContract.Presenter
+            LoginPresenter(loginUseCase = get(), saveInfoLoginUseCase = get(), saveLoginRequestUseCase = get(), getInfoUserUseCase = get()) as LoginContract.Presenter
         }
         factory {
             SearchBookPresenter(findAdvanceBookUseCase = get(), searchBookUseCase = get()) as SearchBookContract.Presenter

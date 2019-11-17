@@ -25,6 +25,7 @@ import basecode.com.ui.features.newnewsdetail.NewsDetailViewController
 import basecode.com.ui.features.news.ListNewsViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
@@ -53,7 +54,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     private fun initEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
-            view.ivLogin.setImageResource(R.drawable.ic_person)
+            GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
@@ -200,9 +201,9 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         }
     }
 
-    override fun handleAfterCheckLogin(isLogin: Boolean) {
+    override fun handleAfterCheckLogin(isLogin: Boolean, linkAvatar: String) {
         if (isLogin) {
-            KBus.post(LoginSuccessEventBus(LoginSuccessEventBus.Type.Normal))
+            KBus.post(LoginSuccessEventBus(LoginSuccessEventBus.Type.Normal, linkAvatar))
         } else {
             KBus.post(LogoutSuccessEventBus())
         }

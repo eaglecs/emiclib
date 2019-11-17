@@ -21,6 +21,7 @@ import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_setting.view.*
@@ -47,6 +48,7 @@ class SettingViewController() : ViewController(bundle = null) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             view.ivLogin.setImageResource(R.drawable.ic_person)
+            GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false

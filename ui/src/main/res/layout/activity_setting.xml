@@ -430,9 +430,8 @@
             android:clickable="true"
             android:onClick="onClick"
             android:text="@string/skyepub"
-            android:textColor="#FFFF00"
-            android:textSize="18sp"
-            android:visibility="gone" />
+            android:textColor="@color/md_black"
+            android:textSize="18sp"/>
     </LinearLayout>
 
 </ScrollView>

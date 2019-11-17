@@ -1,6 +1,6 @@
 package basecode.com.domain.model.bus
 
-class LoginSuccessEventBus(val type: Type) {
+class LoginSuccessEventBus(val type: Type, val avatar: String) {
 
     enum class Type(val value: Int) {
         HandleBook(1),

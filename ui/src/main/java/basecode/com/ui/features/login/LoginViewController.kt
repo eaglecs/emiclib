@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.screen_login.view.*
 import org.koin.standalone.inject
 import android.content.Intent
 import android.net.Uri
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.ui.BuildConfig
 
 
@@ -154,9 +155,11 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
         }
     }
 
-    override fun resultLogin(isLogin: Boolean) {
+    override fun resultLogin(isLogin: Boolean, userModel: UserModel?) {
         if (isLogin) {
-            KBus.post(LoginSuccessEventBus(type))
+            userModel?.let {
+                KBus.post(LoginSuccessEventBus(type, it.linkAvatar))
+            }
             router.popController(this)
         } else {
             activity?.let { activity ->

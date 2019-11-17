@@ -6,12 +6,14 @@ import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.domain.model.network.response.LoginResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.domain.usecase.base.ResultListener
 
 class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
                     private val getLoginRequestUseCase: GetLoginRequestUseCase,
                     private val loginUseCase: LoginUseCase,
                     private val saveInfoLoginUseCase: SaveInfoLoginUseCase,
+                    private val getInfoUserUseCase: GetInfoUserUseCase,
                     private val getUserTokenUseCase: GetUserTokenUseCase) : HomeContract.Presenter() {
     override fun getListNewBook() {
         view?.let { view ->
@@ -33,7 +35,22 @@ class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
             getUserTokenUseCase.cancel()
             getUserTokenUseCase.executeAsync(object : ResultListener<String, ErrorResponse> {
                 override fun success(data: String) {
-                    view.handleAfterCheckLogin(data.isNotEmpty())
+                    getInfoUserUseCase.cancel()
+                    getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
+                        override fun success(userModel: UserModel) {
+                            view.handleAfterCheckLogin(data.isNotEmpty(), userModel.linkAvatar)
+
+                        }
+
+                        override fun fail(error: ErrorResponse) {
+                            view.handleAfterCheckLogin(false)
+                        }
+
+                        override fun done() {
+                            view.hideLoading()
+                        }
+
+                    })
                 }
 
                 override fun fail(error: ErrorResponse) {
@@ -101,6 +118,7 @@ class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
 
     override fun onDetachView() {
         loginUseCase.cancel()
+        getInfoUserUseCase.cancel()
         saveInfoLoginUseCase.cancel()
         getLoginRequestUseCase.cancel()
         getUserTokenUseCase.cancel()
