@@ -29,8 +29,8 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/height_header_screen"
+            android:layout_height="@dimen/height_header_screen"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
             android:padding="@dimen/default_padding_margin_x"

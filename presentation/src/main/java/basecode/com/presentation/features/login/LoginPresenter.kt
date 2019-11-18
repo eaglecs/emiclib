@@ -19,29 +19,9 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
             loginUseCase.cancel()
             loginUseCase.executeAsync(object : ResultListener<LoginResponse, ErrorResponse> {
                 override fun success(data: LoginResponse) {
-                    getInfoUserUseCase.cancel()
-                    getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
-                        override fun success(userModel: UserModel) {
-                            val accessToken = data.accessToken.valueOrEmpty()
-                            val tokenType = data.tokenType.valueOrEmpty()
-                            if (accessToken.isNotEmpty() && tokenType.isNotEmpty()) {
-                                handleAfterLoginSuccess(accessToken, tokenType, loginRequest, userModel)
-                            } else {
-                                view.resultLogin(false, userModel)
-                            }
-
-                        }
-
-                        override fun fail(error: ErrorResponse) {
-                            view.resultLogin(false)
-                        }
-
-                        override fun done() {
-                            view.hideLoading()
-                        }
-
-                    })
-
+                    val accessToken = data.accessToken.valueOrEmpty()
+                    val tokenType = data.tokenType.valueOrEmpty()
+                    handleAfterLoginSuccess(accessToken, tokenType, loginRequest)
                 }
 
                 override fun fail(error: ErrorResponse) {
@@ -55,7 +35,7 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
         }
     }
 
-    private fun handleAfterLoginSuccess(accessToken: String, tokenType: String, loginRequest: LoginRequest, userModel: UserModel) {
+    private fun handleAfterLoginSuccess(accessToken: String, tokenType: String, loginRequest: LoginRequest) {
         view?.let { view ->
             saveInfoLoginUseCase.cancel()
             saveInfoLoginUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse> {
@@ -63,11 +43,30 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
                     saveLoginRequestUseCase.cancel()
                     saveLoginRequestUseCase.executeAsync(object : ResultListener<Boolean, ErrorResponse>{
                         override fun success(data: Boolean) {
-                            view.resultLogin(true, userModel)
+                            getInfoUserUseCase.cancel()
+                            getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
+                                override fun success(userModel: UserModel) {
+                                    if (accessToken.isNotEmpty() && tokenType.isNotEmpty()) {
+                                        view.resultLogin(true, userModel)
+                                    } else {
+                                        view.resultLogin(false, userModel)
+                                    }
+
+                                }
+
+                                override fun fail(error: ErrorResponse) {
+                                    view.resultLogin(false)
+                                }
+
+                                override fun done() {
+                                    view.hideLoading ()
+                                }
+
+                            })
                         }
 
                         override fun fail(error: ErrorResponse) {
-                            view.resultLogin(false, userModel)
+                            view.resultLogin(false)
                         }
 
                         override fun done() {
@@ -78,7 +77,7 @@ class LoginPresenter(private val loginUseCase: LoginUseCase, private val saveInf
 
                 override fun fail(error: ErrorResponse) {
                     view.hideLoading()
-                    view.resultLogin(false, userModel)
+                    view.resultLogin(false)
                 }
 
                 override fun done() {}

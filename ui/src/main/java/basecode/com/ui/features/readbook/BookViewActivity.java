@@ -479,8 +479,8 @@ public class BookViewActivity extends AppCompatActivity {
         ePubView = new RelativeLayout(this);
 
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.FILL_PARENT,
-                RelativeLayout.LayoutParams.FILL_PARENT);
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         ePubView.setLayoutParams(rlp);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -622,7 +622,7 @@ public class BookViewActivity extends AppCompatActivity {
         }
         // If you want to get the license key for commercial use, please email us (skytree21@gmail.com).
         // Without the license key, watermark message will be shown in background.
-        rv.setLicenseKey("0000-0000-0000-0000");
+        rv.setLicenseKey("68c1-8a9a-a63b-74d5");
 
         // set PageTransition Effect
         int transitionType = bundle.getInt("transitionType");

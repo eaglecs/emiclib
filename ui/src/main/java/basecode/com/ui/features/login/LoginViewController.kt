@@ -166,6 +166,8 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 Toasty.error(activity, activity.getString(R.string.msg_error_login)).show()
             }
         }
+
+        hideLoading()
     }
 
     override fun showLoading() {
