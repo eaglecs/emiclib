@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/default_padding_margin"
+    android:background="@drawable/bg_rec_line_book_detail"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding_margin">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivPhotoBooks"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:background="@color/md_grey500" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitleBooks"
+        style="@style/TextPrimaryBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_margin"
+        android:lines="2"
+        tools:text="Ngay xua co 1 con bo to that to" />
+</LinearLayout>

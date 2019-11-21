@@ -25,6 +25,7 @@ import android.content.Intent
 import android.net.Uri
 import basecode.com.domain.model.network.response.UserModel
 import basecode.com.ui.BuildConfig
+import basecode.com.ui.extension.view.gone
 
 
 class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), LoginContract.View {
@@ -93,7 +94,8 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
         BlurImage.with(applicationContext).load(R.drawable.bg_login).intensity(25f).Async(true).into(view.ivLogin)
 
         if (BuildConfig.USE_DATA_OTHER_APP) {
-            if(BuildConfig.USE_DATA_GSL){
+            view.tvForgotPass.gone()
+            if (BuildConfig.USE_DATA_GSL) {
                 view.ivLogoLogin.setImageResource(R.drawable.ic_logo_gsl)
             } else {
                 view.ivLogoLogin.setImageResource(R.drawable.ic_logo_tdn)

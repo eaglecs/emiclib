@@ -14,7 +14,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
     override fun buildUseCaseObservable(): Observable<InfoHomeResponse> {
         return Observable.create { e ->
             val infoHomeResponse = InfoHomeResponse()
-            val newNewsResponse = appRepository.getListNewNews(4, 1, 5).blockingGet()
+            val newNewsResponse = appRepository.getListNews(152, 1, 10).blockingGet()
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
@@ -59,6 +59,9 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                 e.onNext(infoHomeResponse)
                 e.onComplete()
             }
+
+
+
             newNewsResponse?.let {
                 newNewsResponse.forEach { newNews ->
                     val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
@@ -88,7 +91,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
 
             lstNewNews?.let {
                 lstNewNews.forEach { newNews ->
-                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty().trim(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                     infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
                 }
             }

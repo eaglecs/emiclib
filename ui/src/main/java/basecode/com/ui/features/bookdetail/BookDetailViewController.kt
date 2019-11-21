@@ -32,6 +32,7 @@ import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.books.BookRelatedRenderer
 import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
@@ -201,7 +202,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookRelated, renderConfig)
-        rvController.addViewRenderer(BooksRenderer())
+        rvController.addViewRenderer(BookRelatedRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {

@@ -622,7 +622,7 @@ public class BookViewActivity extends AppCompatActivity {
         }
         // If you want to get the license key for commercial use, please email us (skytree21@gmail.com).
         // Without the license key, watermark message will be shown in background.
-        rv.setLicenseKey("68c1-8a9a-a63b-74d5");
+        rv.setLicenseKey("d680-a30f-6ed2-a8c1");
 
         // set PageTransition Effect
         int transitionType = bundle.getInt("transitionType");
