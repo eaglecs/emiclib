@@ -52,7 +52,7 @@ import org.koin.standalone.inject
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
-        DialogOneEventViewController.ActionEvent{
+        DialogOneEventViewController.ActionEvent {
 
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -68,7 +68,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var isLogin = false
     private val permissionsCode = 1000
     private var pathBook = ""
-    private lateinit var player:JcPlayerView
+    private lateinit var player: JcPlayerView
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -206,10 +206,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
-                    targetController?.let { targetController ->
-                        val bundle = BundleOptions.create(bookId = dataItem.id, photo = dataItem.photo)
-                        targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                    }
+                    val bundle = BundleOptions.create(bookId = dataItem.id, photo = dataItem.photo)
+                    router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }
 

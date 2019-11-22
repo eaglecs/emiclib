@@ -68,6 +68,9 @@ class TabUserBookBorrowViewController(bundle: Bundle) : ViewController(bundle), 
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookBorrow, renderConfig)
         rvController.addViewRenderer(BookUserBorrowRenderer())
+        view.vgRefreshBooks.setOnRefreshListener {
+            loadData()
+        }
     }
 
     override fun getListBookSuccess(data: List<ReserveResponse>) {
@@ -88,12 +91,13 @@ class TabUserBookBorrowViewController(bundle: Bundle) : ViewController(bundle), 
 
     override fun getListBookFail() {
         activity?.let { activity ->
-//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
+            //            Toasty.error(activity, activity.resources.getString(R.string.msg_error_get_list_book_borrow)).show()
         }
     }
 
     override fun showLoading() {
         view?.let { view ->
+            view.vgRefreshBooks.isRefreshing = false
             view.vgLoadingBorrowBook.hide()
         }
     }

@@ -17,7 +17,7 @@ class NewsRenderer(private val onActionClickNews: (NewNewsItemViewHolderModel) -
         val ivPhotoNews = viewFinder.find<AppCompatImageView>(R.id.ivPhotoNews)
         GlideUtil.loadImage(model.photo, ivPhotoNews)
         viewFinder.setOnClickListener(R.id.vgNews) {
-            runWithCheckMultiTouch("vgNews"){
+            runWithCheckMultiTouch("vgNewBooks"){
                 onActionClickNews.invoke(model)
             }
         }

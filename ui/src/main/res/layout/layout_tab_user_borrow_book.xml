@@ -3,21 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvBookBorrow"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/vgRefreshBooks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvBookBorrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvNoBook"
-        android:visibility="gone"
         style="@style/TextPrimarySubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/text_khong_co_cuon_sach_nao"
         android:textColor="@color/md_blue800"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <basecode.com.ui.base.loading.LoadingLayout
         android:id="@+id/vgLoadingBorrowBook"
