@@ -3,6 +3,8 @@ package basecode.com.ui.features.renew
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.NewNewsResponse
 import basecode.com.presentation.features.renew.RenewContract
 import basecode.com.ui.R
@@ -45,13 +47,16 @@ class RenewViewController : ViewController(null), RenewContract.View {
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
-                    presenter.renew(dataItem.id.toString())
+                    presenter.renew(dataItem.copyNumber)
                 }
             }
         })
     }
 
     private fun handleView(view: View) {
+        view.vgRefreshRenewBooks.setOnRefreshListener {
+            presenter.getListLoanRenew()
+        }
         view.ivBack.setOnClickListener {
             if (doubleTouchPrevent.check("ivBack")) {
                 router.popController(this)
@@ -65,13 +70,14 @@ class RenewViewController : ViewController(null), RenewContract.View {
                 view.tvNoBook.visible()
             } else {
                 view.tvNoBook.gone()
-                val lstBook = mutableListOf<BookViewHolderModel>()
+                val lstBookViewModel = mutableListOf<BookViewHolderModel>()
                 lstBook.forEach { book ->
-                    val bookViewHolderModel = BookViewHolderModel(id = book.id, author = book.author, photo = book.photo, name = book.name, publishedYear = book.publishedYear,
-                            publisher = book.publisher)
-                    lstBook.add(bookViewHolderModel)
+                    val bookViewHolderModel = BookViewHolderModel(copyNumber = book.copyNumber.valueOrEmpty(), author = book.author.valueOrEmpty(),
+                            photo = book.picture.valueOrEmpty(), name = book.title.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(),
+                            publisher = book.publisher.valueOrEmpty(), id = book.id.valueOrZero())
+                    lstBookViewModel.add(bookViewHolderModel)
                 }
-                rvController.setItems(lstBook)
+                rvController.setItems(lstBookViewModel)
                 rvController.notifyDataChanged()
             }
         }
@@ -80,7 +86,7 @@ class RenewViewController : ViewController(null), RenewContract.View {
 
     override fun getListLoanRenewFail(msgError: String) {
         view?.let { view ->
-//            Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_get_list_book_renew_fail)).show()
+            //            Toasty.error(view.context, view.context.resources.getString(R.string.msg_change_get_list_book_renew_fail)).show()
             hideLoading()
         }
     }
@@ -101,6 +107,7 @@ class RenewViewController : ViewController(null), RenewContract.View {
 
     override fun showLoading() {
         view?.let { view ->
+            view.vgRefreshRenewBooks.isRefreshing = false
             view.vgLoading.show()
         }
     }

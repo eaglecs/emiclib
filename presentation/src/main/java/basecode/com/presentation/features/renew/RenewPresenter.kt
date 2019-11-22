@@ -33,13 +33,13 @@ class RenewPresenter(private val getLoanHoldingRenewUseCase: GetLoanHoldingRenew
         view?.let { view ->
             view.showLoading()
             loanRenewUseCase.cancel()
-            loanRenewUseCase.executeAsync(object : ResultListener<Any, ErrorResponse> {
-                override fun success(data: Any) {
-                    view.renewSuccess()
-//                    if (data == 1) {
-//                    } else {
-//                        view.renewfail()
-//                    }
+            loanRenewUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
+                override fun success(data: Int) {
+                    if (data == 1) {
+                        view.renewSuccess()
+                    } else {
+                        view.renewfail()
+                    }
                 }
 
                 override fun fail(error: ErrorResponse) {

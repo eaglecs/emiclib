@@ -43,15 +43,26 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/default_padding_margin" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/md_grey200"
+            android:layout_height="1dp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvRenewBook"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/vgRefreshRenewBooks"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRenewBook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvNoBook"

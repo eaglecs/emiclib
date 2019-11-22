@@ -8,6 +8,8 @@ data class NewNewsResponse(
         val details: String?,
         @SerializedName("Id")
         val id: Long?,
+        @SerializedName("CopyNumber")
+        val copyNumber: String?,
         @SerializedName("Picture")
         val picture: String?,
         @SerializedName("Summary")

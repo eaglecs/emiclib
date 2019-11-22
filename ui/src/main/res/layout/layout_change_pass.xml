@@ -43,6 +43,10 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/default_padding_margin" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/md_grey200"
+            android:layout_height="1dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

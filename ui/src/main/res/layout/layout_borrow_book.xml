@@ -40,6 +40,11 @@
             android:padding="@dimen/default_padding_margin" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey200" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tlBorrowBook"
         android:layout_width="match_parent"

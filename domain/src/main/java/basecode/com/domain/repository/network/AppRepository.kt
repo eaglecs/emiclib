@@ -40,7 +40,7 @@ interface AppRepository {
 
     fun getListReserveRequest(): Observable<List<ReserveResponse>>
     fun getLoanHoldingRenew(): Observable<List<NewNewsResponse>>
-    fun loanRenew(coppynumber: String): Observable<Any>
+    fun loanRenew(coppynumber: String): Observable<Int>
     fun requestDocument(fullName: String,
                         patronCode: String,
                         email: String,

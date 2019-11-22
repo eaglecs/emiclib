@@ -118,9 +118,12 @@ interface ApiService {
     fun getLoanHoldingRenew(): Observable<List<NewNewsResponse>>
 
     // Gia han
-    @FormUrlEncoded
+
     @POST("/api/cir/LoanRenew")
-    fun loanRenew(@Field("coppynumber") coppynumber: String): Observable<Int>
+    fun loanRenew(@Query("coppynumber") coppynumber: String): Observable<Int>
+
+//    @GET("/api/Cir/LoanRenew")
+//    fun loanRenew(@Query("coppynumber") coppynumber: String): Observable<Int>
 
     //Login
     @FormUrlEncoded
@@ -148,5 +151,4 @@ interface ApiService {
     //Load List book GetItemInCollectionRecomand
     @GET("api/cir/GetLoanHoldingRenew")
     fun getLoanHoldingRenew(@Query("coppynumber") coppynumber: String): Observable<Any>
-
 }
