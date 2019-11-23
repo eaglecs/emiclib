@@ -73,7 +73,7 @@ class RenewViewController : ViewController(null), RenewContract.View {
                 val lstBookViewModel = mutableListOf<BookViewHolderModel>()
                 lstBook.forEach { book ->
                     val bookViewHolderModel = BookViewHolderModel(copyNumber = book.copyNumber.valueOrEmpty(), author = book.author.valueOrEmpty(),
-                            photo = book.picture.valueOrEmpty(), name = book.title.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(),
+                            photo = book.imageCover.valueOrEmpty(), name = book.title.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(),
                             publisher = book.publisher.valueOrEmpty(), id = book.id.valueOrZero())
                     lstBookViewModel.add(bookViewHolderModel)
                 }

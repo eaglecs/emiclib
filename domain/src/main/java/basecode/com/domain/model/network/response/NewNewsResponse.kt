@@ -18,6 +18,8 @@ data class NewNewsResponse(
         val title: String?,
         @SerializedName("CoverPicture")
         val coverPicture: String?,
+        @SerializedName("ImageCover")
+        val imageCover: String?,
         @SerializedName("PublishedYear")
         val publishedYear: String?,
         @SerializedName("Publisher")
