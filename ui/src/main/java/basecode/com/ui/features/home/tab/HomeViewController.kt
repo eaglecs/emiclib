@@ -104,7 +104,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     private fun initView(view: View) {
         if (BuildConfig.USE_DATA_OTHER_APP) {
-            if(BuildConfig.USE_DATA_GSL){
+            if (BuildConfig.USE_DATA_GSL) {
                 view.ivLogo.setImageResource(R.drawable.ic_logo_gsl)
             } else {
                 view.ivLogo.setImageResource(R.drawable.ic_logo_tdn)
@@ -182,14 +182,23 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     override fun getListNewEBookSuccess(data: InfoHomeResponse) {
         rvController.clear()
         view?.vgRefreshInfo?.isRefreshing = false
-        val newNewsViewHolderModel = NewNewsViewHolderModel(lstNewNews = data.lstNewNews)
-        rvController.addItem(newNewsViewHolderModel)
-        val newBookViewHolderModel = NewBookViewHolderModel(lstNewBook = data.lstNewBook)
-        rvController.addItem(newBookViewHolderModel)
-        val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
-        rvController.addItem(newEBookViewHolderModel)
-        val newNewsBottomViewHolderModel = NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
-        rvController.addItem(newNewsBottomViewHolderModel)
+        if (data.lstNewNews.isNotEmpty()) {
+            val newNewsViewHolderModel = NewNewsViewHolderModel(lstNewNews = data.lstNewNews)
+            rvController.addItem(newNewsViewHolderModel)
+        }
+        if (data.lstNewBook.isNotEmpty()) {
+            val newBookViewHolderModel = NewBookViewHolderModel(lstNewBook = data.lstNewBook)
+            rvController.addItem(newBookViewHolderModel)
+        }
+
+        if (data.lstNewEBook.isNotEmpty()) {
+            val newEBookViewHolderModel = NewEBookViewHolderModel(lstNewEBook = data.lstNewEBook)
+            rvController.addItem(newEBookViewHolderModel)
+        }
+        if (data.lstNewNewsBottom.isNotEmpty()) {
+            val newNewsBottomViewHolderModel = NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
+            rvController.addItem(newNewsBottomViewHolderModel)
+        }
         rvController.notifyDataChanged()
         hideLoading()
     }

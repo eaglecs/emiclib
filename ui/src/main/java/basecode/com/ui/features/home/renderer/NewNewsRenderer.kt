@@ -23,7 +23,7 @@ class NewNewsRenderer(private val onActionClickNewNews: (NewNewsModel) -> Unit) 
         val lstPhoto = mutableListOf<String>()
         val lstNewNews = model.lstNewNews
         lstNewNews.forEach { newNews ->
-//            lstPhoto.add("${newNews.picture.split(".jpg")[0]}.jpg")
+//            lstPhoto.add("${newNews.picture.split(".PNG")[0]}.PNG")
             lstPhoto.add(newNews.picture)
         }
         slider.setAdapter(AppSliderAdapter(lstData = lstPhoto))
