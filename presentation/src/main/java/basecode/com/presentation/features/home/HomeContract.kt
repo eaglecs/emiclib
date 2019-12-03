@@ -13,6 +13,6 @@ class HomeContract {
     }
 
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun getListNewBook()
+        abstract fun getListNewBook(isTDN: Boolean)
     }
 }

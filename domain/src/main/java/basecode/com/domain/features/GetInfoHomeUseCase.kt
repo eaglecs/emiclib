@@ -10,8 +10,8 @@ import basecode.com.domain.usecase.base.UseCaseExecution
 import basecode.com.domain.usecase.base.UseCaseOutput
 import io.reactivex.Observable
 
-class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCaseOutput<InfoHomeResponse, ErrorResponse>(useCaseExecution) {
-    override fun buildUseCaseObservable(): Observable<InfoHomeResponse> {
+class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Boolean, InfoHomeResponse, ErrorResponse>(useCaseExecution) {
+    override fun buildUseCaseObservable(isTDN: Boolean): Observable<InfoHomeResponse> {
         return Observable.create { e ->
             val infoHomeResponse = InfoHomeResponse()
             val newNewsResponse = appRepository.getListNews(152, 1, 10).blockingGet()
@@ -20,7 +20,11 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
             var lstNewNews: List<NewNewsResponse>? = null
             try {
-                lstNewNews = appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
+                lstNewNews = if(isTDN){
+                    appRepository.getListNews(categoryId = 178 , pageIndex = 1, pageSize = 6).blockingGet()
+                } else {
+                    appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
+                }
             } catch (ex: Exception){
                 newNewsResponse?.let {
                     newNewsResponse.forEach { newNews ->

@@ -15,7 +15,7 @@ class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
                     private val saveInfoLoginUseCase: SaveInfoLoginUseCase,
                     private val getInfoUserUseCase: GetInfoUserUseCase,
                     private val getUserTokenUseCase: GetUserTokenUseCase) : HomeContract.Presenter() {
-    override fun getListNewBook() {
+    override fun getListNewBook(isTDN: Boolean) {
         view?.let { view ->
             view.showLoading()
             getLoginRequestUseCase.cancel()
@@ -71,7 +71,7 @@ class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
 
                         override fun done() {}
 
-                    })
+                    }, isTDN)
                 }
             })
 

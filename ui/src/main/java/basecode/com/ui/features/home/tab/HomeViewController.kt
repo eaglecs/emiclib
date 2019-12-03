@@ -172,7 +172,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     }
 
     private fun loadData() {
-        presenter.getListNewBook()
+        presenter.getListNewBook(BuildConfig.USE_DATA_TDN)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
