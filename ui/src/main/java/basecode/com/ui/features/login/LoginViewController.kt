@@ -134,7 +134,7 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
     }
 
     private fun openWeb() {
-        val url = "https://lib.eiu.edu.vn/ForgotPassword.aspx"
+        val url = "https://lib.eiu.edu.vn/OForgotPassword.aspx"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)
