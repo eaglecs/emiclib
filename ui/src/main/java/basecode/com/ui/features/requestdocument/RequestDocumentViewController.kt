@@ -32,13 +32,13 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
 
     override fun getUserInfoSuccess(data: UserModel) {
         view?.let { view ->
-            view.edtNameDocument.setText(data.patronName)
-            view.edtPatronCode.setText(data.patronCode)
+            view.edtNameDocument.text = data.patronName
+            view.edtPatronCode.text = data.patronCode
             if (data.email.isNotEmpty()) {
-                view.edtEmail.setText(data.email)
+                view.edtEmail.text = data.email
             }
             if (data.phone.isNotEmpty()) {
-                view.edtPhone.setText(data.phone)
+                view.edtPhone.text = data.phone
             }
         }
     }
@@ -53,28 +53,9 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
         view.btnRequestDocument.setOnClickListener {
             if (doubleTouchPrevent.check("btnChangePass")) {
                 val name = view.edtNameDocument.text.toString()
-                if (name.isEmpty()) {
-                    view.edtNameDocument.shake()
-                    return@setOnClickListener
-                }
                 val patronCode = view.edtPatronCode.text.toString()
-                if (patronCode.isEmpty()) {
-                    view.edtPatronCode.shake()
-                    return@setOnClickListener
-                }
-
                 val email = view.edtEmail.text.toString()
-                if (email.isEmpty()) {
-                    view.edtEmail.shake()
-                    return@setOnClickListener
-                }
-
                 val phone = view.edtPhone.text.toString()
-                if (phone.isEmpty()) {
-                    view.edtPhone.shake()
-                    return@setOnClickListener
-                }
-
                 val facebook = view.edtFacebook.text.toString()
                 val supplier = view.edtSupplier.text.toString()
                 val groupName = view.edtGroupName.text.toString()

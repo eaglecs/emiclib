@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtNameDocument"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -76,9 +76,9 @@
                     android:padding="@dimen/default_padding_margin">
 
                     <requestFocus />
-                </android.support.v7.widget.AppCompatEditText>
+                </android.support.v7.widget.AppCompatTextView>
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtPatronCode"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                     android:nextFocusDown="@+id/edtEmail"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtEmail"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                     android:nextFocusDown="@+id/edtPhone"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtPhone"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     android:nextFocusDown="@+id/edtFacebook"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtFacebook"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -139,6 +139,7 @@
                     android:padding="@dimen/default_padding_margin" />
 
                 <android.support.v7.widget.AppCompatEditText
+                    android:visibility="gone"
                     android:id="@+id/edtSupplier"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
