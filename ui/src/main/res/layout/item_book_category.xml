@@ -40,7 +40,7 @@
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/md_grey800"
+                android:textColor="@color/md_red500"
                 tools:text="Tac Gia" />
 
             <android.support.v7.widget.AppCompatTextView

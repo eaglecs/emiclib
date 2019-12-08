@@ -67,8 +67,8 @@
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/ivBookDetail"
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     tools:background="@color/md_grey300" />
@@ -165,6 +165,51 @@
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tvCopyNumber"
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            tools:text="Ngay xua co mot con bo ..." />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/default_padding_margin"
+                            android:layout_marginRight="@dimen/default_padding_margin"
+                            android:text="Thông tin xếp giá:"
+                            android:textStyle="bold" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tvInfoBook"
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            tools:text="Ngay xua co mot con bo ..." />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextPrimaryBody"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/default_padding_margin"
+                            android:layout_marginRight="@dimen/default_padding_margin"
+                            android:text="Số bản tài liệu rỗi:"
+                            android:textStyle="bold" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tvFreeBook"
                             style="@style/TextPrimaryBody"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

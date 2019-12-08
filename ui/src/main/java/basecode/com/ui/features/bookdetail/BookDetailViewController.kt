@@ -244,7 +244,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
 
-    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String) {
+    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String, infoBook: String, numFreeBook: String) {
         this.linkShare = linkShare
         if (linkShare.isNotEmpty()) {
             view?.ivShareBookDetail?.visible()
@@ -255,6 +255,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             pathBook = lstPathResult.first()
         }
         view?.let { view ->
+            view.tvInfoBook.text = infoBook
+            view.tvFreeBook.text = numFreeBook
             if (bookType == BookType.SPEAK_BOOK) {
                 if (lstPathResult.isNotEmpty()) {
                     player.visible()
@@ -561,7 +563,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     override fun onResultAfterHandleDialog() {
-        handleBook()
     }
 
     override fun onDestroyView(view: View) {

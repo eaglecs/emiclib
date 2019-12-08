@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -2403,7 +2404,7 @@ public class BookViewActivity extends AppCompatActivity {
     }
 
     public ImageButton makeImageButton(int id, int resId, int width, int height) {
-        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT); // width,height
         Drawable icon;
@@ -2419,8 +2420,9 @@ public class BookViewActivity extends AppCompatActivity {
         Bitmap bitmapResized = Bitmap.createScaledBitmap(iconBitmap, width, height, false);
         button.setImageBitmap(bitmapResized);
         button.setVisibility(View.VISIBLE);
-        param.width = (int) (width);
-        param.height = (int) (height);
+        param.width = width;
+        param.height = height;
+        param.gravity = Gravity.CENTER_VERTICAL;
         button.setLayoutParams(param);
         return button;
     }
@@ -2554,7 +2556,7 @@ public class BookViewActivity extends AppCompatActivity {
         this.removeControls();
         Theme theme = getCurrentTheme();
 
-        int bs = 30;
+        int bs = 20;
         if (this.isRotationLocked)
             rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, ps(bs), ps(bs));
         else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, ps(bs), ps(bs));

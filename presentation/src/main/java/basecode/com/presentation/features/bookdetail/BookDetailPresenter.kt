@@ -121,6 +121,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                             lstPathResult.add(pathBook)
                         }
                     }
+                    var numFreeBook = ""
                     data.lstCopyNumber?.let { copyNumbers ->
                         copyNumbers.forEach { copyNumber ->
                             copyNumber?.let {
@@ -131,6 +132,9 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                                 }
                             }
                         }
+                        data.lstFreeCopyNumber?.let { lstFreeCopyNumber ->
+                            numFreeBook = "${lstFreeCopyNumber.size}/${copyNumbers.size}"
+                        }
                     }
                     val title = data.title.valueOrEmpty()
                     val author = data.author.valueOrEmpty()
@@ -138,7 +142,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val publishYear = data.publishYear.valueOrEmpty()
                     val shortDescription = data.shortDescription.valueOrEmpty()
                     val linkShare = data.linkShare.valueOrEmpty()
-                    view.getBookInfoSuccess(lstPathResult, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare)
+                    val info = data.info.valueOrEmpty()
+                    view.getBookInfoSuccess(lstPathResult, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare, info, numFreeBook)
                 }
 
                 override fun fail(error: ErrorResponse) {

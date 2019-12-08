@@ -16,7 +16,8 @@ class BookCategoryRenderer : ViewHolderRenderer<BookViewHolderModel>() {
         val ivCoverBook = viewFinder.find<AppCompatImageView>(R.id.ivCoverBook)
         GlideUtil.loadImage(url = model.photo, imageView = ivCoverBook)
         viewFinder.setText(R.id.tvTitleBook, model.name)
-        viewFinder.setText(R.id.tvPublisher, model.publisher)
+        viewFinder.setText(R.id.tvPublisher, "Tác giả: ${model.author}")
+        viewFinder.setGone(R.id.tvPublisher, model.author.isEmpty())
         viewFinder.setText(R.id.tvPublishedYear, model.publishedYear)
     }
 }

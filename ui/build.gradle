@@ -44,6 +44,7 @@ android {
         DEMO_ {
             buildConfigField BOOLEAN, "USE_DATA_DEMO", TRUE
             buildConfigField BOOLEAN, "USE_DATA_LIVE", FALSE
+            buildConfigField BOOLEAN, "USE_DATA_TDN", FALSE
             buildConfigField BOOLEAN, "SYNC", TRUE
             buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE
             buildConfigField "String", "SCHEME_APP", '"' + schemeApp + '"'
@@ -55,6 +56,7 @@ android {
             buildConfigField BOOLEAN, "USE_DATA_DEMO", FALSE
             buildConfigField BOOLEAN, "USE_DATA_LIVE", TRUE
             buildConfigField BOOLEAN, "SYNC", TRUE
+            buildConfigField BOOLEAN, "USE_DATA_TDN", FALSE
             buildConfigField BOOLEAN, "USE_DATA_OTHER_APP", FALSE
             buildConfigField BOOLEAN, "USE_DATA_GSL", FALSE
             buildConfigField BOOLEAN, "LOG_CRASHLYTICS", TRUE

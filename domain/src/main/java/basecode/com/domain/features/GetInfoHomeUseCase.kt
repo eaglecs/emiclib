@@ -2,19 +2,17 @@ package basecode.com.domain.features
 
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
-import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.domain.model.network.response.*
 import basecode.com.domain.repository.network.AppRepository
 import basecode.com.domain.usecase.base.UseCase
 import basecode.com.domain.usecase.base.UseCaseExecution
-import basecode.com.domain.usecase.base.UseCaseOutput
 import io.reactivex.Observable
 
 class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Boolean, InfoHomeResponse, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(isTDN: Boolean): Observable<InfoHomeResponse> {
         return Observable.create { e ->
             val infoHomeResponse = InfoHomeResponse()
-            val newNewsResponse = appRepository.getListNews(152, 1, 10).blockingGet()
+            val newNewsBottomResponse = appRepository.getListNewNews(10, 1, 10).blockingGet()
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
@@ -26,8 +24,8 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                     appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
                 }
             } catch (ex: Exception){
-                newNewsResponse?.let {
-                    newNewsResponse.forEach { newNews ->
+                lstNewNews?.let {
+                    lstNewNews.forEach { newNews ->
                         val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                         infoHomeResponse.lstNewNews.add(newNewsModel)
                     }
@@ -53,8 +51,8 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                     }
                 }
 
-                lstNewNews?.let {
-                    lstNewNews.forEach { newNews ->
+                newNewsBottomResponse?.let {
+                    newNewsBottomResponse.forEach { newNews ->
                         val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                         infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
                     }
@@ -66,8 +64,8 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
 
 
 
-            newNewsResponse?.let {
-                newNewsResponse.forEach { newNews ->
+            lstNewNews?.let {
+                lstNewNews.forEach { newNews ->
                     val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                     infoHomeResponse.lstNewNews.add(newNewsModel)
                 }
@@ -93,8 +91,8 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                 }
             }
 
-            lstNewNews?.let {
-                lstNewNews.forEach { newNews ->
+            newNewsBottomResponse?.let {
+                newNewsBottomResponse.forEach { newNews ->
                     val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty().trim(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
                     infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
                 }
