@@ -36,7 +36,7 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     }
 
     override fun getListNewNewsObservable(numberItem: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>> {
-        return apiServiceApp.getListNewNewsObservable(numberItem, pageIndex, pageSize)
+        return apiServiceApp.getListNewNewsObservable(pageIndex, pageSize)
     }
 
     override fun getListNewItems(numberItem: Int, pageIndex: Int, pageSize: Int): Single<List<BookResponse>> {

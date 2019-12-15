@@ -9,5 +9,6 @@ class BookViewHolderModel(
         var publisher: String,
         val photo: String,
         val author: String,
-        var publishedYear: String
+        var publishedYear: String,
+        val dueDate: String =""
 ): ViewHolderModel

@@ -3,9 +3,11 @@ package basecode.com.ui.features.renew
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.extention.formatTime
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.NewNewsResponse
+import basecode.com.domain.util.DateTimeFormat
 import basecode.com.presentation.features.renew.RenewContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -15,17 +17,19 @@ import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.dialog.DialogTwoEventViewController
 import basecode.com.ui.features.searchbook.BookViewHolderModel
-import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
 import basecode.com.ui.util.DoubleTouchPrevent
+import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_renew.view.*
 import org.koin.standalone.inject
 
-class RenewViewController : ViewController(null), RenewContract.View {
+class RenewViewController : ViewController(null), RenewContract.View, DialogTwoEventViewController.ActionEvent {
     private val presenter: RenewContract.Presenter by inject()
     private lateinit var rvController: RecyclerViewController
+    private var bookSelected: BookViewHolderModel? = null
 
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -43,14 +47,24 @@ class RenewViewController : ViewController(null), RenewContract.View {
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvRenewBook, renderConfig)
-        rvController.addViewRenderer(BookCategoryRenderer())
+        rvController.addViewRenderer(BookRenewRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
-                    presenter.renew(dataItem.copyNumber)
+                    bookSelected = dataItem
+                    val bundle = DialogTwoEventViewController.BundleOptions.create(title = "Gia hạn", msg = "Bạn có muốn gia hạn cuốn sách này không?")
+                    router.pushController(RouterTransaction.with(
+                            DialogTwoEventViewController(targetController = this@RenewViewController, bundle = bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false)))
                 }
             }
         })
+    }
+
+    override fun onResultAfterHandleDialog() {
+        bookSelected?.let {
+            presenter.renew(it.copyNumber)
+        }
     }
 
     private fun handleView(view: View) {
@@ -72,9 +86,9 @@ class RenewViewController : ViewController(null), RenewContract.View {
                 view.tvNoBook.gone()
                 val lstBookViewModel = mutableListOf<BookViewHolderModel>()
                 lstBook.forEach { book ->
-                    val bookViewHolderModel = BookViewHolderModel(copyNumber = book.copyNumber.valueOrEmpty(), author = book.author.valueOrEmpty(),
-                            photo = book.imageCover.valueOrEmpty(), name = book.title.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(),
-                            publisher = book.publisher.valueOrEmpty(), id = book.id.valueOrZero())
+                    val bookViewHolderModel = BookViewHolderModel(id = book.id.valueOrZero(), copyNumber = book.copyNumber.valueOrEmpty(),
+                            name = book.title.valueOrEmpty(), publisher = book.publisher.valueOrEmpty(), photo = book.imageCover.valueOrEmpty(),
+                            author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), dueDate = book.dueDate.valueOrEmpty().formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT))
                     lstBookViewModel.add(bookViewHolderModel)
                 }
                 rvController.setItems(lstBookViewModel)

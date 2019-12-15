@@ -37,6 +37,9 @@ interface ApiService {
     fun getCollectionRecomand(): Single<List<CollectionRecomand>>
 
     //15 GetListNewNews
+    @GET("/api/News/GetAllNews")
+    fun getListNewNews(@Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewNewsResponse>>
+
     @GET("/api/News/GetListNewNews")
     fun getListNewNews(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewNewsResponse>>
 
@@ -54,8 +57,8 @@ interface ApiService {
     fun getCollectionRecomandObservable(): Observable<List<CollectionRecomand>>
 
     //15 GetListNewNews
-    @GET("/api/News/GetListNewNews")
-    fun getListNewNewsObservable(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
+    @GET("/api/News/GetAllNews")
+    fun getListNewNewsObservable(@Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>
 
     //6 Get Information book
     @GET("/api/Item/GetItemContents")

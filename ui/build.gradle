@@ -188,4 +188,5 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.github.jeancsanchez:JcPlayer:2.6.11'
     implementation 'com.jackandphantom.android:blurimage:1.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }

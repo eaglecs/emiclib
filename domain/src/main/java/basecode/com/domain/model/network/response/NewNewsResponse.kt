@@ -24,6 +24,10 @@ data class NewNewsResponse(
         val publishedYear: String?,
         @SerializedName("Publisher")
         val publisher: String?,
+        @SerializedName("CheckOutDate")
+        val checkOutDate: String?,
+        @SerializedName("DueDate")
+        val dueDate: String?,
         @SerializedName("Author")
         val author: String?
 )

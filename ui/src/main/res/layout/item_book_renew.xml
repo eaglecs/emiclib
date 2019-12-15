@@ -41,16 +41,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_blue800"
-                tools:text="Tac Gia" />
+                tools:text="Hạn trả" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvPublishedYear"
-                style="@style/TextPrimaryBody"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom|end"
-                android:textColor="@color/md_grey600"
-                tools:text="2018" />
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvDueDate"
+                    style="@style/TextPrimaryBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:textColor="@color/md_blue800"
+                    tools:text="2018" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvPublishedYear"
+                    style="@style/TextPrimaryBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|end"
+                    android:textColor="@color/md_grey600"
+                    tools:text="2018" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>
