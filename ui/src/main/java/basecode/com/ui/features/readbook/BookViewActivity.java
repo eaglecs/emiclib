@@ -2404,25 +2404,17 @@ public class BookViewActivity extends AppCompatActivity {
     }
 
     public ImageButton makeImageButton(int id, int resId, int width, int height) {
-        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT); // width,height
-        Drawable icon;
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(10, 10); // width,height
+//        param.width = 10;
+        param.gravity = Gravity.CENTER_VERTICAL;
         ImageButton button = new ImageButton(this);
         button.setAdjustViewBounds(true);
         button.setId(id);
         button.setOnClickListener(listener);
         button.setBackgroundColor(Color.TRANSPARENT);
-        icon = getResources().getDrawable(resId);
-        icon.setBounds(0, 0, width, height);
-
-        Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(iconBitmap, width, height, false);
-        button.setImageBitmap(bitmapResized);
+        button.setImageResource(resId);
         button.setVisibility(View.VISIBLE);
-        param.width = width;
-        param.height = height;
-        param.gravity = Gravity.CENTER_VERTICAL;
+//        param.height = height;
         button.setLayoutParams(param);
         return button;
     }
@@ -2556,7 +2548,7 @@ public class BookViewActivity extends AppCompatActivity {
         this.removeControls();
         Theme theme = getCurrentTheme();
 
-        int bs = 80;
+        int bs = 40;
         if (this.isRotationLocked)
             rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, bs, bs);
         else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, bs, bs);
@@ -3108,12 +3100,7 @@ public class BookViewActivity extends AppCompatActivity {
         } else {
             imageId = R.drawable.rotation2x;
         }
-        int bs = 80;
-        icon = getResources().getDrawable(imageId);
-        icon.setBounds(0, 0, bs, bs);
-        Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(iconBitmap, bs, bs, false);
-        rotationButton.setImageBitmap(bitmapResized);
+        rotationButton.setImageResource(imageId);
     }
 
     private void changePlayAndPauseButton() {
