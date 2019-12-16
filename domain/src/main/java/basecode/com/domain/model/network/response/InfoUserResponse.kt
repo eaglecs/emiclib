@@ -18,7 +18,7 @@ data class InfoUserResponse(
         val email: String?,
         @SerializedName("Portrait")
         val linkAvatar: String?,
-        @SerializedName("FaceBook")
+        @SerializedName("Facebook")
         val facebook: String?,
         @SerializedName("Faculty")
         val faculty: String?,
