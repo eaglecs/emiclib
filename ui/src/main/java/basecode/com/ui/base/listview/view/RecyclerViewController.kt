@@ -51,7 +51,7 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
 
     private fun configLoadMore(loadMoreConfig: LoadMoreConfig) {
         viewAdapter.registerRenderer(loadMoreConfig.viewRenderer)
-        recyclerView.addOnScrollListener(EndlessRecyclerViewScrollListener(recyclerView.layoutManager, loadMoreConfig.loadMoreEvent))
+        recyclerView.addOnScrollListener(EndlessRecyclerViewScrollListener(recyclerView.layoutManager, loadMoreConfig))
     }
 
     fun showLoadMore() {
@@ -65,6 +65,9 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
 
     fun hideLoadMore() {
         recyclerView.post {
+            renderConfig.loadMoreConfig?.let { loadMoreConfig ->
+                loadMoreConfig.isLoadingMore = false
+            }
             isShowingLoadMore = false
             viewAdapter.hideLoadMore()
         }
@@ -121,25 +124,27 @@ class RecyclerViewController(private val recyclerView: RecyclerView, private val
         fun create(): RenderConfig
     }
 
-    class EndlessRecyclerViewScrollListener(private val layoutManager: RecyclerView.LayoutManager?, private val onReachEndItemEvent: () -> Unit) : RecyclerView.OnScrollListener() {
+    class EndlessRecyclerViewScrollListener(private val layoutManager: RecyclerView.LayoutManager?, private val loadMoreConfig: LoadMoreConfig) : RecyclerView.OnScrollListener() {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
+            if (!loadMoreConfig.isLoadingMore) {
+                val totalItem = layoutManager?.itemCount ?: 0
+                var lastVisibleItem = 0
+                if (layoutManager is LinearLayoutManager) {
+                    lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                } else if (layoutManager is GridLayoutManager) {
+                    lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                }
 
-            val totalItem = layoutManager?.itemCount ?: 0
-            var lastVisibleItem = 0
-            if (layoutManager is LinearLayoutManager) {
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-            } else if (layoutManager is GridLayoutManager) {
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-            }
-
-            if (lastVisibleItem >= totalItem - 2) {
-                onReachEndItemEvent.invoke()
+                if (lastVisibleItem >= totalItem - 2) {
+                    loadMoreConfig.isLoadingMore = true
+                    loadMoreConfig.loadMoreEvent.invoke()
+                }
             }
         }
     }
 
-    class LoadMoreConfig(val viewRenderer: LoadMoreViewBinder, val loadMoreEvent: () -> Unit)
+    class LoadMoreConfig(var isLoadingMore: Boolean = false, val viewRenderer: LoadMoreViewBinder, val loadMoreEvent: () -> Unit)
 
 }
