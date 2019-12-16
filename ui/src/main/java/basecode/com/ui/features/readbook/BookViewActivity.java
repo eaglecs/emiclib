@@ -2556,13 +2556,13 @@ public class BookViewActivity extends AppCompatActivity {
         this.removeControls();
         Theme theme = getCurrentTheme();
 
-        int bs = 20;
+        int bs = 80;
         if (this.isRotationLocked)
-            rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, ps(bs), ps(bs));
-        else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, ps(bs), ps(bs));
-        listButton = this.makeImageButton(9001, R.drawable.list2x, getPS(bs), getPS(bs));
-        fontButton = this.makeImageButton(9002, R.drawable.font2x, getPS(bs), getPS(bs));
-        searchButton = this.makeImageButton(9003, R.drawable.search2x, getPS(bs), getPS(bs));
+            rotationButton = this.makeImageButton(9000, R.drawable.rotationlocked2x, bs, bs);
+        else rotationButton = this.makeImageButton(9000, R.drawable.rotation2x, bs, bs);
+        listButton = this.makeImageButton(9001, R.drawable.list2x, bs, bs);
+        fontButton = this.makeImageButton(9002, R.drawable.font2x, bs, bs);
+        searchButton = this.makeImageButton(9003, R.drawable.search2x, bs, bs);
         rotationButton.setOnTouchListener(new ImageButtonHighlighterOnTouchListener(rotationButton));
         listButton.setOnTouchListener(new ImageButtonHighlighterOnTouchListener(listButton));
         fontButton.setOnTouchListener(new ImageButtonHighlighterOnTouchListener(fontButton));
@@ -3102,13 +3102,13 @@ public class BookViewActivity extends AppCompatActivity {
 
     private void changeRotationButton() {
         Drawable icon;
-        int imageId = R.drawable.rotationlocked2x;
+        int imageId;
         if (isRotationLocked) {
             imageId = R.drawable.rotationlocked2x;
         } else {
             imageId = R.drawable.rotation2x;
         }
-        int bs = ps(42);
+        int bs = 80;
         icon = getResources().getDrawable(imageId);
         icon.setBounds(0, 0, bs, bs);
         Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();

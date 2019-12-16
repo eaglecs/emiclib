@@ -13,7 +13,7 @@ data class BookResponse(
         @SerializedName("DocType")
         val docType: Int?,
         @SerializedName("Href")
-        val href: Int?,
+        val href: String?,
         @SerializedName("Id")
         val id: Long?,
         @SerializedName("PublishedYear")

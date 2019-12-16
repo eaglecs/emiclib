@@ -107,6 +107,7 @@ class RenewViewController : ViewController(null), RenewContract.View, DialogTwoE
 
     override fun renewSuccess() {
         view?.let { view ->
+            presenter.getListLoanRenew()
             Toasty.success(view.context, view.context.resources.getString(R.string.msg_change_renew_success)).show()
             hideLoading()
         }
