@@ -155,7 +155,7 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_full_name">Họ và Tên</string>
     <string name="text_patron_code">Số thẻ</string>
     <string name="text_facebook">Facebook</string>
-    <string name="text_supplier">Nhà cung cấp</string>
+    <string name="text_supplier">Đơn vị</string>
     <string name="text_groupN_name">Tên Nhóm</string>
     <string name="text_author">Tác giả</string>
     <string name="text_publisher">Nhà xuất bản</string>

@@ -34,6 +34,8 @@ class RequestDocumentViewController : ViewController(null), RequestDocumentContr
         view?.let { view ->
             view.edtNameDocument.text = data.patronName
             view.edtPatronCode.text = data.patronCode
+            view.edtSupplier.text = data.paculty
+            view.edtFacebook.text = data.facebook
             if (data.email.isNotEmpty()) {
                 view.edtEmail.text = data.email
             }

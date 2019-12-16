@@ -128,7 +128,7 @@ interface ApiService {
 //    @GET("/api/Cir/LoanRenew")
 //    fun loanRenew(@Query("coppynumber") coppynumber: String): Observable<Int>
 
-    //Login
+
     @FormUrlEncoded
     @POST("api/Request/Cataloger")
     fun requestDocument(@Field("FullName") fullName: String,

@@ -8,5 +8,7 @@ class UserModel(
         val patronGroup: String,
         val phone: String,
         val email: String,
-        val linkAvatar: String
+        val linkAvatar: String,
+        val paculty: String,
+        val facebook: String
 )

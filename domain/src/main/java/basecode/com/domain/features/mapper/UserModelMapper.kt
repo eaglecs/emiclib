@@ -12,8 +12,10 @@ class UserModelMapper : Mapper<InfoUserResponse, UserModel>() {
                 expiredDate = input.expiredDate.valueOrEmpty(),
                 patronName = input.patronName.valueOrEmpty(),
                 patronGroup = input.patronGroup.valueOrEmpty(),
-                phone =input.phone.valueOrEmpty(),
-                email =input.email.valueOrEmpty(),
-                linkAvatar = input.linkAvatar.valueOrEmpty())
+                phone = input.phone.valueOrEmpty(),
+                email = input.email.valueOrEmpty(),
+                linkAvatar = input.linkAvatar.valueOrEmpty(),
+                facebook = input.facebook.valueOrEmpty(),
+                paculty = input.faculty.valueOrEmpty())
     }
 }
