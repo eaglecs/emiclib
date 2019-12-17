@@ -153,7 +153,7 @@
                     android:nextFocusDown="@+id/edtGroupName"
                     android:padding="@dimen/default_padding_margin"/>
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/edtGroupName"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
