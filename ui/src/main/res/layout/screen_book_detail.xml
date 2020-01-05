@@ -194,6 +194,7 @@
                             android:maxLines="2"
                             tools:text="Ngay xua co mot con bo ..." />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -233,19 +234,32 @@
                 android:paddingRight="@dimen/default_padding_margin_huge"
                 android:paddingBottom="@dimen/default_padding_margin"
                 tools:text="Đặt mượn" />
+
             <com.example.jean.jcplayer.view.JcPlayerView
                 android:id="@+id/playBookAudio"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvTitleDescription"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding_margin"
+                android:maxLines="10"
+                android:text="Nội dung"
+                android:textColor="@color/md_blue800"
+                android:textStyle="bold" />
+
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvDescription"
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_padding_margin"
-                android:layout_marginTop="@dimen/default_padding_margin"
+                android:layout_marginLeft="@dimen/default_padding_margin"
+                android:layout_marginRight="@dimen/default_padding_margin"
                 android:maxLines="10"
                 tools:text="Ngay xua co mot con bo ..." />
 

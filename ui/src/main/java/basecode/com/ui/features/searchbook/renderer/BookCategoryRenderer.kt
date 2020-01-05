@@ -18,6 +18,6 @@ class BookCategoryRenderer : ViewHolderRenderer<BookViewHolderModel>() {
         viewFinder.setText(R.id.tvTitleBook, model.name)
         viewFinder.setText(R.id.tvPublisher, "Tác giả: ${model.author}")
         viewFinder.setGone(R.id.tvPublisher, model.author.isEmpty())
-        viewFinder.setText(R.id.tvPublishedYear, model.publishedYear)
+        viewFinder.setText(R.id.tvPublishedYear, "Năm xuất bản: ${model.publishedYear}")
     }
 }

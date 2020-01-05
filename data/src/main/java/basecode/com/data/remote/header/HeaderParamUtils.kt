@@ -1,15 +1,7 @@
 package basecode.com.data.remote.header
 
 import android.content.Context
-import android.util.Base64
-import basecode.com.data.BuildConfig
 import basecode.com.data.cache.pager.ConfigUtil
-import basecode.com.data.remote.UDIDUtil
-import basecode.com.domain.util.DateTimeFormat
-import java.text.SimpleDateFormat
-import java.util.*
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 
 class HeaderParamUtils {
     companion object {

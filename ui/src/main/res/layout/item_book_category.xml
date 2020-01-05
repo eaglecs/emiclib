@@ -48,8 +48,8 @@
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom|end"
-                android:textColor="@color/md_grey600"
+                android:gravity="bottom"
+                android:textColor="@color/md_blue800"
                 tools:text="2018" />
         </LinearLayout>
 

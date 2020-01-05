@@ -290,6 +290,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             view.tvDescription.text = shortDescription
+            if (shortDescription.isNotEmpty()) {
+                view.tvTitleDescription.visible()
+            } else {
+                view.tvTitleDescription.gone()
+            }
             if (copyNumberResult.isNotEmpty()) {
                 view.tvCopyNumber.text = copyNumberResult
             } else {
