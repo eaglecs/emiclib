@@ -3,6 +3,8 @@ package basecode.com.ui.features.notify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.CheckStatusNewMessageEventBus
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.MessageResponse
@@ -97,6 +99,7 @@ class NotifyViewController : ViewController(null), NotifyContract.View {
             }
         }
         rvController.notifyDataChanged()
+        KBus.post(CheckStatusNewMessageEventBus())
     }
 
     override fun readMessageFail() {

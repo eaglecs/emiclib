@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.CheckStatusNewMessageEventBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
@@ -68,11 +69,16 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         view?.let { view ->
             if (isHasNewMessage) {
                 view.tvNewNotify.visible()
+            } else {
+                view.tvNewNotify.gone()
             }
         }
     }
 
     private fun iniEventBus(view: View) {
+        KBus.subscribe<CheckStatusNewMessageEventBus>(this) {
+            presenter.checkNewMessage()
+        }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
