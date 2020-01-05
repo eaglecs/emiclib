@@ -9,9 +9,11 @@ class SettingContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun resultCheckLogin(isLogin: Boolean)
         fun getUserInfoSuccess(data: LoginRequest)
+        fun setStatusNewMessage(isHasNewMessage: Boolean)
     }
     abstract class Presenter : PresenterMvp<View>() {
         abstract fun checkLogin()
         abstract fun getUserInfo()
+        abstract fun checkNewMessage()
     }
 }

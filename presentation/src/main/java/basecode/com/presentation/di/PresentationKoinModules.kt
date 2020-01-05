@@ -119,6 +119,7 @@ object PresentationKoinModules {
 
         factory {
             SettingPresenter(getUserTokenUseCase = get(),
+                    getListMessageUseCase = get(),
                     getLoginRequestUseCase = get()) as SettingContract.Presenter
         }
     }

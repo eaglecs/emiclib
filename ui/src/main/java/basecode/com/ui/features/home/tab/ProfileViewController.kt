@@ -17,6 +17,7 @@ import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.invisible
+import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
 import basecode.com.ui.features.changepass.ChangePassViewController
@@ -52,13 +53,22 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         initView(view)
         handleOnClick(view)
         iniEventBus(view)
+        presenter.checkNewMessage()
         presenter.checkLogin()
     }
 
     private fun initView(view: View) {
-        if(BuildConfig.USE_DATA_OTHER_APP){
+        if (BuildConfig.USE_DATA_OTHER_APP) {
             view.vgBookRoom.gone()
             view.vgChangePass.invisible()
+        }
+    }
+
+    override fun setStatusNewMessage(isHasNewMessage: Boolean) {
+        view?.let { view ->
+            if (isHasNewMessage) {
+                view.tvNewNotify.visible()
+            }
         }
     }
 
