@@ -110,7 +110,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                 view.ivLogo.setImageResource(R.drawable.ic_logo_tdn)
             }
         } else {
-            view.ivLogo.setImageResource(R.drawable.ic_logo_header)
+            view.ivLogo.setImageResource(R.drawable.ic_logo_new)
         }
 
         val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)

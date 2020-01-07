@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/default_padding_margin_small"
                 android:layout_marginBottom="@dimen/default_padding_margin_small"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_logo_header" />
+                android:src="@drawable/ic_logo_new" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivLogin"

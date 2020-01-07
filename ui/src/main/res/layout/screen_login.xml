@@ -24,11 +24,12 @@
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivLogoLogin"
             android:layout_width="100dp"
+            android:background="@drawable/bg_icon_logo"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding_margin_huge"
             android:layout_marginBottom="@dimen/default_padding_margin_huge"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_logo" />
+            android:src="@drawable/ic_logo_new" />
 
         <android.support.v7.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
