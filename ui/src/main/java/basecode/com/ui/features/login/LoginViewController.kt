@@ -101,7 +101,7 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 view.ivLogoLogin.setImageResource(R.drawable.ic_logo_tdn)
             }
         } else {
-            view.ivLogoLogin.setImageResource(R.drawable.ic_logo)
+            view.ivLogoLogin.setImageResource(R.drawable.ic_logo_new)
         }
     }
 
