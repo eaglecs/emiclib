@@ -1,6 +1,7 @@
 package basecode.com.ui.features.renew
 
 import android.support.v7.widget.AppCompatImageView
+import android.view.View
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.features.searchbook.BookViewHolderModel
@@ -20,5 +21,10 @@ class BookRenewRenderer : ViewHolderRenderer<BookViewHolderModel>() {
         viewFinder.setText(R.id.tvPublisher, "Tác giả: ${model.author}")
         viewFinder.setGone(R.id.tvPublisher, model.author.isEmpty())
         viewFinder.setText(R.id.tvPublishedYear, model.publishedYear)
+        if (model.inRes == 1) {
+            viewFinder.setVisibility(R.id.tvNotRenew, View.VISIBLE)
+        } else {
+            viewFinder.setVisibility(R.id.tvNotRenew, View.INVISIBLE)
+        }
     }
 }

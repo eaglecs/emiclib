@@ -51,11 +51,13 @@ class RenewViewController : ViewController(null), RenewContract.View, DialogTwoE
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
-                    bookSelected = dataItem
-                    val bundle = DialogTwoEventViewController.BundleOptions.create(title = "Gia hạn", msg = "Bạn có muốn gia hạn cuốn sách này không?")
-                    router.pushController(RouterTransaction.with(
-                            DialogTwoEventViewController(targetController = this@RenewViewController, bundle = bundle)
-                    ).pushChangeHandler(FadeChangeHandler(false)))
+                    if (dataItem.inRes != 1) {
+                        bookSelected = dataItem
+                        val bundle = DialogTwoEventViewController.BundleOptions.create(title = "Gia hạn", msg = "Bạn có muốn gia hạn cuốn sách này không?")
+                        router.pushController(RouterTransaction.with(
+                                DialogTwoEventViewController(targetController = this@RenewViewController, bundle = bundle)
+                        ).pushChangeHandler(FadeChangeHandler(false)))
+                    }
                 }
             }
         })
@@ -86,7 +88,7 @@ class RenewViewController : ViewController(null), RenewContract.View, DialogTwoE
                 view.tvNoBook.gone()
                 val lstBookViewModel = mutableListOf<BookViewHolderModel>()
                 lstBook.forEach { book ->
-                    val bookViewHolderModel = BookViewHolderModel(id = book.id.valueOrZero(), copyNumber = book.copyNumber.valueOrEmpty(),
+                    val bookViewHolderModel = BookViewHolderModel(id = book.id.valueOrZero(), copyNumber = book.copyNumber.valueOrEmpty(), inRes = book.inRes.valueOrZero(),
                             name = book.title.valueOrEmpty(), publisher = book.publisher.valueOrEmpty(), photo = book.imageCover.valueOrEmpty(),
                             author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), dueDate = book.dueDate.valueOrEmpty().formatTime(DateTimeFormat.YY_MM_DD_T_HH_MM_SS, DateTimeFormat.DDMMYYFORMAT))
                     lstBookViewModel.add(bookViewHolderModel)

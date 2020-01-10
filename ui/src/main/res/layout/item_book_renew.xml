@@ -43,9 +43,23 @@
                 android:textColor="@color/md_blue800"
                 tools:text="Hạn trả" />
 
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvNotRenew"
+                style="@style/TextPrimaryCaption"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/default_padding_margin_small"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                android:textColor="@color/md_red500"
+                android:text="Không có quyền gia hạn do tài liệu đã được đặt chỗ" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.AppCompatTextView
