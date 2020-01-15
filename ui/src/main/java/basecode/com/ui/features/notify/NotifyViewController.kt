@@ -10,17 +10,20 @@ import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.MessageResponse
 import basecode.com.presentation.features.notify.NotifyContract
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.dialog.DialogOneEventViewController
 import basecode.com.ui.util.DoubleTouchPrevent
+import com.bluelinelabs.conductor.RouterTransaction
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_notifies.view.*
 import org.koin.standalone.inject
 
-class NotifyViewController : ViewController(null), NotifyContract.View {
+class NotifyViewController : ViewController(null), NotifyContract.View, DialogOneEventViewController.ActionEvent {
 
     private val presenter: NotifyContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -58,7 +61,13 @@ class NotifyViewController : ViewController(null), NotifyContract.View {
         rvController = RecyclerViewController(view.rvNotify, renderConfig)
         rvController.addViewRenderer(NotifyRenderer { model ->
             presenter.readMessage(model.id)
+            val bundle = DialogOneEventViewController.BundleOptions.create(title = model.title, msg = model.message, textEvent = "Đóng")
+            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
+                    .pushChangeHandler(FadeChangeHandler(false)))
         })
+    }
+
+    override fun onResultAfterHandleDialog() {
     }
 
     override fun getListNotifySuccess(data: List<MessageResponse>) {
@@ -83,7 +92,7 @@ class NotifyViewController : ViewController(null), NotifyContract.View {
 
     override fun getListNotifyFail() {
         activity?.let { activity ->
-//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_read_message_fail)).show()
+            //            Toasty.error(activity, activity.resources.getString(R.string.msg_error_read_message_fail)).show()
             hideLoading()
         }
     }
@@ -104,7 +113,7 @@ class NotifyViewController : ViewController(null), NotifyContract.View {
 
     override fun readMessageFail() {
         activity?.let { activity ->
-//            Toasty.error(activity, activity.resources.getString(R.string.msg_error_read_message_fail)).show()
+            //            Toasty.error(activity, activity.resources.getString(R.string.msg_error_read_message_fail)).show()
         }
     }
 

@@ -26,9 +26,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/default_padding_margin"
-            android:text="@string/TITLE_ERROR"
+            tools:text="@string/TITLE_ERROR"
+            android:lines="1"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextPrimaryTitle"
+            android:textAppearance="@style/TextPrimarySubtitle"
             android:textStyle="bold" />
 
         <View

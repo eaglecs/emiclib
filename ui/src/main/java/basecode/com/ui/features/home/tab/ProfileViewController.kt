@@ -32,6 +32,8 @@ import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.ControllerChangeHandler
+import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_tab_profile.view.*
 import org.koin.standalone.inject
@@ -40,6 +42,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private val presenter: SettingContract.Presenter by inject()
     private var isLogin = false
+    private var isFirstEnter = true
 
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
@@ -47,6 +50,17 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.layout_tab_profile, container, false)
+    }
+
+    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+        super.onChangeEnded(changeHandler, changeType)
+        if (changeType.isEnter) {
+            if (isFirstEnter) {
+                isFirstEnter = false
+            } else {
+                presenter.checkNewMessage()
+            }
+        }
     }
 
     override fun initPostCreateView(view: View) {
