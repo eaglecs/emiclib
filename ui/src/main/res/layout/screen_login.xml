@@ -108,6 +108,7 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvCloseLogin"
+        android:visibility="gone"
         style="@style/TextPrimarySubtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
