@@ -481,26 +481,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         activity?.let { activity ->
             hideLoading()
             val msgError = when (data) {
-                1 -> {
-                    activity.getString(R.string.msg_reservation_fail_number_card)
-                }
                 2 -> {
-                    activity.getString(R.string.msg_reservation_fail)
-                }
-                3 -> {
-                    activity.getString(R.string.msg_reservation_fail_request_exist)
-                }
-                4 -> {
-                    activity.getString(R.string.msg_reservation_fail_except)
-                }
-                5 -> {
-                    activity.getString(R.string.msg_reservation_fail_full)
-                }
-                6 -> {
-                    activity.getString(R.string.msg_reservation_fail_not_Invalid)
-                }
-                7 -> {
-                    activity.getString(R.string.msg_reservation_fail_free)
+                    activity.getString(R.string.msg_reserver_fail)
                 }
                 else -> {
                     activity.getString(R.string.msg_reserver_fail_nomal)

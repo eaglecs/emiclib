@@ -9,6 +9,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.CheckStatusNewMessageEventBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
+import basecode.com.domain.model.bus.LoadStatusNotify
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.presentation.features.setting.SettingContract
@@ -42,7 +43,6 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private val presenter: SettingContract.Presenter by inject()
     private var isLogin = false
-    private var isFirstEnter = true
 
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
@@ -50,17 +50,6 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.layout_tab_profile, container, false)
-    }
-
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
-        super.onChangeEnded(changeHandler, changeType)
-        if (changeType.isEnter) {
-            if (isFirstEnter) {
-                isFirstEnter = false
-            } else {
-                presenter.checkNewMessage()
-            }
-        }
     }
 
     override fun initPostCreateView(view: View) {
@@ -90,6 +79,9 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     }
 
     private fun iniEventBus(view: View) {
+        KBus.subscribe<LoadStatusNotify>(this) {
+            presenter.checkNewMessage()
+        }
         KBus.subscribe<CheckStatusNewMessageEventBus>(this) {
             presenter.checkNewMessage()
         }

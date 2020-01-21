@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.model.bus.LoadStatusNotify
 import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
@@ -14,9 +16,7 @@ import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraLong
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.features.home.tab.*
-import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.*
 import com.bluelinelabs.conductor.support.RouterPagerAdapter
 import kotlinx.android.synthetic.main.screen_home.view.*
 import org.koin.standalone.inject
@@ -52,6 +52,17 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     private val iconSizeOfTab: Float = 28.toFloat()
     private val pageHomeSize = 5
     private var prevMenuItem: MenuItem? = null
+    private var isFirstEnter = true
+    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+        super.onChangeEnded(changeHandler, changeType)
+        if (changeType.isEnter) {
+            if (isFirstEnter) {
+                isFirstEnter = false
+            } else {
+                KBus.post(LoadStatusNotify())
+            }
+        }
+    }
 
     private fun initView(view: View) {
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

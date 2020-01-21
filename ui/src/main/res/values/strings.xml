@@ -141,8 +141,8 @@ while the Global Pagination is going on, some user interfaces will be restricted
 
     <string name="msg_reservation_fail_number_card">Số thẻ hoặc mật khẩu không hợp lệ.</string>
     <string name="msg_reservation_fail_request_exist">Yêu cầu này đã tồn tại.</string>
-    <string name="msg_reservation_fail_except">Yêu cầu vượt quá giới hạn được mượn.</string>
-    <string name="msg_reservation_fail_full">Bạn đã hết lượt đăng ký đặt chỗ.</string>
+    <string name="msg_reservation_fail_except">Bạn đang mượn tài liệu này.</string>
+    <string name="msg_reservation_fail_full">Bạn không có quyền mượn tài liệu này.</string>
     <string name="msg_reservation_fail_not_Invalid">Đăng ký cá biệt không hợp lệ.</string>
     <string name="msg_reservation_fail_free">không có tài liệu rỗi.</string>
     <string name="msg_reservation_fail_nomal">Đặt mượn sách thất bại.</string>
@@ -166,6 +166,7 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="title_share_book">Chia sẽ sách</string>
     <string name="msg_reserver_fail_nomal">Đặt chỗ thất bại!</string>
     <string name="msg_reserver_success">Đặt chỗ thành công!</string>
+    <string name="msg_reserver_fail">Yêu cầu này đã tồn tại.</string>
 
 
 </resources>
