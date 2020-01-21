@@ -87,6 +87,10 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.reservationBook(bookId)
     }
 
+    override fun reserverBook(bookId: Long): Observable<Int> {
+        return apiServiceApp.reserverBook(bookId)
+    }
+
     override fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>> {
         return apiServiceApp.getItemInCollectionRecomand(collectionId, pageIndex, pageSize)
     }

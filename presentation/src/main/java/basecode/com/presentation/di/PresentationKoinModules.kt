@@ -67,7 +67,8 @@ object PresentationKoinModules {
                     getUserTokenUseCase = get(),
                     getInfoBookUseCase = get(),
                     reservationBookUseCase = get(),
-                    saveBookUseCase = get()) as BookDetailContract.Presenter
+                    saveBookUseCase = get(),
+                    reserverBookUseCase = get()) as BookDetailContract.Presenter
         }
         factory {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter

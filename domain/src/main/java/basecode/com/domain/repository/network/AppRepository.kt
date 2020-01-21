@@ -24,6 +24,7 @@ interface AppRepository {
     fun getInfoBook(itemId: Long): Observable<InfoBookResponse>
     fun getInfoUser(): Single<InfoUserResponse>
     fun reservationBook(bookId: Long): Observable<Int>
+    fun reserverBook(bookId: Long): Observable<Int>
     fun getItemInCollectionRecomand(collectionId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
     fun getLoanHoldingCurrent(): Observable<List<BookBorrowResponse>>
     fun getLoanHoldingHistory(): Observable<List<BookBorrowResponse>>

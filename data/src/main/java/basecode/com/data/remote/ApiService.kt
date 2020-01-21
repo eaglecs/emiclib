@@ -72,6 +72,10 @@ interface ApiService {
     @POST("/api/Reservation/Reservation")
     fun reservationBook(@Query("itemId") bookId: Long): Observable<Int>
 
+    //Reservation Book
+    @POST("/api/Cir/Reserver")
+    fun reserverBook(@Query("itemid") bookId: Long): Observable<Int>
+
     //Load List book GetItemInCollectionRecomand
     @GET("/Api/Item/GetItemInCollectionRecomand")
     fun getItemInCollectionRecomand(@Query("collectionId") collectionId: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Observable<List<NewNewsResponse>>

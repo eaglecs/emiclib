@@ -148,4 +148,6 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="msg_request_document_success">Gửi yêu cầu bổ sung tài liệu thành công!</string>
     <string name="msg_request_document_fail">Gửi yêu cầu bổ sung tài liệu thất bại!</string>
     <string name="title_share_book">Chia sẽ sách</string>
+    <string name="msg_reserver_fail_nomal">Đặt chỗ thất bại!</string>
+    <string name="msg_reserver_success">Đặt chỗ thành công!</string>
 </resources>

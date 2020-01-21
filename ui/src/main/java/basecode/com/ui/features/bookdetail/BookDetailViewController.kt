@@ -33,7 +33,6 @@ import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.books.BookRelatedRenderer
-import basecode.com.ui.features.books.BooksRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
 import basecode.com.ui.features.login.LoginViewController
@@ -69,6 +68,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private val permissionsCode = 1000
     private var pathBook = ""
     private lateinit var player: JcPlayerView
+    private var numFreeBook = 0
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -243,11 +243,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
     }
 
-
-    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String, infoBook: String, numFreeBook: String) {
+    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String, infoBook: String, numFreeBookStr: String, numFreeBook: Int) {
         this.linkShare = linkShare
+        this.numFreeBook = numFreeBook
         if (linkShare.isNotEmpty()) {
             view?.ivShareBookDetail?.visible()
+        }
+        if (numFreeBook == 0 && bookType == BookType.BOOK_NORMAL) {
+            view?.tvHandleBook?.text = "Đặt chỗ"
         }
         titleBook = title
         this.author = author
@@ -256,7 +259,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         view?.let { view ->
             view.tvInfoBook.text = infoBook
-            view.tvFreeBook.text = numFreeBook
+            view.tvFreeBook.text = numFreeBookStr
             if (bookType == BookType.SPEAK_BOOK) {
                 if (lstPathResult.isNotEmpty()) {
                     player.visible()
@@ -451,7 +454,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 }
             }
             else -> {
-                presenter.reservationBook(bookId)
+                if (numFreeBook == 0) {
+                    presenter.reserverBook(bookId)
+                } else {
+                    presenter.reservationBook(bookId)
+                }
             }
         }
     }
@@ -460,6 +467,50 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         activity?.let { activity ->
             hideLoading()
             Toasty.success(activity, activity.getString(R.string.msg_reservation_success)).show()
+        }
+    }
+
+    override fun reserverBookSuccess() {
+        activity?.let { activity ->
+            hideLoading()
+            Toasty.success(activity, activity.getString(R.string.msg_reserver_success)).show()
+        }
+    }
+
+    override fun reserverBookFail(data: Int) {
+        activity?.let { activity ->
+            hideLoading()
+            val msgError = when (data) {
+                1 -> {
+                    activity.getString(R.string.msg_reservation_fail_number_card)
+                }
+                2 -> {
+                    activity.getString(R.string.msg_reservation_fail)
+                }
+                3 -> {
+                    activity.getString(R.string.msg_reservation_fail_request_exist)
+                }
+                4 -> {
+                    activity.getString(R.string.msg_reservation_fail_except)
+                }
+                5 -> {
+                    activity.getString(R.string.msg_reservation_fail_full)
+                }
+                6 -> {
+                    activity.getString(R.string.msg_reservation_fail_not_Invalid)
+                }
+                7 -> {
+                    activity.getString(R.string.msg_reservation_fail_free)
+                }
+                else -> {
+                    activity.getString(R.string.msg_reserver_fail_nomal)
+                }
+            }
+
+            val title = activity.getString(R.string.TITLE_ERROR)
+            val bundle = DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
+            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
+                    .pushChangeHandler(FadeChangeHandler(false)))
         }
     }
 

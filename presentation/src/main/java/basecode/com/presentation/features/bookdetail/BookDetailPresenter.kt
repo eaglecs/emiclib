@@ -14,6 +14,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                           private val getUserTokenUseCase: GetUserTokenUseCase,
                           private val getInfoBookUseCase: GetInfoBookUseCase,
                           private val reservationBookUseCase: ReservationBookUseCase,
+                          private val reserverBookUseCase: ReserverBookUseCase,
                           private val saveBookUseCase: SaveBookUseCase) : BookDetailContract.Presenter() {
 
     override fun saveBookDownload(eBookModel: EBookModel) {
@@ -50,6 +51,31 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
 
                 override fun fail(error: ErrorResponse) {
                     view.reservationBookFail(8)
+                }
+
+                override fun done() {
+                    view.hideLoading()
+                }
+
+            }, bookId)
+        }
+    }
+
+    override fun reserverBook(bookId: Long) {
+        view?.let { view ->
+            view.showLoading()
+            reserverBookUseCase.cancel()
+            reserverBookUseCase.executeAsync(object : ResultListener<Int, ErrorResponse> {
+                override fun success(data: Int) {
+                    if (data == 0) {
+                        view.reserverBookSuccess()
+                    } else {
+                        view.reserverBookFail(data)
+                    }
+                }
+
+                override fun fail(error: ErrorResponse) {
+                    view.reserverBookFail(8)
                 }
 
                 override fun done() {
@@ -121,7 +147,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                             lstPathResult.add(pathBook)
                         }
                     }
-                    var numFreeBook = ""
+                    var numFreeBookStr = ""
+                    var numFreeBook = 0
                     data.lstCopyNumber?.let { copyNumbers ->
                         copyNumbers.forEach { copyNumber ->
                             copyNumber?.let {
@@ -133,7 +160,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                             }
                         }
                         data.lstFreeCopyNumber?.let { lstFreeCopyNumber ->
-                            numFreeBook = "${lstFreeCopyNumber.size}/${copyNumbers.size}"
+                            numFreeBook = lstFreeCopyNumber.size
+                            numFreeBookStr = "$numFreeBook/${copyNumbers.size}"
                         }
                     }
                     val title = data.title.valueOrEmpty()
@@ -143,7 +171,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val shortDescription = data.shortDescription.valueOrEmpty()
                     val linkShare = data.linkShare.valueOrEmpty()
                     val info = data.info.valueOrEmpty()
-                    view.getBookInfoSuccess(lstPathResult, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare, info, numFreeBook)
+                    view.getBookInfoSuccess(lstPathResult, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare, info, numFreeBookStr, numFreeBook)
                 }
 
                 override fun fail(error: ErrorResponse) {
@@ -164,6 +192,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         reservationBookUseCase.cancel()
         getUserTokenUseCase.cancel()
         getInfoBookUseCase.cancel()
+        reserverBookUseCase.cancel()
         super.onDetachView()
     }
 }

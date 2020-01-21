@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/md_blue100"
         android:padding="@dimen/default_padding_margin">
 
         <android.support.v7.widget.AppCompatTextView
