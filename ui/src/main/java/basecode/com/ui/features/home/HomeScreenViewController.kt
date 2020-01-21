@@ -138,6 +138,9 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
             }
 
             override fun onPageSelected(position: Int) {
+                if (position == indexTabProfile) {
+                    KBus.post(LoadStatusNotify())
+                }
                 prevMenuItem?.let { prevMenuItem ->
                     prevMenuItem.setChecked(false)
                 }
