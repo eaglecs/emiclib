@@ -5,6 +5,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.util.DoubleTouchPrevent
@@ -19,16 +20,31 @@ class AboutViewController : ViewController(null) {
             "        <p>(84-8 3 847 5821)</p>\n" +
             "        <p>info@dgsoft.vn</p>"
 
+    private val textAboutTND = "<h2>Thư viện số Trần Đại Nghĩa </h2>\n" +
+            "        <br/>\n" +
+            "        <p>53 Nguyễn Du, P. Bến Nghé, Quận 1, TP. HCM</p>\n" +
+            "        <p>20 Lý Tự Trọng, P. Bến Nghé, Q. 1, TP. HCM</p>\n" +
+            "        <p>(028 38 229 040) (08 38 258 368)</p>\n" +
+            "        <p>Website: www.trandainghia.edu.vn</p>" +
+            "        <p>Email:  info@trandainghia.edu.vn</p>" +
+            "        <br/>\n" +
+            "Powered by Greenhouse. All rights Reserved."
+
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.layout_about, container, false)
     }
 
     override fun initPostCreateView(view: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            view.tvAbout.text = Html.fromHtml(textAbout, Html.FROM_HTML_MODE_COMPACT)
+        val textAbountResult = if(BuildConfig.USE_DATA_TDN){
+            textAboutTND
         } else {
-            view.tvAbout.text = Html.fromHtml(textAbout)
+            textAbout
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            view.tvAbout.text = Html.fromHtml(textAbountResult, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            view.tvAbout.text = Html.fromHtml(textAbountResult)
         }
         view.ivBack.setOnClickListener {
             if (doubleTouchPrevent.check("ivBack")) {

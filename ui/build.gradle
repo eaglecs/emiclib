@@ -156,8 +156,8 @@ dependencies {
     // Show hide password.
     implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
 
-    //EasySwipeMenuLayout
-    implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
+//    //EasySwipeMenuLayout
+//    implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
 
     //RequestPermission
     implementation 'com.karumi:dexter:5.0.0'
