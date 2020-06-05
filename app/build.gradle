@@ -6,7 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-def final applicationId_Live = "com.emiclib"
+def final applicationId_Live = "com.emic.lib"
+def final applicationIdTDN_Live = "com.tdn"
+def final applicationIdGSL_Live = "com.gsl"
 def final applicationId_Demo = "com.emiclibdemo"
 
 def final APP_NAME_DEMO = "EIU Library"
@@ -89,14 +91,14 @@ android {
 
         tdn_ {
             signingConfig signingConfigs.live
-            applicationId = applicationId_Live
+            applicationId = applicationIdTDN_Live
             manifestPlaceholders = [nameApp: APP_NAME_TDN]
             resValue "string", "name_app", "$APP_NAME_TDN"
         }
 
         gsl_ {
             signingConfig signingConfigs.live
-            applicationId = applicationId_Live
+            applicationId = applicationIdGSL_Live
             manifestPlaceholders = [nameApp: APP_NAME_GSL]
             resValue "string", "name_app", "$APP_NAME_GSL"
         }
