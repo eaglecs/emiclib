@@ -91,8 +91,6 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
     }
 
     private fun initView(view: View) {
-        BlurImage.with(applicationContext).load(R.drawable.bg_login).intensity(25f).Async(true).into(view.ivLogin)
-
         if (BuildConfig.USE_DATA_OTHER_APP) {
             view.tvForgotPass.gone()
             if (BuildConfig.USE_DATA_GSL) {
