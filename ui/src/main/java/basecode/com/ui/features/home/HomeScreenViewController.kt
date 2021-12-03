@@ -45,10 +45,10 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     }
 
     private val indexTabHome = 0
-    private val indexTabNews = 1
-    private val indexTabSearch = 2
-    private val indexTabProfile = 3
-    private val indexTabSetting = 4
+//    private val indexTabNews = 1
+    private val indexTabSearch = 1
+    private val indexTabProfile = 2
+    private val indexTabSetting = 3
     private val iconSizeOfTab: Float = 28.toFloat()
     private val pageHomeSize = 5
     private var prevMenuItem: MenuItem? = null
@@ -71,10 +71,10 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
                     view.vpHome.currentItem = indexTabHome
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.navigation_news -> {
-                    view.vpHome.currentItem = indexTabNews
-                    return@OnNavigationItemSelectedListener true
-                }
+//                R.id.navigation_news -> {
+//                    view.vpHome.currentItem = indexTabNews
+//                    return@OnNavigationItemSelectedListener true
+//                }
                 R.id.navigation_search -> {
                     view.vpHome.currentItem = indexTabSearch
                     return@OnNavigationItemSelectedListener true
@@ -105,9 +105,9 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
                         indexTabHome -> {
                             page = HomeViewController(targetController)
                         }
-                        indexTabNews -> {
-                            page = NewsViewController(targetController)
-                        }
+//                        indexTabNews -> {
+//                            page = NewsViewController(targetController)
+//                        }
                         indexTabSearch -> {
                             page = SearchViewController(targetController)
                         }

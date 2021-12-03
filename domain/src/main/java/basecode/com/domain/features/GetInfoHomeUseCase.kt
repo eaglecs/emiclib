@@ -12,24 +12,24 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
     override fun buildUseCaseObservable(isTDN: Boolean): Observable<InfoHomeResponse> {
         return Observable.create { e ->
             val infoHomeResponse = InfoHomeResponse()
-            val newNewsBottomResponse = appRepository.getListNewNews(10, 1, 10).blockingGet()
+//            val newNewsBottomResponse = appRepository.getListNewNews(10, 1, 10).blockingGet()
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
             val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
-            var lstNewNews: List<NewNewsResponse>? = null
+//            var lstNewNews: List<NewNewsResponse>? = null
             try {
-                lstNewNews = if(isTDN){
-                    appRepository.getListNews(categoryId = 178 , pageIndex = 1, pageSize = 6).blockingGet()
-                } else {
-                    appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
-                }
+//                lstNewNews = if(isTDN){
+//                    appRepository.getListNews(categoryId = 178 , pageIndex = 1, pageSize = 6).blockingGet()
+//                } else {
+//                    appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
+//                }
             } catch (ex: Exception){
-                lstNewNews?.let {
-                    lstNewNews.forEach { newNews ->
-                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-                        infoHomeResponse.lstNewNews.add(newNewsModel)
-                    }
-                }
+//                lstNewNews?.let {
+//                    lstNewNews.forEach { newNews ->
+//                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+//                        infoHomeResponse.lstNewNews.add(newNewsModel)
+//                    }
+//                }
                 listNewBooks?.let {
                     listNewBooks.forEach { newBook ->
                         val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
@@ -51,12 +51,12 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                     }
                 }
 
-                newNewsBottomResponse?.let {
-                    newNewsBottomResponse.forEach { newNews ->
-                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-                        infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
-                    }
-                }
+//                newNewsBottomResponse?.let {
+//                    newNewsBottomResponse.forEach { newNews ->
+//                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+//                        infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
+//                    }
+//                }
 
                 e.onNext(infoHomeResponse)
                 e.onComplete()
@@ -64,12 +64,12 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
 
 
 
-            lstNewNews?.let {
-                lstNewNews.forEach { newNews ->
-                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-                    infoHomeResponse.lstNewNews.add(newNewsModel)
-                }
-            }
+//            lstNewNews?.let {
+//                lstNewNews.forEach { newNews ->
+//                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+//                    infoHomeResponse.lstNewNews.add(newNewsModel)
+//                }
+//            }
             listNewBooks?.let {
                 listNewBooks.forEach { newBook ->
                     val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
@@ -91,12 +91,12 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                 }
             }
 
-            newNewsBottomResponse?.let {
-                newNewsBottomResponse.forEach { newNews ->
-                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty().trim(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-                    infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
-                }
-            }
+//            newNewsBottomResponse?.let {
+//                newNewsBottomResponse.forEach { newNews ->
+//                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty().trim(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
+//                    infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
+//                }
+//            }
 
             e.onNext(infoHomeResponse)
             e.onComplete()

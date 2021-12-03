@@ -17,7 +17,7 @@ def final FALSE = "false"
 //def final API_LIVE = "http://118.69.60.149:8059/"
 //def final API_DEMO = "http://118.69.60.149:8059/"
 def final API_LIVE = "http://api.lib.eiu.edu.vn/"
-def final API_GSL = "http://apilib.thuvientphcm.gov.vn/"
+def final API_GSL = "https://apilib.thuvientphcm.gov.vn/"
 def final API_TDN = "http://apitdn.thessc.vn/"
 def final API_DEMO = "http://118.69.60.149:8059/"
 

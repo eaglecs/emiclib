@@ -12,7 +12,7 @@ class SettingContract {
         fun setStatusNewMessage(isHasNewMessage: Boolean)
     }
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun checkLogin()
+        abstract fun checkLogin(onActionDone: (() -> Unit)? = null)
         abstract fun getUserInfo()
         abstract fun checkNewMessage()
     }
