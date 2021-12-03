@@ -14,8 +14,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_main.*
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() { // KoinComponent(add inject)
-    private val doubleTouchPrevent: DoubleTouchPrevent by inject()
+class MainActivity : AppCompatActivity() {
     private val timeDelayWhenClickBack = 2000
     private var timeBackPressed: Long = 0
     private lateinit var router: Router

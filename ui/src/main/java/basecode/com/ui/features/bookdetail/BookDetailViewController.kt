@@ -21,6 +21,7 @@ import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
+import basecode.com.ui.ReadBookActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraInt
@@ -311,23 +312,31 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         if (pathBook.isEmpty()) {
             activity?.let {
                 hideLoading()
-                Toasty.warning(it, it.resources.getString(R.string.msg_warning_link_download_empty)).show()
+                Toasty.warning(it, it.resources.getString(R.string.msg_warning_read_book)).show()
             }
             return
         }
-        activity?.let { activity ->
-            ls?.let {
-                if (it.isDownloaded(pathBook)) {
-                    openEBook(activity)
-                } else {
-                    showLoading()
-                    isLoadingFinished = false
-                    updateProgress()
-                    it.startDownload(pathBook, "", titleBook, author)
-                }
-            }
-
+        activity?.let {
+            val intent = Intent(it, ReadBookActivity::class.java)
+            intent.putExtra("LinkBook", pathBook)
+            intent.putExtra("BookName", titleBook)
+            it.startActivity(intent)
         }
+
+//        activity?.let { activity ->
+//            ls?.let {
+//                if (it.isDownloaded(pathBook)) {
+//
+//                    openEBook(activity)
+//                } else {
+//                    showLoading()
+//                    isLoadingFinished = false
+//                    updateProgress()
+//                    it.startDownload(pathBook, "", titleBook, author)
+//                }
+//            }
+//
+//        }
     }
 
     private fun openEBook(activity: Activity) {

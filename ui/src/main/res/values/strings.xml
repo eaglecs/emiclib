@@ -167,6 +167,7 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="msg_reserver_fail_nomal">Đặt chỗ thất bại!</string>
     <string name="msg_reserver_success">Đặt chỗ thành công!</string>
     <string name="msg_reserver_fail">Yêu cầu này đã tồn tại.</string>
+    <string name="msg_warning_read_book">Hiện sách này chưa có tài liệu.</string>
 
 
 </resources>
