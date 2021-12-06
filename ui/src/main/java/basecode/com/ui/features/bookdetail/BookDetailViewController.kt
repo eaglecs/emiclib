@@ -453,14 +453,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private fun handleBook() {
         when (bookType) {
             BookType.EBOOK -> {
-                activity?.let {
-                    if (PermissionUtil.hasPermissions(it, Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        readEBook()
-                    } else {
-                        requestPermissions(PermissionUtil.readWriteExternalPermissions, permissionsCode)
-                    }
-                }
+                readEBook()
             }
             else -> {
                 if (numFreeBook == 0) {
