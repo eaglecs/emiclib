@@ -1,13 +1,12 @@
 package basecode.com.ui.features.readbook
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
+import android.webkit.*
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -49,22 +48,25 @@ class ReadBookViewController(bundle: Bundle) : ViewController(bundle) {
         handleView(view)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initView(view: View) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+        }
         view.tvBookName.text = bookName
         view.webView.settings.domStorageEnabled = true
         view.webView.settings.javaScriptEnabled = true
-        view.webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
-        view.webView.settings.domStorageEnabled = true
-        view.webView.settings.useWideViewPort = true
-        view.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        view.webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        view.webView.settings.setSupportMultipleWindows(true)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        view.webView.loadUrl(url)
+        view.webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                url?.let {
+                }
+            }
+
         }
         view.webView.webChromeClient = CustomChromeClient()
-        view.webView.loadUrl(url)
-
     }
 
 
