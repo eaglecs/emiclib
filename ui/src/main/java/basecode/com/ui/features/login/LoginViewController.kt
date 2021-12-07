@@ -104,6 +104,12 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
     }
 
     private fun onHandleView(view: View) {
+        view.ivBack.setOnClickListener {
+            if (doubleTouchPrevent.check("ivBack")) {
+                router.popController(this)
+            }
+        }
+
         view.tvCloseLogin.setOnClickListener {
             if (doubleTouchPrevent.check("ivCloseLogin")) {
                 router.popController(this)
