@@ -64,8 +64,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var author = ""
     private var isBound = false
     private var receiver: SkyReceiver = SkyReceiver()
-    private var isCheckLogin = false
-    private var isLogin = false
+    private var isCheckLogin = true
+    private var isLogin = true
     private val permissionsCode = 1000
     private var pathBook = ""
     private lateinit var player: JcPlayerView

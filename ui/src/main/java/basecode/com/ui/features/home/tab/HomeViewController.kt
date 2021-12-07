@@ -89,7 +89,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
                     targetController?.let { targetController ->
                         val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
                         val loginViewController = LoginViewController(bundle)
-                        targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+                        targetController.router.pushController(RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
             }
@@ -160,14 +161,14 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             }
         }))
 
-//        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
-//            targetController?.let { targetController ->
-//                val title = collectionRecommend.title
-//                val id = collectionRecommend.id
-//                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
-//                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
-//            }
-//        })
+        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+            targetController?.let { targetController ->
+                val title = collectionRecommend.title
+                val id = collectionRecommend.id
+                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
+                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+            }
+        })
 
     }
 
@@ -199,6 +200,12 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             val newNewsBottomViewHolderModel = NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
             rvController.addItem(newNewsBottomViewHolderModel)
         }
+
+//        if (data.lstCollectionRecommend.isNotEmpty()){
+//            val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
+//            rvController.addItem(newCollectionRecommendViewHolderModel)
+//        }
+
         rvController.notifyDataChanged()
         hideLoading()
     }
