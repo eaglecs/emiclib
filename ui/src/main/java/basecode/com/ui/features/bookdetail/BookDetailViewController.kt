@@ -1,6 +1,5 @@
 package basecode.com.ui.features.bookdetail
 
-import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
@@ -29,10 +28,15 @@ import basecode.com.ui.base.extra.BundleExtraLong
 import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
-import basecode.com.ui.base.listview.view.OnItemRvClickedListener
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
+import basecode.com.ui.features.bookdetail.renderer.HeaderAudioRenderer
+import basecode.com.ui.features.bookdetail.renderer.HeaderBookRelatedRenderer
+import basecode.com.ui.features.bookdetail.viewmodel.AudioViewHolderModel
+import basecode.com.ui.features.bookdetail.viewmodel.HeaderAudioViewHolderModel
+import basecode.com.ui.features.bookdetail.viewmodel.HeaderBookRelatedViewHolderModel
 import basecode.com.ui.features.books.BookRelatedRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
@@ -42,7 +46,9 @@ import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
 import basecode.com.ui.util.*
 import com.bluelinelabs.conductor.RouterTransaction
+import com.example.jean.jcplayer.general.JcStatus
 import com.example.jean.jcplayer.model.JcAudio
+import com.example.jean.jcplayer.service.JcPlayerManagerListener
 import com.example.jean.jcplayer.view.JcPlayerView
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
@@ -52,7 +58,7 @@ import org.koin.standalone.inject
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
-        DialogOneEventViewController.ActionEvent {
+    DialogOneEventViewController.ActionEvent {
 
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
@@ -70,6 +76,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var pathBook = ""
     private lateinit var player: JcPlayerView
     private var numFreeBook = 0
+    private val lstPathAudio = mutableListOf<String>()
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -91,13 +98,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
-        fun create(bookType: Int = BookType.BOOK_NORMAL.value, bookId: Long, photo: String) = Bundle().apply {
-            this.bookType = bookType
-            this.bookId = bookId
-            this.author = author
-            this.titleBook = titleBook
-            this.photo = photo
-        }
+        fun create(bookType: Int = BookType.BOOK_NORMAL.value, bookId: Long, photo: String) =
+            Bundle().apply {
+                this.bookType = bookType
+                this.bookId = bookId
+                this.author = author
+                this.titleBook = titleBook
+                this.photo = photo
+            }
     }
 
     companion object : BundleOptionsCompanion<BundleOptions>(BundleOptions)
@@ -142,7 +150,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             view.vgLoadingDownloadBook?.gone()
             activity?.let { activity ->
                 isLoadingFinished = true
-                Toasty.error(activity, "${activity.resources.getString(R.string.msg_error_download_book)} ${reasonText.reasonText}").show()
+                Toasty.error(
+                    activity,
+                    "${activity.resources.getString(R.string.msg_error_download_book)} ${reasonText.reasonText}"
+                ).show()
                 hideLoading()
             }
         }
@@ -159,7 +170,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             if (it.percentValue == 100) {
                 if (!isLoadingFinished) {
                     isLoadingFinished = true
-                    val eBookModel = EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
+                    val eBookModel =
+                        EBookModel(id = bookId, title = titleBook, author = author, photo = photo)
                     presenter.saveBookDownload(eBookModel)
                 }
             }
@@ -171,9 +183,20 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             view.vgLoadingDownloadBook.gone()
             val textAction = view.context.getString(R.string.text_read_book)
             val msg = view.context.getString(R.string.msg_download_book_success)
-            val bundle = DialogOneEventViewController.BundleOptions.create(title = "", msg = msg, textEvent = textAction)
-            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
-                    .pushChangeHandler(FadeChangeHandler(false)))
+            val bundle = DialogOneEventViewController.BundleOptions.create(
+                title = "",
+                msg = msg,
+                textEvent = textAction
+            )
+            router.pushController(
+                RouterTransaction.with(
+                    DialogOneEventViewController(
+                        targetController = this,
+                        bundle = bundle
+                    )
+                )
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
             hideLoading()
         }
     }
@@ -200,19 +223,72 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 view.tvHandleBook.gone()
             }
         }
-        val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL)
+        val input = LinearRenderConfigFactory.Input(
+            context = view.context,
+            orientation = LinearRenderConfigFactory.Orientation.VERTICAL
+        )
         val renderConfig = LinearRenderConfigFactory(input).create()
-        rvController = RecyclerViewController(view.rvBookRelated, renderConfig)
-        rvController.addViewRenderer(BookRelatedRenderer())
-        rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
-            override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
-                if (dataItem is BooksViewHolderModel) {
-                    val bundle = BundleOptions.create(bookId = dataItem.id, photo = dataItem.photo)
-                    router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+        rvController = RecyclerViewController(view.rvBookInfo, renderConfig)
+        rvController.addViewRenderer(HeaderBookRelatedRenderer())
+        rvController.addViewRenderer(BookRelatedRenderer { model ->
+            val bundle = BundleOptions.create(bookId = model.id, photo = model.photo)
+            router.pushController(
+                RouterTransaction.with(BookDetailViewController(bundle))
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
+        })
+        rvController.addViewRenderer(HeaderAudioRenderer())
+        rvController.addViewRenderer(AudioRenderer { model ->
+            player.myPlaylist?.let { myPlaylist ->
+                var audio: JcAudio? = null
+                run loop@{
+                    myPlaylist.forEach {
+                        if (it.path == model.url) {
+                            audio = it
+                            return@loop
+                        }
+                    }
+                }
+                audio?.let {
+                    player.playAudio(it)
+                    rvController.getItems().forEach { viewModel ->
+                        if (viewModel is AudioViewHolderModel) {
+                            viewModel.isSelected = viewModel.url == model.url
+                        }
+                    }
+                    rvController.notifyDataChanged()
                 }
             }
-
         })
+        player.jcPlayerManagerListener = object : JcPlayerManagerListener {
+            override fun onCompletedAudio() {
+            }
+
+            override fun onContinueAudio(status: JcStatus) {
+            }
+
+            override fun onJcpError(throwable: Throwable) {
+            }
+
+            override fun onPaused(status: JcStatus) {
+            }
+
+            override fun onPlaying(status: JcStatus) {
+            }
+
+            override fun onPreparedAudio(status: JcStatus) {
+                rvController.getItems().forEach { viewModel ->
+                    if (viewModel is AudioViewHolderModel) {
+                        viewModel.isSelected = viewModel.url == status.jcAudio.path
+                    }
+                }
+                rvController.notifyDataChanged()
+            }
+
+            override fun onTimeChanged(status: JcStatus) {
+            }
+
+        }
     }
 
     private fun handleOnClick(view: View) {
@@ -227,9 +303,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     if (isLogin) {
                         handleBook()
                     } else {
-                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
+                        val bundle =
+                            LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
                         val loginViewController = LoginViewController(bundle)
-                        router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+                        router.pushController(
+                            RouterTransaction.with(loginViewController)
+                                .pushChangeHandler(FadeChangeHandler(false))
+                        )
                     }
                 } else {
                     presenter.getStatusLogin()
@@ -239,12 +319,32 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         view.ivShareBookDetail.setOnClickListener {
             if (doubleTouchPrevent.check("ivShareBookDetail")) {
                 val title = "${view.context.getString(R.string.title_share_book)} $titleBook"
-                ShareUtil.shareViaMedia(subject = "", body = linkShare, title = title, controller = this, requestCode = 1000)
+                ShareUtil.shareViaMedia(
+                    subject = "",
+                    body = linkShare,
+                    title = title,
+                    controller = this,
+                    requestCode = 1000
+                )
             }
         }
     }
 
-    override fun getBookInfoSuccess(lstPathResult: List<String>, title: String, author: String, publisher: String, publishYear: String, shortDescription: String, copyNumberResult: String, linkShare: String, infoBook: String, numFreeBookStr: String, numFreeBook: Int) {
+    override fun getBookInfoSuccess(
+        lstPathResult: List<String>,
+        title: String,
+        author: String,
+        publisher: String,
+        publishYear: String,
+        shortDescription: String,
+        copyNumberResult: String,
+        linkShare: String,
+        infoBook: String,
+        numFreeBookStr: String,
+        numFreeBook: Int
+    ) {
+        lstPathAudio.clear()
+        lstPathAudio.addAll(lstPathResult)
         this.linkShare = linkShare
         this.numFreeBook = numFreeBook
         if (linkShare.isNotEmpty()) {
@@ -256,19 +356,31 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         titleBook = title
         this.author = author
         if (lstPathResult.isNotEmpty()) {
-            pathBook = lstPathResult.first()
+            pathBook = lstPathAudio.first()
         }
         view?.let { view ->
             view.tvInfoBook.text = infoBook
             view.tvFreeBook.text = numFreeBookStr
             if (bookType == BookType.SPEAK_BOOK) {
-                if (lstPathResult.isNotEmpty()) {
+                if (lstPathAudio.isNotEmpty()) {
                     player.visible()
                     val jcAudios = ArrayList<JcAudio>()
-                    lstPathResult.forEach { path ->
+                    val lstAudio = mutableListOf<AudioViewHolderModel>()
+                    lstPathAudio.forEachIndexed { index, path ->
+                        lstAudio.add(
+                            AudioViewHolderModel(
+                                id = index + 1,
+                                url = path,
+                                isSelected = index == 0,
+                                title = titleBook
+                            )
+                        )
                         jcAudios.add(JcAudio.createFromURL(titleBook, path))
                     }
                     player.initPlaylist(jcAudios, null)
+                    rvController.addItem(0, HeaderAudioViewHolderModel())
+                    rvController.addItems(1, lstAudio)
+                    rvController.notifyDataChanged()
                 }
             }
             view.tvBookName.text = title
@@ -367,7 +479,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     intent.putExtra("AUTHOR", bi.creator)
                     intent.putExtra("BOOKNAME", bi.fileName)
                     if (bi.position < 0.0f) {
-                        intent.putExtra("POSITION", (-1.0f).toDouble()) // 7.x -1 stands for start position for both LTR and RTL book.
+                        intent.putExtra(
+                            "POSITION",
+                            (-1.0f).toDouble()
+                        ) // 7.x -1 stands for start position for both LTR and RTL book.
                     } else {
                         intent.putExtra("POSITION", bi.position)
                     }
@@ -412,7 +527,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         Handler().postDelayed({ updateProgress() }, 1000)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == permissionsCode) {
             if (permissions.isNotEmpty() && grantResults.isNotEmpty() && permissions.size == grantResults.size) {
@@ -444,9 +563,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         if (isLogin) {
             handleBook()
         } else {
-            val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
+            val bundle =
+                LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.HandleBook.value)
             val loginViewController = LoginViewController(bundle)
-            router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
+            router.pushController(
+                RouterTransaction.with(loginViewController)
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
         }
     }
 
@@ -492,9 +615,17 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             val title = activity.getString(R.string.TITLE_ERROR)
-            val bundle = DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
-            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
-                    .pushChangeHandler(FadeChangeHandler(false)))
+            val bundle =
+                DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
+            router.pushController(
+                RouterTransaction.with(
+                    DialogOneEventViewController(
+                        targetController = this,
+                        bundle = bundle
+                    )
+                )
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
         }
     }
 
@@ -529,19 +660,40 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             val title = activity.getString(R.string.TITLE_ERROR)
-            val bundle = DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
-            router.pushController(RouterTransaction.with(DialogOneEventViewController(targetController = this, bundle = bundle))
-                    .pushChangeHandler(FadeChangeHandler(false)))
+            val bundle =
+                DialogOneEventViewController.BundleOptions.create(title = title, msg = msgError)
+            router.pushController(
+                RouterTransaction.with(
+                    DialogOneEventViewController(
+                        targetController = this,
+                        bundle = bundle
+                    )
+                )
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
         }
     }
 
     override fun getListBookRelatedSuccess(data: List<BookViewModel>) {
         val lstBook = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
-            val booksViewHolderModel = BooksViewHolderModel(id = book.id, title = book.name, photo = book.photo, author = book.author)
+            val booksViewHolderModel = BooksViewHolderModel(
+                id = book.id,
+                title = book.name,
+                photo = book.photo,
+                author = book.author
+            )
             lstBook.add(booksViewHolderModel)
         }
-        rvController.setItems(lstBook)
+        val lstData = mutableListOf<ViewModel>()
+        rvController.getItems().forEach { viewModel ->
+            if (viewModel !is HeaderBookRelatedViewHolderModel && viewModel !is BooksViewHolderModel) {
+                lstData.add(viewModel)
+            }
+        }
+        lstData.add(HeaderBookRelatedViewHolderModel())
+        lstData.addAll(lstBook)
+        rvController.setItems(lstData)
         rvController.notifyDataChanged()
     }
 
@@ -571,7 +723,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         override fun handleMessage(msg: Message) {
             view?.vgLoadingDownloadBook?.gone()
             activity?.let { activity ->
-                Toasty.error(activity, activity.resources.getString(R.string.msg_error_download_book)).show()
+                Toasty.error(
+                    activity,
+                    activity.resources.getString(R.string.msg_error_download_book)
+                ).show()
             }
             hideLoading()
         }

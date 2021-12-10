@@ -239,7 +239,8 @@
                 android:id="@+id/playBookAudio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvTitleDescription"
@@ -260,17 +261,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding_margin"
                 android:layout_marginRight="@dimen/default_padding_margin"
+                android:layout_marginBottom="@dimen/default_padding_margin"
                 android:maxLines="10"
                 tools:text="Ngay xua co mot con bo ..." />
-
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/TextPrimarySubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding_margin"
-                android:text="@string/text_book_related"
-                android:textColor="@color/md_blue800"
-                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -278,7 +271,7 @@
                 android:background="@color/md_grey200" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvBookRelated"
+                android:id="@+id/rvBookInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

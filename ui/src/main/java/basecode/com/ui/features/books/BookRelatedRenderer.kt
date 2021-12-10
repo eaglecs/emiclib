@@ -6,7 +6,7 @@ import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.util.GlideUtil
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 
-class BookRelatedRenderer : ViewHolderRenderer<BooksViewHolderModel>() {
+class BookRelatedRenderer(private val onActionSelected: (model: BooksViewHolderModel) -> Unit) : ViewHolderRenderer<BooksViewHolderModel>() {
     override fun getLayoutId(): Int = R.layout.item_book_related
 
     override fun getModelClass(): Class<BooksViewHolderModel> = BooksViewHolderModel::class.java
@@ -15,5 +15,10 @@ class BookRelatedRenderer : ViewHolderRenderer<BooksViewHolderModel>() {
         val ivPhotoBooks = viewFinder.find<AppCompatImageView>(R.id.ivPhotoBooks)
         GlideUtil.loadImage(model.photo, ivPhotoBooks)
         viewFinder.setText(R.id.tvTitleBooks, model.title)
+        viewFinder.setOnClickListener {
+            runWithCheckMultiTouch("book"){
+                onActionSelected.invoke(model)
+            }
+        }
     }
 }

@@ -102,8 +102,9 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                 }
 
                 override fun fail(error: ErrorResponse) {
-                    view.hideLoading()
-                    view.showErrorGetListBookRelated()
+                    view.getListBookRelatedSuccess(data = mutableListOf())
+//                    view.hideLoading()
+//                    view.showErrorGetListBookRelated()
                 }
 
                 override fun done() {}
