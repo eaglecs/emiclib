@@ -9,6 +9,7 @@ import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.response.InfoHomeResponse
+import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
@@ -54,7 +55,12 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     private fun initEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
-            GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
+            GlideUtil.loadImage(
+                url = it.avatar,
+                imageView = view.ivLogin,
+                holderImage = R.drawable.user_default,
+                errorImage = R.drawable.user_default
+            )
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
@@ -66,8 +72,13 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             if (bookInfo.size == 2) {
                 val bookId = bookInfo.first().trim().toLong()
                 targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(bookId = bookId, photo = "")
-                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                    val bundle =
+                        BookDetailViewController.BundleOptions.create(bookId = bookId, photo = "")
+                    targetController.router.pushController(
+                        RouterTransaction.with(
+                            BookDetailViewController(bundle)
+                        ).pushChangeHandler(FadeChangeHandler(false))
+                    )
                 }
             }
         }
@@ -83,14 +94,21 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             if (doubleTouchPrevent.check("ivLogin")) {
                 if (isLogin) {
                     targetController?.let { targetController ->
-                        targetController.router.pushController(RouterTransaction.with(UserViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                        targetController.router.pushController(
+                            RouterTransaction.with(
+                                UserViewController()
+                            ).pushChangeHandler(FadeChangeHandler(false))
+                        )
                     }
                 } else {
                     targetController?.let { targetController ->
-                        val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
+                        val bundle =
+                            LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
                         val loginViewController = LoginViewController(bundle)
-                        targetController.router.pushController(RouterTransaction.with(loginViewController)
-                            .pushChangeHandler(FadeChangeHandler(false)))
+                        targetController.router.pushController(
+                            RouterTransaction.with(loginViewController)
+                                .pushChangeHandler(FadeChangeHandler(false))
+                        )
                     }
                 }
             }
@@ -114,61 +132,131 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             view.ivLogo.setImageResource(R.drawable.ic_logo_new)
         }
 
-        val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
+        val input = LinearRenderConfigFactory.Input(
+            context = view.context,
+            orientation = LinearRenderConfigFactory.Orientation.VERTICAL
+        )
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvHome.setItemViewCacheSize(10)
         rvController = RecyclerViewController(view.rvHome, renderConfig)
         rvController.addViewRenderer(NewNewsRenderer { newsModel ->
             targetController?.let { targetController ->
-                val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.picture, content = newsModel.content)
-                targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = NewsDetailViewController.BundleOptions.create(
+                    title = newsModel.title,
+                    photo = newsModel.picture,
+                    content = newsModel.content
+                )
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        NewsDetailViewController(bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
             }
         })
 
 
         rvController.addViewRenderer(NewBookRenderer(onActionClickBook = { bookItem ->
             targetController?.let { targetController ->
-                val bundle = BookDetailViewController.BundleOptions.create(bookId = bookItem.id, photo = bookItem.coverPicture)
-                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = BookDetailViewController.BundleOptions.create(
+                    bookId = bookItem.id,
+                    photo = bookItem.coverPicture
+                )
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BookDetailViewController(bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
             }
         }, onActionReadMore = {
             targetController?.let { targetController ->
-                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
-                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle =
+                    BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BooksViewController(
+                            bundle = bundle
+                        )
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
 
             }
         }))
         rvController.addViewRenderer(NewEBookRenderer(onActionClickBook = { bookItem ->
             targetController?.let { targetController ->
-                val bundle = BookDetailViewController.BundleOptions.create(bookType = BookDetailViewController.BookType.EBOOK.value, bookId = bookItem.id, photo = bookItem.coverPicture)
-                targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = BookDetailViewController.BundleOptions.create(
+                    bookType = BookDetailViewController.BookType.EBOOK.value,
+                    bookId = bookItem.id,
+                    photo = bookItem.coverPicture,
+                    docType = ConstAPI.DocType.Ebook.value
+                )
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BookDetailViewController(bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
             }
         }, onActionReadMore = {
             targetController?.let { targetController ->
-                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
-                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle =
+                    BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BooksViewController(
+                            bundle = bundle
+                        )
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
 
             }
         }))
         rvController.addViewRenderer(NewsBottomRenderer(onActionClickNews = { newsModel ->
             targetController?.let { targetController ->
-                val bundle = NewsDetailViewController.BundleOptions.create(title = newsModel.title, photo = newsModel.photo, content = newsModel.content)
-                targetController.router.pushController(RouterTransaction.with(NewsDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = NewsDetailViewController.BundleOptions.create(
+                    title = newsModel.title,
+                    photo = newsModel.photo,
+                    content = newsModel.content
+                )
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        NewsDetailViewController(bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
             }
         }, onActionReadMore = {
             targetController?.let { targetController ->
-                targetController.router.pushController(RouterTransaction.with(ListNewsViewController()).pushChangeHandler(FadeChangeHandler(false)))
+                targetController.router.pushController(
+                    RouterTransaction.with(ListNewsViewController())
+                        .pushChangeHandler(FadeChangeHandler(false))
+                )
             }
         }))
 
-        rvController.addViewRenderer(CollectionRecommendRenderer { collectionRecommend ->
+        rvController.addViewRenderer(CollectionRecommendRenderer(onActionClickRecommend = { collectionRecommend ->
             targetController?.let { targetController ->
-                val title = collectionRecommend.title
-                val id = collectionRecommend.id
-                val bundle = BooksViewController.BundleOptions.create(bookType = BookType.COLLECTION.value, collectionId = id, collectionName = title)
-                targetController.router.pushController(RouterTransaction.with(BooksViewController(bundle = bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                val bundle = BookDetailViewController.BundleOptions.create(
+                    bookId = collectionRecommend.id.toLong(),
+                    photo = collectionRecommend.coverPicture
+                )
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BookDetailViewController(bundle)
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
             }
-        })
+        }, onReadMore = {
+            targetController?.let { targetController ->
+                val bundle =
+                    BooksViewController.BundleOptions.create(bookType = BookType.BOOK_RECOMMEND.value)
+                targetController.router.pushController(
+                    RouterTransaction.with(
+                        BooksViewController(
+                            bundle = bundle
+                        )
+                    ).pushChangeHandler(FadeChangeHandler(false))
+                )
+
+            }
+        }))
 
     }
 
@@ -197,14 +285,16 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             rvController.addItem(newEBookViewHolderModel)
         }
         if (data.lstNewNewsBottom.isNotEmpty()) {
-            val newNewsBottomViewHolderModel = NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
+            val newNewsBottomViewHolderModel =
+                NewNewsBottomViewHolderModel(lstNewNews = data.lstNewNewsBottom)
             rvController.addItem(newNewsBottomViewHolderModel)
         }
 
-//        if (data.lstCollectionRecommend.isNotEmpty()){
-//            val newCollectionRecommendViewHolderModel = NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
-//            rvController.addItem(newCollectionRecommendViewHolderModel)
-//        }
+        if (data.lstCollectionRecommend.isNotEmpty()) {
+            val newCollectionRecommendViewHolderModel =
+                NewCollectionRecommendViewHolderModel(lstCollectionRecommend = data.lstCollectionRecommend)
+            rvController.addItem(newCollectionRecommendViewHolderModel)
+        }
 
         rvController.notifyDataChanged()
         hideLoading()

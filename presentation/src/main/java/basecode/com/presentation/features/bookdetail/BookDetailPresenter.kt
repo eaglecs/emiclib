@@ -86,7 +86,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         }
     }
 
-    override fun getListBookRelated(bookId: Long) {
+    override fun getListBookRelated(bookId: Long, docType: Int) {
         view?.let { view ->
             view.showLoading()
             getListBookRelatedUseCase.cancel()
@@ -109,7 +109,7 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
 
                 override fun done() {}
 
-            }, bookId)
+            }, GetListBookRelatedUseCase.Input(bookId = bookId, docType = docType))
         }
     }
 

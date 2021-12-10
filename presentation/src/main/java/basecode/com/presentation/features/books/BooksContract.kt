@@ -15,5 +15,6 @@ class BooksContract {
         abstract fun getItemInCollectionRecomand(isRefresh: Boolean, collectionId: Int)
         abstract fun getListNewEBook(isRefresh: Boolean)
         abstract fun isShowLoadMore(bookType: Int): Boolean
+        abstract fun getListBookRecommend(isRefresh: Boolean)
     }
 }

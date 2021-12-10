@@ -1,6 +1,5 @@
 package basecode.com.domain.repository.network
 
-import basecode.com.domain.model.network.request.LoginRequest
 import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -17,7 +16,7 @@ interface AppRepository {
     fun getCollectionRecomandObservable(): Observable<List<CollectionRecomand>>
     fun getListNewNewsObservable(numberItem: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
 
-    fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>>
+    fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int, docType: Int): Observable<List<BookResponse>>
     fun login(username: String, password: String): Observable<LoginResponse>
     fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
     fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: String, author: String, language: String): Observable<List<BookResponse>>
@@ -57,4 +56,7 @@ interface AppRepository {
     fun getListNews(categoryId: Int, pageIndex: Int, pageSize: Int): Single<List<NewNewsResponse>>
     fun getListNewsObservable(categoryId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>>
     fun getLoanHoldingRenew(coppynumber: String): Observable<Any>
+
+    fun getBooksRecommend(): Single<List<BookRecommendResponse>>
+    fun getBooksRecommendObservable(pageIndex: Int, pageSize: Int): Observable<List<BookRecommendResponse>>
 }

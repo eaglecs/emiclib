@@ -4,4 +4,4 @@ import basecode.com.ui.base.listview.model.ViewHolderModel
 import basecode.com.ui.features.books.BooksViewHolderModel
 import com.github.vivchar.rendererrecyclerviewadapter.DefaultCompositeViewModel
 
-class HeaderBookRelatedViewHolderModel : ViewHolderModel
+class BooksRelatedViewHolderModel(lstBook: MutableList<BooksViewHolderModel>) : DefaultCompositeViewModel(lstBook)

@@ -19,8 +19,8 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.login(username = username, password = password)
     }
 
-    override fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {
-        return apiServiceApp.getListBookRelated(itemId, pageIndex, pageSize)
+    override fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int, docType: Int): Observable<List<BookResponse>> {
+        return apiServiceApp.getListBookRelated(itemId = itemId, pageIndex = pageIndex, pageSize = pageSize, docType = docType)
     }
 
     override fun getListNewItemsObservable(numberItem: Int, pageIndex: Int, pageSize: Int): Observable<List<BookResponse>> {
@@ -145,5 +145,13 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
 
     override fun getListNewsObservable(categoryId: Int, pageIndex: Int, pageSize: Int): Observable<List<NewNewsResponse>> {
         return apiServiceApp.getListNewsObservable(categoryId, pageIndex, pageSize)
+    }
+
+    override fun getBooksRecommend(): Single<List<BookRecommendResponse>> {
+        return apiServiceApp.getBooksRecommend()
+    }
+
+    override fun getBooksRecommendObservable(pageIndex: Int, pageSize: Int): Observable<List<BookRecommendResponse>> {
+        return apiServiceApp.getBooksRecommendObservable(pageIndex, pageSize)
     }
 }

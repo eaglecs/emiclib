@@ -117,7 +117,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
                                 BookDetailViewController.BookType.BOOK_NORMAL.value
                             }
                         }
-                        val bundle = BookDetailViewController.BundleOptions.create(bookType = type, bookId = dataItem.id, photo = dataItem.photo)
+                        val bundle = BookDetailViewController.BundleOptions.create(bookType = type, bookId = dataItem.id, photo = dataItem.photo, docType = categoryId)
                         targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }

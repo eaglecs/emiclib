@@ -130,9 +130,9 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
 
     //RxKotlin
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
 
     //Design
     implementation 'com.github.vivchar:RendererRecyclerViewAdapter:2.5.1'

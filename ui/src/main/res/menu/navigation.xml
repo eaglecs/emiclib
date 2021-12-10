@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="@null" />
+        android:title="@string/text_title_home" />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_news"-->
@@ -14,16 +14,16 @@
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search"
-        android:title="@null" />
+        android:title="@string/text_title_search" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
-        android:title="@null" />
+        android:title="@string/text_title_profile" />
 
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_more_horiz"
-        android:title="@null" />
+        android:title="@string/text_title_setting" />
 
 </menu>

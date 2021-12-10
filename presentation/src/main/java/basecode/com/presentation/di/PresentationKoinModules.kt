@@ -46,64 +46,91 @@ object PresentationKoinModules {
             NewsPresenter(getListNewsUseCase = get()) as NewsContract.Presenter
         }
         factory {
-            RequestDocumentPresenter(requestDocumentUseCase = get(),
-                    getInfoUserUseCase = get()) as RequestDocumentContract.Presenter
+            RequestDocumentPresenter(
+                requestDocumentUseCase = get(),
+                getInfoUserUseCase = get()
+            ) as RequestDocumentContract.Presenter
         }
         factory {
-            HomePresenter(getInfoHomeUseCase = get(),
-                    getUserTokenUseCase = get(),
-                    getLoginRequestUseCase = get(),
-                    loginUseCase = get(),
-                    saveInfoLoginUseCase = get(),
-                    getInfoUserUseCase = get()) as HomeContract.Presenter
+            HomePresenter(
+                getInfoHomeUseCase = get(),
+                getUserTokenUseCase = get(),
+                getLoginRequestUseCase = get(),
+                loginUseCase = get(),
+                saveInfoLoginUseCase = get(),
+                getInfoUserUseCase = get()
+            ) as HomeContract.Presenter
         }
         factory {
-            BooksPresenter(getListNewBookUseCase = get(),
-                    getListNewEbookUseCase = get(),
-                    getItemInCollectionRecomandUseCase = get()) as BooksContract.Presenter
+            BooksPresenter(
+                getListNewBookUseCase = get(),
+                getListNewEbookUseCase = get(),
+                getItemInCollectionRecomandUseCase = get(),
+                getBooksRecommendUseCase = get()
+            ) as BooksContract.Presenter
         }
         factory {
-            BookDetailPresenter(getListBookRelatedUseCase = get(),
-                    getUserTokenUseCase = get(),
-                    getInfoBookUseCase = get(),
-                    reservationBookUseCase = get(),
-                    saveBookUseCase = get(),
-                    reserverBookUseCase = get()) as BookDetailContract.Presenter
+            BookDetailPresenter(
+                getListBookRelatedUseCase = get(),
+                getUserTokenUseCase = get(),
+                getInfoBookUseCase = get(),
+                reservationBookUseCase = get(),
+                saveBookUseCase = get(),
+                reserverBookUseCase = get()
+            ) as BookDetailContract.Presenter
         }
         factory {
             NewNewsPresenter(getListNewNewsUseCase = get()) as NewNewsContract.Presenter
         }
         factory {
-            LoginPresenter(loginUseCase = get(), saveInfoLoginUseCase = get(), saveLoginRequestUseCase = get(), getInfoUserUseCase = get()) as LoginContract.Presenter
+            LoginPresenter(
+                loginUseCase = get(),
+                saveInfoLoginUseCase = get(),
+                saveLoginRequestUseCase = get(),
+                getInfoUserUseCase = get()
+            ) as LoginContract.Presenter
         }
         factory {
-            SearchBookPresenter(findAdvanceBookUseCase = get(), searchBookUseCase = get()) as SearchBookContract.Presenter
+            SearchBookPresenter(
+                findAdvanceBookUseCase = get(),
+                searchBookUseCase = get()
+            ) as SearchBookContract.Presenter
         }
         factory {
-            UserPresenter(getInfoUserUseCase = get(),
-                    saveInfoLoginUseCase = get()) as UserContract.Presenter
+            UserPresenter(
+                getInfoUserUseCase = get(),
+                saveInfoLoginUseCase = get()
+            ) as UserContract.Presenter
         }
         factory {
-            BookBorrowPresenter(getLoanHoldingCurrentUseCase = get(),
-                    getLoanHoldingHistoryUseCase = get(),
-                    loanRenewUseCase = get()) as BookBorrowContract.Presenter
+            BookBorrowPresenter(
+                getLoanHoldingCurrentUseCase = get(),
+                getLoanHoldingHistoryUseCase = get(),
+                loanRenewUseCase = get()
+            ) as BookBorrowContract.Presenter
         }
         factory {
-            NotifyPresenter(getListMessageUseCase = get(),
-                    readMessageUseCase = get()) as NotifyContract.Presenter
+            NotifyPresenter(
+                getListMessageUseCase = get(),
+                readMessageUseCase = get()
+            ) as NotifyContract.Presenter
         }
         factory {
             ChangePassPresenter(changePassUseCase = get()) as ChangePassContract.Presenter
         }
 
         factory {
-            RenewPresenter(getLoanHoldingRenewUseCase = get(),
-                    loanRenewUseCase = get()) as RenewContract.Presenter
+            RenewPresenter(
+                getLoanHoldingRenewUseCase = get(),
+                loanRenewUseCase = get()
+            ) as RenewContract.Presenter
         }
 
         factory {
-            ReserveQueueRequestPresenter(getListReserveQueueUseCase = get(),
-                    getListReserveRequestUseCase = get()) as ReserveQueueRequestContract.Presenter
+            ReserveQueueRequestPresenter(
+                getListReserveQueueUseCase = get(),
+                getListReserveRequestUseCase = get()
+            ) as ReserveQueueRequestContract.Presenter
         }
 
         factory {
@@ -119,9 +146,11 @@ object PresentationKoinModules {
         }
 
         factory {
-            SettingPresenter(getUserTokenUseCase = get(),
-                    getListMessageUseCase = get(),
-                    getLoginRequestUseCase = get()) as SettingContract.Presenter
+            SettingPresenter(
+                getUserTokenUseCase = get(),
+                getListMessageUseCase = get(),
+                getLoginRequestUseCase = get()
+            ) as SettingContract.Presenter
         }
     }
 }

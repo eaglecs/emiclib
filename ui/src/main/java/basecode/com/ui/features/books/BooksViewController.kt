@@ -38,11 +38,12 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
         var Bundle.bookType by BundleExtraInt("BooksViewController.bookType")
         var Bundle.collectionId by BundleExtraInt("BooksViewController.collectionId")
         var Bundle.collectionName by BundleExtraString("BooksViewController.collectionName")
-        fun create(bookType: Int, collectionId: Int = 0, collectionName: String = "") = Bundle().apply {
-            this.bookType = bookType
-            this.collectionId = collectionId
-            this.collectionName = collectionName
-        }
+        fun create(bookType: Int, collectionId: Int = 0, collectionName: String = "") =
+            Bundle().apply {
+                this.bookType = bookType
+                this.collectionId = collectionId
+                this.collectionName = collectionName
+            }
     }
 
     companion object : BundleOptionsCompanion<BundleOptions>(BundleOptions)
@@ -77,6 +78,9 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
             BookType.COLLECTION.value -> {
                 presenter.getItemInCollectionRecomand(isRefresh = true, collectionId = collectionId)
             }
+            BookType.BOOK_RECOMMEND.value -> {
+                presenter.getListBookRecommend(isRefresh = false)
+            }
         }
     }
 
@@ -89,30 +93,44 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
             BookType.E_BOOK.value -> {
                 view.context.getString(R.string.text_ebook_new)
             }
+            BookType.BOOK_RECOMMEND.value -> {
+                view.context.getString(R.string.text_collection_recommend)
+            }
             else -> {
                 collectionName
             }
         }
         view.tvTitleBookDetail.text = textTitle
 
-        val loadMoreConfig = RecyclerViewController.LoadMoreConfig(viewRenderer = LoadMoreViewBinder(R.layout.item_load_more)) {
-            if (presenter.isShowLoadMore(bookType = bookType)) {
-                rvController.showLoadMore()
+        val loadMoreConfig =
+            RecyclerViewController.LoadMoreConfig(viewRenderer = LoadMoreViewBinder(R.layout.item_load_more)) {
+                if (presenter.isShowLoadMore(bookType = bookType)) {
+                    rvController.showLoadMore()
 
-                when (bookType) {
-                    BookType.BOOK.value -> {
-                        presenter.getListNewBook(false)
-                    }
-                    BookType.E_BOOK.value -> {
-                        presenter.getListNewEBook(false)
-                    }
-                    BookType.COLLECTION.value -> {
-                        presenter.getItemInCollectionRecomand(isRefresh = false, collectionId = collectionId)
+                    when (bookType) {
+                        BookType.BOOK.value -> {
+                            presenter.getListNewBook(false)
+                        }
+                        BookType.E_BOOK.value -> {
+                            presenter.getListNewEBook(false)
+                        }
+                        BookType.BOOK_RECOMMEND.value -> {
+                            presenter.getListBookRecommend(false)
+                        }
+                        BookType.COLLECTION.value -> {
+                            presenter.getItemInCollectionRecomand(
+                                isRefresh = false,
+                                collectionId = collectionId
+                            )
+                        }
                     }
                 }
             }
-        }
-        val input = GridRenderConfigFactory.Input(context = view.context, loadMoreConfig = loadMoreConfig, spanCount = 2)
+        val input = GridRenderConfigFactory.Input(
+            context = view.context,
+            loadMoreConfig = loadMoreConfig,
+            spanCount = 2
+        )
         val renderConfig = GridRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookDetail, renderConfig)
         rvController.addViewRenderer(BooksRenderer())
@@ -121,13 +139,20 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
                         val isEBook = bookType == BookType.E_BOOK.value
-                        val type = if(isEBook){
+                        val type = if (isEBook) {
                             BookDetailViewController.BookType.EBOOK.value
                         } else {
                             BookDetailViewController.BookType.BOOK_NORMAL.value
                         }
-                        val bundle = BookDetailViewController.BundleOptions.create(bookType = type, bookId = dataItem.id, photo = dataItem.photo)
-                        router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                        val bundle = BookDetailViewController.BundleOptions.create(
+                            bookType = type,
+                            bookId = dataItem.id,
+                            photo = dataItem.photo
+                        )
+                        router.pushController(
+                            RouterTransaction.with(BookDetailViewController(bundle))
+                                .pushChangeHandler(FadeChangeHandler(false))
+                        )
                     }
                 }
             }
@@ -153,7 +178,12 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
         rvController.hideLoadMore()
         val lstData = mutableListOf<BooksViewHolderModel>()
         data.forEach { book ->
-            val booksViewHolderModel = BooksViewHolderModel(id = book.id, photo = book.photo, title = book.name, author = book.author)
+            val booksViewHolderModel = BooksViewHolderModel(
+                id = book.id,
+                photo = book.photo,
+                title = book.name,
+                author = book.author
+            )
             lstData.add(booksViewHolderModel)
         }
         if (refresh) {

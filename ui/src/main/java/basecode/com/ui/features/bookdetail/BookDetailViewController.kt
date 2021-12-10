@@ -12,11 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
+import basecode.com.domain.extention.number.valueOrDefault
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.dbflow.EBookModel
+import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
@@ -33,10 +35,10 @@ import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.HeaderAudioRenderer
-import basecode.com.ui.features.bookdetail.renderer.HeaderBookRelatedRenderer
+import basecode.com.ui.features.bookdetail.renderer.BooksRelatedRenderer
 import basecode.com.ui.features.bookdetail.viewmodel.AudioViewHolderModel
 import basecode.com.ui.features.bookdetail.viewmodel.HeaderAudioViewHolderModel
-import basecode.com.ui.features.bookdetail.viewmodel.HeaderBookRelatedViewHolderModel
+import basecode.com.ui.features.bookdetail.viewmodel.BooksRelatedViewHolderModel
 import basecode.com.ui.features.books.BookRelatedRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
@@ -59,7 +61,6 @@ import org.koin.standalone.inject
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
     DialogOneEventViewController.ActionEvent {
-
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private var bookType = BookType.BOOK_NORMAL
@@ -77,6 +78,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private lateinit var player: JcPlayerView
     private var numFreeBook = 0
     private val lstPathAudio = mutableListOf<String>()
+    private var docType = ConstAPI.DocType.Book.value
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -98,13 +100,15 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
-        fun create(bookType: Int = BookType.BOOK_NORMAL.value, bookId: Long, photo: String) =
+        var Bundle.docType by BundleExtraInt("BooksViewController.docType")
+        fun create(bookType: Int = BookType.BOOK_NORMAL.value, bookId: Long, photo: String, docType: Int = ConstAPI.DocType.Book.value) =
             Bundle().apply {
                 this.bookType = bookType
                 this.bookId = bookId
                 this.author = author
                 this.titleBook = titleBook
                 this.photo = photo
+                this.docType = docType
             }
     }
 
@@ -125,6 +129,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
             bookId = options.bookId.valueOrZero()
             photo = options.photo.valueOrEmpty()
+            docType = options.docType.valueOrDefault(ConstAPI.DocType.Book.value)
         }
     }
 
@@ -142,7 +147,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         initEventBus(view)
         handleOnClick(view)
         presenter.getBookInfo(bookId)
-        presenter.getListBookRelated(bookId)
+        presenter.getListBookRelated(bookId = bookId, docType = docType)
     }
 
     private fun initEventBus(view: View) {
@@ -213,13 +218,16 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         player = view.playBookAudio
         GlideUtil.loadImage(photo, view.ivBookDetail)
         when (bookType) {
-            BookType.BOOK_NORMAL -> {
-                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
-            }
+//            BookType.BOOK_NORMAL -> {
+//                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
+//            }
             BookType.EBOOK -> {
                 view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
             }
             BookType.SPEAK_BOOK -> {
+                view.tvHandleBook.gone()
+            }
+            else -> {
                 view.tvHandleBook.gone()
             }
         }
@@ -229,9 +237,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         )
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookInfo, renderConfig)
-        rvController.addViewRenderer(HeaderBookRelatedRenderer())
-        rvController.addViewRenderer(BookRelatedRenderer { model ->
-            val bundle = BundleOptions.create(bookId = model.id, photo = model.photo)
+        rvController.addViewRenderer(BooksRelatedRenderer(), BookRelatedRenderer { model ->
+            val bundle = BundleOptions.create(bookId = model.id, photo = model.photo, docType = docType)
             router.pushController(
                 RouterTransaction.with(BookDetailViewController(bundle))
                     .pushChangeHandler(FadeChangeHandler(false))
@@ -375,7 +382,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                                 title = titleBook
                             )
                         )
-                        jcAudios.add(JcAudio.createFromURL(titleBook, path))
+                        jcAudios.add(JcAudio.createFromURL("$titleBook Phần ${index + 1}", path))
                     }
                     player.initPlaylist(jcAudios, null)
                     rvController.addItem(0, HeaderAudioViewHolderModel())
@@ -687,12 +694,12 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         val lstData = mutableListOf<ViewModel>()
         rvController.getItems().forEach { viewModel ->
-            if (viewModel !is HeaderBookRelatedViewHolderModel && viewModel !is BooksViewHolderModel) {
+            if (viewModel !is BooksRelatedViewHolderModel ) {
                 lstData.add(viewModel)
             }
         }
-        lstData.add(HeaderBookRelatedViewHolderModel())
-        lstData.addAll(lstBook)
+        lstData.add(BooksRelatedViewHolderModel(lstBook))
+//        lstData.addAll(lstBook)
         rvController.setItems(lstData)
         rvController.notifyDataChanged()
     }

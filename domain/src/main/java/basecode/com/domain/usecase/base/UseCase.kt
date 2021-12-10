@@ -20,6 +20,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import java.util.*
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).

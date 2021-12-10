@@ -2,26 +2,62 @@ package basecode.com.presentation.features.books
 
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.features.GetBooksRecommendUseCase
 import basecode.com.domain.features.GetItemInCollectionRecomandUseCase
 import basecode.com.domain.features.GetListNewBookUseCase
 import basecode.com.domain.features.GetListNewEbookUseCase
 import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.request.NewEBookRequest
-import basecode.com.domain.model.network.response.ErrorResponse
-import basecode.com.domain.model.network.response.BookResponse
-import basecode.com.domain.model.network.response.NewEBookResponse
-import basecode.com.domain.model.network.response.NewNewsResponse
+import basecode.com.domain.model.network.response.*
 import basecode.com.domain.usecase.base.ResultListener
 
 class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
                      private val getListNewBookUseCase: GetListNewBookUseCase,
+                     private val getBooksRecommendUseCase: GetBooksRecommendUseCase,
                      private val getItemInCollectionRecomandUseCase: GetItemInCollectionRecomandUseCase) : BooksContract.Presenter() {
     private val numItemLoadMore = 10
     private val pageSize = 10
     private var pageIndexCurrent = 1
     private var isLoadMoreNewBook = true
+    private var isLoadMoreBookRecommend = true
     private var isLoadMoreNewEBook = true
     private var isLoadMoreBookCollection = true
+
+    override fun getListBookRecommend(isRefresh: Boolean) {
+        view?.let { view ->
+            view.showLoading()
+            if (isRefresh) {
+                pageIndexCurrent = 1
+                isLoadMoreBookRecommend = true
+            }
+
+            getBooksRecommendUseCase.cancel()
+            getBooksRecommendUseCase.executeAsync(object : ResultListener<List<BookRecommendResponse>, ErrorResponse> {
+                override fun success(data: List<BookRecommendResponse>) {
+                    if (data.size < pageSize) {
+                        isLoadMoreBookRecommend = false
+                    } else {
+                        pageIndexCurrent += 1
+                    }
+                    val lstResult = mutableListOf<BookViewModel>()
+                    data.forEach { newbook ->
+                        val bookVewModel = BookViewModel(id = newbook.id.valueOrZero().toLong(), name = newbook.title.valueOrEmpty(), photo = newbook.coverPicture.valueOrEmpty(),
+                            author = newbook.author.valueOrEmpty(), publishedYear = newbook.publishedYear.valueOrEmpty(), publisher = newbook.publisher.valueOrEmpty())
+                        lstResult.add(bookVewModel)
+                    }
+                    view.getListNewBookSuccess(lstResult, isRefresh)
+                }
+
+                override fun fail(error: ErrorResponse) {
+                    view.hideLoading()
+                    view.showErrorGetListNewBook()
+                }
+
+                override fun done() {}
+            }, GetBooksRecommendUseCase.Input(pageIndex = pageIndexCurrent, pageSize = pageSize))
+
+        }
+    }
 
     override fun isShowLoadMore(bookType: Int): Boolean {
         return when (bookType) {
@@ -30,6 +66,9 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
             }
             BookType.E_BOOK.value -> {
                 isLoadMoreNewEBook
+            }
+            BookType.BOOK_RECOMMEND.value -> {
+                isLoadMoreBookRecommend
             }
             else -> {
                 isLoadMoreBookCollection
@@ -154,6 +193,7 @@ class BooksPresenter(private val getListNewEbookUseCase: GetListNewEbookUseCase,
     }
 
     override fun onDetachView() {
+        getBooksRecommendUseCase.cancel()
         getListNewEbookUseCase.cancel()
         getListNewBookUseCase.cancel()
         getItemInCollectionRecomandUseCase.cancel()

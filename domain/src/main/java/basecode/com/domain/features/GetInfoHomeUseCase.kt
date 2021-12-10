@@ -15,7 +15,8 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
 //            val newNewsBottomResponse = appRepository.getListNewNews(10, 1, 10).blockingGet()
             val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
             val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
-            val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
+//            val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
+            val collectionRecomand = appRepository.getBooksRecommend().blockingGet()
 //            var lstNewNews: List<NewNewsResponse>? = null
             try {
 //                lstNewNews = if(isTDN){
@@ -46,7 +47,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
                 }
                 collectionRecomand?.let {
                     collectionRecomand.forEach { collection ->
-                        val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.name.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
+                        val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.title.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
                         infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
                     }
                 }
@@ -86,7 +87,7 @@ class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepo
             }
             collectionRecomand?.let {
                 collectionRecomand.forEach { collection ->
-                    val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.name.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
+                    val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.title.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
                     infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
                 }
             }

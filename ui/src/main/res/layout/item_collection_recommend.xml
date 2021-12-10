@@ -4,13 +4,30 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatTextView
-        style="@style/TextPrimarySubtitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding_margin"
-        android:text="@string/text_collection_recommend"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding_margin"
+            android:text="@string/text_collection_recommend"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvReadMore"
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:padding="@dimen/default_padding_margin"
+            android:text="@string/text_view_more"
+            android:textColor="@color/md_blue800" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

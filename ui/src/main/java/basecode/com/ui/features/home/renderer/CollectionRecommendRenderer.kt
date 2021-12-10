@@ -12,7 +12,9 @@ import basecode.com.ui.features.home.viewholder.NewCollectionRecommendViewHolder
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 
-class CollectionRecommendRenderer(private val onActionClickRecommend: (CollectionRecommentItemViewHolderModel) -> Unit) : ViewHolderRenderer<NewCollectionRecommendViewHolderModel>() {
+class CollectionRecommendRenderer(
+    private val onReadMore: () -> Unit,
+    private val onActionClickRecommend: (CollectionRecommentItemViewHolderModel) -> Unit) : ViewHolderRenderer<NewCollectionRecommendViewHolderModel>() {
     override fun getLayoutId(): Int = R.layout.item_collection_recommend
 
     override fun getModelClass(): Class<NewCollectionRecommendViewHolderModel> = NewCollectionRecommendViewHolderModel::class.java
@@ -37,5 +39,8 @@ class CollectionRecommendRenderer(private val onActionClickRecommend: (Collectio
         }
         rvController.setItems(lstBookVHM)
         rvController.notifyDataChanged()
+        viewFinder.setOnClickListener(R.id.tvReadMore) {
+            onReadMore.invoke()
+        }
     }
 }
