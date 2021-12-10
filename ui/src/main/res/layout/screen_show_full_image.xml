@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivImage"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="500dp"
         android:layout_marginTop="@dimen/height_toolbar"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
