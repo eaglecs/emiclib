@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBack"
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="@dimen/height_toolbar"
@@ -24,7 +24,7 @@
             android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_back" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_toolbar"
@@ -33,7 +33,7 @@
             android:text="@string/text_about"
             android:textColor="@color/md_blue800" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="@dimen/height_toolbar"
             android:adjustViewBounds="true"
@@ -46,7 +46,7 @@
         android:layout_height="1dp"
         android:background="@color/md_grey200" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAbout"
         style="@style/TextPrimaryBody"
         android:layout_width="match_parent"

@@ -3,7 +3,7 @@ package basecode.com.ui.util
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 
 object PermissionUtil {
     fun hasPermissions(context: Context?, vararg permissions: String): Boolean {

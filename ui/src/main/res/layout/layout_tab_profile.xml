@@ -13,7 +13,7 @@
         android:layout_height="@dimen/height_header_screen"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivScanQRCode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_qr_code" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textColor="@color/md_blue500"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivLogin"
             android:layout_width="@dimen/height_header_screen"
             android:layout_height="@dimen/height_header_screen"
@@ -72,13 +72,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_user_information" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,13 +96,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_user_history" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -124,13 +124,13 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:src="@drawable/icon_user_notification" />
 
-                        <android.support.v7.widget.AppCompatTextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextPrimarySubtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                             android:textColor="@color/md_black" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvNewNotify"
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
@@ -176,13 +176,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_user_delay" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -200,13 +200,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_add_more" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,13 +225,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_user_password" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -252,13 +252,13 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_user_download" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -285,13 +285,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_user_booking" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextPrimarySubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

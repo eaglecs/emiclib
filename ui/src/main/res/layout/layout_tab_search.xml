@@ -14,7 +14,7 @@
         android:layout_height="@dimen/height_header_screen"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivScanQRCode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_qr_code" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textColor="@color/md_blue500"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSearchAdvance"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -55,7 +55,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSearchPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             android:padding="@dimen/default_padding_margin_small"
             app:srcCompat="@drawable/ic_search" />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edtSearchBook"
             style="@style/TextPrimaryBody"
             android:layout_width="0dp"
@@ -76,7 +76,7 @@
             android:inputType="text"
             android:lines="1" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnClearTextSearchPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             tools:visibility="visible" />
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlCategoryBook"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -98,7 +98,7 @@
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/md_grey700" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,8 +1,8 @@
 package basecode.com.ui.features.borrowbook
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatImageView
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.util.GlideUtil

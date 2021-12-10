@@ -1,6 +1,6 @@
 package basecode.com.ui.features.searchbook.renderer
 
-import android.support.v7.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatImageView
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
 import basecode.com.ui.features.searchbook.BookViewHolderModel

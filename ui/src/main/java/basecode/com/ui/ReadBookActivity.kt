@@ -1,7 +1,7 @@
 package basecode.com.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.ui.features.readbook.ReadBookViewController
 import com.bluelinelabs.conductor.Conductor

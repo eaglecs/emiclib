@@ -20,7 +20,7 @@
         android:background="@drawable/bg_dialog_alert"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitleDialogOneEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_marginTop="@dimen/default_padding_margin_small"
             android:background="@color/md_grey200" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMsgError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:layout_marginTop="@dimen/default_padding_margin_small"
             android:background="@color/md_grey200" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

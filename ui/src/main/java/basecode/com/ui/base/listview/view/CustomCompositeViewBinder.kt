@@ -1,8 +1,8 @@
 package basecode.com.ui.base.listview.view
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.vivchar.rendererrecyclerviewadapter.CompositeViewModel
 import com.github.vivchar.rendererrecyclerviewadapter.binder.CompositeViewBinder
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewBinder
@@ -12,10 +12,17 @@ class CustomCompositeViewBinder<M : CompositeViewModel>(layoutID: Int, recyclerV
     override fun createLayoutManager(): RecyclerView.LayoutManager {
         return when (config.managerType) {
             LayoutManagerType.GridLayout -> {
-                GridLayoutManager(context, config.spanCount)
+                GridLayoutManager(
+                    context,
+                    config.spanCount
+                )
             }
             LayoutManagerType.LinearRender -> {
-                LinearLayoutManager(context, getOrientation(config.orientation), false)
+                LinearLayoutManager(
+                    context,
+                    getOrientation(config.orientation),
+                    false
+                )
             }
         }
     }

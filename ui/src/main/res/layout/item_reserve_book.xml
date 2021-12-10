@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBookDetail"
             android:layout_width="80dp"
             android:layout_height="100dp"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="@dimen/default_padding_margin"
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitleBook"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:textColor="@color/md_blue800"
                 tools:text="@string/text_login" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTimeBorrow"
                 style="@style/TextPrimaryBody"
                 android:layout_width="wrap_content"

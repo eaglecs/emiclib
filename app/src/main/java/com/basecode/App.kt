@@ -2,9 +2,9 @@ package com.basecode
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.multidex.MultiDex
-import android.support.multidex.MultiDexApplication
-import android.support.v7.app.AppCompatDelegate
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
+import androidx.appcompat.app.AppCompatDelegate
 import basecode.com.data.di.DataKoinModules
 import basecode.com.domain.di.DomainKoinModules
 import basecode.com.presentation.di.PresentationKoinModules

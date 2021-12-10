@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivCoverBook"
             android:layout_width="90dp"
             android:layout_height="110dp"
@@ -26,7 +26,7 @@
             android:layout_marginLeft="@dimen/default_padding_margin"
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitleBook"
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:textColor="@color/md_black"
                 tools:text="Sach 1" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPublisher"
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:textColor="@color/md_blue800"
                 tools:text="Tac Gia" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPublishedYear"
                 style="@style/TextPrimaryBody"
                 android:layout_width="match_parent"

@@ -21,7 +21,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivBackBookDetail"
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
@@ -30,7 +30,7 @@
                 android:padding="@dimen/default_padding_margin_h"
                 app:srcCompat="@drawable/ic_back" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimaryTitle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_toolbar"
@@ -39,7 +39,7 @@
                 android:text="@string/text_infomation"
                 android:textColor="@color/md_blue800" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLogout"
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
@@ -55,7 +55,7 @@
             android:layout_height="0.5dp"
             android:background="@color/md_grey300" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAvatarProfile"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -64,7 +64,7 @@
             android:adjustViewBounds="true"
             android:src="@drawable/user_default" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserName"
             style="@style/TextPrimarySubtitle"
             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/md_black" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCodeCard"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
@@ -119,14 +119,14 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Điên thoại:"
                 android:textColor="@color/md_black" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPhone"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
@@ -144,14 +144,14 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email:"
                 android:textColor="@color/md_black" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEmail"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
@@ -169,14 +169,14 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhóm bạn đọc:"
                 android:textColor="@color/md_black" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPatronGroup"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
@@ -196,14 +196,14 @@
             android:layout_marginRight="@dimen/default_padding_margin_h"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thời hạn:"
                 android:textColor="@color/md_black" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTime"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
@@ -215,7 +215,7 @@
                 tools:text="15/01/2014 - 15/01/2019" />
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tlUserBorrowBook"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_toolbar"
@@ -225,7 +225,7 @@
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabTextColor="@color/md_grey700" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/vpUserBorrowBook"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

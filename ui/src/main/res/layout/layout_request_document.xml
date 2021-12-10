@@ -18,7 +18,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivBack"
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
@@ -27,7 +27,7 @@
                 android:padding="@dimen/default_padding_margin_h"
                 app:srcCompat="@drawable/ic_back" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimaryTitle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_toolbar"
@@ -36,7 +36,7 @@
                 android:text="@string/text_request_document"
                 android:textColor="@color/md_blue800" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
                 android:adjustViewBounds="true"
@@ -49,7 +49,7 @@
             android:layout_height="0.5dp"
             android:background="@color/md_grey200" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtNameDocument"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -76,9 +76,9 @@
                     android:padding="@dimen/default_padding_margin">
 
                     <requestFocus />
-                </android.support.v7.widget.AppCompatTextView>
+                </androidx.appcompat.widget.AppCompatTextView>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtPatronCode"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                     android:nextFocusDown="@+id/edtEmail"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtEmail"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                     android:nextFocusDown="@+id/edtPhone"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtPhone"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     android:nextFocusDown="@+id/edtFacebook"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtFacebook"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                     android:nextFocusDown="@+id/edtSupplier"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtSupplier"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                     android:nextFocusDown="@+id/edtGroupName"
                     android:padding="@dimen/default_padding_margin"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/edtGroupName"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     android:nextFocusDown="@+id/edtTitle"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtTitle"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                     android:nextFocusDown="@+id/edtAuthor"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtAuthor"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -198,7 +198,7 @@
                     android:nextFocusDown="@+id/edtPublisher"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtPublisher"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -213,7 +213,7 @@
                     android:nextFocusDown="@+id/edtPublishYear"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtPublishYear"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -228,7 +228,7 @@
                     android:nextFocusDown="@+id/edtInformation"
                     android:padding="@dimen/default_padding_margin" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtInformation"
                     style="@style/TextPrimarySubtitle"
                     android:layout_width="match_parent"
@@ -243,9 +243,9 @@
                     android:lines="1"
                     android:padding="@dimen/default_padding_margin" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btnRequestDocument"
             style="@style/ButtonStyle.Active.Largest"
             android:layout_width="wrap_content"

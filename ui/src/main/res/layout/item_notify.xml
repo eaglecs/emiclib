@@ -15,7 +15,7 @@
         android:background="@color/md_blue100"
         android:padding="@dimen/default_padding_margin">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             style="@style/TextPrimarySubtitle"
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:textStyle="bold"
             tools:text="Title" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMessage"
             style="@style/TextPrimaryBody"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:textColor="@color/md_grey800"
             tools:text="Title" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCreateDate"
             style="@style/TextPrimaryBody"
             android:layout_width="wrap_content"

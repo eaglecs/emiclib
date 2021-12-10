@@ -1,7 +1,7 @@
 package basecode.com.ui.extension
 
 import android.content.Context
-import android.support.annotation.PluralsRes
+import androidx.annotation.PluralsRes
 import basecode.com.ui.R
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat

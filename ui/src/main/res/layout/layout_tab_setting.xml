@@ -10,7 +10,7 @@
         android:layout_height="@dimen/height_header_screen"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivScanQRCode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -18,7 +18,7 @@
             android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_qr_code" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textColor="@color/md_blue800"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivLogin"
             android:layout_width="@dimen/height_header_screen"
             android:layout_height="@dimen/height_header_screen"
@@ -51,7 +51,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/default_padding_margin_h">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -59,7 +59,7 @@
             android:padding="@dimen/default_padding_margin"
             app:srcCompat="@drawable/ic_feedback" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         android:padding="@dimen/default_padding_margin_h"
         android:visibility="gone">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -93,7 +93,7 @@
             android:padding="@dimen/default_padding_margin"
             app:srcCompat="@drawable/ic_setting" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/default_padding_margin_h">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -127,7 +127,7 @@
             android:padding="@dimen/default_padding_margin"
             app:srcCompat="@drawable/ic_fqa" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/default_padding_margin_h">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -160,7 +160,7 @@
             android:padding="@dimen/default_padding_margin"
             app:srcCompat="@drawable/ic_about" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextPrimaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

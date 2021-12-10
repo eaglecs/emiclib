@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_toolbar">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivBackNewsDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -26,7 +26,7 @@
                 android:padding="@dimen/default_padding_margin_h"
                 app:srcCompat="@drawable/ic_back" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp">
 
-                        <android.support.v7.widget.AppCompatImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivNewNews"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -81,7 +81,7 @@
                         android:layout_marginRight="@dimen/default_padding_margin"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.AppCompatTextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTitleNews"
                             style="@style/TextPrimarySubtitle"
                             android:layout_width="match_parent"

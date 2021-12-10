@@ -18,7 +18,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivBack"
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
@@ -27,7 +27,7 @@
                 android:padding="@dimen/default_padding_margin_h"
                 app:srcCompat="@drawable/ic_back" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextPrimaryTitle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_toolbar"
@@ -36,7 +36,7 @@
                 android:text="@string/text_renew"
                 android:textColor="@color/md_blue800" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
                 android:adjustViewBounds="true"
@@ -52,19 +52,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.widget.SwipeRefreshLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/vgRefreshRenewBooks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvRenewBook"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-            </android.support.v4.widget.SwipeRefreshLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvNoBook"
                 style="@style/TextPrimarySubtitle"
                 android:layout_width="wrap_content"

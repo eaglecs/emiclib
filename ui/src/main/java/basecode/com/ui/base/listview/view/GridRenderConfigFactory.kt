@@ -1,14 +1,17 @@
 package basecode.com.ui.base.listview.view
 
 import android.content.Context
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class GridRenderConfigFactory(private val input: Input) : RecyclerViewController.RenderConfigFactory {
     override fun create(): RecyclerViewController.RenderConfig {
         val spanCount: Int = input.spanCount
-        val layoutManager = GridLayoutManager(input.context, spanCount)
+        val layoutManager = GridLayoutManager(
+            input.context,
+            spanCount
+        )
         layoutManager.spanSizeLookup = input.spanSizeLookup
         return RecyclerViewController.RenderConfig(layoutManager, input.animator, input.viewHolderSizer, input.decoration, input.loadMoreConfig)
     }

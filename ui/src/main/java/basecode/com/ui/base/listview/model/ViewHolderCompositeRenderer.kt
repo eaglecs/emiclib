@@ -1,7 +1,7 @@
 package basecode.com.ui.base.listview.model
 
-import android.support.annotation.CallSuper
-import android.support.annotation.LayoutRes
+import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
 import basecode.com.ui.base.listview.view.CustomCompositeViewBinder
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.github.vivchar.rendererrecyclerviewadapter.DefaultCompositeViewModel

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_toolbar">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBackBookDetail"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:padding="@dimen/default_padding_margin_h"
             app:srcCompat="@drawable/ic_back" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitleBookDetail"
             style="@style/TextPrimarySubtitle"
             android:layout_width="wrap_content"
@@ -42,16 +42,16 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/vgRefreshBooks"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBookDetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <basecode.com.ui.base.loading.LoadingLayout
             android:id="@+id/vgLoadingBookDetail"

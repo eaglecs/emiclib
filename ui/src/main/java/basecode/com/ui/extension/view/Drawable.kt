@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.os.Build
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 
 fun Drawable.changeColorBackground(@ColorInt colorToSet: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

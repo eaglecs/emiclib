@@ -1,8 +1,9 @@
 package basecode.com.ui.base.listview.view
 
 import android.content.Context
-import android.support.v7.widget.*
+import androidx.appcompat.widget.*
 import android.view.View
+import androidx.recyclerview.widget.*
 import basecode.com.ui.base.listview.model.ViewHolderCompositeRenderer
 import basecode.com.ui.base.listview.model.ViewHolderModel
 import basecode.com.ui.base.listview.model.ViewHolderRenderer

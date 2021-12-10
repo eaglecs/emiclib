@@ -1,7 +1,7 @@
 package basecode.com.ui.util;
 
 import android.os.SystemClock;
-import android.support.v4.util.ArrayMap;
+import androidx.collection.ArrayMap;
 
 public class DoubleTouchPrevent {
     public static final int TIME_PREVENT_DOUBLE_TOUCH = 300;

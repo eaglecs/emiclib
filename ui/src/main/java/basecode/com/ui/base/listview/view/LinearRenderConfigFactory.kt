@@ -1,14 +1,18 @@
 package basecode.com.ui.base.listview.view
 
 import android.content.Context
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LinearRenderConfigFactory(private val input: Input) : RecyclerViewController.RenderConfigFactory {
     override fun create(): RecyclerViewController.RenderConfig {
         val orientation: Int = getOrientation(input.orientation)
-        val layoutManager = LinearLayoutManager(input.context, orientation, input.reverse)
+        val layoutManager = LinearLayoutManager(
+            input.context,
+            orientation,
+            input.reverse
+        )
         return RecyclerViewController.RenderConfig(layoutManager, input.animator, input.viewHolderSizer, input.decoration, input.loadMoreConfig)
     }
 

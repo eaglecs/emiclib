@@ -3,7 +3,7 @@ package basecode.com.ui
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import basecode.com.ui.features.home.HomeScreenViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.Conductor

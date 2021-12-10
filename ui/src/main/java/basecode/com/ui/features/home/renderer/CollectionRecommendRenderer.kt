@@ -1,6 +1,6 @@
 package basecode.com.ui.features.home.renderer
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
