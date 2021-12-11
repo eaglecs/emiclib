@@ -1,5 +1,6 @@
 package basecode.com.ui.features.bookdetail.renderer
 
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import basecode.com.ui.R
 import basecode.com.ui.base.listview.model.ViewHolderRenderer
@@ -7,7 +8,7 @@ import basecode.com.ui.features.bookdetail.viewmodel.ImageBookViewHolderModel
 import basecode.com.ui.util.GlideUtil
 import com.github.vivchar.rendererrecyclerviewadapter.binder.ViewFinder
 
-class ImageBookRenderer(private val onClick: (image: String) -> Unit) :
+class ImageBookRenderer(private val onClick: (image: String, viewPhoto: ImageView) -> Unit) :
     ViewHolderRenderer<ImageBookViewHolderModel>() {
     override fun getLayoutId(): Int = R.layout.item_image_book
 
@@ -19,7 +20,7 @@ class ImageBookRenderer(private val onClick: (image: String) -> Unit) :
         GlideUtil.loadImage(model.image, ivImage)
         viewFinder.setOnClickListener {
             runWithCheckMultiTouch("root") {
-                onClick.invoke(model.image)
+                onClick.invoke(model.image, ivImage)
             }
         }
     }

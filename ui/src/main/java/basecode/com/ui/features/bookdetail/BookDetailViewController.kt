@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.extention.number.valueOrDefault
@@ -57,6 +58,7 @@ import com.example.jean.jcplayer.service.JcPlayerManagerListener
 import com.example.jean.jcplayer.view.JcPlayerView
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
 import com.skytree.epub.BookInformation
+import com.stfalcon.imageviewer.StfalconImageViewer
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_book_info.view.*
 import kotlinx.android.synthetic.main.layout_image_info.view.*
@@ -89,6 +91,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
     private lateinit var rvImageController: RecyclerViewController
+    private lateinit var viewer: StfalconImageViewer<String>
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
         }
@@ -267,11 +270,28 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         )
         val renderConfigImage = LinearRenderConfigFactory(inputImage).create()
         rvImageController = RecyclerViewController(view.rvImage, renderConfigImage)
-        rvImageController.addViewRenderer(ImageBookRenderer{ image ->
-            val bundle = ShowFullImageViewController.BundleOptions.create(image = image)
-            router.pushController(RouterTransaction.with(ShowFullImageViewController(bundle))
-                .popChangeHandler(HorizontalChangeHandler(400, false))
-                .pushChangeHandler(HorizontalChangeHandler(400)))
+        rvImageController.addViewRenderer(ImageBookRenderer{ image, viewPhoto ->
+            activity?.let { activity ->
+                val imageViews = mutableListOf(viewPhoto)
+                val images = mutableListOf(image)
+                viewer = StfalconImageViewer.Builder(activity, images, ::loadImage)
+                    .withStartPosition(0)
+                    .withOverlayView(ImageOverlayView(context = activity, onActionClose = {
+                        viewer.close()
+                    }))
+                    .withHiddenStatusBar(false)
+                    .withBackgroundColorResource(R.color.default_color_black_alpha_80)
+                    .withTransitionFrom(viewPhoto)
+                    .withImageChangeListener { viewer.updateTransitionImage(imageViews.getOrNull(it)) }
+                    .show()
+
+            }
+
+
+//            val bundle = ShowFullImageViewController.BundleOptions.create(image = image)
+//            router.pushController(RouterTransaction.with(ShowFullImageViewController(bundle))
+//                .popChangeHandler(HorizontalChangeHandler(400, false))
+//                .pushChangeHandler(HorizontalChangeHandler(400)))
         })
 
 
@@ -344,6 +364,15 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             override fun onTimeChanged(status: JcStatus) {
+            }
+
+        }
+    }
+
+    private fun loadImage(imageView: ImageView, url: String) {
+        activity?.let { activity ->
+            imageView.apply {
+                GlideUtil.showAvatar(context = activity, url = url, imageView = imageView)
             }
 
         }
@@ -647,8 +676,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     override fun getBookInfoFail(msgError: String) {
         activity?.let { activity ->
-            Toasty.error(activity, msgError).show()
+//            Toasty.error(activity, msgError).show()
         }
+        hideLoading()
     }
 
     override fun handleAfterCheckLogin(isLogin: Boolean) {

@@ -1,5 +1,6 @@
 package basecode.com.ui.util
 
+import android.app.Activity
 import android.content.Context
 import androidx.core.content.ContextCompat
 import android.widget.ImageView
@@ -7,6 +8,7 @@ import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
+import java.util.*
 
 @GlideModule
 class GlideUtil : AppGlideModule() {
@@ -27,7 +29,7 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(url)
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, imgBookDefault))
+                    .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .error(ContextCompat.getDrawable(context, imgBookDefault))
                     .into(imageView)
         }
@@ -47,7 +49,7 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(url)
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, imgBookDefault))
+                    .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .error(ContextCompat.getDrawable(context, errorImage))
                     .into(imageView)
         }
@@ -58,7 +60,7 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(url)
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, holderImage))
+                    .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .error(ContextCompat.getDrawable(context, errorImage))
                     .into(imageView)
         }
@@ -69,7 +71,7 @@ class GlideUtil : AppGlideModule() {
                     .load(url)
                     .fitCenter()
                     .centerCrop()
-                    .placeholder(ContextCompat.getDrawable(context, R.drawable.news))
+                    .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .error(ContextCompat.getDrawable(context, R.drawable.news))
                     .into(imageView)
         }
@@ -89,10 +91,28 @@ class GlideUtil : AppGlideModule() {
             GlideApp.with(context)
                     .load(resource)
                     .fitCenter()
-                    .placeholder(ContextCompat.getDrawable(context, imgBookDefault))
+                    .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .centerCrop()
                     .error(ContextCompat.getDrawable(context, imgBookDefault))
                     .into(imageView)
+        }
+
+        fun showAvatar(url: String, imageView: ImageView, context: Activity) {
+            GlideApp.with(context)
+                .load(url)
+                .placeholder(ContextCompat.getDrawable(context, getRandomColorHolder()))
+                .error(ContextCompat.getDrawable(context, R.drawable.img_book_default))
+                .into(imageView)
+        }
+
+        private fun getRandomColorHolder(): Int {
+            val colorsLoading = mutableListOf<Int>()
+            colorsLoading.add(R.color.loading_one)
+            colorsLoading.add(R.color.loading_two)
+            colorsLoading.add(R.color.loading_three)
+            colorsLoading.add(R.color.loading_four)
+            colorsLoading.add(R.color.loading_five)
+            return colorsLoading[Random().nextInt(colorsLoading.size)]
         }
     }
 }

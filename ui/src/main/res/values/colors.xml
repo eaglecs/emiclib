@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
+    <color name="loading_one">#FFE6E6</color>
+    <color name="loading_two">#f6faff</color>
+    <color name="loading_three">#fff4f0</color>
+    <color name="loading_four">#f1f1f1</color>
+    <color name="loading_five">#ebf7f7</color>
 
     <color name="default_color_white_alpha_0">#00ffffff</color>
     <color name="default_color_white_alpha_10">#10ffffff</color>

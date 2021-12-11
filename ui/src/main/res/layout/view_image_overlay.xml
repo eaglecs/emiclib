@@ -1,0 +1,18 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivClose"
+        style="@style/IconClick.BlackActive"
+        android:layout_width="@dimen/height_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_padding_margin_h"
+        android:layout_marginTop="@dimen/default_padding_margin_xxx"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_conner_black_alpha"
+        android:padding="@dimen/default_padding_margin_x"
+        app:srcCompat="@drawable/ic_x_back"
+        app:tint="@color/md_white" />
+</merge>
