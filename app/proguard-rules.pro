@@ -94,3 +94,11 @@
 -keep class * extends com.raizlabs.android.dbflow.structure.BaseModel { *; }
 -keep class com.raizlabs.android.dbflow.config.GeneratedDatabaseHolder
 -keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }
+
+-keepclassmembers public class * extends com.bluelinelabs.conductor.Controller {
+   public <init>();
+   public <init>(android.os.Bundle);
+}
+-keepclassmembers public class * extends com.bluelinelabs.conductor.ControllerChangeHandler {
+    public <init>(...);
+}
