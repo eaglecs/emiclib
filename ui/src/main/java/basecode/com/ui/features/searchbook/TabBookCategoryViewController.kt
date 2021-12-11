@@ -25,16 +25,20 @@ import basecode.com.ui.features.searchbook.renderer.BookCategoryRenderer
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.RouterTransaction
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
+import com.github.vivchar.rendererrecyclerviewadapter.binder.LoadMoreViewBinder
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.layout_tab_category_book.view.*
 import org.koin.standalone.inject
 
-class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), SearchBookContract.View {
+class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
+    SearchBookContract.View {
     private val presenter: SearchBookContract.Presenter by inject()
     private var categoryId = 0
     private lateinit var rvController: RecyclerViewController
     private var searchText = ""
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
+    private var isSearchAdvance = false
+    private var modelAdvance: SearchAdvanceBookEventBus? = null
 
     constructor(targetController: ViewController, bundle: Bundle) : this(bundle) {
         setTargetController(targetController)
@@ -64,40 +68,67 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
         initView(view)
         initEventBus()
         handleOnClick(view)
-        loadData()
+        loadData(isRefresh = true)
     }
 
     private fun initEventBus() {
         KBus.subscribe<SearchBookWithKeyEventBus>(this) { searchBookWithKeyEventBus ->
             if (categoryId == searchBookWithKeyEventBus.categoryId) {
+                isSearchAdvance = false
                 searchText = searchBookWithKeyEventBus.textSearch
-                loadData()
+                loadData(isRefresh = true)
             }
         }
         KBus.subscribe<SearchAdvanceBookEventBus>(this) { model ->
             val categoryIdSearchAdvance = model.categoryId
             if (categoryIdSearchAdvance == categoryId) {
-                presenter.searchBookAdvance(docType = categoryId, language = model.language,
-                        author = model.author, title = model.title,
-                        searchText = searchText)
+                isSearchAdvance = true
+                modelAdvance = model
+                loadData(isRefresh = true)
             }
         }
     }
 
-    private fun loadData() {
-        presenter.searchBook(docType = categoryId, searchText = searchText)
+    private fun loadData(isRefresh: Boolean) {
+        if (isSearchAdvance) {
+            modelAdvance?.let { model ->
+                presenter.searchBookAdvance(
+                    isRefresh = isRefresh,
+                    docType = categoryId, language = model.language,
+                    author = model.author, title = model.title,
+                    searchText = searchText
+                )
+            }
+        } else {
+            presenter.searchBook(
+                isRefresh = isRefresh,
+                docType = categoryId,
+                searchText = searchText
+            )
+        }
     }
 
     private fun handleOnClick(view: View) {
         view.vgRefreshCategoryBooks.setOnRefreshListener {
             if (doubleTouchPrevent.check("vgRefreshCategoryBooks")) {
-                loadData()
+                loadData(isRefresh = true)
             }
         }
     }
 
     private fun initView(view: View) {
-        val input = LinearRenderConfigFactory.Input(context = view.context, orientation = LinearRenderConfigFactory.Orientation.VERTICAL)
+        val loadMoreConfig =
+            RecyclerViewController.LoadMoreConfig(viewRenderer = LoadMoreViewBinder(R.layout.item_load_more)) {
+                if (presenter.isShowLoadMore()) {
+                    rvController.showLoadMore()
+                    loadData(isRefresh = false)
+                }
+            }
+        val input = LinearRenderConfigFactory.Input(
+            context = view.context,
+            orientation = LinearRenderConfigFactory.Orientation.VERTICAL,
+            loadMoreConfig = loadMoreConfig
+        )
         val renderConfig = LinearRenderConfigFactory(input).create()
         view.rvCategoryBook.setItemViewCacheSize(20)
         rvController = RecyclerViewController(view.rvCategoryBook, renderConfig)
@@ -106,9 +137,9 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BookViewHolderModel) {
                     targetController?.let { targetController ->
-                        val type = when(categoryId){
+                        val type = when (categoryId) {
                             3 -> {
-                               BookDetailViewController.BookType.SPEAK_BOOK.value
+                                BookDetailViewController.BookType.SPEAK_BOOK.value
                             }
                             4 -> {
                                 BookDetailViewController.BookType.EBOOK.value
@@ -117,8 +148,17 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
                                 BookDetailViewController.BookType.BOOK_NORMAL.value
                             }
                         }
-                        val bundle = BookDetailViewController.BundleOptions.create(bookType = type, bookId = dataItem.id, photo = dataItem.photo, docType = categoryId)
-                        targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
+                        val bundle = BookDetailViewController.BundleOptions.create(
+                            bookType = type,
+                            bookId = dataItem.id,
+                            photo = dataItem.photo,
+                            docType = categoryId
+                        )
+                        targetController.router.pushController(
+                            RouterTransaction.with(
+                                BookDetailViewController(bundle)
+                            ).pushChangeHandler(FadeChangeHandler(false))
+                        )
                     }
                 }
             }
@@ -126,18 +166,28 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
     }
 
 
-    override fun searchBookSuccess(lstBookSearch: MutableList<BookViewModel>) {
+    override fun searchBookSuccess(lstBookSearch: MutableList<BookViewModel>, isRefresh: Boolean) {
         view?.let { view ->
             view.vgNoResult.gone()
             val lstBook = mutableListOf<BookViewHolderModel>()
             lstBookSearch.forEach { book ->
-                val bookViewHolderModel = BookViewHolderModel(id = book.id, name = book.name, publisher = book.publisher, photo = book.photo, author = book.author,
-                        publishedYear = book.publishedYear)
+                val bookViewHolderModel = BookViewHolderModel(
+                    id = book.id,
+                    name = book.name,
+                    publisher = book.publisher,
+                    photo = book.photo,
+                    author = book.author,
+                    publishedYear = book.publishedYear
+                )
                 lstBook.add(bookViewHolderModel)
             }
-            rvController.setItems(lstBook)
+            if (isRefresh) {
+                rvController.setItems(lstBook)
+            } else {
+                rvController.addItems(lstBook)
+            }
             rvController.notifyDataChanged()
-            if (lstBook.isEmpty()) {
+            if (lstBook.isEmpty() && isRefresh) {
                 view.vgNoResult.visible()
             }
             hideLoading()
@@ -159,6 +209,8 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle), Se
 
     override fun hideLoading() {
         view?.let { view ->
+            view.vgRefreshCategoryBooks.isRefreshing = false
+            rvController.hideLoadMore()
             view.vgLoadingBooks.hide()
         }
     }

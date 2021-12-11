@@ -18,6 +18,7 @@ import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.bus.DownloadFailEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
+import basecode.com.domain.model.bus.SelectedHomeEventBus
 import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.bookdetail.BookDetailContract
@@ -35,6 +36,7 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
+import basecode.com.ui.features.bookdetail.BookDetailViewController.BundleOptions.bookType
 import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.HeaderAudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.BooksRelatedRenderer
@@ -87,6 +89,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var numFreeBook = 0
     private val lstPathAudio = mutableListOf<String>()
     private var docType = ConstAPI.DocType.Book.value
+    private val handler = Handler()
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -286,12 +289,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     .show()
 
             }
-
-
-//            val bundle = ShowFullImageViewController.BundleOptions.create(image = image)
-//            router.pushController(RouterTransaction.with(ShowFullImageViewController(bundle))
-//                .popChangeHandler(HorizontalChangeHandler(400, false))
-//                .pushChangeHandler(HorizontalChangeHandler(400)))
         })
 
 
@@ -303,11 +300,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         rvController = RecyclerViewController(view.rvBookInfo, renderConfig)
         rvController.addViewRenderer(BooksRelatedRenderer(), BookRelatedRenderer { model ->
             val bundle =
-                BundleOptions.create(bookId = model.id, photo = model.photo, docType = docType)
+                BundleOptions.create(bookId = model.id, photo = model.photo, docType = docType, bookType = bookType.value)
             router.pushController(
                 RouterTransaction.with(BookDetailViewController(bundle))
                     .pushChangeHandler(FadeChangeHandler(false))
             )
+            handler.postDelayed({
+                router.popController(this)
+            }, 500)
         })
         rvController.addViewRenderer(HeaderAudioRenderer())
         rvController.addViewRenderer(AudioRenderer { model ->
@@ -415,6 +415,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 )
             }
         }
+
+        view.ivHome.setOnClickListener {
+            if (doubleTouchPrevent.check("ivHome")) {
+                KBus.post(SelectedHomeEventBus())
+                router.popController(this)
+            }
+        }
     }
 
     override fun getBookInfoSuccess(
@@ -435,7 +442,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         this.linkShare = linkShare
         this.numFreeBook = numFreeBook
         if (linkShare.isNotEmpty()) {
-            view?.ivShareBookDetail?.visible()
+//            view?.ivShareBookDetail?.visible()
         }
         if (numFreeBook == 0 && bookType == BookType.BOOK_NORMAL) {
             view?.tvHandleBook?.text = "Đặt chỗ"

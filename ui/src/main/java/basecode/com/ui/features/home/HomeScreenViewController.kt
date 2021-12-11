@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.model.bus.LoadStatusNotify
+import basecode.com.domain.model.bus.SelectedHomeEventBus
 import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
@@ -41,7 +42,14 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     }
 
     override fun initPostCreateView(view: View) {
+        initEventBus(view)
         initView(view)
+    }
+
+    private fun initEventBus(view: View) {
+        KBus.subscribe<SelectedHomeEventBus>(this){
+            view.navigation.currentItem = indexTabHome
+        }
     }
 
     private val indexTabHome = 0
@@ -154,5 +162,10 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_home, container, false)
+    }
+
+    override fun onDestroyView(view: View) {
+        KBus.unsubscribe(this)
+        super.onDestroyView(view)
     }
 }

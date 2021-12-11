@@ -7,12 +7,13 @@ import basecode.com.presentation.features.books.BookViewModel
 
 class SearchBookContract {
     interface View : ViewMvp, ViewSupportLoading {
-        fun searchBookSuccess(lstBookSearch: MutableList<BookViewModel>)
+        fun searchBookSuccess(lstBookSearch: MutableList<BookViewModel>, isRefresh: Boolean)
         fun searchBookFail()
     }
 
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun searchBookAdvance(docType: Int, searchText: String, title: String, author: String, language: String)
-        abstract fun searchBook(docType: Int, searchText: String)
+        abstract fun searchBookAdvance(isRefresh: Boolean, docType: Int, searchText: String, title: String, author: String, language: String)
+        abstract fun searchBook(isRefresh: Boolean, docType: Int, searchText: String)
+        abstract fun isShowLoadMore(): Boolean
     }
 }
