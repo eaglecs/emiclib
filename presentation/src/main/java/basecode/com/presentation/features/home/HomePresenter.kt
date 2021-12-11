@@ -47,7 +47,6 @@ class HomePresenter(private val getInfoHomeUseCase: GetInfoHomeUseCase,
                         }
 
                         override fun done() {
-                            view.hideLoading()
                         }
 
                     })

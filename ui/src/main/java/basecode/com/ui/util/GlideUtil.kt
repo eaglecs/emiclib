@@ -28,7 +28,6 @@ class GlideUtil : AppGlideModule() {
 
             GlideApp.with(context)
                     .load(url)
-                    .centerCrop()
                     .placeholder(ContextCompat.getDrawable(imageView.context, getRandomColorHolder()))
                     .error(ContextCompat.getDrawable(context, imgBookDefault))
                     .into(imageView)
