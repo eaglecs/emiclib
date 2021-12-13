@@ -55,13 +55,18 @@
             android:layout_height="0.5dp"
             android:background="@color/md_grey300" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/ivAvatarProfile"
+            android:layout_marginTop="80dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"
             android:adjustViewBounds="true"
+            app:civ_border="true"
+            app:civ_border_color="@color/md_blue500"
+            app:civ_circle_color="@color/transparent"
+            android:layout_margin="@dimen/default_padding_margin"
+            app:civ_border_width="@dimen/default_divider_size"
             android:src="@drawable/user_default" />
 
         <androidx.appcompat.widget.AppCompatTextView

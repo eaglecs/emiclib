@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <FrameLayout
@@ -27,14 +28,17 @@
             android:textColor="@color/md_blue800"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/ivLogin"
-            android:layout_width="@dimen/height_header_screen"
-            android:layout_height="@dimen/height_header_screen"
-            android:layout_gravity="end"
+            android:layout_width="@dimen/height_profile"
+            android:layout_height="@dimen/height_profile"
+            android:layout_gravity="end|center_vertical"
             android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin_x"
-            app:srcCompat="@drawable/ic_login" />
+            app:civ_border="false"
+            app:civ_circle_color="@color/transparent"
+            android:layout_margin="@dimen/default_padding_margin"
+            app:civ_border_width="@dimen/default_divider_size"
+            tools:srcCompat="@drawable/ic_login" />
     </FrameLayout>
 
     <View

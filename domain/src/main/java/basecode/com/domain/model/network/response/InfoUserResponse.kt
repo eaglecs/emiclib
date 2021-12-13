@@ -12,8 +12,10 @@ data class InfoUserResponse(
         val expiredDate: String?,
         @SerializedName("PatronName")
         val patronName: String?,
-        @SerializedName("MobiePhone")
+        @SerializedName("Mobile")
         val phone: String?,
+        @SerializedName("Telephone")
+        val telephone: String?,
         @SerializedName("Email")
         val email: String?,
         @SerializedName("Portrait")

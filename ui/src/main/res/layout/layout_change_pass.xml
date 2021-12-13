@@ -35,13 +35,6 @@
                 android:gravity="center"
                 android:text="@string/text_change_pass"
                 android:textColor="@color/md_blue800" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/height_toolbar"
-                android:layout_height="@dimen/height_toolbar"
-                android:adjustViewBounds="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/default_padding_margin" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"

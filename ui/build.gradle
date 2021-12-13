@@ -194,6 +194,7 @@ dependencies {
     implementation 'com.github.eaglecs:ImageSlideshow:0.1.1'
     implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.5'
     implementation 'xyz.doikki.android.dkplayer:dkplayer-ui:3.3.5'
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
 
 
 }
