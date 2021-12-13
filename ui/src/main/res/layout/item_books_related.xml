@@ -20,8 +20,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBook"
         android:layout_width="0dp"
-        android:minHeight="@dimen/height_toolbar"
         android:layout_height="wrap_content"
+        android:minHeight="@dimen/height_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />

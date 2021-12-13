@@ -2,7 +2,9 @@ package basecode.com.ui.features.bookdetail
 
 import android.app.Activity
 import android.content.*
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.*
 import android.provider.Settings
@@ -10,6 +12,7 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
@@ -36,14 +39,13 @@ import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
 import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
-import basecode.com.ui.features.bookdetail.renderer.HeaderAudioRenderer
+import basecode.com.ui.features.bookdetail.renderer.AudiosRenderer
 import basecode.com.ui.features.bookdetail.renderer.BooksRelatedRenderer
 import basecode.com.ui.features.bookdetail.renderer.ImageBookRenderer
 import basecode.com.ui.features.bookdetail.viewmodel.AudioViewHolderModel
-import basecode.com.ui.features.bookdetail.viewmodel.HeaderAudioViewHolderModel
+import basecode.com.ui.features.bookdetail.viewmodel.AudiosViewHolderModel
 import basecode.com.ui.features.bookdetail.viewmodel.BooksRelatedViewHolderModel
 import basecode.com.ui.features.bookdetail.viewmodel.ImageBookViewHolderModel
-import basecode.com.ui.features.books.BookRelatedRenderer
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
 import basecode.com.ui.features.login.LoginViewController
@@ -57,6 +59,8 @@ import com.example.jean.jcplayer.model.JcAudio
 import com.example.jean.jcplayer.service.JcPlayerManagerListener
 import com.example.jean.jcplayer.view.JcPlayerView
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
+import com.potyvideo.library.globalEnums.EnumResizeMode
+import com.potyvideo.library.globalInterfaces.AndExoPlayerListener
 import com.skytree.epub.BookInformation
 import com.stfalcon.imageviewer.StfalconImageViewer
 import es.dmoral.toasty.Toasty
@@ -65,6 +69,10 @@ import kotlinx.android.synthetic.main.layout_image_info.view.*
 import kotlinx.android.synthetic.main.layout_video_info.view.*
 import kotlinx.android.synthetic.main.screen_book_detail.view.*
 import org.koin.standalone.inject
+import xyz.doikki.videocontroller.StandardVideoController
+import xyz.doikki.videocontroller.component.*
+import xyz.doikki.videoplayer.player.VideoView
+import xyz.doikki.videoplayer.util.L
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
@@ -86,12 +94,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private lateinit var player: JcPlayerView
     private var numFreeBook = 0
     private val lstPathAudio = mutableListOf<String>()
+    private var indexVideoCurrent = 0
     private var docType = ConstAPI.DocType.Book.value
     private val handler = Handler()
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
     private lateinit var rvImageController: RecyclerViewController
+    private lateinit var rvPartBookController: RecyclerViewController
     private lateinit var viewer: StfalconImageViewer<String>
     private val lstImage = mutableListOf<ImageBookViewHolderModel>()
     private val mConnection: ServiceConnection = object : ServiceConnection {
@@ -160,7 +170,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         activity?.registerReceiver(receiver, filter)
         presenter.attachView(this)
         initView(view)
-
         initEventBus(view)
         handleOnClick(view)
         presenter.getBookInfo(bookId)
@@ -232,6 +241,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun initView(view: View) {
+        initViewVideo(view)
         player = view.playBookAudio
         GlideUtil.loadImage(photo, view.ivBookDetail)
         when (docType) {
@@ -266,13 +276,64 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
         }
 
+        val inputPartBook = LinearRenderConfigFactory.Input(
+            context = view.context,
+            orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL
+        )
+        val renderConfigPartBook = LinearRenderConfigFactory(inputPartBook).create()
+        rvPartBookController = RecyclerViewController(view.rvPartBook, renderConfigPartBook)
+        rvPartBookController.addViewRenderer(AudiosRenderer { model ->
+            if (docType == ConstAPI.DocType.Video.value) {
+                kotlin.run loop@{
+                    lstPathAudio.forEachIndexed { index, url ->
+                        if (model.url == url){
+                            indexVideoCurrent = index
+                            return@loop
+                        }
+                    }
+                }
+                view.mVideoView.release()
+                view.mVideoView.setUrl(model.url)
+                view.mVideoView.start()
+            } else {
+                player.myPlaylist?.let { myPlaylist ->
+                    var audio: JcAudio? = null
+                    run loop@{
+                        myPlaylist.forEach {
+                            if (it.path == model.url) {
+                                audio = it
+                                return@loop
+                            }
+                        }
+                    }
+                    audio?.let {
+                        player.playAudio(it)
+                    }
+                }
+
+            }
+            kotlin.run loop@{
+                rvPartBookController.getItems().forEach { viewModel ->
+                    if (viewModel is AudiosViewHolderModel) {
+                        viewModel.lstAudio.forEach { audio ->
+                            audio.isSelected = audio.url == model.url
+                        }
+                        return@loop
+                    }
+                }
+
+            }
+            rvPartBookController.notifyDataChanged()
+        })
+
+
         val inputImage = LinearRenderConfigFactory.Input(
             context = view.context,
             orientation = LinearRenderConfigFactory.Orientation.HORIZONTAL
         )
         val renderConfigImage = LinearRenderConfigFactory(inputImage).create()
         rvImageController = RecyclerViewController(view.rvImage, renderConfigImage)
-        rvImageController.addViewRenderer(ImageBookRenderer{ image, viewPhoto ->
+        rvImageController.addViewRenderer(ImageBookRenderer { image, viewPhoto ->
             activity?.let { activity ->
 //                val imageViews = mutableListOf(viewPhoto)
 //                val images = mutableListOf(image)
@@ -291,7 +352,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 val lstImageStr = mutableListOf<String>()
                 var positionSelected = 0
                 lstImage.forEachIndexed { index, imageBookViewHolderModel ->
-                    if (imageBookViewHolderModel.image == image){
+                    if (imageBookViewHolderModel.image == image) {
                         positionSelected = index
                     }
                     lstImageStr.add(imageBookViewHolderModel.image)
@@ -303,8 +364,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 )
                 val bundle = ShowFullImageViewController.BundleOptions.create(input)
 
-                router.pushController(RouterTransaction.with(ShowFullImageViewController(bundle))
-                    .pushChangeHandler(FadeChangeHandler(false)))
+                router.pushController(
+                    RouterTransaction.with(ShowFullImageViewController(bundle))
+                        .pushChangeHandler(FadeChangeHandler(false))
+                )
 
             }
         })
@@ -316,9 +379,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         )
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBookInfo, renderConfig)
-        rvController.addViewRenderer(BooksRelatedRenderer(), BookRelatedRenderer { model ->
+        rvController.addViewRenderer(BooksRelatedRenderer { model ->
             val bundle =
-                BundleOptions.create(bookId = model.id, photo = model.photo, docType = docType, bookType = bookType.value)
+                BundleOptions.create(
+                    bookId = model.id,
+                    photo = model.photo,
+                    docType = docType,
+                    bookType = bookType.value
+                )
             router.pushController(
                 RouterTransaction.with(BookDetailViewController(bundle))
                     .pushChangeHandler(FadeChangeHandler(false))
@@ -326,35 +394,6 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             handler.postDelayed({
                 router.popController(this)
             }, 500)
-        })
-        rvController.addViewRenderer(HeaderAudioRenderer())
-        rvController.addViewRenderer(AudioRenderer { model ->
-            if (docType == ConstAPI.DocType.Video.value) {
-                view.andExoPlayerView.setSource(model.url)
-                view.andExoPlayerView.setPlayWhenReady(true)
-            } else {
-                player.myPlaylist?.let { myPlaylist ->
-                    var audio: JcAudio? = null
-                    run loop@{
-                        myPlaylist.forEach {
-                            if (it.path == model.url) {
-                                audio = it
-                                return@loop
-                            }
-                        }
-                    }
-                    audio?.let {
-                        player.playAudio(it)
-                    }
-                }
-
-            }
-            rvController.getItems().forEach { viewModel ->
-                if (viewModel is AudioViewHolderModel) {
-                    viewModel.isSelected = viewModel.url == model.url
-                }
-            }
-            rvController.notifyDataChanged()
         })
         player.jcPlayerManagerListener = object : JcPlayerManagerListener {
             override fun onCompletedAudio() {
@@ -386,6 +425,89 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
         }
     }
+
+    private fun initViewVideo(view: View) {
+        activity?.apply {
+            val controller = StandardVideoController(this)
+            controller.setEnableOrientation(true)
+            val prepareView = PrepareView(this)
+            prepareView.setClickStart()
+//            val thumb = prepareView.findViewById<ImageView>(R.id.thumb)
+            controller.addControlComponent(prepareView)
+            controller.addControlComponent(CompleteView(this))
+            controller.addControlComponent(ErrorView(this))
+            val titleView = TitleView(this)
+            controller.addControlComponent(titleView)
+            val vodControlView = VodControlView(this)
+            controller.addControlComponent(vodControlView)
+            val gestureControlView = GestureView(this)
+            controller.addControlComponent(gestureControlView)
+            controller.setCanChangePosition(true)
+            titleView.setTitle(titleBook)
+            view.mVideoView.setVideoController(controller)
+            view.mVideoView.addOnStateChangeListener(mOnStateChangeListener)
+//            view.mVideoView.start()
+            view.mVideoView.setScreenScaleType(VideoView.SCREEN_SCALE_16_9)
+        }
+    }
+
+    private val mOnStateChangeListener: VideoView.OnStateChangeListener =
+        object : VideoView.SimpleOnStateChangeListener() {
+            override fun onPlayerStateChanged(playerState: Int) {
+                when (playerState) {
+                    VideoView.PLAYER_NORMAL -> {
+                    }
+                    VideoView.PLAYER_FULL_SCREEN -> {
+                    }
+                }
+            }
+
+            override fun onPlayStateChanged(playState: Int) {
+                when (playState) {
+                    VideoView.STATE_IDLE -> {
+                    }
+                    VideoView.STATE_PREPARING -> {
+                    }
+                    VideoView.STATE_PREPARED -> {
+                    }
+                    VideoView.STATE_PLAYING -> {
+//                        val videoSize = mVideoView!!.videoSize
+//                        L.d("视频宽：" + videoSize[0])
+//                        L.d("视频高：" + videoSize[1])
+                    }
+                    VideoView.STATE_PAUSED -> {
+                    }
+                    VideoView.STATE_BUFFERING -> {
+                    }
+                    VideoView.STATE_BUFFERED -> {
+                    }
+                    VideoView.STATE_PLAYBACK_COMPLETED -> {
+                        if (lstPathAudio.size -1 > indexVideoCurrent){
+                            indexVideoCurrent += 1
+                            view?.let { view ->
+                                view.mVideoView.release()
+                                view.mVideoView.setUrl(lstPathAudio[indexVideoCurrent])
+                                view.mVideoView.start()
+                            }
+                            kotlin.run loop@{
+                                rvPartBookController.getItems().forEach { viewModel ->
+                                    if (viewModel is AudiosViewHolderModel) {
+                                        viewModel.lstAudio.forEach { audio ->
+                                            audio.isSelected = audio.url == lstPathAudio[indexVideoCurrent]
+                                        }
+                                        return@loop
+                                    }
+                                }
+
+                            }
+                            rvPartBookController.notifyDataChanged()
+                        }
+                    }
+                    VideoView.STATE_ERROR -> {
+                    }
+                }
+            }
+        }
 
     private fun loadImage(imageView: ImageView, url: String) {
         activity?.let { activity ->
@@ -482,7 +604,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 rvImageController.notifyDataChanged()
             } else if (docType == ConstAPI.DocType.Video.value) {
                 if (lstPathAudio.isNotEmpty()) {
-                    view.andExoPlayerView.setSource(lstPathAudio.first())
+                    view.mVideoView.setUrl(lstPathAudio.first())
+                    view.mVideoView.start()
                     val lstAudio = mutableListOf<AudioViewHolderModel>()
                     lstPathAudio.forEachIndexed { index, path ->
                         lstAudio.add(
@@ -495,9 +618,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                         )
                     }
 
-                    rvController.addItem(0, HeaderAudioViewHolderModel())
-                    rvController.addItems(1, lstAudio)
-                    rvController.notifyDataChanged()
+                    rvPartBookController.setItems(mutableListOf(AudiosViewHolderModel(lstAudio)))
+                    rvPartBookController.notifyDataChanged()
                 }
             } else {
                 if (bookType == BookType.SPEAK_BOOK) {
@@ -522,9 +644,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                             )
                         }
                         player.initPlaylist(jcAudios, null)
-                        rvController.addItem(0, HeaderAudioViewHolderModel())
-                        rvController.addItems(1, lstAudio)
-                        rvController.notifyDataChanged()
+                        rvPartBookController.setItems(mutableListOf(AudiosViewHolderModel(lstAudio)))
+                        rvPartBookController.notifyDataChanged()
                     }
                 }
             }
@@ -909,11 +1030,27 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     override fun onResultAfterHandleDialog() {
     }
 
+    private fun turnOnFullScreen() {
+        activity?.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.statusBarColor = Color.TRANSPARENT
+                window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            }
+        }
+    }
+
+
     override fun onDestroyView(view: View) {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         player.kill()
         KBus.unsubscribe(this)
         activity?.unbindService(mConnection)
         activity?.unregisterReceiver(receiver)
+        if (view.mVideoView.currentPlayState == VideoView.STATE_PREPARING) {
+            view.mVideoView.release()
+        }
         super.onDestroyView(view)
     }
 
@@ -924,3 +1061,4 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 }
 
 class ProgressDownloadBook(var bookCode: Int, var percentValue: Int)
+

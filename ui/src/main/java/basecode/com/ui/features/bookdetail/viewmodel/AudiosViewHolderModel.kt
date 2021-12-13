@@ -2,4 +2,4 @@ package basecode.com.ui.features.bookdetail.viewmodel
 
 import basecode.com.ui.base.listview.model.ViewHolderModel
 
-class HeaderAudioViewHolderModel : ViewHolderModel
+class AudiosViewHolderModel(val lstAudio: MutableList<AudioViewHolderModel>) : ViewHolderModel
