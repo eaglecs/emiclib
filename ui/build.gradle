@@ -191,4 +191,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:2.0.7'
     implementation "com.github.stfalcon:stfalcon-imageviewer:1.0.1"
+    implementation 'com.github.eaglecs:ImageSlideshow:0.1.1'
 }

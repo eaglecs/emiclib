@@ -26,7 +26,6 @@ import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
 import basecode.com.ui.ReadBookActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
-import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraInt
 import basecode.com.ui.base.extra.BundleExtraLong
@@ -36,7 +35,6 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
-import basecode.com.ui.features.bookdetail.BookDetailViewController.BundleOptions.bookType
 import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.HeaderAudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.BooksRelatedRenderer
@@ -95,6 +93,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private lateinit var rvController: RecyclerViewController
     private lateinit var rvImageController: RecyclerViewController
     private lateinit var viewer: StfalconImageViewer<String>
+    private val lstImage = mutableListOf<ImageBookViewHolderModel>()
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
         }
@@ -275,18 +274,37 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         rvImageController = RecyclerViewController(view.rvImage, renderConfigImage)
         rvImageController.addViewRenderer(ImageBookRenderer{ image, viewPhoto ->
             activity?.let { activity ->
-                val imageViews = mutableListOf(viewPhoto)
-                val images = mutableListOf(image)
-                viewer = StfalconImageViewer.Builder(activity, images, ::loadImage)
-                    .withStartPosition(0)
-                    .withOverlayView(ImageOverlayView(context = activity, onActionClose = {
-                        viewer.close()
-                    }))
-                    .withHiddenStatusBar(false)
-                    .withBackgroundColorResource(R.color.default_color_black_alpha_80)
-                    .withTransitionFrom(viewPhoto)
-                    .withImageChangeListener { viewer.updateTransitionImage(imageViews.getOrNull(it)) }
-                    .show()
+//                val imageViews = mutableListOf(viewPhoto)
+//                val images = mutableListOf(image)
+//                viewer = StfalconImageViewer.Builder(activity, images, ::loadImage)
+//                    .withStartPosition(0)
+//                    .withOverlayView(ImageOverlayView(context = activity, onActionClose = {
+//                        viewer.close()
+//                    }))
+//                    .withHiddenStatusBar(false)
+//                    .withBackgroundColorResource(R.color.default_color_black_alpha_80)
+//                    .withTransitionFrom(viewPhoto)
+//                    .withImageChangeListener { viewer.updateTransitionImage(imageViews.getOrNull(it)) }
+//                    .show()
+
+
+                val lstImageStr = mutableListOf<String>()
+                var positionSelected = 0
+                lstImage.forEachIndexed { index, imageBookViewHolderModel ->
+                    if (imageBookViewHolderModel.image == image){
+                        positionSelected = index
+                    }
+                    lstImageStr.add(imageBookViewHolderModel.image)
+                }
+
+                val input = ShowFullImageViewController.Input(
+                    lstImage = lstImageStr,
+                    positonSelected = positionSelected
+                )
+                val bundle = ShowFullImageViewController.BundleOptions.create(input)
+
+                router.pushController(RouterTransaction.with(ShowFullImageViewController(bundle))
+                    .pushChangeHandler(FadeChangeHandler(false)))
 
             }
         })
@@ -456,7 +474,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             view.tvInfoBook.text = infoBook
             view.tvFreeBook.text = numFreeBookStr
             if (docType == ConstAPI.DocType.Image.value) {
-                val lstImage = mutableListOf<ImageBookViewHolderModel>()
+                lstImage.clear()
                 lstPathAudio.forEach { image ->
                     lstImage.add(ImageBookViewHolderModel(image = image))
                 }
