@@ -8,6 +8,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.model.bus.HideKeyboardEventBus
 import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.presentation.features.searchbook.SearchBookContract
 import basecode.com.ui.R
@@ -135,6 +136,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
         rvController.addViewRenderer(BookCategoryRenderer())
         rvController.setOnItemRvClickedListener(object : OnItemRvClickedListener<ViewModel> {
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
+                KBus.post(HideKeyboardEventBus())
                 if (dataItem is BookViewHolderModel) {
                     targetController?.let { targetController ->
                         val type = when (categoryId) {

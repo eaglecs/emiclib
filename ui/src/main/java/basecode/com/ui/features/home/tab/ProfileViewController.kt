@@ -64,7 +64,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
     private fun initView(view: View) {
         if (BuildConfig.USE_DATA_OTHER_APP) {
             view.vgBookRoom.gone()
-            view.vgChangePass.invisible()
+//            view.vgChangePass.invisible()
         }
     }
 

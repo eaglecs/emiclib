@@ -3,13 +3,17 @@ package basecode.com.ui.features.home.tab
 import com.google.android.material.tabs.TabLayout
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
+import basecode.com.domain.model.bus.HideKeyboardEventBus
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
@@ -47,12 +51,16 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
 
     override fun initPostCreateView(view: View) {
         initView(view)
-        initEventBus()
+        initEventBus(view)
         handleOnClick(view)
     }
 
 
-    private fun initEventBus() {
+    private fun initEventBus(view: View) {
+        KBus.subscribe<HideKeyboardEventBus>(this){
+            view.edtSearchBook.hideKeyboard()
+            view.edtSearchBook.clearFocus()
+        }
         KBus.subscribe<ResultScanQRCodeEventBus>(this) {
             val contentQRCode = it.contentQRCode
             val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
@@ -67,6 +75,25 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
     }
 
     private fun handleOnClick(view: View) {
+        view.edtSearchBook.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                event?.let {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || event.action == KeyEvent.ACTION_DOWN
+                        && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        val textSearch = view.edtSearchBook.text.toString().trim()
+                        handleSearchBookWithText(textSearch)
+                        view.edtSearchBook.hideKeyboard()
+                        view.edtSearchBook.clearFocus()
+                        return true
+                    }
+
+                }
+                return false
+            }
+
+        })
         view.edtSearchBook.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(textSearchDestination: Editable?) {
                 val textSearch = textSearchDestination.toString().trim()
@@ -95,6 +122,7 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
         view.ivSearchPlace.setOnClickListener {
             if (doubleTouchPrevent.check("ivSearchPlace")) {
                 view.edtSearchBook.hideKeyboard()
+                view.edtSearchBook.clearFocus()
                 val textSearch = view.edtSearchBook.text.toString()
                 KBus.post(SearchBookWithKeyEventBus(categoryIdCurrent, textSearch))
             }
@@ -178,6 +206,7 @@ class SearchViewController() : ViewController(bundle = null), SearchAdvanceViewC
     override fun onDestroyView(view: View) {
         KBus.unsubscribe(this)
         view.edtSearchBook.hideKeyboard()
+        view.edtSearchBook.clearFocus()
         super.onDestroyView(view)
     }
 }

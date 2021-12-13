@@ -9,6 +9,7 @@ import android.graphics.Typeface
 import android.os.*
 import android.provider.Settings
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -286,7 +287,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             if (docType == ConstAPI.DocType.Video.value) {
                 kotlin.run loop@{
                     lstPathAudio.forEachIndexed { index, url ->
-                        if (model.url == url){
+                        if (model.url == url) {
                             indexVideoCurrent = index
                             return@loop
                         }
@@ -397,6 +398,24 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         })
         player.jcPlayerManagerListener = object : JcPlayerManagerListener {
             override fun onCompletedAudio() {
+                player.currentAudio?.let { currentAudio ->
+                    var indexCurrent = 0
+                    player.myPlaylist?.let { myPlaylist ->
+                        kotlin.run loop@{
+                            myPlaylist.forEachIndexed { index, jcAudio ->
+                                if (jcAudio.path == currentAudio.path) {
+                                    indexCurrent = index
+                                    return@loop
+                                }
+                            }
+                        }
+                        if (indexCurrent + 1 < myPlaylist.size) {
+                            player.playAudio(myPlaylist[indexCurrent + 1])
+                        }
+                    }
+
+                }
+
             }
 
             override fun onContinueAudio(status: JcStatus) {
@@ -409,15 +428,18 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             }
 
             override fun onPlaying(status: JcStatus) {
+                LogDebug.d("duc_anh ${status.currentPosition}")
             }
 
             override fun onPreparedAudio(status: JcStatus) {
-                rvController.getItems().forEach { viewModel ->
-                    if (viewModel is AudioViewHolderModel) {
-                        viewModel.isSelected = viewModel.url == status.jcAudio.path
+                rvPartBookController.getItems().forEach { viewModel ->
+                    if (viewModel is AudiosViewHolderModel) {
+                        viewModel.lstAudio.forEach { audio ->
+                            audio.isSelected = audio.url == status.jcAudio.path
+                        }
                     }
                 }
-                rvController.notifyDataChanged()
+                rvPartBookController.notifyDataChanged()
             }
 
             override fun onTimeChanged(status: JcStatus) {
@@ -482,7 +504,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     VideoView.STATE_BUFFERED -> {
                     }
                     VideoView.STATE_PLAYBACK_COMPLETED -> {
-                        if (lstPathAudio.size -1 > indexVideoCurrent){
+                        if (lstPathAudio.size - 1 > indexVideoCurrent) {
                             indexVideoCurrent += 1
                             view?.let { view ->
                                 view.mVideoView.release()
@@ -493,7 +515,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                                 rvPartBookController.getItems().forEach { viewModel ->
                                     if (viewModel is AudiosViewHolderModel) {
                                         viewModel.lstAudio.forEach { audio ->
-                                            audio.isSelected = audio.url == lstPathAudio[indexVideoCurrent]
+                                            audio.isSelected =
+                                                audio.url == lstPathAudio[indexVideoCurrent]
                                         }
                                         return@loop
                                     }
@@ -638,12 +661,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                             )
                             jcAudios.add(
                                 JcAudio.createFromURL(
-                                    "$titleBook Phần ${index + 1}",
+                                    "",
                                     path
                                 )
                             )
                         }
                         player.initPlaylist(jcAudios, null)
+                        player.playAudio(jcAudios.first())
                         rvPartBookController.setItems(mutableListOf(AudiosViewHolderModel(lstAudio)))
                         rvPartBookController.notifyDataChanged()
                     }
@@ -1034,23 +1058,24 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         activity?.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.statusBarColor = Color.TRANSPARENT
-                window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+                window.decorView.systemUiVisibility =
+                    (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                )
             }
         }
     }
 
 
     override fun onDestroyView(view: View) {
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         player.kill()
         KBus.unsubscribe(this)
         activity?.unbindService(mConnection)
         activity?.unregisterReceiver(receiver)
-        if (view.mVideoView.currentPlayState == VideoView.STATE_PREPARING) {
-            view.mVideoView.release()
-        }
+        view.mVideoView.release()
         super.onDestroyView(view)
     }
 

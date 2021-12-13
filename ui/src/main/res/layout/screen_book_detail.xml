@@ -97,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/default_padding_margin"
-                    android:layout_marginBottom="@dimen/default_padding_margin"
                     android:paddingLeft="@dimen/default_padding_margin_huge"
                     android:paddingTop="@dimen/default_padding_margin"
                     android:paddingRight="@dimen/default_padding_margin_huge"
