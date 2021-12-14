@@ -2,6 +2,7 @@ package basecode.com.ui.features.about
 
 import android.os.Build
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,14 @@ import kotlinx.android.synthetic.main.layout_about.view.*
 import org.koin.standalone.inject
 
 class AboutViewController : ViewController(null) {
-    private val textAbout = "<h2> DGSoft Technologies JSC © Emiclib 2017. All Rights Reserved</h2>\n" +
+    private val textAbout = "<p>Tên gọi chính thức: <h3>THƯ VIỆN KHOA HỌC TỔNG HỢP THÀNH PHỐ HỒ CHÍ MINH(TVKHTH TPHCM)</h3></p>\n" +
+            "        <p>Tên giao dịch quốc tế: <h3>GENERAL SCIENCES LIBRARY OF HOCHIMINH CITY(GSLHCMC)</h3></p>\n" +
             "        <br/>\n" +
-            "        <p>Tầng M Tòa nhà VTC, Số 132 Cộng Hòa - Phường 4 - Quận Tân Bình - Tp. Hồ Chí Minh.</p>\n" +
-            "        <p>Văn phòng: 138/7 Duy Tân, Phường 15, Quận Phú Nhuận, TP Hồ Chí Minh.</p>\n" +
-            "        <p>(84-8 3 847 5821)</p>\n" +
-            "        <p>info@dgsoft.vn</p>"
+            "        <p>Địa chỉ: 69 Lý Tự Trọng, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh</p>\n" +
+            "        <p>Điện thoại: <a href=\"tel:842838225055\">(84) 028 -  38 225 055</a></p>\n" +
+            "        <p>Fax: (84) 028 -  38 299 318</p>\n" +
+            "        <p>Website: <a href=\"http://www.thuvientphcm.gov.vn\">http://www.thuvientphcm.gov.vn</a> và <a href=\"http://www.gslhcm.org.vn\">http://www.gslhcm.org.vn</a></p>\n" +
+            "        <p>Email: <a href=\"mailto:thuvientphcm@thuvientphcm.gov.vn\">thuvientphcm@thuvientphcm.gov.vn</a></p>"
 
     private val textAboutTND = "<h2>Thư viện số Trần Đại Nghĩa </h2>\n" +
             "        <br/>\n" +
@@ -51,5 +54,6 @@ class AboutViewController : ViewController(null) {
                 router.popController(this)
             }
         }
+        view.tvAbout.movementMethod = LinkMovementMethod.getInstance()
     }
 }

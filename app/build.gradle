@@ -11,7 +11,7 @@ def final applicationId_Demo = "com.emiclibdemo"
 def final APP_NAME_DEMO = "EIU Library"
 def final APP_NAME_LIVE = "EIU Library"
 def final APP_NAME_TDN = "TdnLib"
-def final APP_NAME_GSL = "GslLib"
+def final APP_NAME_GSL = "GSL OPAC"
 
 def targetSdkVersionValue = rootProject.ext.targetSdkVersion as Integer
 def compileSdkVersionValue = rootProject.ext.compileSdkVersion as Integer
