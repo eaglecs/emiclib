@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 def final applicationId_Live = "com.emic.lib"
 def final applicationIdTDN_Live = "com.tdn"
-def final applicationIdGSL_Live = "com.gsl"
+def final applicationIdGSL_Live = "com.gsl.vn"
 def final applicationId_Demo = "com.emiclibdemo"
 
 def final APP_NAME_DEMO = "EIU Library"
@@ -64,7 +64,7 @@ android {
         variant.outputs.all {
             def date = new Date()
             def formattedDate = date.format('yyyy-MM-dd_HH_mm_ss')
-            outputFileName = "${nameApp}_${variant.flavorName.replace("_", "")}_${variant.versionName}_${formattedDate}.apk"
+            outputFileName = "${nameApp}_${variant.flavorName.replace("-", "")}_${variant.versionName.replace("-", "")}_${formattedDate.replace("-", "")}.apk"
         }
     }
 
