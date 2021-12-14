@@ -27,15 +27,15 @@ class ContentLoadingProgressBar : FrameLayout {
     var onViewHideEvent: (() -> Unit)? = null
     var mIsAttachedToWindow: Boolean = false
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         initView(context)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0) {
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0) {
         initView(context)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         mIsShown = visibility == View.VISIBLE
         initView(context)
     }
@@ -97,7 +97,7 @@ class ContentLoadingProgressBar : FrameLayout {
         }
     }
 
-    override fun onVisibilityChanged(changedView: View?, visibility: Int) {
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
         if (changedView === this) {
             if (visibility == View.VISIBLE) {

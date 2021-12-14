@@ -10,7 +10,10 @@ fun View.hideKeyboard() {
 }
 
 fun Activity.hideKeyboard() {
-    hideKeyboard(if (currentFocus == null) View(this) else currentFocus)
+    val view = if (currentFocus == null) View(this) else currentFocus
+    view?.let {
+        hideKeyboard(view)
+    }
 }
 
 fun Context.hideKeyboard(view: View) {
@@ -23,7 +26,10 @@ fun View.showKeyboard() {
 }
 
 fun Activity.showKeyboard() {
-    showKeyboard(if (currentFocus == null) View(this) else currentFocus)
+    val view = if (currentFocus == null) View(this) else currentFocus
+    view?.let {
+        showKeyboard(view)
+    }
 }
 
 fun Context.showKeyboard(view: View) {

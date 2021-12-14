@@ -65,46 +65,32 @@ class App : MultiDexApplication() {
     private fun initLogActivity() {
         if (BuildConfig.DEBUG) {
             this.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-                override fun onActivityPaused(activity: Activity?) {
-                    activity?.let {
-                        Timber.d("onActivityPaused ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityPaused(activity: Activity) {
+                    Timber.d("onActivityPaused ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivityResumed(activity: Activity?) {
-                    activity?.let {
-                        Timber.d("onActivityResumed ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityResumed(activity: Activity) {
+                    Timber.d("onActivityResumed ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivityStarted(activity: Activity?) {
-                    activity?.let {
-                        Timber.d("onActivityStarted ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityStarted(activity: Activity) {
+                    Timber.d("onActivityStarted ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivityDestroyed(activity: Activity?) {
-                    activity?.let {
-                        Timber.d("onActivityDestroyed ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityDestroyed(activity: Activity) {
+                    Timber.d("onActivityDestroyed ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-                    activity?.let {
-                        Timber.d("onActivitySaveInstanceState ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+                    Timber.d("onActivitySaveInstanceState ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivityStopped(activity: Activity?) {
-                    activity?.let {
-                        Timber.d("onActivityStopped ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityStopped(activity: Activity) {
+                    Timber.d("onActivityStopped ${activity.javaClass.simpleName}")
                 }
 
-                override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-                    activity?.let {
-                        Timber.d("onActivityCreated ${activity.javaClass.simpleName}")
-                    }
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                    Timber.d("onActivityCreated ${activity.javaClass.simpleName}")
                 }
 
             })

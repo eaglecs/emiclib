@@ -28,6 +28,7 @@
             style="@style/TextPrimaryTitle"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_toolbar"
+            android:layout_marginEnd="@dimen/height_toolbar"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/text_about_me"
@@ -43,10 +44,10 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAbout"
         style="@style/TextPrimaryBody"
-        android:textColorLink="@color/md_blue500"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/default_padding_margin"
+        android:textColorLink="@color/md_blue500"
         tools:text="@string/text_content_about" />
 
 
