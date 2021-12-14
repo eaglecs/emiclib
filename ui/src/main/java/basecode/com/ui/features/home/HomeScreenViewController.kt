@@ -58,7 +58,7 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     private val indexTabProfile = 2
     private val indexTabSetting = 3
     private val iconSizeOfTab: Float = 28.toFloat()
-    private val pageHomeSize = 5
+    private val pageHomeSize = 4
     private var prevMenuItem: MenuItem? = null
     private var isFirstEnter = true
     override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {

@@ -15,6 +15,7 @@ def final APP_NAME_GSL = "GSL OPAC"
 
 def targetSdkVersionValue = rootProject.ext.targetSdkVersion as Integer
 def compileSdkVersionValue = rootProject.ext.compileSdkVersion as Integer
+def buildToolsVersionValue = rootProject.ext.buildToolsVersion as String
 def versionCodeValue = rootProject.ext.versionCode as Integer
 def versionNameValue = rootProject.ext.versionName as String
 def minSdkVersionValue = rootProject.ext.minSdkVersion as Integer
@@ -26,6 +27,7 @@ def nameApp = rootProject.ext.nameApp as String
 android {
     flavorDimensions flavorDimensionsValue
     compileSdkVersion compileSdkVersionValue
+    buildToolsVersion buildToolsVersionValue
     defaultConfig {
         minSdkVersion minSdkVersionValue
         targetSdkVersion targetSdkVersionValue
@@ -62,7 +64,7 @@ android {
         variant.outputs.all {
             def date = new Date()
             def formattedDate = date.format('yyyy-MM-dd_HH_mm_ss')
-            outputFileName = "${nameApp}-${variant.flavorName.replace("_", "")}-${variant.versionName}-${formattedDate}.apk"
+            outputFileName = "${nameApp}_${variant.flavorName.replace("_", "")}_${variant.versionName}_${formattedDate}.apk"
         }
     }
 
