@@ -74,10 +74,10 @@ android {
             keyPassword "emiclib123456a@A"
         }
         live {
-            storeFile file("emiclib.jks")
-            storePassword "emiclib123456a@A"
-            keyAlias "emiclib"
-            keyPassword "emiclib123456a@A"
+            storeFile file("gsl.jks")
+            storePassword "123456a@A"
+            keyAlias "gsl"
+            keyPassword "123456a@A"
         }
     }
 
