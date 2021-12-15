@@ -143,7 +143,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             targetController?.let { targetController ->
                 val bundle = BookDetailViewController.BundleOptions.create(
                     bookId = bookItem.id,
-                    photo = bookItem.coverPicture
+                    photo = bookItem.coverPicture,
+                    docType = ConstAPI.DocType.Book.value
                 )
                 targetController.router.pushController(
                     RouterTransaction.with(
@@ -154,7 +155,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         }, onActionReadMore = {
             targetController?.let { targetController ->
                 val bundle =
-                    BooksViewController.BundleOptions.create(bookType = BookType.BOOK.value)
+                    BooksViewController.BundleOptions.create(docType = ConstAPI.DocType.Book.value)
                 targetController.router.pushController(
                     RouterTransaction.with(
                         BooksViewController(
@@ -182,7 +183,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         }, onActionReadMore = {
             targetController?.let { targetController ->
                 val bundle =
-                    BooksViewController.BundleOptions.create(bookType = BookType.E_BOOK.value)
+                    BooksViewController.BundleOptions.create(docType = ConstAPI.DocType.Ebook.value)
                 targetController.router.pushController(
                     RouterTransaction.with(
                         BooksViewController(
@@ -219,7 +220,8 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
             targetController?.let { targetController ->
                 val bundle = BookDetailViewController.BundleOptions.create(
                     bookId = collectionRecommend.id.toLong(),
-                    photo = collectionRecommend.coverPicture
+                    photo = collectionRecommend.coverPicture,
+                    docType = ConstAPI.DocType.Book.value
                 )
                 targetController.router.pushController(
                     RouterTransaction.with(
@@ -230,7 +232,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         }, onReadMore = {
             targetController?.let { targetController ->
                 val bundle =
-                    BooksViewController.BundleOptions.create(bookType = BookType.BOOK_RECOMMEND.value)
+                    BooksViewController.BundleOptions.create(docType = ConstAPI.DocType.BookRecommend.value)
                 targetController.router.pushController(
                     RouterTransaction.with(
                         BooksViewController(

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.BookType
+import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.ui.R
@@ -33,14 +34,15 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     private val presenter: BooksContract.Presenter by inject()
     private var collectionId = 0
     private var collectionName = ""
+    private var docType = ConstAPI.DocType.Book.value
 
     object BundleOptions {
-        var Bundle.bookType by BundleExtraInt("BooksViewController.bookType")
+        var Bundle.docType by BundleExtraInt("BooksViewController.docType")
         var Bundle.collectionId by BundleExtraInt("BooksViewController.collectionId")
         var Bundle.collectionName by BundleExtraString("BooksViewController.collectionName")
-        fun create(bookType: Int, collectionId: Int = 0, collectionName: String = "") =
+        fun create(docType: Int, collectionId: Int = 0, collectionName: String = "") =
             Bundle().apply {
-                this.bookType = bookType
+                this.docType = docType
                 this.collectionId = collectionId
                 this.collectionName = collectionName
             }
@@ -50,9 +52,16 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
 
     init {
         bundle.options { options ->
-            bookType = options.bookType.valueOrZero()
+            docType = options.docType.valueOrZero()
             collectionId = options.collectionId.valueOrZero()
             collectionName = options.collectionName.valueOrEmpty()
+            bookType = if (docType == ConstAPI.DocType.Ebook.value){
+                BookType.E_BOOK.value
+            } else if (docType == ConstAPI.DocType.Book.value){
+                BookType.BOOK.value
+            } else {
+                BookType.BOOK_RECOMMEND.value
+            }
         }
     }
 
@@ -68,20 +77,32 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
     }
 
     private fun loadData() {
-        when (bookType) {
-            BookType.BOOK.value -> {
-                presenter.getListNewBook(true)
-            }
-            BookType.E_BOOK.value -> {
+        when (docType) {
+            ConstAPI.DocType.Ebook.value -> {
                 presenter.getListNewEBook(true)
             }
-            BookType.COLLECTION.value -> {
-                presenter.getItemInCollectionRecomand(isRefresh = true, collectionId = collectionId)
+            ConstAPI.DocType.Book.value -> {
+                presenter.getListNewBook(true)
             }
-            BookType.BOOK_RECOMMEND.value -> {
+            else -> {
                 presenter.getListBookRecommend(isRefresh = false)
             }
         }
+
+//        when (bookType) {
+//            BookType.BOOK.value -> {
+//                presenter.getListNewBook(true)
+//            }
+//            BookType.E_BOOK.value -> {
+//                presenter.getListNewEBook(true)
+//            }
+//            BookType.COLLECTION.value -> {
+//                presenter.getItemInCollectionRecomand(isRefresh = true, collectionId = collectionId)
+//            }
+//            BookType.BOOK_RECOMMEND.value -> {
+//                presenter.getListBookRecommend(isRefresh = false)
+//            }
+//        }
     }
 
     private fun initView(view: View) {
@@ -145,9 +166,9 @@ class BooksViewController(bundle: Bundle) : ViewController(bundle), BooksContrac
                             BookDetailViewController.BookType.BOOK_NORMAL.value
                         }
                         val bundle = BookDetailViewController.BundleOptions.create(
-                            bookType = type,
                             bookId = dataItem.id,
-                            photo = dataItem.photo
+                            photo = dataItem.photo,
+                            docType = docType
                         )
                         router.pushController(
                             RouterTransaction.with(BookDetailViewController(bundle))

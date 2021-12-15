@@ -74,7 +74,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     DialogOneEventViewController.ActionEvent {
     private val presenter: BookDetailContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
-    private var bookType = BookType.BOOK_NORMAL
+//    private var bookType = BookType.BOOK_NORMAL
     private var bookId: Long = 0
     private var photo = ""
     private var titleBook = ""
@@ -122,7 +122,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             bookType: Int = BookType.BOOK_NORMAL.value,
             bookId: Long,
             photo: String,
-            docType: Int = ConstAPI.DocType.Book.value
+            docType: Int
         ) =
             Bundle().apply {
                 this.bookType = bookType
@@ -138,17 +138,17 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 
     init {
         bundle.options { options ->
-            bookType = when (options.bookType.valueOrZero()) {
-                BookType.EBOOK.value -> {
-                    BookType.EBOOK
-                }
-                BookType.SPEAK_BOOK.value -> {
-                    BookType.SPEAK_BOOK
-                }
-                else -> {
-                    BookType.BOOK_NORMAL
-                }
-            }
+//            bookType = when (options.bookType.valueOrZero()) {
+//                BookType.EBOOK.value -> {
+//                    BookType.EBOOK
+//                }
+//                BookType.SPEAK_BOOK.value -> {
+//                    BookType.SPEAK_BOOK
+//                }
+//                else -> {
+//                    BookType.BOOK_NORMAL
+//                }
+//            }
             bookId = options.bookId.valueOrZero()
             photo = options.photo.valueOrEmpty()
             docType = options.docType.valueOrDefault(ConstAPI.DocType.Book.value)
@@ -256,20 +256,25 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 view.vgInfoBook.visible()
             }
         }
-        when (bookType) {
-//            BookType.BOOK_NORMAL -> {
-//                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
-//            }
-            BookType.EBOOK -> {
-                view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
-            }
-            BookType.SPEAK_BOOK -> {
-                view.tvHandleBook.gone()
-            }
-            else -> {
-                view.tvHandleBook.gone()
-            }
+        if (docType == ConstAPI.DocType.Ebook.value){
+            view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
+        } else {
+            view.tvHandleBook.gone()
         }
+//        when (bookType) {
+////            BookType.BOOK_NORMAL -> {
+////                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
+////            }
+//            BookType.EBOOK -> {
+//                view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
+//            }
+//            BookType.SPEAK_BOOK -> {
+//                view.tvHandleBook.gone()
+//            }
+//            else -> {
+//                view.tvHandleBook.gone()
+//            }
+//        }
 
         val inputPartBook = LinearRenderConfigFactory.Input(
             context = view.context,
@@ -379,8 +384,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 BundleOptions.create(
                     bookId = model.id,
                     photo = model.photo,
-                    docType = docType,
-                    bookType = bookType.value
+                    docType = docType
                 )
             router.pushController(
                 RouterTransaction.with(BookDetailViewController(bundle))
@@ -603,9 +607,9 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         if (linkShare.isNotEmpty()) {
 //            view?.ivShareBookDetail?.visible()
         }
-        if (numFreeBook == 0 && bookType == BookType.BOOK_NORMAL) {
-            view?.tvHandleBook?.text = "Đặt chỗ"
-        }
+//        if (numFreeBook == 0 && bookType == BookType.BOOK_NORMAL) {
+//            view?.tvHandleBook?.text = "Đặt chỗ"
+//        }
         titleBook = title
         this.author = author
         if (lstPathResult.isNotEmpty()) {
@@ -642,7 +646,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                     rvPartBookController.notifyDataChanged()
                 }
             } else {
-                if (bookType == BookType.SPEAK_BOOK) {
+                if (docType == ConstAPI.DocType.SpeakBook.value) {
                     if (lstPathAudio.isNotEmpty()) {
                         player.visible()
                         val jcAudios = ArrayList<JcAudio>()
@@ -865,18 +869,21 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun handleBook() {
-        when (bookType) {
-            BookType.EBOOK -> {
-                readEBook()
-            }
-            else -> {
-                if (numFreeBook == 0) {
-                    presenter.reserverBook(bookId)
-                } else {
-                    presenter.reservationBook(bookId)
-                }
-            }
+        if (docType == ConstAPI.DocType.Ebook.value){
+            readEBook()
         }
+//        when (docType == ConstAPI.DocType.Ebook.value) {
+//            BookType.EBOOK -> {
+//                readEBook()
+//            }
+//            else -> {
+//                if (numFreeBook == 0) {
+//                    presenter.reserverBook(bookId)
+//                } else {
+//                    presenter.reservationBook(bookId)
+//                }
+//            }
+//        }
     }
 
     override fun reservationBookSuccess() {

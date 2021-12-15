@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.model.dbflow.EBookModel
+import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.downloadboook.DownloadBookContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -51,7 +52,7 @@ class DownloadBookViewController : ViewController(null), DownloadBookContract.Vi
             override fun onItemClicked(view: View, position: Int, dataItem: ViewModel) {
                 if (dataItem is BooksViewHolderModel) {
                     if (doubleTouchPrevent.check("dataItem$position")) {
-                        val bundle = BookDetailViewController.BundleOptions.create(bookType = BookDetailViewController.BookType.EBOOK.value, bookId = dataItem.id, photo = dataItem.photo)
+                        val bundle = BookDetailViewController.BundleOptions.create(docType = ConstAPI.DocType.Ebook.value, bookId = dataItem.id, photo = dataItem.photo)
                         router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 }
