@@ -10,12 +10,14 @@ import basecode.com.domain.model.network.response.InfoBookResponse
 import basecode.com.domain.usecase.base.ResultListener
 import basecode.com.presentation.features.books.BookViewModel
 
-class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
-                          private val getUserTokenUseCase: GetUserTokenUseCase,
-                          private val getInfoBookUseCase: GetInfoBookUseCase,
-                          private val reservationBookUseCase: ReservationBookUseCase,
-                          private val reserverBookUseCase: ReserverBookUseCase,
-                          private val saveBookUseCase: SaveBookUseCase) : BookDetailContract.Presenter() {
+class BookDetailPresenter(
+    private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
+    private val getUserTokenUseCase: GetUserTokenUseCase,
+    private val getInfoBookUseCase: GetInfoBookUseCase,
+    private val reservationBookUseCase: ReservationBookUseCase,
+    private val reserverBookUseCase: ReserverBookUseCase,
+    private val saveBookUseCase: SaveBookUseCase
+) : BookDetailContract.Presenter() {
 
     override fun saveBookDownload(eBookModel: EBookModel) {
         view?.let { view ->
@@ -90,12 +92,19 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         view?.let { view ->
             view.showLoading()
             getListBookRelatedUseCase.cancel()
-            getListBookRelatedUseCase.executeAsync(object : ResultListener<List<BookResponse>, ErrorResponse> {
+            getListBookRelatedUseCase.executeAsync(object :
+                ResultListener<List<BookResponse>, ErrorResponse> {
                 override fun success(data: List<BookResponse>) {
                     val lstResult = mutableListOf<BookViewModel>()
                     data.forEach { book ->
-                        val bookVewModel = BookViewModel(id = book.id.valueOrZero(), photo = book.coverPicture.valueOrEmpty(), name = book.title.valueOrEmpty(),
-                                author = book.author.valueOrEmpty(), publishedYear = book.publishedYear.valueOrEmpty(), publisher = book.publisher.valueOrEmpty())
+                        val bookVewModel = BookViewModel(
+                            id = book.id.valueOrZero(),
+                            photo = book.coverPicture.valueOrEmpty(),
+                            name = book.title.valueOrEmpty(),
+                            author = book.author.valueOrEmpty(),
+                            publishedYear = book.publishedYear.valueOrEmpty(),
+                            publisher = book.publisher.valueOrEmpty()
+                        )
                         lstResult.add(bookVewModel)
                     }
                     view.getListBookRelatedSuccess(data = lstResult)
@@ -138,7 +147,8 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
         view?.let { view ->
             view.showLoading()
             getInfoBookUseCase.cancel()
-            getInfoBookUseCase.executeAsync(object : ResultListener<InfoBookResponse, ErrorResponse> {
+            getInfoBookUseCase.executeAsync(object :
+                ResultListener<InfoBookResponse, ErrorResponse> {
                 override fun success(data: InfoBookResponse) {
                     val lstPathResult = mutableListOf<String>()
                     var copyNumberResult = ""
@@ -171,8 +181,22 @@ class BookDetailPresenter(private val getListBookRelatedUseCase: GetListBookRela
                     val publishYear = data.publishYear.valueOrEmpty()
                     val shortDescription = data.shortDescription.valueOrEmpty()
                     val linkShare = data.linkShare.valueOrEmpty()
+                    val coverPicture = data.coverPicture.valueOrEmpty()
                     val info = data.info.valueOrEmpty()
-                    view.getBookInfoSuccess(lstPathResult, title, author, publisher, publishYear, shortDescription, copyNumberResult, linkShare, info, numFreeBookStr, numFreeBook)
+                    view.getBookInfoSuccess(
+                        lstPathResult = lstPathResult,
+                        title = title,
+                        author = author,
+                        publisher = publisher,
+                        publishYear = publishYear,
+                        shortDescription = shortDescription,
+                        copyNumberResult = copyNumberResult,
+                        linkShare = linkShare,
+                        infoBook = info,
+                        numFreeBookStr = numFreeBookStr,
+                        numFreeBook = numFreeBook,
+                        coverPicture = coverPicture
+                    )
                 }
 
                 override fun fail(error: ErrorResponse) {

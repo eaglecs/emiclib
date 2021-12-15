@@ -2,14 +2,12 @@ package basecode.com.ui.features.bookdetail
 
 import android.app.Activity
 import android.content.*
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.*
 import android.provider.Settings
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +37,6 @@ import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.RecyclerViewController
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.visible
-import basecode.com.ui.features.bookdetail.renderer.AudioRenderer
 import basecode.com.ui.features.bookdetail.renderer.AudiosRenderer
 import basecode.com.ui.features.bookdetail.renderer.BooksRelatedRenderer
 import basecode.com.ui.features.bookdetail.renderer.ImageBookRenderer
@@ -60,8 +57,6 @@ import com.example.jean.jcplayer.model.JcAudio
 import com.example.jean.jcplayer.service.JcPlayerManagerListener
 import com.example.jean.jcplayer.view.JcPlayerView
 import com.github.vivchar.rendererrecyclerviewadapter.ViewModel
-import com.potyvideo.library.globalEnums.EnumResizeMode
-import com.potyvideo.library.globalInterfaces.AndExoPlayerListener
 import com.skytree.epub.BookInformation
 import com.stfalcon.imageviewer.StfalconImageViewer
 import es.dmoral.toasty.Toasty
@@ -73,7 +68,6 @@ import org.koin.standalone.inject
 import xyz.doikki.videocontroller.StandardVideoController
 import xyz.doikki.videocontroller.component.*
 import xyz.doikki.videoplayer.player.VideoView
-import xyz.doikki.videoplayer.util.L
 
 
 class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDetailContract.View,
@@ -598,8 +592,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         linkShare: String,
         infoBook: String,
         numFreeBookStr: String,
-        numFreeBook: Int
+        numFreeBook: Int,
+        coverPicture: String
     ) {
+        photo = coverPicture
         lstPathAudio.clear()
         lstPathAudio.addAll(lstPathResult)
         this.linkShare = linkShare
@@ -616,6 +612,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
             pathBook = lstPathAudio.first()
         }
         view?.let { view ->
+            GlideUtil.loadImage(photo, view.ivBookDetail)
             view.tvInfoBook.text = infoBook
             view.tvFreeBook.text = numFreeBookStr
             if (docType == ConstAPI.DocType.Image.value) {

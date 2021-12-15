@@ -12,5 +12,6 @@ class InfoBookResponse (
         @SerializedName("ListFreeCopyNumber") val lstFreeCopyNumber: List<String?>?,
         @SerializedName("DDC") val info: String,
         @SerializedName("Href") val linkShare: String?,
+        @SerializedName("CoverPicture") val coverPicture: String?,
         @SerializedName("Author") val author: String?
 )
