@@ -126,17 +126,6 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
             isLogin = false
             view.ivLogin.setImageResource(R.drawable.ic_login)
         }
-        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
-            val contentQRCode = it.contentQRCode
-            val bookInfo = contentQRCode.replace("{", "").replace("}", "").split(":")
-            if (bookInfo.size == 2) {
-                val bookId = bookInfo.first().trim().toLong()
-                targetController?.let { targetController ->
-                    val bundle = BookDetailViewController.BundleOptions.create(bookId = bookId, photo = "")
-                    targetController.router.pushController(RouterTransaction.with(BookDetailViewController(bundle)).pushChangeHandler(FadeChangeHandler(false)))
-                }
-            }
-        }
     }
 
     private fun handleOnClick(view: View) {

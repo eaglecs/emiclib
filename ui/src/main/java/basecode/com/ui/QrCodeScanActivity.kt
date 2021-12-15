@@ -8,9 +8,13 @@ import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
+import basecode.com.domain.extention.number.valueOrZero
 import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.model.network.response.ScanQRCodeResponse
+import com.google.gson.Gson
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import java.lang.Exception
 
 class QrCodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private val requestCodePermissionsCamera = 9999
@@ -59,8 +63,17 @@ class QrCodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     override fun handleResult(rawResult: Result?) {
         rawResult?.let { result ->
             val contentQRCode = result.text.valueOrEmpty()
-            KBus.post(ResultScanQRCodeEventBus(contentQRCode))
-            finish()
+            try {
+                val gson = Gson()
+                val infoBook = gson.fromJson(contentQRCode, ScanQRCodeResponse::class.java)
+                val bookId = infoBook.id.valueOrZero()
+                if (bookId> 0){
+                    KBus.post(ResultScanQRCodeEventBus(bookId = bookId, docType = infoBook.docType.valueOrZero()))
+                }
+                finish()
+            } catch (e: Exception){
+                finish()
+            }
         }
     }
 

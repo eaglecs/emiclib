@@ -8,14 +8,17 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoadStatusNotify
 import basecode.com.domain.model.bus.SelectedHomeEventBus
 import basecode.com.domain.model.network.request.NewEBookRequest
 import basecode.com.presentation.features.home.HomeContract
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraLong
 import basecode.com.ui.base.extra.BundleOptionsCompanion
+import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.home.tab.*
 import com.bluelinelabs.conductor.*
 import com.bluelinelabs.conductor.support.RouterPagerAdapter
@@ -47,13 +50,27 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     }
 
     private fun initEventBus(view: View) {
-        KBus.subscribe<SelectedHomeEventBus>(this){
+        KBus.subscribe<SelectedHomeEventBus>(this) {
             view.navigation.currentItem = indexTabHome
+        }
+        KBus.subscribe<ResultScanQRCodeEventBus>(this) {
+            val bundle =
+                BookDetailViewController.BundleOptions.create(
+                    bookId = it.bookId,
+                    photo = "",
+                    docType = it.docType
+                )
+            router.pushController(
+                RouterTransaction.with(
+                    BookDetailViewController(bundle)
+                ).pushChangeHandler(FadeChangeHandler(false))
+            )
         }
     }
 
     private val indexTabHome = 0
-//    private val indexTabNews = 1
+
+    //    private val indexTabNews = 1
     private val indexTabSearch = 1
     private val indexTabProfile = 2
     private val indexTabSetting = 3
@@ -61,7 +78,10 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     private val pageHomeSize = 4
     private var prevMenuItem: MenuItem? = null
     private var isFirstEnter = true
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
+    override fun onChangeEnded(
+        changeHandler: ControllerChangeHandler,
+        changeType: ControllerChangeType
+    ) {
         super.onChangeEnded(changeHandler, changeType)
         if (changeType.isEnter) {
             if (isFirstEnter) {
@@ -73,35 +93,36 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
     }
 
     private fun initView(view: View) {
-        val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    view.vpHome.currentItem = indexTabHome
-                    return@OnNavigationItemSelectedListener true
-                }
+        val mOnNavigationItemSelectedListener =
+            BottomNavigationView.OnNavigationItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.navigation_home -> {
+                        view.vpHome.currentItem = indexTabHome
+                        return@OnNavigationItemSelectedListener true
+                    }
 //                R.id.navigation_news -> {
 //                    view.vpHome.currentItem = indexTabNews
 //                    return@OnNavigationItemSelectedListener true
 //                }
-                R.id.navigation_search -> {
-                    view.vpHome.currentItem = indexTabSearch
-                    return@OnNavigationItemSelectedListener true
+                    R.id.navigation_search -> {
+                        view.vpHome.currentItem = indexTabSearch
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.navigation_profile -> {
+                        view.vpHome.currentItem = indexTabProfile
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.navigation_setting -> {
+                        view.vpHome.currentItem = indexTabSetting
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    else -> {
+                        view.vpHome.currentItem = indexTabHome
+                        return@OnNavigationItemSelectedListener true
+                    }
                 }
-                R.id.navigation_profile -> {
-                    view.vpHome.currentItem = indexTabProfile
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_setting -> {
-                    view.vpHome.currentItem = indexTabSetting
-                    return@OnNavigationItemSelectedListener true
-                }
-                else -> {
-                    view.vpHome.currentItem = indexTabHome
-                    return@OnNavigationItemSelectedListener true
-                }
-            }
 
-        }
+            }
         view.navigation.onNavigationItemSelectedListener = mOnNavigationItemSelectedListener
         view.navigation.setIconSize(iconSizeOfTab)
         val targetController = this
@@ -127,7 +148,9 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
                         }
                     }
                     page?.let {
-                        router.setRoot(RouterTransaction.with(page).tag("HomeViewController$position"))
+                        router.setRoot(
+                            RouterTransaction.with(page).tag("HomeViewController$position")
+                        )
                     }
                 }
             }
