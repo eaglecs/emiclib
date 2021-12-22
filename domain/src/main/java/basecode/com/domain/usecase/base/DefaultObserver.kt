@@ -49,6 +49,7 @@ open class DefaultObserver<SuccessOutput, FailOutput>(private val failOutputFact
         val failOutput = failOutputFactory.invoke(throwable)
         resultListeners.forEach { resultListener ->
             resultListener.fail(failOutput)
+            resultListener.done()
         }
         rawResultListeners.forEach { resultListener ->
             resultListener.fail(throwable)

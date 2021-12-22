@@ -64,7 +64,7 @@ object DomainKoinModules {
             GetInfoBookUseCase(useCaseExecution = get(), appRepository = get())
         }
         factory {
-            GetInfoUserUseCase(appRepository = get(), useCaseExecution = get(), cacheRespository = get())
+            GetInfoUserUseCase(appRepository = get(), useCaseExecution = get(), cacheRepository = get())
         }
 
         factory {
@@ -140,7 +140,7 @@ object DomainKoinModules {
         }
 
         factory {
-            GetLoginRequestUseCase(useCaseExecution = get(), cacheRespository = get())
+            GetLoginRequestUseCase(useCaseExecution = get(), cacheRepository = get())
         }
         factory {
             GetLoanHoldingRenewBookUseCase(useCaseExecution = get(), appRepository = get())

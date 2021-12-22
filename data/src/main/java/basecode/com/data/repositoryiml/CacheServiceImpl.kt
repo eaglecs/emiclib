@@ -11,11 +11,11 @@ class CacheServiceImpl : CacheRespository {
         ConfigUtil.saveLoginRequest(loginRequest)
     }
 
-    override fun getLoginRequest(): LoginRequest? {
+    override fun getLoginRequest(): LoginRequest {
         return ConfigUtil.getLoginRequest()
     }
 
-    override fun getUserModel(): UserModel? {
+    override fun getUserModel(): UserModel {
         return ConfigUtil.getUserModel()
     }
 
@@ -26,7 +26,7 @@ class CacheServiceImpl : CacheRespository {
     override fun saveInfoLogin(accessToken: String, loginType: String): Observable<Boolean> {
         return Observable.create { e ->
             if (accessToken.isEmpty() && loginType.isEmpty()) {
-                ConfigUtil.saveUserModel(null)
+                ConfigUtil.saveUserModel(UserModel())
             }
             ConfigUtil.saveUserToken(accessToken)
             ConfigUtil.saveLoginType(loginType)

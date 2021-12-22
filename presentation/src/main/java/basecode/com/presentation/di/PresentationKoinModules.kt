@@ -48,17 +48,20 @@ object PresentationKoinModules {
         factory {
             RequestDocumentPresenter(
                 requestDocumentUseCase = get(),
-                getInfoUserUseCase = get()
+                getInfoUserUseCase = get(),
+                getUserTokenUseCase = get()
             ) as RequestDocumentContract.Presenter
         }
         factory {
             HomePresenter(
-                getInfoHomeUseCase = get(),
                 getUserTokenUseCase = get(),
                 getLoginRequestUseCase = get(),
                 loginUseCase = get(),
                 saveInfoLoginUseCase = get(),
-                getInfoUserUseCase = get()
+                getInfoUserUseCase = get(),
+                getBooksRecommendUseCase = get(),
+                getListNewBookUseCase = get(),
+                getListNewEbookUseCase = get()
             ) as HomeContract.Presenter
         }
         factory {

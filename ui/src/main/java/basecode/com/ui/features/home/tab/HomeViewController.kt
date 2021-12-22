@@ -290,6 +290,7 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
         view?.let { view ->
             view.vgRefreshInfo.isRefreshing = false
             Toasty.error(view.context, view.context.getString(R.string.msg_error_get_info)).show()
+            hideLoading()
         }
     }
 

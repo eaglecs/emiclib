@@ -26,14 +26,18 @@ object ConfigUtil {
     }
 
 
-    fun saveUserModel(userModel: UserModel?) {
+    fun saveUserModel(userModel: UserModel) {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
         configSaver.save(ConfigSaver.CONFIG_USER_MODEL, userModel)
     }
 
-    fun getUserModel(): UserModel?{
+    fun getUserModel(): UserModel{
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
-        return configSaver.get<UserModel>(ConfigSaver.CONFIG_USER_MODEL)
+        var userModel = configSaver.get<UserModel>(ConfigSaver.CONFIG_USER_MODEL)
+        if (userModel == null){
+            userModel = UserModel()
+        }
+        return userModel
     }
 
     fun saveLoginRequest(loginRequest: LoginRequest) {
@@ -41,8 +45,12 @@ object ConfigUtil {
         configSaver.save(ConfigSaver.CONFIG_LOGIN_REQUEST, loginRequest)
     }
 
-    fun getLoginRequest(): LoginRequest?{
+    fun getLoginRequest(): LoginRequest {
         val configSaver = PaperConfigSaverImpl(ConfigSaver.CONFIG_PAGER)
-        return configSaver.get<LoginRequest>(ConfigSaver.CONFIG_LOGIN_REQUEST)
+        var loginRequest = configSaver.get<LoginRequest>(ConfigSaver.CONFIG_LOGIN_REQUEST)
+        if (loginRequest == null){
+            loginRequest = LoginRequest("", "")
+        }
+        return loginRequest
     }
 }

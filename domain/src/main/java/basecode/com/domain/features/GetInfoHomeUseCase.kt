@@ -11,96 +11,37 @@ import io.reactivex.Observable
 class GetInfoHomeUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<Boolean, InfoHomeResponse, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(isTDN: Boolean): Observable<InfoHomeResponse> {
         return Observable.create { e ->
-            val infoHomeResponse = InfoHomeResponse()
-//            val newNewsBottomResponse = appRepository.getListNewNews(10, 1, 10).blockingGet()
-            val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
-            val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
-//            val collectionRecomand = appRepository.getCollectionRecomand().blockingGet()
-            val collectionRecomand = appRepository.getBooksRecommend().blockingGet()
-//            var lstNewNews: List<NewNewsResponse>? = null
             try {
-//                lstNewNews = if(isTDN){
-//                    appRepository.getListNews(categoryId = 178 , pageIndex = 1, pageSize = 6).blockingGet()
-//                } else {
-//                    appRepository.getListNews(categoryId = 152, pageIndex = 1, pageSize = 10).blockingGet()
-//                }
-            } catch (ex: Exception){
-//                lstNewNews?.let {
-//                    lstNewNews.forEach { newNews ->
-//                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-//                        infoHomeResponse.lstNewNews.add(newNewsModel)
-//                    }
-//                }
+                val infoHomeResponse = InfoHomeResponse()
+                val listNewBooks = appRepository.getListNewItems(10, 1, 10).blockingGet()
+                val listNewEBooks = appRepository.getListNewEBookItems(10, 1, 10).blockingGet()
+                val collectionRecommend = appRepository.getBooksRecommend().blockingGet()
                 listNewBooks?.let {
                     listNewBooks.forEach { newBook ->
                         val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
-                                coverPicture = newBook.coverPicture.valueOrEmpty(), author = newBook.author.valueOrEmpty())
+                            coverPicture = newBook.coverPicture.valueOrEmpty(), author = newBook.author.valueOrEmpty())
                         infoHomeResponse.lstNewBook.add(newBooksModel)
                     }
                 }
                 listNewEBooks?.let {
                     listNewEBooks.forEach { eBook ->
                         val newEBooksModel = NewEBookModel(id = eBook.id.valueOrZero(), title = eBook.title.valueOrEmpty(),
-                                coverPicture = eBook.coverPicture.valueOrEmpty(), author = eBook.author.valueOrEmpty())
+                            coverPicture = eBook.coverPicture.valueOrEmpty(), author = eBook.author.valueOrEmpty())
                         infoHomeResponse.lstNewEBook.add(newEBooksModel)
                     }
                 }
-                collectionRecomand?.let {
-                    collectionRecomand.forEach { collection ->
+                collectionRecommend?.let {
+                    collectionRecommend.forEach { collection ->
                         val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.title.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
                         infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
                     }
                 }
-
-//                newNewsBottomResponse?.let {
-//                    newNewsBottomResponse.forEach { newNews ->
-//                        val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-//                        infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
-//                    }
-//                }
-
                 e.onNext(infoHomeResponse)
                 e.onComplete()
+            } catch (ex: Exception){
+                e.onError(ex)
+                e.onComplete()
             }
-
-
-
-//            lstNewNews?.let {
-//                lstNewNews.forEach { newNews ->
-//                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-//                    infoHomeResponse.lstNewNews.add(newNewsModel)
-//                }
-//            }
-            listNewBooks?.let {
-                listNewBooks.forEach { newBook ->
-                    val newBooksModel = NewBooksModel(id = newBook.id.valueOrZero(), title = newBook.title.valueOrEmpty(),
-                            coverPicture = newBook.coverPicture.valueOrEmpty(), author = newBook.author.valueOrEmpty())
-                    infoHomeResponse.lstNewBook.add(newBooksModel)
-                }
-            }
-            listNewEBooks?.let {
-                listNewEBooks.forEach { eBook ->
-                    val newEBooksModel = NewEBookModel(id = eBook.id.valueOrZero(), title = eBook.title.valueOrEmpty(),
-                            coverPicture = eBook.coverPicture.valueOrEmpty(), author = eBook.author.valueOrEmpty())
-                    infoHomeResponse.lstNewEBook.add(newEBooksModel)
-                }
-            }
-            collectionRecomand?.let {
-                collectionRecomand.forEach { collection ->
-                    val collectionRecommendModel = CollectionRecommendModel(id = collection.id.valueOrZero(), name = collection.title.valueOrEmpty(), coverPicture = collection.coverPicture.valueOrEmpty())
-                    infoHomeResponse.lstCollectionRecommend.add(collectionRecommendModel)
-                }
-            }
-
-//            newNewsBottomResponse?.let {
-//                newNewsBottomResponse.forEach { newNews ->
-//                    val newNewsModel = NewNewsModel(id = newNews.id.valueOrZero(), picture = newNews.picture.valueOrEmpty().trim(), title = newNews.title.valueOrEmpty(), content = newNews.details.valueOrEmpty(), summary = newNews.summary.valueOrEmpty())
-//                    infoHomeResponse.lstNewNewsBottom.add(newNewsModel)
-//                }
-//            }
-
-            e.onNext(infoHomeResponse)
-            e.onComplete()
         }
     }
 
