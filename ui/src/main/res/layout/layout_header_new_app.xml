@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_header_screen">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivScanQRCode"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|center_vertical"
+        android:adjustViewBounds="true"
+        android:padding="@dimen/default_padding_margin_x"
+        app:srcCompat="@drawable/ic_qr_code" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/default_padding_margin_small"
+        android:layout_marginBottom="@dimen/default_padding_margin_small"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_logo_gsl" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/ivLogin"
+        android:layout_width="@dimen/height_profile"
+        android:layout_height="@dimen/height_profile"
+        android:layout_gravity="end|center_vertical"
+        android:layout_margin="@dimen/default_padding_margin"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_login"
+        app:civ_border="false"
+        app:civ_border_width="@dimen/default_divider_size"
+        app:civ_circle_color="@color/transparent" />
+</FrameLayout>

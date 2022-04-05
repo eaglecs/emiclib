@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_header_new_app" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnSearchBooth"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_padding_margin_huge"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_search_book" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/text_search_book" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnBorrowBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding_margin_huge"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_padding_margin_huge"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_check_out" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextPrimaryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_padding_margin"
+                    android:text="@string/text_borrow_books" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnReturnBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding_margin_huge"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_padding_margin_huge"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_check_in" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextPrimaryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_padding_margin"
+                    android:text="@string/text_return_book" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnAccount"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_padding_margin_huge"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_user" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:text="@string/text_account" />
+
+
+    </LinearLayout>
+
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

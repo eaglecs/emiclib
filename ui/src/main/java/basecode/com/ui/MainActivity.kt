@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import basecode.com.ui.features.home.HomeScreenViewController
+import basecode.com.ui.features.new.MainViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
@@ -28,8 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.layout_main)
         router = Conductor.attachRouter(this, this.controllerContainer, savedInstanceState)
         if (!router.hasRootController()) {
-            val bundle = HomeScreenViewController.BundleOption.create(resId = 1)
-            router.setRoot(RouterTransaction.with(HomeScreenViewController(bundle)))
+            router.setRoot(RouterTransaction.with(MainViewController()))
         }
     }
 

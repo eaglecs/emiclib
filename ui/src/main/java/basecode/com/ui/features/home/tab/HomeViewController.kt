@@ -37,11 +37,15 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     private val presenter: HomeContract.Presenter by inject()
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
-    private lateinit var rvController: RecyclerViewController
     private var isLogin = false
+    private lateinit var rvController: RecyclerViewController
 
     constructor(targetController: ViewController) : this() {
         setTargetController(targetController)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(R.layout.layout_tab_home, container, false)
     }
 
     override fun initPostCreateView(view: View) {
@@ -248,10 +252,6 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
 
     private fun loadData() {
         presenter.getListNewBook(BuildConfig.USE_DATA_TDN)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.layout_tab_home, container, false)
     }
 
     override fun getListNewEBookSuccess(data: InfoHomeResponse) {

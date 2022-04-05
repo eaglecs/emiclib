@@ -173,6 +173,9 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_title_search" translatable="false">Tìm kiếm</string>
     <string name="text_title_profile" translatable="false">Tài khoản</string>
     <string name="text_title_setting" translatable="false">Nhiều hơn</string>
+    <string name="text_search_book">Tra cứu sách</string>
+    <string name="text_borrow_books">Mượn sách</string>
+    <string name="text_return_book">Trả sách</string>
 
 
 </resources>
