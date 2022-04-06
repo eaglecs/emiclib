@@ -50,7 +50,7 @@ class MainViewController : ViewController(null) {
         }
         view.ivLogin.setOnClickListener {
             if (doubleTouchPrevent.check("ivLogin")) {
-                if (isLogin ) {
+                if (isLogin) {
                     router.pushController(
                         RouterTransaction.with(
                             UserViewController()
