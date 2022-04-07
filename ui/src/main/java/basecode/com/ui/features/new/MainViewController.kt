@@ -54,7 +54,21 @@ class MainViewController : ViewController(null), MainContract.View {
     private fun handleView(view: View) {
         view.btnAccount.setOnClickListener {
             if (doubleTouchPrevent.check("btnAccount")) {
-
+                if (isLogin) {
+                    router.pushController(
+                        RouterTransaction.with(
+                            UserViewController()
+                        ).pushChangeHandler(FadeChangeHandler(false))
+                    )
+                } else {
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
+                    )
+                }
             }
         }
         view.btnReturnBook.setOnClickListener {

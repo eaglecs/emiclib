@@ -99,6 +99,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/default_padding_margin_huge"
             android:adjustViewBounds="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_user" />
 
         <androidx.appcompat.widget.AppCompatTextView
