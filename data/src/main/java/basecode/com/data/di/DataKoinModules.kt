@@ -11,6 +11,7 @@ import basecode.com.domain.repository.CacheRespository
 import basecode.com.domain.repository.dbflow.BookDataService
 import basecode.com.domain.repository.network.AppRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import okhttp3.Interceptor
@@ -41,23 +42,25 @@ object DataKoinModules {
     private val remoteModule = module {
         fun createApiService(): ApiService {
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(BuildConfig.END_POINT)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addConverterFactory(NullOnEmptyConverterFactory())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(get())
-                    .build()
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(NullOnEmptyConverterFactory())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
+                .client(get())
+                .build()
             return retrofit.create(ApiService::class.java)
         }
 
         fun provideOkClient(): OkHttpClient {
             return OkHttpClient.Builder()
-                    .addNetworkInterceptor(StethoInterceptor())
-                    .retryOnConnectionFailure(false)
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .addInterceptor(get())
-                    .build()
+                .addNetworkInterceptor(StethoInterceptor())
+                .retryOnConnectionFailure(false)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(get())
+                .addInterceptor(OkHttpProfilerInterceptor())
+                .build()
         }
 
         single {

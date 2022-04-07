@@ -18,6 +18,8 @@ import basecode.com.presentation.features.home.HomeContract
 import basecode.com.presentation.features.home.HomePresenter
 import basecode.com.presentation.features.login.LoginContract
 import basecode.com.presentation.features.login.LoginPresenter
+import basecode.com.presentation.features.new.MainContract
+import basecode.com.presentation.features.new.MainPresenter
 import basecode.com.presentation.features.newnews.NewNewsContract
 import basecode.com.presentation.features.newnews.NewNewsPresenter
 import basecode.com.presentation.features.news.NewsContract
@@ -42,6 +44,9 @@ object PresentationKoinModules {
     }
 
     private val homeModule = module {
+        factory<MainContract.Presenter> {
+            MainPresenter(getInfoUserUseCase = get())
+        }
         factory {
             NewsPresenter(getListNewsUseCase = get()) as NewsContract.Presenter
         }

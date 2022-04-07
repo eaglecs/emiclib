@@ -176,6 +176,7 @@ while the Global Pagination is going on, some user interfaces will be restricted
     <string name="text_search_book">Tra cứu sách</string>
     <string name="text_borrow_books">Mượn sách</string>
     <string name="text_return_book">Trả sách</string>
+    <string name="title_booth">Địa điểm các Booth</string>
 
 
 </resources>

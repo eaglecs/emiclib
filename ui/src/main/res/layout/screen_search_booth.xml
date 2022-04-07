@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_header_new_app" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapBooths"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="?attr/selectableItemBackground"
+            map:liteMode="true"
+            map:mapType="normal" />
+
+        <LinearLayout
+            android:id="@+id/ChooseDestination"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/default_padding_margin"
+            android:layout_marginTop="@dimen/default_padding_margin_h"
+            android:layout_marginRight="@dimen/default_padding_margin"
+            android:layout_marginBottom="@dimen/default_padding_margin_h"
+            android:background="@drawable/bg_corner_blue_grey"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSearchBooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/default_padding_margin_small"
+                app:srcCompat="@drawable/ic_search" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtSearchBooth"
+                style="@style/TextPrimaryBody"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/text_search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnClearTextSearchBooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding_margin_small"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/default_padding_margin_small"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_close"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_booth" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBooth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
