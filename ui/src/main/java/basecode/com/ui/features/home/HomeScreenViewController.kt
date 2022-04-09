@@ -138,7 +138,7 @@ class HomeScreenViewController(bundle: Bundle) : ViewController(bundle) {
 //                            page = NewsViewController(targetController)
 //                        }
                         indexTabSearch -> {
-                            page = SearchViewController(targetController)
+//                            page = SearchViewController(targetController)
                         }
                         indexTabProfile -> {
                             page = ProfileViewController(targetController)

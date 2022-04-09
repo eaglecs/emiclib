@@ -12,8 +12,16 @@ class SearchBookContract {
     }
 
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun searchBookAdvance(isRefresh: Boolean, docType: Int, searchText: String, title: String, author: String, language: String)
-        abstract fun searchBook(isRefresh: Boolean, docType: Int, searchText: String)
+        abstract fun searchBookAdvance(
+            isRefresh: Boolean,
+            docType: Int,
+            searchText: String,
+            title: String,
+            author: String,
+            language: String,
+            boothId: Long
+        )
+        abstract fun searchBook(isRefresh: Boolean, docType: Int, searchText: String, boothId: Long)
         abstract fun isShowLoadMore(): Boolean
     }
 }

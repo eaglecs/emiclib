@@ -92,13 +92,14 @@
         android:id="@+id/tlCategoryBook"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:visibility="gone"
         app:tabIndicatorColor="@color/md_blue700"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/md_blue600"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/md_grey700" />
 
-    <androidx.viewpager.widget.ViewPager
+    <basecode.com.ui.util.NonSwipeableViewPager
         android:id="@+id/vpBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

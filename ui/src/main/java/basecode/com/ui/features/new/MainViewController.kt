@@ -1,19 +1,24 @@
 package basecode.com.ui.features.new
 
+import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
+import basecode.com.domain.util.ConstAPI
+import basecode.com.domain.util.ConstApp
 import basecode.com.presentation.features.new.MainContract
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
+import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
+import basecode.com.ui.util.PermissionUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_header_new_app.view.*
@@ -22,8 +27,10 @@ import org.koin.standalone.inject
 
 class MainViewController : ViewController(null), MainContract.View {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
+    private val permissionUtil: PermissionUtil by inject()
     private val presenter by inject<MainContract.Presenter>()
     private var isLogin = false
+    private val locationPermissionsCode = 1111
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_main, container, false)
     }
@@ -83,7 +90,14 @@ class MainViewController : ViewController(null), MainContract.View {
         }
         view.btnSearchBooth.setOnClickListener {
             if (doubleTouchPrevent.check("btnSearchBooth")) {
-
+                if (permissionUtil.hasPermissions(permissionUtil.getPermissionsLocation())) {
+                    openScreenSearchBooth()
+                } else {
+                    requestPermissions(
+                        permissionUtil.getPermissionsLocation(),
+                        locationPermissionsCode
+                    )
+                }
             }
         }
         view.ivLogin.setOnClickListener {
@@ -113,6 +127,14 @@ class MainViewController : ViewController(null), MainContract.View {
         }
     }
 
+    private fun openScreenSearchBooth() {
+        router.pushController(
+            RouterTransaction.with(SearchBoothViewController())
+                .pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+                .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
+        )
+    }
+
     override fun handleAfterCheckLogin(isLogin: Boolean, avatar: String) {
         this.isLogin = isLogin
         view?.let { view ->
@@ -138,6 +160,28 @@ class MainViewController : ViewController(null), MainContract.View {
     override fun hideLoading() {
         view?.apply {
             vgLoading.hide()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == locationPermissionsCode) {
+            if (permissions.isNotEmpty() && grantResults.isNotEmpty() && permissions.size == grantResults.size) {
+                var isGrantAll = true
+                loop@ for (grantResult in grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        isGrantAll = false
+                        break@loop
+                    }
+                }
+                if (isGrantAll) {
+                    openScreenSearchBooth()
+                }
+            }
         }
     }
 

@@ -12,6 +12,12 @@ object DomainKoinModules {
 
     private val appModule = module {
         factory {
+            GetBoothsUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+        factory {
             GetBooksRecommendUseCase(
                 useCaseExecution = get(),
                 appRepository = get()

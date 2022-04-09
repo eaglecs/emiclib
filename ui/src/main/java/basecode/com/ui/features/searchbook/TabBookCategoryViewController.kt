@@ -15,6 +15,7 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraInt
+import basecode.com.ui.base.extra.BundleExtraLong
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
 import basecode.com.ui.base.listview.view.OnItemRvClickedListener
@@ -40,6 +41,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private var isSearchAdvance = false
     private var modelAdvance: SearchAdvanceBookEventBus? = null
+    private var boothId: Long = 0
 
     constructor(targetController: ViewController, bundle: Bundle) : this(bundle) {
         setTargetController(targetController)
@@ -47,8 +49,10 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
 
     object BundleOptions {
         var Bundle.categoryId by BundleExtraInt("TabBookCategoryViewController.categoryId")
-        fun create(categoryId: Int) = Bundle().apply {
+        var Bundle.boothId by BundleExtraLong("TabBookCategoryViewController.boothId")
+        fun create(categoryId: Int, boothId: Long) = Bundle().apply {
             this.categoryId = categoryId
+            this.boothId = boothId
         }
     }
 
@@ -57,6 +61,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
     init {
         bundle.options { options ->
             categoryId = options.categoryId.valueOrZero()
+            boothId = options.boothId.valueOrZero()
         }
     }
 
@@ -77,6 +82,7 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
             if (categoryId == searchBookWithKeyEventBus.categoryId) {
                 isSearchAdvance = false
                 searchText = searchBookWithKeyEventBus.textSearch
+                boothId = searchBookWithKeyEventBus.boothId
                 loadData(isRefresh = true)
             }
         }
@@ -97,14 +103,16 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
                     isRefresh = isRefresh,
                     docType = categoryId, language = model.language,
                     author = model.author, title = model.title,
-                    searchText = searchText
+                    searchText = searchText,
+                    boothId = boothId
                 )
             }
         } else {
             presenter.searchBook(
                 isRefresh = isRefresh,
                 docType = categoryId,
-                searchText = searchText
+                searchText = searchText,
+                boothId = boothId
             )
         }
     }

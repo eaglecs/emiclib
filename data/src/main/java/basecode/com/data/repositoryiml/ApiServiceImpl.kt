@@ -55,24 +55,64 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
         return apiServiceApp.getListNewEBookItems(numberItem, pageIndex, pageSize)
     }
 
-    override fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>> {
+    override fun findBook(
+        docType: Int,
+        pageIndex: Int,
+        pageSize: Int,
+        searchText: String,
+        boothId: Long
+    ): Observable<List<BookResponse>> {
         return if (searchText.isNotEmpty()) {
             if(docType == -1){
-                apiServiceApp.findBook(docType = docType, itemType = 3, pageIndex = pageIndex, pageSize = pageSize, searchText = searchText)
+                apiServiceApp.findBook(
+//                    docType = docType,
+                    itemType = 3,
+                    pageIndex = pageIndex,
+                    pageSize = pageSize,
+                    searchText = searchText,
+                    boothId = boothId.toString()
+                )
             } else {
-                apiServiceApp.findBook(docType = docType, pageIndex = pageIndex, pageSize = pageSize, searchText = searchText)
+                apiServiceApp.findBook(
+//                    docType = docType,
+                    pageIndex = pageIndex, pageSize = pageSize, searchText = searchText, boothId = boothId.toString())
             }
         } else {
             if(docType == -1){
-                apiServiceApp.findBook(docType = docType, itemType = 3, pageIndex = pageIndex, pageSize = pageSize)
+                apiServiceApp.findBook(
+//                    docType = docType,
+                    itemType = 3,
+                    pageIndex = pageIndex,
+                    pageSize = pageSize,
+                    boothId = boothId.toString()
+                )
             } else {
-                apiServiceApp.findBook(docType = docType, pageIndex = pageIndex, pageSize = pageSize)
+                apiServiceApp.findBook(
+//                    docType = docType,
+                    pageIndex = pageIndex,
+                    pageSize = pageSize,
+                    boothId = boothId.toString()
+                )
             }
         }
     }
 
-    override fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: String, author: String, language: String): Observable<List<BookResponse>> {
-        return apiServiceApp.findBookAdvance(docType, pageIndex, pageSize, searchText, title, author, language)
+    override fun findBookAdvance(
+        docType: Int,
+        pageIndex: Int,
+        pageSize: Int,
+        searchText: String,
+        title: String,
+        author: String,
+        language: String,
+        boothId: String
+    ): Observable<List<BookResponse>> {
+        return apiServiceApp.findBookAdvance(
+//            docType = docType,
+            pageIndex = pageIndex, pageSize = pageSize,
+            searchText = searchText, title = title, author = author,
+//            language = language,
+            boothId = boothId)
     }
 
     override fun getInfoBook(itemId: Long): Observable<InfoBookResponse> {
@@ -153,5 +193,9 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
 
     override fun getBooksRecommendObservable(pageIndex: Int, pageSize: Int): Observable<List<BookRecommendResponse>> {
         return apiServiceApp.getBooksRecommendObservable(pageIndex, pageSize)
+    }
+
+    override fun getListBooth(): Observable<BoothsResponse> {
+        return apiServiceApp.getListBooth()
     }
 }

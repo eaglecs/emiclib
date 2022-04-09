@@ -18,8 +18,17 @@ interface AppRepository {
 
     fun getListBookRelated(itemId: Long, pageIndex: Int, pageSize: Int, docType: Int): Observable<List<BookResponse>>
     fun login(username: String, password: String): Observable<LoginResponse>
-    fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String): Observable<List<BookResponse>>
-    fun findBookAdvance(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, title: String, author: String, language: String): Observable<List<BookResponse>>
+    fun findBook(docType: Int, pageIndex: Int, pageSize: Int, searchText: String, boothId: Long): Observable<List<BookResponse>>
+    fun findBookAdvance(
+        docType: Int,
+        pageIndex: Int,
+        pageSize: Int,
+        searchText: String,
+        title: String,
+        author: String,
+        language: String,
+        boothId: String
+    ): Observable<List<BookResponse>>
     fun getInfoBook(itemId: Long): Observable<InfoBookResponse>
     fun getInfoUser(): Single<InfoUserResponse>
     fun reservationBook(bookId: Long): Observable<Int>
@@ -59,4 +68,5 @@ interface AppRepository {
 
     fun getBooksRecommend(): Single<List<BookRecommendResponse>>
     fun getBooksRecommendObservable(pageIndex: Int, pageSize: Int): Observable<List<BookRecommendResponse>>
+    fun getListBooth(): Observable<BoothsResponse>
 }

@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center">
 
     <LinearLayout
@@ -23,9 +26,17 @@
             android:id="@+id/mapBooths"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="?attr/selectableItemBackground"
+            android:background="@color/md_blue500"
+            android:visibility="gone"
             map:liteMode="true"
-            map:mapType="normal" />
+            map:mapType="normal"
+            map:uiZoomControls="true" />
+
+        <FrameLayout
+            android:id="@+id/vgMap"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
 
         <LinearLayout
             android:id="@+id/ChooseDestination"
@@ -37,7 +48,9 @@
             android:layout_marginBottom="@dimen/default_padding_margin_h"
             android:background="@drawable/bg_corner_blue_grey"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivSearchBooth"
@@ -76,7 +89,13 @@
             style="@style/TextPrimarySubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding_margin_h"
             android:text="@string/title_booth" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBooth"

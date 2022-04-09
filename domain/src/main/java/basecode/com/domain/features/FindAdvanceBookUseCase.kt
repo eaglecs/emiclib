@@ -10,12 +10,21 @@ import io.reactivex.Observable
 class FindAdvanceBookUseCase(useCaseExecution: UseCaseExecution, private val appRepository: AppRepository) : UseCase<FindAdvanceBookUseCase.Input, List<BookResponse>, ErrorResponse>(useCaseExecution) {
     override fun buildUseCaseObservable(input: Input): Observable<List<BookResponse>> {
         return appRepository.findBookAdvance(docType = input.docType, pageIndex = input.pageIndex, pageSize = input.pageSize, searchText = input.searchText, title = input.title,
-                author = input.author, language = input.language)
+                author = input.author, language = input.language, boothId = input.boothId.toString())
     }
 
     override fun createFailOutput(throwable: Throwable): ErrorResponse {
         return ErrorResponse("")
     }
 
-    class Input(val docType: Int, val pageIndex: Int = 1, val pageSize: Int = 20, val searchText: String, val title: String, val author: String, val language: String)
+    class Input(
+        val docType: Int,
+        val pageIndex: Int = 1,
+        val pageSize: Int = 20,
+        val searchText: String,
+        val title: String,
+        val author: String,
+        val language: String,
+        val boothId: Long
+    )
 }

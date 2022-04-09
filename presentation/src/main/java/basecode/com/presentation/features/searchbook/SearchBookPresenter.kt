@@ -23,7 +23,8 @@ class SearchBookPresenter(
         searchText: String,
         title: String,
         author: String,
-        language: String
+        language: String,
+        boothId: Long
     ) {
         view?.let { view ->
             if (isRefresh) {
@@ -38,7 +39,8 @@ class SearchBookPresenter(
                 title = title,
                 language = language,
                 pageIndex = pageIndex,
-                pageSize = pageSize
+                pageSize = pageSize,
+                boothId = boothId
             )
             findAdvanceBookUseCase.cancel()
             findAdvanceBookUseCase.executeAsync(object :
@@ -75,7 +77,7 @@ class SearchBookPresenter(
         }
     }
 
-    override fun searchBook(isRefresh: Boolean, docType: Int, searchText: String) {
+    override fun searchBook(isRefresh: Boolean, docType: Int, searchText: String, boothId: Long) {
         view?.let { view ->
             if (isRefresh) {
                 pageIndex = 1
@@ -85,6 +87,7 @@ class SearchBookPresenter(
             val input = FindBookUseCase.Input(
                 docType = docType,
                 searchText = searchText,
+                boothId = boothId,
                 pageIndex = pageIndex,
                 pageSize = pageSize
             )

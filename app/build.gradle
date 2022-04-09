@@ -154,6 +154,7 @@ dependencies {
 
     // change language
     implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
 
 

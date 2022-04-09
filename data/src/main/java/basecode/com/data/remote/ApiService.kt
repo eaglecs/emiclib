@@ -29,13 +29,28 @@ interface ApiService {
     ): Observable<List<BookResponse>>
 
     //7 Find Book
-    @GET("/api/Item/Search")
-    fun findBook(@Query("docType") docType: Int? = null, @Query("itemType") itemType: Int? = null , @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String? = null): Observable<List<BookResponse>>
+    @GET("/api/Item/SearchBooth")
+    fun findBook(
+//        @Query("docType") docType: Int? = null,
+        @Query("itemType") itemType: Int? = null,
+        @Query("pageIndex") pageIndex: Int,
+        @Query("pageSize") pageSize: Int,
+        @Query("searchText") searchText: String? = null,
+        @Query("booth") boothId: String
+    ): Observable<List<BookResponse>>
 
     //8 Find Book Advance
-    @GET("/api/Item/SearchAdvance")
-    fun findBookAdvance(@Query("docType") docType: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int, @Query("searchText") searchText: String,
-                        @Query("title") title: String, @Query("author") author: String, @Query("language") language: String): Observable<List<BookResponse>>
+    @GET("/api/Item/SearchAdvanceBooth")
+    fun findBookAdvance(
+//        @Query("docType") docType: Int,
+        @Query("pageIndex") pageIndex: Int,
+        @Query("pageSize") pageSize: Int,
+        @Query("keyWord") searchText: String,
+        @Query("title") title: String,
+        @Query("author") author: String,
+//        @Query("language") language: String,
+        @Query("booth") boothId: String
+    ): Observable<List<BookResponse>>
 
     //13 GetCollectionRecomand
     @GET("/api/Cat/GetCollectionRecomand")
@@ -170,4 +185,7 @@ interface ApiService {
     //Load List book GetItemInCollectionRecomand
     @GET("api/cir/GetLoanHoldingRenew")
     fun getLoanHoldingRenew(@Query("coppynumber") coppynumber: String): Observable<Any>
+
+    @GET("api/Booth/GetListBooth")
+    fun getListBooth(): Observable<BoothsResponse>
 }

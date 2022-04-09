@@ -1,16 +1,206 @@
 package basecode.com.ui.features.new
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.util.ConstApp
+import basecode.com.presentation.features.new.SearchBoothContract
+import basecode.com.presentation.features.new.model.BoothViewModel
 import basecode.com.ui.R
+import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.base.extra.BundleExtraInt
+import basecode.com.ui.base.extra.BundleExtraLong
+import basecode.com.ui.base.extra.BundleOptionsCompanion
+import basecode.com.ui.base.listview.view.LinearRenderConfigFactory
+import basecode.com.ui.base.listview.view.RecyclerViewController
+import basecode.com.ui.features.home.tab.SearchViewController
+import basecode.com.ui.features.new.mapper.BoothViewHolderModelMapper
+import basecode.com.ui.features.new.renderer.BoothRenderer
+import basecode.com.ui.features.searchbook.TabBookCategoryViewController.Companion.options
+import basecode.com.ui.util.LocationUtil
+import com.bluelinelabs.conductor.RouterTransaction
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.ui.IconGenerator
+import kotlinx.android.synthetic.main.layout_custom_market_booth.view.*
+import kotlinx.android.synthetic.main.screen_search_booth.view.*
+import org.koin.standalone.inject
 
-class SearchBoothViewController : ViewController(null) {
+class SearchBoothViewController : ViewController(null), OnMapReadyCallback,
+    SearchBoothContract.View {
+    private val locationUtil by inject<LocationUtil>()
+    private val presenter by inject<SearchBoothContract.Presenter>()
+    private lateinit var googleMap: GoogleMap
+    private var mapFragment: SupportMapFragment? = null
+    private lateinit var rvController: RecyclerViewController
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_search_booth, container, false)
     }
 
+    private val lstAllBooth = mutableListOf<BoothViewModel>()
+
     override fun initPostCreateView(view: View) {
+        presenter.attachView(this)
+        initView(view)
+        presenter.getBooths()
+    }
+
+    private fun initView(view: View) {
+        val input = LinearRenderConfigFactory.Input(
+            context = view.context,
+            orientation = LinearRenderConfigFactory.Orientation.VERTICAL
+        )
+        val renderConfig = LinearRenderConfigFactory(input).create()
+        rvController = RecyclerViewController(view.rvBooth, renderConfig)
+        rvController.addViewRenderer(BoothRenderer { model ->
+            val bundle = SearchViewController.BundleOptions.create(model.id)
+            router.pushController(
+                RouterTransaction.with(SearchViewController(bundle))
+                    .pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+                    .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
+            )
+        })
+        if (mapFragment == null) {
+            mapFragment = SupportMapFragment.newInstance()
+            mapFragment?.apply {
+                getMapAsync(this@SearchBoothViewController)
+            }
+            activity?.let { activity ->
+                if (activity is AppCompatActivity) {
+                    mapFragment?.let { mapFragment ->
+                        activity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.vgMap, mapFragment).commitAllowingStateLoss()
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(googleMap: GoogleMap) {
+        activity?.let { activity ->
+            MapsInitializer.initialize(activity)
+            this.googleMap = googleMap
+            if (ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                googleMap.isMyLocationEnabled = true
+            }
+            with(googleMap) {
+                uiSettings.isMapToolbarEnabled = false
+                uiSettings.isZoomControlsEnabled = true
+                mapType = GoogleMap.MAP_TYPE_NORMAL
+            }
+        }
+        initDataMap()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initDataMap() {
+        if (::googleMap.isInitialized && lstAllBooth.isNotEmpty()) {
+            with(googleMap) {
+                setOnMapLoadedCallback {
+                    activity?.let { activity ->
+                        if (ContextCompat.checkSelfPermission(
+                                activity,
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                                activity,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            googleMap.isMyLocationEnabled = true
+                        }
+                    }
+                    mapType = GoogleMap.MAP_TYPE_NORMAL
+                    uiSettings.isMapToolbarEnabled = false
+                    uiSettings.isZoomControlsEnabled = true
+                    drawMarkerBooth(googleMap = googleMap, lstBooth = lstAllBooth)
+                    locationUtil.getLatLongCurrent { latitude, longitude ->
+                        val myLocation = LatLng(latitude, longitude)
+                        val markerOptions = MarkerOptions()
+                            .position(myLocation)
+                            .title("Vị trí của bạn")
+                        val addMarker = addMarker(markerOptions)
+                        addMarker?.showInfoWindow()
+                        moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16f))
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun drawMarkerBooth(googleMap: GoogleMap, lstBooth: List<BoothViewModel>) {
+        activity?.let { context ->
+            val iconFactory = IconGenerator(context)
+            val myInflater =
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val activityView = myInflater.inflate(R.layout.layout_custom_market_booth, null, false)
+            iconFactory.setContentView(activityView)
+            iconFactory.setBackground(null)
+            lstBooth.forEach { booth ->
+                activityView.tvBoothName.text = booth.codeLoc
+                val markerOptions = MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon()))
+                    .position(LatLng(booth.bLatitude, booth.bLongitude))
+                    .anchor(iconFactory.anchorU, iconFactory.anchorV)
+                googleMap.addMarker(markerOptions)
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun showBooths(lstBooth: List<BoothViewModel>) {
+        this.lstAllBooth.clear()
+        this.lstAllBooth.addAll(lstBooth)
+        locationUtil.getLatLongCurrent { latitude, longitude ->
+            val input =
+                BoothViewHolderModelMapper.Input(lat = latitude, lng = longitude, booths = lstBooth)
+            val booths = BoothViewHolderModelMapper().map(input)
+            rvController.setItems(booths)
+            rvController.notifyDataChanged()
+        }
+        initDataMap()
+    }
+
+    override fun showErrorGetBooths() {
+
+    }
+
+    override fun showLoading() {
+        view?.apply {
+            vgLoading.show()
+        }
+    }
+
+    override fun hideLoading() {
+        view?.apply {
+            vgLoading.hide()
+        }
+    }
+
+    override fun onDestroyView(view: View) {
+        presenter.detachView()
+        super.onDestroyView(view)
     }
 }
+
+// search booth: removeAccentAndSpace
