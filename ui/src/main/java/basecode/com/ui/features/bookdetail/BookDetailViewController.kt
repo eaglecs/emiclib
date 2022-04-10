@@ -92,6 +92,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var indexVideoCurrent = 0
     private var docType = ConstAPI.DocType.Book.value
     private val handler = Handler()
+    private var boothId: Long = 0
 
     internal var ls: LocalService? = null
     private lateinit var rvController: RecyclerViewController
@@ -114,6 +115,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     object BundleOptions {
         var Bundle.bookType by BundleExtraInt("BooksViewController.bookType")
         var Bundle.bookId by BundleExtraLong("BooksViewController.bookId")
+        var Bundle.boothId by BundleExtraLong("BooksViewController.boothId")
         var Bundle.titleBook by BundleExtraString("BooksViewController.titleBook")
         var Bundle.author by BundleExtraString("BooksViewController.bookCode")
         var Bundle.photo by BundleExtraString("BooksViewController.photo")
@@ -121,12 +123,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         fun create(
             bookType: Int = BookType.BOOK_NORMAL.value,
             bookId: Long,
+            boothId: Long = 0,
             photo: String,
             docType: Int
         ) =
             Bundle().apply {
                 this.bookType = bookType
                 this.bookId = bookId
+                this.boothId = boothId
                 this.author = author
                 this.titleBook = titleBook
                 this.photo = photo
@@ -149,6 +153,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
 //                    BookType.BOOK_NORMAL
 //                }
 //            }
+            boothId = options.boothId.valueOrZero()
             bookId = options.bookId.valueOrZero()
             photo = options.photo.valueOrEmpty()
             docType = options.docType.valueOrDefault(ConstAPI.DocType.Book.value)
@@ -168,7 +173,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         initEventBus(view)
         handleOnClick(view)
         presenter.getBookInfo(bookId)
-        presenter.getListBookRelated(bookId = bookId, docType = docType)
+        presenter.getListBookRelated(bookId = bookId, docType = docType, boothId = boothId)
     }
 
     private fun initEventBus(view: View) {
@@ -384,7 +389,8 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 BundleOptions.create(
                     bookId = model.id,
                     photo = model.photo,
-                    docType = docType
+                    docType = docType,
+                    boothId = boothId
                 )
             router.pushController(
                 RouterTransaction.with(BookDetailViewController(bundle))

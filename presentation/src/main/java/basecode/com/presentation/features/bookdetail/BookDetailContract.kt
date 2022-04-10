@@ -34,7 +34,7 @@ class BookDetailContract {
     }
 
     abstract class Presenter : PresenterMvp<View>() {
-        abstract fun getListBookRelated(bookId: Long, docType: Int)
+        abstract fun getListBookRelated(bookId: Long, docType: Int, boothId: Long)
         abstract fun getStatusLogin()
         abstract fun getBookInfo(bookId: Long)
         abstract fun reservationBook(bookId: Long)

@@ -88,7 +88,7 @@ class BookDetailPresenter(
         }
     }
 
-    override fun getListBookRelated(bookId: Long, docType: Int) {
+    override fun getListBookRelated(bookId: Long, docType: Int, boothId: Long) {
         view?.let { view ->
             view.showLoading()
             getListBookRelatedUseCase.cancel()

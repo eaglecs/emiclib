@@ -20,7 +20,7 @@ interface ApiService {
     fun getListNewEBookItems(@Query("numberItem") numberItem: Int, @Query("pageIndex") pageIndex: Int, @Query("pageSize") pageSize: Int): Single<List<NewEBookResponse>>
 
     //5 GetListBookRelated
-    @GET("/api/Item/GetRelationItems")
+    @GET("/api/Item/GetRelationItemsBooth")
     fun getListBookRelated(
         @Query("itemId") itemId: Long,
         @Query("pageIndex") pageIndex: Int,

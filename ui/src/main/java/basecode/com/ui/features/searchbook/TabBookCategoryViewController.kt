@@ -162,7 +162,8 @@ class TabBookCategoryViewController(bundle: Bundle) : ViewController(bundle),
                             bookType = type,
                             bookId = dataItem.id,
                             photo = dataItem.photo,
-                            docType = categoryId
+                            docType = categoryId,
+                            boothId = boothId
                         )
                         targetController.router.pushController(
                             RouterTransaction.with(
