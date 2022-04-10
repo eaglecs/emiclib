@@ -85,7 +85,7 @@ object PresentationKoinModules {
         factory {
             BookDetailPresenter(
                 getListBookRelatedUseCase = get(),
-                getUserTokenUseCase = get(),
+                getInfoUserUseCase = get(),
                 getInfoBookUseCase = get(),
                 reservationBookUseCase = get(),
                 saveBookUseCase = get(),

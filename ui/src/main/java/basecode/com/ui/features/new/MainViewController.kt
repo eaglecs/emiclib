@@ -54,6 +54,24 @@ class MainViewController : ViewController(null), MainContract.View {
                 holderImage = R.drawable.user_default,
                 errorImage = R.drawable.user_default
             )
+            when (it.type) {
+                LoginSuccessEventBus.Type.ScreenAccount -> {
+                    openScreenAccount()
+                }
+                LoginSuccessEventBus.Type.ScreenReturnBook -> {
+                    openScreenReturnBook()
+                }
+                LoginSuccessEventBus.Type.ScreenBorrowBook -> {
+                    openScreenBorrowBook()
+                }
+                LoginSuccessEventBus.Type.ScreenSearchBooth -> {
+                    openScreenSearchBooth()
+                }
+                else -> {
+                    return@subscribe
+                }
+            }
+
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             avatar = ""
@@ -65,27 +83,60 @@ class MainViewController : ViewController(null), MainContract.View {
     private fun handleView(view: View) {
         view.btnAccount.setOnClickListener {
             if (doubleTouchPrevent.check("btnAccount")) {
-                openScreenAccount()
+                if (isLogin) {
+                    openScreenAccount()
+                } else {
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.ScreenAccount.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
+                    )
+                }
             }
         }
         view.btnReturnBook.setOnClickListener {
             if (doubleTouchPrevent.check("btnReturnBook")) {
-
+                if (isLogin) {
+                    openScreenReturnBook()
+                } else {
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.ScreenReturnBook.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
+                    )
+                }
             }
         }
         view.btnBorrowBook.setOnClickListener {
             if (doubleTouchPrevent.check("btnBorrowBook")) {
-
+                if (isLogin) {
+                    openScreenBorrowBook()
+                } else {
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.ScreenBorrowBook.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
+                    )
+                }
             }
         }
         view.btnSearchBooth.setOnClickListener {
             if (doubleTouchPrevent.check("btnSearchBooth")) {
-                if (permissionUtil.hasPermissions(permissionUtil.getPermissionsLocation())) {
-                    openScreenSearchBooth()
+                if (isLogin) {
+                    openScreenBooths()
                 } else {
-                    requestPermissions(
-                        permissionUtil.getPermissionsLocation(),
-                        locationPermissionsCode
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.ScreenSearchBooth.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
                     )
                 }
             }
@@ -115,6 +166,45 @@ class MainViewController : ViewController(null), MainContract.View {
                 ScanQRCode.openScreenQRCode(activity, this)
             }
         }
+    }
+
+    private fun openScreenBooths() {
+        if (permissionUtil.hasPermissions(permissionUtil.getPermissionsLocation())) {
+            openScreenSearchBooth()
+        } else {
+            requestPermissions(
+                permissionUtil.getPermissionsLocation(),
+                locationPermissionsCode
+            )
+        }
+    }
+
+    private fun openScreenBorrowBook() {
+        val bundle = BorrowReturnBookViewController.BundleOptions.create(
+            isLogin = isLogin,
+            avatar = avatar,
+            isBorrow = true
+        )
+        router.pushController(
+            RouterTransaction.with(
+                BorrowReturnBookViewController(bundle = bundle)
+            ).pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+                .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
+        )
+    }
+
+    private fun openScreenReturnBook() {
+        val bundle = BorrowReturnBookViewController.BundleOptions.create(
+            isLogin = isLogin,
+            avatar = avatar,
+            isBorrow = false
+        )
+        router.pushController(
+            RouterTransaction.with(
+                BorrowReturnBookViewController(bundle = bundle)
+            ).pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+                .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
+        )
     }
 
     private fun openScreenAccount() {

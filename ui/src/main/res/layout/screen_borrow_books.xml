@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_header_new_app" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ChooseDestination"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/default_padding_margin"
+                android:layout_weight="1"
+                android:background="@drawable/bg_corner_blue_grey"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSearchPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/default_padding_margin_small"
+                    app:srcCompat="@drawable/ic_search" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtSearch"
+                    style="@style/TextPrimaryBody"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="Mã xếp giá"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:lines="1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnClearTextSearchPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_padding_margin_small"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/default_padding_margin_small"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_close"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnEnter"
+                style="@style/ButtonStyle.Active.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding_margin"
+                android:paddingLeft="@dimen/default_padding_margin_x"
+                android:paddingTop="@dimen/default_padding_margin"
+                android:paddingRight="@dimen/default_padding_margin_x"
+                android:paddingBottom="@dimen/default_padding_margin"
+                android:text="Nhập" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimarySubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding_margin"
+            android:text="Danh sách ấn phẩm vừa ghi mượn" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBooks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <basecode.com.ui.base.loading.LoadingLayout
+        android:id="@+id/vgLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

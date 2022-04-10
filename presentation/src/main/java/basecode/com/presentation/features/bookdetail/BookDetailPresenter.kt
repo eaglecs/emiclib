@@ -7,12 +7,13 @@ import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.domain.model.network.response.BookResponse
 import basecode.com.domain.model.network.response.ErrorResponse
 import basecode.com.domain.model.network.response.InfoBookResponse
+import basecode.com.domain.model.network.response.UserModel
 import basecode.com.domain.usecase.base.ResultListener
 import basecode.com.presentation.features.books.BookViewModel
 
 class BookDetailPresenter(
     private val getListBookRelatedUseCase: GetListBookRelatedUseCase,
-    private val getUserTokenUseCase: GetUserTokenUseCase,
+    private val getInfoUserUseCase: GetInfoUserUseCase,
     private val getInfoBookUseCase: GetInfoBookUseCase,
     private val reservationBookUseCase: ReservationBookUseCase,
     private val reserverBookUseCase: ReserverBookUseCase,
@@ -124,15 +125,15 @@ class BookDetailPresenter(
 
     override fun getStatusLogin() {
         view?.let { view ->
-            getUserTokenUseCase.cancel()
-            getUserTokenUseCase.executeAsync(object : ResultListener<String, ErrorResponse> {
-                override fun success(data: String) {
-                    val isLogin = data.isNotEmpty()
-                    view.handleAfterCheckLogin(isLogin)
+            getInfoUserUseCase.cancel()
+            getInfoUserUseCase.executeAsync(object : ResultListener<UserModel, ErrorResponse> {
+                override fun success(data: UserModel) {
+                    val isLogin = data.patronCode.isNotEmpty()
+                    view.handleAfterCheckLogin(isLogin = isLogin, avatar = data.linkAvatar)
                 }
 
                 override fun fail(error: ErrorResponse) {
-                    view.handleAfterCheckLogin(false)
+                    view.handleAfterCheckLogin(false, "")
                 }
 
                 override fun done() {
@@ -215,7 +216,7 @@ class BookDetailPresenter(
         saveBookUseCase.cancel()
         getListBookRelatedUseCase.cancel()
         reservationBookUseCase.cancel()
-        getUserTokenUseCase.cancel()
+        getInfoUserUseCase.cancel()
         getInfoBookUseCase.cancel()
         reserverBookUseCase.cancel()
         super.onDetachView()

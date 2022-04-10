@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSelected"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/default_padding_margin"
+        android:layout_marginEnd="@dimen/default_padding_margin"
+        android:layout_marginBottom="@dimen/default_padding_margin"
+        android:padding="@dimen/default_padding_margin"
+        app:srcCompat="@drawable/ic_unselected"
+        tools:srcCompat="@drawable/ic_selected" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimaryBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="TPHCM đăng ký 3 cầu thủ trong nhóm lãn công ở trận đấu với Sài Gòn tại Cúp Quốc gia KẾT QUẢ TP.HCM 1-1 Sài Gòn (3-4 luân lưu): 'Tuyệt chiêu' thay thủ môn giúp Sài Gòn đi tiếp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ĐKCB: " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="LN: 133/2005 "
+                        android:textColor="@color/md_blue500" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_padding_margin_small"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày mượn: " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/md_red500"
+                        android:textStyle="italic"
+                        tools:text="30/03/2022 - 11:53:59" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_padding_margin_small"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày trả: " />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimaryBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/md_red500"
+                        android:textStyle="italic"
+                        tools:text="30/03/2022 - 11:53:59" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnEnter"
+                style="@style/ButtonStyle.Active.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding_margin"
+                android:paddingLeft="@dimen/default_padding_margin_x"
+                android:paddingTop="@dimen/default_padding_margin"
+                android:paddingRight="@dimen/default_padding_margin_x"
+                android:paddingBottom="@dimen/default_padding_margin"
+                android:text="Thu Hồi" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:layout_marginTop="@dimen/default_padding_margin"
+            android:background="@color/md_grey300" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

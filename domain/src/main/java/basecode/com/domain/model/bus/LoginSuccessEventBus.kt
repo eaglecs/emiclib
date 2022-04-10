@@ -12,6 +12,10 @@ class LoginSuccessEventBus(val type: Type, val avatar: String) {
         ChangePass(7),
         RequestDocument(8),
         BookRoom(9),
+        ScreenAccount(10),
+        ScreenReturnBook(11),
+        ScreenBorrowBook(12),
+        ScreenSearchBooth(13),
         Normal(-1)
     }
 }

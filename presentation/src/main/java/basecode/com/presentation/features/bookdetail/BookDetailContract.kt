@@ -10,7 +10,7 @@ class BookDetailContract {
     interface View : ViewMvp, ViewSupportLoading {
         fun getListBookRelatedSuccess(data: List<BookViewModel>)
         fun showErrorGetListBookRelated()
-        fun handleAfterCheckLogin(isLogin: Boolean)
+        fun handleAfterCheckLogin(isLogin: Boolean, avatar: String)
         fun getBookInfoSuccess(
             lstPathResult: List<String>,
             title: String,

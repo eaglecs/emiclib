@@ -23,11 +23,13 @@ import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.bus.SelectedHomeEventBus
 import basecode.com.domain.model.dbflow.EBookModel
 import basecode.com.domain.util.ConstAPI
+import basecode.com.domain.util.ConstApp
 import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.books.BookViewModel
 import basecode.com.ui.R
 import basecode.com.ui.ReadBookActivity
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
+import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
 import basecode.com.ui.base.extra.BundleExtraInt
 import basecode.com.ui.base.extra.BundleExtraLong
@@ -47,6 +49,7 @@ import basecode.com.ui.features.bookdetail.viewmodel.ImageBookViewHolderModel
 import basecode.com.ui.features.books.BooksViewHolderModel
 import basecode.com.ui.features.dialog.DialogOneEventViewController
 import basecode.com.ui.features.login.LoginViewController
+import basecode.com.ui.features.new.BorrowReturnBookViewController
 import basecode.com.ui.features.readbook.BookViewActivity
 import basecode.com.ui.features.readbook.LocalService
 import basecode.com.ui.features.readbook.SkyDatabase
@@ -84,6 +87,7 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     private var receiver: SkyReceiver = SkyReceiver()
     private var isCheckLogin = true
     private var isLogin = true
+    private var avatar = ""
     private val permissionsCode = 1000
     private var pathBook = ""
     private lateinit var player: JcPlayerView
@@ -190,12 +194,14 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
+            avatar = it.avatar
             if (it.type == LoginSuccessEventBus.Type.HandleBook) {
                 handleBook()
             }
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
+            avatar = ""
         }
         KBus.subscribe<ProgressDownloadBook>(this) {
             if (it.percentValue == 100) {
@@ -261,11 +267,11 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
                 view.vgInfoBook.visible()
             }
         }
-        if (docType == ConstAPI.DocType.Ebook.value){
-            view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
-        } else {
-            view.tvHandleBook.gone()
-        }
+//        if (docType == ConstAPI.DocType.Ebook.value){
+//            view.tvHandleBook.text = view.context.getString(R.string.text_read_book)
+//        } else {
+//            view.tvHandleBook.gone()
+//        }
 //        when (bookType) {
 ////            BookType.BOOK_NORMAL -> {
 ////                view.tvHandleBook.text = view.context.getString(R.string.text_borrow)
@@ -858,9 +864,10 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
         hideLoading()
     }
 
-    override fun handleAfterCheckLogin(isLogin: Boolean) {
+    override fun handleAfterCheckLogin(isLogin: Boolean, avatar: String) {
         isCheckLogin = true
         this.isLogin = isLogin
+        this.avatar = avatar
         if (isLogin) {
             handleBook()
         } else {
@@ -875,9 +882,13 @@ class BookDetailViewController(bundle: Bundle) : ViewController(bundle), BookDet
     }
 
     private fun handleBook() {
-        if (docType == ConstAPI.DocType.Ebook.value){
-            readEBook()
-        }
+        val bundle = BorrowReturnBookViewController.BundleOptions.create(isBorrow = true, isLogin = isLogin, avatar = avatar)
+        router.pushController(RouterTransaction.with(BorrowReturnBookViewController(bundle = bundle))
+            .pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+            .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen)))
+//        if (docType == ConstAPI.DocType.Ebook.value){
+//            readEBook()
+//        }
 //        when (docType == ConstAPI.DocType.Ebook.value) {
 //            BookType.EBOOK -> {
 //                readEBook()
