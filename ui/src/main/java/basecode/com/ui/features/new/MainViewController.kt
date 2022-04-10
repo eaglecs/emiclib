@@ -14,6 +14,7 @@ import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.screenchangehandler.HorizontalChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.features.home.tab.ProfileViewController
 import basecode.com.ui.features.login.LoginViewController
 import basecode.com.ui.features.user.UserViewController
 import basecode.com.ui.util.DoubleTouchPrevent
@@ -31,6 +32,7 @@ class MainViewController : ViewController(null), MainContract.View {
     private val presenter by inject<MainContract.Presenter>()
     private var isLogin = false
     private val locationPermissionsCode = 1111
+    private var avatar = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_main, container, false)
     }
@@ -44,6 +46,7 @@ class MainViewController : ViewController(null), MainContract.View {
 
     private fun initEventBus(view: View) {
         KBus.subscribe<LoginSuccessEventBus>(this) {
+            avatar = it.avatar
             isLogin = true
             GlideUtil.loadImage(
                 url = it.avatar,
@@ -53,6 +56,7 @@ class MainViewController : ViewController(null), MainContract.View {
             )
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
+            avatar = ""
             isLogin = false
             view.ivLogin.setImageResource(R.drawable.ic_login)
         }
@@ -61,21 +65,7 @@ class MainViewController : ViewController(null), MainContract.View {
     private fun handleView(view: View) {
         view.btnAccount.setOnClickListener {
             if (doubleTouchPrevent.check("btnAccount")) {
-                if (isLogin) {
-                    router.pushController(
-                        RouterTransaction.with(
-                            UserViewController()
-                        ).pushChangeHandler(FadeChangeHandler(false))
-                    )
-                } else {
-                    val bundle =
-                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
-                    val loginViewController = LoginViewController(bundle)
-                    router.pushController(
-                        RouterTransaction.with(loginViewController)
-                            .pushChangeHandler(FadeChangeHandler(false))
-                    )
-                }
+                openScreenAccount()
             }
         }
         view.btnReturnBook.setOnClickListener {
@@ -127,9 +117,20 @@ class MainViewController : ViewController(null), MainContract.View {
         }
     }
 
-    private fun openScreenSearchBooth() {
+    private fun openScreenAccount() {
+        val bundle = ProfileViewController.BundleOptions.create(isLogin = isLogin, avatar = avatar)
         router.pushController(
-            RouterTransaction.with(SearchBoothViewController())
+            RouterTransaction.with(
+                ProfileViewController(bundle = bundle)
+            ).pushChangeHandler(FadeChangeHandler(false))
+        )
+    }
+
+    private fun openScreenSearchBooth() {
+        val bundle =
+            SearchBoothViewController.BundleOptions.create(isLogin = isLogin, avatar = avatar)
+        router.pushController(
+            RouterTransaction.with(SearchBoothViewController(bundle = bundle))
                 .pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
                 .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
         )
@@ -137,6 +138,7 @@ class MainViewController : ViewController(null), MainContract.View {
 
     override fun handleAfterCheckLogin(isLogin: Boolean, avatar: String) {
         this.isLogin = isLogin
+        this.avatar = avatar
         view?.let { view ->
             if (isLogin) {
                 GlideUtil.loadImage(

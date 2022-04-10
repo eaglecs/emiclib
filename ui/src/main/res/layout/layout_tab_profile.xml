@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_white"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -35,11 +36,11 @@
             android:layout_width="@dimen/height_profile"
             android:layout_height="@dimen/height_profile"
             android:layout_gravity="end|center_vertical"
+            android:layout_margin="@dimen/default_padding_margin"
             android:adjustViewBounds="true"
             app:civ_border="false"
-            app:civ_circle_color="@color/transparent"
-            android:layout_margin="@dimen/default_padding_margin"
             app:civ_border_width="@dimen/default_divider_size"
+            app:civ_circle_color="@color/transparent"
             tools:srcCompat="@drawable/ic_login" />
     </FrameLayout>
 
@@ -168,7 +169,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding_margin"
+                android:gravity="start"
                 android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/vgChangePass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/icon_user_password" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextPrimarySubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/default_padding_margin"
+                        android:text="@string/text_change_password"
+                        android:textColor="@color/md_black" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/vgRenew"
@@ -177,7 +205,8 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
@@ -201,7 +230,8 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="80dp"
@@ -216,31 +246,6 @@
                         android:gravity="center"
                         android:padding="@dimen/default_padding_margin"
                         android:text="@string/text_request_document"
-                        android:textColor="@color/md_black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/vgChangePass"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/icon_user_password" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextPrimarySubtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding_margin"
-                        android:text="@string/text_change_password"
                         android:textColor="@color/md_black" />
                 </LinearLayout>
 
@@ -277,7 +282,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/vgBookRoom"

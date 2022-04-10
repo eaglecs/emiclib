@@ -83,6 +83,7 @@ class QrCodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
                 onCheckPermissionSuccess()
             }
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
 

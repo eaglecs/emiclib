@@ -2,6 +2,7 @@ package basecode.com.ui.features.home.tab
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.CheckStatusNewMessageEventBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
+import basecode.com.domain.extention.valueOrEmpty
+import basecode.com.domain.extention.valueOrFalse
 import basecode.com.domain.model.bus.LoadStatusNotify
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.request.LoginRequest
@@ -17,6 +20,9 @@ import basecode.com.ui.BuildConfig
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
 import basecode.com.ui.base.controller.viewcontroller.ViewController
+import basecode.com.ui.base.extra.BundleExtraBoolean
+import basecode.com.ui.base.extra.BundleExtraString
+import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.extension.view.gone
 import basecode.com.ui.extension.view.invisible
 import basecode.com.ui.extension.view.visible
@@ -25,6 +31,7 @@ import basecode.com.ui.features.borrowbook.BorrowBookViewController
 import basecode.com.ui.features.changepass.ChangePassViewController
 import basecode.com.ui.features.downloadbook.DownloadBookViewController
 import basecode.com.ui.features.login.LoginViewController
+import basecode.com.ui.features.new.SearchBoothViewController.Companion.options
 import basecode.com.ui.features.notify.NotifyViewController
 import basecode.com.ui.features.renew.RenewViewController
 import basecode.com.ui.features.requestdocument.RequestDocumentViewController
@@ -36,17 +43,39 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
+import kotlinx.android.synthetic.main.layout_header_new_app.view.*
 import kotlinx.android.synthetic.main.layout_tab_profile.view.*
+import kotlinx.android.synthetic.main.layout_tab_profile.view.ivLogin
+import kotlinx.android.synthetic.main.layout_tab_profile.view.ivScanQRCode
 import org.koin.standalone.inject
 
-class ProfileViewController() : ViewController(bundle = null), SettingContract.View {
+class ProfileViewController(bundle: Bundle) : ViewController(bundle = bundle), SettingContract.View {
     private val doubleTouchPrevent: DoubleTouchPrevent by inject()
     private val presenter: SettingContract.Presenter by inject()
     private var isLogin = false
+    private var avatar: String = ""
 
-    constructor(targetController: ViewController) : this() {
-        setTargetController(targetController)
+    object BundleOptions {
+        var Bundle.isLogin by BundleExtraBoolean("isLogin")
+        var Bundle.avatar by BundleExtraString("avatar")
+        fun create(isLogin: Boolean, avatar: String) = Bundle().apply {
+            this.isLogin = isLogin
+            this.avatar = avatar
+        }
     }
+
+    companion object : BundleOptionsCompanion<BundleOptions>(BundleOptions)
+
+    init {
+        bundle.options { options ->
+            isLogin = options.isLogin.valueOrFalse()
+            avatar = options.avatar.valueOrEmpty()
+        }
+    }
+
+//    constructor(targetController: ViewController) : this() {
+//        setTargetController(targetController)
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.layout_tab_profile, container, false)
@@ -65,6 +94,17 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         if (BuildConfig.USE_DATA_OTHER_APP) {
             view.vgBookRoom.gone()
 //            view.vgChangePass.invisible()
+        }
+
+        if (isLogin) {
+            GlideUtil.loadImage(
+                url = avatar,
+                imageView = view.ivLogin,
+                holderImage = R.drawable.user_default,
+                errorImage = R.drawable.user_default
+            )
+        } else {
+            view.ivLogin.setImageResource(R.drawable.ic_login)
         }
     }
 
@@ -88,7 +128,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             GlideUtil.loadImage(url = it.avatar, imageView = view.ivLogin, holderImage = R.drawable.user_default, errorImage = R.drawable.user_default)
-            targetController?.let { targetController ->
+            this.let { targetController ->
                 when (it.type) {
                     LoginSuccessEventBus.Type.UserInfo -> {
                         targetController.router.pushController(RouterTransaction.with(UserViewController())
@@ -124,14 +164,25 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         }
         KBus.subscribe<LogoutSuccessEventBus>(this) {
             isLogin = false
+            avatar = ""
             view.ivLogin.setImageResource(R.drawable.ic_login)
+        }
+        KBus.subscribe<LoginSuccessEventBus>(this) {
+            isLogin = true
+            this.avatar = it.avatar
+            GlideUtil.loadImage(
+                url = it.avatar,
+                imageView = view.ivLogin,
+                holderImage = R.drawable.user_default,
+                errorImage = R.drawable.user_default
+            )
         }
     }
 
     private fun handleOnClick(view: View) {
         view.vgInfoUser.setOnClickListener {
             if (doubleTouchPrevent.check("vgInfoUser")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(UserViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
@@ -143,7 +194,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         }
         view.vgBorrow.setOnClickListener {
             if (doubleTouchPrevent.check("vgBorrow")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(BorrowBookViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
@@ -157,7 +208,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
         view.vgNotify.setOnClickListener {
             if (doubleTouchPrevent.check("vgNotify")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(NotifyViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
@@ -172,7 +223,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
         view.vgRenew.setOnClickListener {
             if (doubleTouchPrevent.check("vgDelayUser")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
 
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(RenewViewController()).pushChangeHandler(FadeChangeHandler(false)))
@@ -185,7 +236,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
         view.vgDownload.setOnClickListener {
             if (doubleTouchPrevent.check("vgDownload")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(DownloadBookViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     } else {
@@ -197,7 +248,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
 
         view.vgChangePass.setOnClickListener {
             if (doubleTouchPrevent.check("vgChangePass")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(ChangePassViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     } else {
@@ -214,11 +265,11 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         view.ivLogin.setOnClickListener {
             if (doubleTouchPrevent.check("ivLogin")) {
                 if (isLogin) {
-                    targetController?.let { targetController ->
+                    this.let { targetController ->
                         targetController.router.pushController(RouterTransaction.with(UserViewController()).pushChangeHandler(FadeChangeHandler(false)))
                     }
                 } else {
-                    targetController?.let { targetController ->
+                    this.let { targetController ->
                         val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.Normal.value)
                         val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
@@ -228,7 +279,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
         }
         view.vgRequestDocument.setOnClickListener {
             if (doubleTouchPrevent.check("vgRequestDocument")) {
-                targetController?.let { targetController ->
+                this.let { targetController ->
                     if (isLogin) {
                         targetController.router.pushController(RouterTransaction.with(RequestDocumentViewController())
                                 .pushChangeHandler(FadeChangeHandler(false)))
@@ -245,7 +296,7 @@ class ProfileViewController() : ViewController(bundle = null), SettingContract.V
                 if (isLogin) {
                     bookRoom()
                 } else {
-                    targetController?.let { targetController ->
+                    this.let { targetController ->
                         val bundle = LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.BookRoom.value)
                         val loginViewController = LoginViewController(bundle)
                         targetController.router.pushController(RouterTransaction.with(loginViewController).pushChangeHandler(FadeChangeHandler(false)))
