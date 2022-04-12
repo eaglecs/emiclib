@@ -6,6 +6,8 @@ import basecode.com.presentation.features.bookdetail.BookDetailContract
 import basecode.com.presentation.features.bookdetail.BookDetailPresenter
 import basecode.com.presentation.features.books.BooksContract
 import basecode.com.presentation.features.books.BooksPresenter
+import basecode.com.presentation.features.borrowreturn.BorrowReturnBookContract
+import basecode.com.presentation.features.borrowreturn.BorrowReturnPresenter
 import basecode.com.presentation.features.changepass.ChangePassContract
 import basecode.com.presentation.features.changepass.ChangePassPresenter
 import basecode.com.presentation.features.downloadboook.DownloadBookContract
@@ -46,6 +48,13 @@ object PresentationKoinModules {
     }
 
     private val homeModule = module {
+        factory<BorrowReturnBookContract.Presenter> {
+            BorrowReturnPresenter(returnBookUseCase = get(),
+            borrowBookUseCase = get(),
+            getCheckInCurrentLoanInforUseCase = get(),
+            getCheckOutCurrentLoanUseCase = get(),
+            getPatronOnLoanCopiesUseCase = get())
+        }
         factory<SearchBoothContract.Presenter> {
             SearchBoothPresenter(getBoothsUseCase = get())
         }

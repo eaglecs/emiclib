@@ -198,4 +198,24 @@ class ApiServiceImpl(private val apiServiceApp: ApiService) : AppRepository {
     override fun getListBooth(): Observable<BoothsResponse> {
         return apiServiceApp.getListBooth()
     }
+
+    override fun borrowBook(coppynumber: String): Observable<BorrowReturnBookResponse> {
+        return apiServiceApp.borrowBook(coppynumber)
+    }
+
+    override fun getCheckOutCurrentLoan(transactionIds: String): Observable<BooksDetailResponse> {
+        return apiServiceApp.getCheckOutCurrentLoan(transactionIds)
+    }
+
+    override fun returnBook(coppynumber: String): Observable<BorrowReturnBookResponse> {
+        return apiServiceApp.returnBook(coppynumber)
+    }
+
+    override fun getCheckInCurrentLoanInfor(transactionIds: String): Observable<BooksDetailResponse> {
+        return apiServiceApp.getCheckInCurrentLoanInfor(transactionIds)
+    }
+
+    override fun getPatronOnLoanCopies(): Observable<GetPatronOnLoanCopiesResponse> {
+        return apiServiceApp.getPatronOnLoanCopies()
+    }
 }

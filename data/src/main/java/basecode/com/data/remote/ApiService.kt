@@ -188,4 +188,22 @@ interface ApiService {
 
     @GET("api/Booth/GetListBooth")
     fun getListBooth(): Observable<BoothsResponse>
+
+    @GET("api/Cir/CheckOutBook")
+    fun borrowBook(@Query("coppynumber") coppynumber: String): Observable<BorrowReturnBookResponse>
+
+    @GET("api/Cir/GetCheckOutCurrentLoanInfor")
+    fun getCheckOutCurrentLoan(@Query("transactionIds") transactionIds: String): Observable<BooksDetailResponse>
+
+    @GET("api/Cir/CheckInBook")
+    fun returnBook(@Query("coppynumber") coppynumber: String): Observable<BorrowReturnBookResponse>
+
+    @GET("api/Cir/GetCheckInCurrentLoanInfor")
+    fun getCheckInCurrentLoanInfor(@Query("transactionIds") transactionIds: String): Observable<BooksDetailResponse>
+
+    @GET("api/Cir/GetPatronOnLoanCopies")
+    fun getPatronOnLoanCopies(): Observable<GetPatronOnLoanCopiesResponse>
+
+
+
 }

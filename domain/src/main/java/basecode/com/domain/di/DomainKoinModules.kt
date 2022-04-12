@@ -12,6 +12,41 @@ object DomainKoinModules {
 
     private val appModule = module {
         factory {
+            ReturnBookUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+
+        factory {
+            GetCheckInCurrentLoanInforUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+
+        factory {
+            GetPatronOnLoanCopiesUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+
+        factory {
+            GetCheckOutCurrentLoanUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+
+        factory {
+            BorrowBookUseCase(
+                useCaseExecution = get(),
+                appRepository = get()
+            )
+        }
+
+        factory {
             GetBoothsUseCase(
                 useCaseExecution = get(),
                 appRepository = get()

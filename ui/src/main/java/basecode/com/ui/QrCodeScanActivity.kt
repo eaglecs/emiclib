@@ -7,10 +7,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import basecode.com.domain.eventbus.KBus
+import basecode.com.domain.eventbus.model.ResultScanQRCodeBookCodeEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.extention.valueOrDefault
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.model.network.response.ScanQRCodeResponse
+import basecode.com.ui.util.ScanQRCode
 import com.google.gson.Gson
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -21,8 +24,11 @@ class QrCodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     private lateinit var mScannerView: ZXingScannerView
     private var isRequestedPermission: Boolean = false
+    private var type = ScanQRCode.TypeScan.Book.value
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        type =
+            intent.getStringExtra("Type").valueOrDefault(ScanQRCode.TypeScan.Book.value)
         mScannerView = ZXingScannerView(this)
         //mScannerView.setAspectTolerance(0.5f)
         setContentView(mScannerView)
@@ -63,15 +69,20 @@ class QrCodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     override fun handleResult(rawResult: Result?) {
         rawResult?.let { result ->
             val contentQRCode = result.text.valueOrEmpty()
-            try {
-                val gson = Gson()
-                val infoBook = gson.fromJson(contentQRCode, ScanQRCodeResponse::class.java)
-                val bookId = infoBook.id.valueOrZero()
-                if (bookId> 0){
-                    KBus.post(ResultScanQRCodeEventBus(bookId = bookId, docType = infoBook.docType.valueOrZero()))
+            if (type == ScanQRCode.TypeScan.Book.value){
+                try {
+                    val gson = Gson()
+                    val infoBook = gson.fromJson(contentQRCode, ScanQRCodeResponse::class.java)
+                    val bookId = infoBook.id.valueOrZero()
+                    if (bookId> 0){
+                        KBus.post(ResultScanQRCodeEventBus(bookId = bookId, docType = infoBook.docType.valueOrZero()))
+                    }
+                    finish()
+                } catch (e: Exception){
+                    finish()
                 }
-                finish()
-            } catch (e: Exception){
+            } else {
+                KBus.post(ResultScanQRCodeBookCodeEventBus(bookCode = contentQRCode))
                 finish()
             }
         }

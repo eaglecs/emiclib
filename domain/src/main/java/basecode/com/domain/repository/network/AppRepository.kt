@@ -3,6 +3,8 @@ package basecode.com.domain.repository.network
 import basecode.com.domain.model.network.response.*
 import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface AppRepository {
     fun getListNewItems(numberItem: Int, pageIndex: Int, pageSize: Int): Single<List<BookResponse>>
@@ -69,4 +71,9 @@ interface AppRepository {
     fun getBooksRecommend(): Single<List<BookRecommendResponse>>
     fun getBooksRecommendObservable(pageIndex: Int, pageSize: Int): Observable<List<BookRecommendResponse>>
     fun getListBooth(): Observable<BoothsResponse>
+    fun borrowBook(coppynumber: String): Observable<BorrowReturnBookResponse>
+    fun getCheckOutCurrentLoan(transactionIds: String): Observable<BooksDetailResponse>
+    fun returnBook(coppynumber: String): Observable<BorrowReturnBookResponse>
+    fun getCheckInCurrentLoanInfor(transactionIds: String): Observable<BooksDetailResponse>
+    fun getPatronOnLoanCopies(): Observable<GetPatronOnLoanCopiesResponse>
 }
