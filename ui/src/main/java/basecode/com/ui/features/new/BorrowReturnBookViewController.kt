@@ -223,6 +223,8 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
                     presenter.returnBook(copyNumber)
                 }
                 view.edtSearch.setText("")
+                view.edtSearch.clearFocus()
+                view.edtSearch.hideKeyboard()
             }
         }
     }

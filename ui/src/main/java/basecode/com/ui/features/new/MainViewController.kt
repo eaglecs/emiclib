@@ -65,7 +65,7 @@ class MainViewController : ViewController(null), MainContract.View {
                     openScreenBorrowBook()
                 }
                 LoginSuccessEventBus.Type.ScreenSearchBooth -> {
-                    openScreenSearchBooth()
+                    openScreenBooths()
                 }
                 else -> {
                     return@subscribe
