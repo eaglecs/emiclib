@@ -6,7 +6,7 @@ class BooksDetailResponse : ArrayList<BooksDetailResponseItem>()
 
 data class BooksDetailResponseItem(
     @SerializedName("CheckInDate")
-    val checkInDate: Any?,
+    val checkInDate: String?,
     @SerializedName("CheckOutDate")
     val checkOutDate: String?,
     @SerializedName("CopyNumber")

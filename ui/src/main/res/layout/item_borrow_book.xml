@@ -12,19 +12,22 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="@dimen/default_padding_margin"
-        android:layout_marginEnd="@dimen/default_padding_margin"
         android:layout_marginBottom="@dimen/default_padding_margin"
         android:padding="@dimen/default_padding_margin"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:srcCompat="@drawable/ic_unselected"
         tools:srcCompat="@drawable/ic_selected" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_margin="@dimen/default_padding_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
             style="@style/TextPrimaryBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,16 +59,18 @@
                         android:text="ĐKCB: " />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBookCode"
                         style="@style/TextPrimaryBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="LN: 133/2005 "
+                        tools:text="LN: 133/2005 "
                         android:textColor="@color/md_blue500" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/default_padding_margin_small"
                     android:orientation="horizontal">
 
@@ -76,6 +81,8 @@
                         android:text="Ngày mượn: " />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBorrowDate"
+                        android:gravity="center_vertical"
                         style="@style/TextPrimaryBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,6 +94,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/default_padding_margin_small"
                     android:orientation="horizontal">
 
@@ -97,7 +105,9 @@
                         android:text="Ngày trả: " />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvReturnDate"
                         style="@style/TextPrimaryBody"
+                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/md_red500"
@@ -115,6 +125,8 @@
                 android:layout_marginEnd="@dimen/default_padding_margin"
                 android:paddingLeft="@dimen/default_padding_margin_x"
                 android:paddingTop="@dimen/default_padding_margin"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:paddingRight="@dimen/default_padding_margin_x"
                 android:paddingBottom="@dimen/default_padding_margin"
                 android:text="Thu Hồi" />

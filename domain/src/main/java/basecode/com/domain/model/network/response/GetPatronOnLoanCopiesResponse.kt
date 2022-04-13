@@ -6,7 +6,7 @@ class GetPatronOnLoanCopiesResponse : ArrayList<GetPatronOnLoanCopiesResponseIte
 
 data class GetPatronOnLoanCopiesResponseItem(
     @SerializedName("CheckInDate")
-    val checkInDate: Any?,
+    val checkInDate: String?,
     @SerializedName("CheckOutDate")
     val checkOutDate: String?,
     @SerializedName("CopyNumber")

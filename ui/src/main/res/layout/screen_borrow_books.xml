@@ -91,12 +91,55 @@
             android:layout_height="@dimen/default_divider_size"
             android:background="@color/md_grey300" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/vgAboutBookReturn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleBookReturn"
+                style="@style/TextPrimarySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/md_grey200"
+                android:padding="@dimen/default_padding_margin"
+                android:text="Danh sách ấn phẩm vừa ghi trả"
+                android:textColor="@color/md_blue800" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_divider_size"
+                android:background="@color/md_grey300" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBooksBookReturn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/default_padding_margin" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
+
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
             style="@style/TextPrimarySubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_padding_margin"
-            android:text="Danh sách ấn phẩm vừa ghi mượn" />
+            android:background="@color/md_grey200"
+            android:padding="@dimen/default_padding_margin"
+            android:textColor="@color/md_blue800"
+            tools:text="Danh sách ấn phẩm vừa ghi mượn" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_size"
+            android:background="@color/md_grey300" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBooks"
