@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 def final applicationId_Live = "com.emic.lib"
 def final applicationIdTDN_Live = "com.tdn"
-def final applicationIdGSL_Live = "com.gsl.vn"
+def final applicationIdGSL_Live = "com.new.app"
 def final applicationId_Demo = "com.emiclibdemo"
 
 def final APP_NAME_DEMO = "EIU Library"

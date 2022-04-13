@@ -268,10 +268,19 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
         }
     }
 
-    override fun borrowBookSuccess() {
+    override fun borrowBookSuccess(copyNumber: String) {
         activity?.let { activity ->
             Toasty.success(activity, "Mượn sách thành công!!!").show()
         }
+        val lstBookBorrow = mutableListOf<BookBorrowNewViewHolderModel>()
+        rvController.getItems().forEach { viewModel ->
+            if (viewModel is BookBorrowNewViewHolderModel && viewModel.code != copyNumber) {
+                lstBookBorrow.add(viewModel)
+            }
+        }
+        rvController.setItems(lstBookBorrow)
+        rvController.notifyDataChanged()
+        hideLoading()
     }
 
     override fun showBookBorrow(lstBook: List<BookBorrowNewViewModel>) {
