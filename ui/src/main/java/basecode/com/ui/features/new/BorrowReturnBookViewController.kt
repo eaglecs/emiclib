@@ -106,6 +106,11 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
     }
 
     private fun initView(view: View) {
+        if (isBorrow){
+            view.edtSearch.hint = "Nhập mã xếp giá bạn muốn mượn"
+        } else {
+            view.edtSearch.hint = "Nhập mã xếp giá bạn muốn trả"
+        }
         val input = LinearRenderConfigFactory.Input(
             context = view.context,
             orientation = LinearRenderConfigFactory.Orientation.VERTICAL

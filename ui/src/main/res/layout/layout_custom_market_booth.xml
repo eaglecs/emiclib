@@ -21,8 +21,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/default_padding_margin"
         android:gravity="center"
-        android:textColor="@color/md_redA700"
+        android:maxWidth="160dp"
+        android:textColor="@color/md_deeporange700"
         android:textStyle="bold"
-        tools:text="Booth 002 (Quận 3)" />
+        tools:text="Booth 002 (Quận 3) Booth 002 (Quận 3) Booth 002 (Quận 3)" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -55,7 +55,7 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
-                    android:hint="Nhập mã xếp giá"
+                    tools:hint="Nhập mã xếp giá"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:lines="1" />
