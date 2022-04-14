@@ -253,6 +253,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
     override fun showErrorReturnBook(errorCode: Int) {
         val msgError = when (errorCode) {
             1 -> "Không tồn tại ÐKCB trong danh sách ấn phẩm cho mượn."
+            3 -> "Tài liệu này đang được mượn bởi người khác."
             2 -> "Ấn phẩm chưa sẵn sàng phục vụ (bị khoá hoặc chưa đưa ra lưu thông)."
             5 -> "Ấn phẩm này thuộc kho mà cán bộ thư viện không có quyền quản lý."
             6 -> "Bạn đọc không được mượn trả ấn phẩm thuộc những kho mà cán bộ thư viện quản lý."
