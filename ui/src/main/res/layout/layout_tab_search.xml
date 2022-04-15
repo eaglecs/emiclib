@@ -9,6 +9,7 @@
     android:focusable="true"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_header_screen"
@@ -22,14 +23,28 @@
             android:padding="@dimen/default_padding_margin_x"
             app:srcCompat="@drawable/ic_qr_code" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextPrimaryTitle"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/vgComeHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/text_search_title"
-            android:textColor="@color/md_blue500"
-            android:textStyle="bold" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivComeHome"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_home" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextPrimaryBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trang chủ" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSearchAdvance"

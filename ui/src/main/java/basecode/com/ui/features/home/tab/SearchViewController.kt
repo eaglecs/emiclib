@@ -14,6 +14,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.SearchAdvanceBookEventBus
 import basecode.com.domain.eventbus.model.SearchBookWithKeyEventBus
 import basecode.com.domain.extention.number.valueOrZero
+import basecode.com.domain.model.bus.ComeHomeScreenEventBus
 import basecode.com.domain.model.bus.HideKeyboardEventBus
 import basecode.com.ui.R
 import basecode.com.ui.base.controller.screenchangehandler.FadeChangeHandler
@@ -75,6 +76,9 @@ class SearchViewController(bundle: Bundle) : ViewController(bundle = bundle),
 
 
     private fun initEventBus(view: View) {
+        KBus.subscribe<ComeHomeScreenEventBus>(this){
+            router.popController(this)
+        }
         KBus.subscribe<HideKeyboardEventBus>(this) {
             view.edtSearchBook.hideKeyboard()
             view.edtSearchBook.clearFocus()
@@ -147,6 +151,12 @@ class SearchViewController(bundle: Bundle) : ViewController(bundle = bundle),
                     RouterTransaction.with(SearchAdvanceViewController(targetController = this))
                         .pushChangeHandler(FadeChangeHandler(false))
                 )
+            }
+        }
+
+        view.vgComeHome.setOnClickListener {
+            if (doubleTouchPrevent.check("vgComeHome")) {
+                KBus.post(ComeHomeScreenEventBus())
             }
         }
 
