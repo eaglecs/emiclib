@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.CheckStatusNewMessageEventBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
-import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
+import basecode.com.domain.model.bus.ComeHomeScreenEventBus
 import basecode.com.domain.model.bus.LoadStatusNotify
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.model.network.request.LoginRequest
@@ -24,14 +24,11 @@ import basecode.com.ui.base.extra.BundleExtraBoolean
 import basecode.com.ui.base.extra.BundleExtraString
 import basecode.com.ui.base.extra.BundleOptionsCompanion
 import basecode.com.ui.extension.view.gone
-import basecode.com.ui.extension.view.invisible
 import basecode.com.ui.extension.view.visible
-import basecode.com.ui.features.bookdetail.BookDetailViewController
 import basecode.com.ui.features.borrowbook.BorrowBookViewController
 import basecode.com.ui.features.changepass.ChangePassViewController
 import basecode.com.ui.features.downloadbook.DownloadBookViewController
 import basecode.com.ui.features.login.LoginViewController
-import basecode.com.ui.features.new.SearchBoothViewController.Companion.options
 import basecode.com.ui.features.notify.NotifyViewController
 import basecode.com.ui.features.renew.RenewViewController
 import basecode.com.ui.features.requestdocument.RequestDocumentViewController
@@ -40,13 +37,9 @@ import basecode.com.ui.util.DoubleTouchPrevent
 import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.layout_header_new_app.view.*
 import kotlinx.android.synthetic.main.layout_tab_profile.view.*
-import kotlinx.android.synthetic.main.layout_tab_profile.view.ivLogin
-import kotlinx.android.synthetic.main.layout_tab_profile.view.ivScanQRCode
 import org.koin.standalone.inject
 
 class ProfileViewController(bundle: Bundle) : ViewController(bundle = bundle), SettingContract.View {
@@ -119,6 +112,9 @@ class ProfileViewController(bundle: Bundle) : ViewController(bundle = bundle), S
     }
 
     private fun iniEventBus(view: View) {
+        KBus.subscribe<ComeHomeScreenEventBus>(this){
+            router.popController(this)
+        }
         KBus.subscribe<LoadStatusNotify>(this) {
             presenter.checkNewMessage()
         }
@@ -180,6 +176,12 @@ class ProfileViewController(bundle: Bundle) : ViewController(bundle = bundle), S
     }
 
     private fun handleOnClick(view: View) {
+        view.vgComeHome.setOnClickListener {
+            if (doubleTouchPrevent.check("vgComeHome")) {
+                KBus.post(ComeHomeScreenEventBus())
+            }
+        }
+
         view.vgInfoUser.setOnClickListener {
             if (doubleTouchPrevent.check("vgInfoUser")) {
                 this.let { targetController ->

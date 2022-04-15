@@ -14,6 +14,7 @@ import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
+import basecode.com.domain.model.bus.ComeHomeScreenEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.domain.util.ConstApp
 import basecode.com.presentation.features.new.SearchBoothContract
@@ -40,6 +41,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ui.IconGenerator
 import kotlinx.android.synthetic.main.layout_custom_market_booth.view.*
@@ -48,7 +50,7 @@ import kotlinx.android.synthetic.main.screen_search_booth.view.*
 import org.koin.standalone.inject
 
 class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapReadyCallback,
-    SearchBoothContract.View {
+    SearchBoothContract.View, GoogleMap.OnMarkerClickListener {
     private val locationUtil by inject<LocationUtil>()
     private val doubleTouchPrevent by inject<DoubleTouchPrevent>()
     private val presenter by inject<SearchBoothContract.Presenter>()
@@ -57,6 +59,9 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
     private lateinit var rvController: RecyclerViewController
     private var isLogin = false
     private var avatar: String = ""
+    private val lstAllBooth = mutableListOf<BoothViewModel>()
+    private val lstMarker = mutableListOf<Marker>()
+    private val booths = mutableListOf<BoothViewModel>()
 
     object BundleOptions {
         var Bundle.isLogin by BundleExtraBoolean("isLogin")
@@ -80,8 +85,6 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
         return inflater.inflate(R.layout.screen_search_booth, container, false)
     }
 
-    private val lstAllBooth = mutableListOf<BoothViewModel>()
-
     override fun initPostCreateView(view: View) {
         presenter.attachView(this)
         initView(view)
@@ -91,6 +94,9 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
     }
 
     private fun initEventBus(view: View) {
+        KBus.subscribe<ComeHomeScreenEventBus>(this){
+            router.popController(this)
+        }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             this.avatar = it.avatar
@@ -151,6 +157,11 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
     }
 
     private fun handleView(view: View) {
+        view.vgComeHome.setOnClickListener {
+            if (doubleTouchPrevent.check("vgComeHome")) {
+                KBus.post(ComeHomeScreenEventBus())
+            }
+        }
         view.ivLogin.setOnClickListener {
             if (doubleTouchPrevent.check("ivLogin")) {
                 if (isLogin) {
@@ -183,6 +194,7 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
         activity?.let { activity ->
             MapsInitializer.initialize(activity)
             this.googleMap = googleMap
+            googleMap.setOnMarkerClickListener(this)
             if (ContextCompat.checkSelfPermission(
                     activity,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -240,6 +252,8 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
 
     private fun drawMarkerBooth(googleMap: GoogleMap, lstBooth: List<BoothViewModel>) {
         activity?.let { context ->
+            lstMarker.clear()
+            booths.clear()
             val iconFactory = IconGenerator(context)
             val myInflater =
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -252,7 +266,11 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
                     .icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon()))
                     .position(LatLng(booth.bLatitude, booth.bLongitude))
                     .anchor(iconFactory.anchorU, iconFactory.anchorV)
-                googleMap.addMarker(markerOptions)
+                val marker = googleMap.addMarker(markerOptions)
+                marker?.let {
+                    booths.add(booth)
+                    lstMarker.add(marker)
+                }
             }
         }
     }
@@ -264,7 +282,7 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
         locationUtil.getLatLongCurrent { latitude, longitude ->
             val input =
                 BoothViewHolderModelMapper.Input(lat = latitude, lng = longitude, booths = lstBooth)
-            val booths = BoothViewHolderModelMapper().map(input)
+            val booths = BoothViewHolderModelMapper().map(input).sortedBy { it.distanceValue }
             rvController.setItems(booths)
             rvController.notifyDataChanged()
         }
@@ -290,6 +308,21 @@ class SearchBoothViewController(bundle: Bundle) : ViewController(bundle), OnMapR
     override fun onDestroyView(view: View) {
         presenter.detachView()
         super.onDestroyView(view)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        if (lstMarker.contains(marker)){
+            val index = lstMarker.indexOf(marker)
+            val boothViewModel = booths[index]
+
+            val bundle = SearchViewController.BundleOptions.create(boothViewModel.id)
+            router.pushController(
+                RouterTransaction.with(SearchViewController(bundle))
+                    .pushChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen, false))
+                    .popChangeHandler(HorizontalChangeHandler(ConstApp.timeEffectScreen))
+            )
+        }
+        return true
     }
 }
 

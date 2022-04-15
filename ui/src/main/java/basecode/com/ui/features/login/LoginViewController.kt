@@ -85,6 +85,9 @@ class LoginViewController(bundle: Bundle) : ViewController(bundle = bundle), Log
                 13 -> {
                     LoginSuccessEventBus.Type.ScreenSearchBooth
                 }
+                14 -> {
+                    LoginSuccessEventBus.Type.BorrowReturnBook
+                }
                 else -> {
                     LoginSuccessEventBus.Type.Normal
                 }

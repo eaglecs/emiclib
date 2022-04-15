@@ -5,9 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import basecode.com.domain.eventbus.KBus
 import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
-import basecode.com.domain.eventbus.model.ResultScanQRCodeEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
-import basecode.com.domain.model.network.BookType
 import basecode.com.domain.model.network.response.InfoHomeResponse
 import basecode.com.domain.util.ConstAPI
 import basecode.com.presentation.features.home.HomeContract
@@ -112,12 +110,12 @@ class HomeViewController() : ViewController(bundle = null), HomeContract.View {
     private fun initView(view: View) {
         if (BuildConfig.USE_DATA_OTHER_APP) {
             if (BuildConfig.USE_DATA_GSL) {
-                view.ivLogo.setImageResource(R.drawable.ic_logo_gsl)
+                view.ivComeHome.setImageResource(R.drawable.ic_logo_gsl)
             } else {
-                view.ivLogo.setImageResource(R.drawable.ic_logo_tdn)
+                view.ivComeHome.setImageResource(R.drawable.ic_logo_tdn)
             }
         } else {
-            view.ivLogo.setImageResource(R.drawable.ic_logo_new)
+            view.ivComeHome.setImageResource(R.drawable.ic_logo_new)
         }
 
         val input = LinearRenderConfigFactory.Input(

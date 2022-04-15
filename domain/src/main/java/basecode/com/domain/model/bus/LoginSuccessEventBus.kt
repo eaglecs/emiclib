@@ -16,6 +16,7 @@ class LoginSuccessEventBus(val type: Type, val avatar: String) {
         ScreenReturnBook(11),
         ScreenBorrowBook(12),
         ScreenSearchBooth(13),
+        BorrowReturnBook(14),
         Normal(-1)
     }
 }

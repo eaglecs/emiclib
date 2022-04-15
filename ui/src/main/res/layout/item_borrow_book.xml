@@ -129,7 +129,7 @@
                 tools:visibility="visible"
                 android:paddingRight="@dimen/default_padding_margin_x"
                 android:paddingBottom="@dimen/default_padding_margin"
-                android:text="Thu Hồi" />
+                android:text="Ghi trả" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View

@@ -12,6 +12,7 @@ import basecode.com.domain.eventbus.model.LogoutSuccessEventBus
 import basecode.com.domain.eventbus.model.ResultScanQRCodeBookCodeEventBus
 import basecode.com.domain.extention.valueOrEmpty
 import basecode.com.domain.extention.valueOrFalse
+import basecode.com.domain.model.bus.ComeHomeScreenEventBus
 import basecode.com.domain.model.bus.LoginSuccessEventBus
 import basecode.com.presentation.features.borrowreturn.BorrowReturnBookContract
 import basecode.com.presentation.features.borrowreturn.model.BookBorrowNewViewModel
@@ -84,6 +85,14 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
     }
 
     private fun initEventBus(view: View) {
+        KBus.subscribe<LoginSuccessEventBus>(this){
+            if (it.type == LoginSuccessEventBus.Type.BorrowReturnBook){
+                handleBook(view)
+            }
+        }
+        KBus.subscribe<ComeHomeScreenEventBus>(this){
+            router.popController(this)
+        }
         KBus.subscribe<LoginSuccessEventBus>(this) {
             isLogin = true
             this.avatar = it.avatar
@@ -117,7 +126,9 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
         )
         val renderConfig = LinearRenderConfigFactory(input).create()
         rvController = RecyclerViewController(view.rvBooks, renderConfig)
-        rvController.addViewRenderer(BorrowReturnBookRenderer(isScreenBorrow = isBorrow))
+        rvController.addViewRenderer(BorrowReturnBookRenderer{ bookCode ->
+            presenter.returnBook(bookCode)
+        })
 
         val inputBookReturn = LinearRenderConfigFactory.Input(
             context = view.context,
@@ -126,7 +137,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
         val renderConfigBookReturn = LinearRenderConfigFactory(inputBookReturn).create()
         rvControllerBookReturn =
             RecyclerViewController(view.rvBooksBookReturn, renderConfigBookReturn)
-        rvControllerBookReturn.addViewRenderer(BorrowReturnBookRenderer(isScreenBorrow = isBorrow))
+        rvControllerBookReturn.addViewRenderer(BorrowReturnBookRenderer())
 
 
 
@@ -150,6 +161,11 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
 
 
     private fun handleView(view: View) {
+        view.vgComeHome.setOnClickListener {
+            if (doubleTouchPrevent.check("vgComeHome")) {
+                KBus.post(ComeHomeScreenEventBus())
+            }
+        }
         view.edtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 view.edtSearch.clearFocus()
@@ -222,16 +238,32 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
                     }
                     return@setOnClickListener
                 }
-                if (isBorrow) {
-                    presenter.borrowBook(copyNumber)
+                if (isLogin) {
+                    handleBook(view)
                 } else {
-                    presenter.returnBook(copyNumber)
+                    val bundle =
+                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.BorrowReturnBook.value)
+                    val loginViewController = LoginViewController(bundle)
+                    router.pushController(
+                        RouterTransaction.with(loginViewController)
+                            .pushChangeHandler(FadeChangeHandler(false))
+                    )
                 }
-                view.edtSearch.setText("")
-                view.edtSearch.clearFocus()
-                view.edtSearch.hideKeyboard()
+
             }
         }
+    }
+
+    private fun handleBook(view: View) {
+        val copyNumber = view.edtSearch.text.toString()
+        if (isBorrow) {
+            presenter.borrowBook(copyNumber)
+        } else {
+            presenter.returnBook(copyNumber)
+        }
+        view.edtSearch.setText("")
+        view.edtSearch.clearFocus()
+        view.edtSearch.hideKeyboard()
     }
 
     override fun showErrorBorrowBook(errorCode: Int) {
@@ -276,30 +308,22 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
         }
     }
 
-    override fun borrowBookSuccess(copyNumber: String) {
+    override fun borrowBookSuccess() {
         activity?.let { activity ->
             Toasty.success(activity, "Mượn sách thành công!!!").show()
         }
-        val lstBookBorrow = mutableListOf<BookBorrowNewViewHolderModel>()
-        rvController.getItems().forEach { viewModel ->
-            if (viewModel is BookBorrowNewViewHolderModel && viewModel.code != copyNumber) {
-                lstBookBorrow.add(viewModel)
-            }
-        }
-        rvController.setItems(lstBookBorrow)
-        rvController.notifyDataChanged()
-        hideLoading()
     }
 
     override fun showBookBorrow(lstBook: List<BookBorrowNewViewModel>) {
-        val lstResult = BookBorrowNewViewHolderModelMapper().mapList(lstBook)
+        val lstResult = BookBorrowNewViewHolderModelMapper(isBooksBorrow = true).mapList(lstBook)
         rvController.setItems(lstResult)
         rvController.notifyDataChanged()
         hideLoading()
     }
 
     override fun addBookBorrow(book: BookBorrowNewViewModel) {
-        val newBookBorrow = BookBorrowNewViewHolderModelMapper().map(book)
+        val newBookBorrow = BookBorrowNewViewHolderModelMapper(false).map(book)
+        newBookBorrow.isOfBooksBorrow = true
         rvController.addItem(0, newBookBorrow)
         rvController.notifyDataChanged()
         hideLoading()
@@ -307,7 +331,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
 
     override fun deleteBookBorrow(book: BookBorrowNewViewModel) {
         view?.let { view ->
-            val returnBook = BookBorrowNewViewHolderModelMapper().map(book)
+            val returnBook = BookBorrowNewViewHolderModelMapper(false).map(book)
             rvControllerBookReturn.setItems(mutableListOf(returnBook))
             rvControllerBookReturn.notifyDataChanged()
             view.vgAboutBookReturn.visible()

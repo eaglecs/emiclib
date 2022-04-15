@@ -10,7 +10,7 @@ interface BorrowReturnBookContract {
         fun showErrorBorrowBook(errorCode: Int)
         fun showErrorReturnBook(errorCode: Int)
         fun returnBookSuccess()
-        fun borrowBookSuccess(copyNumber: String)
+        fun borrowBookSuccess()
         fun showErrorGetBooksBorrow()
         fun showBookBorrow(lstBook: List<BookBorrowNewViewModel>)
         fun addBookBorrow(book: BookBorrowNewViewModel)

@@ -12,5 +12,6 @@ class BoothViewHolderModel(
     val isBooth: Boolean,
     val bLongitude: Double,
     val bLatitude: Double,
+    val distanceValue : Float,
     val distance: String = ""
 ) : ViewHolderModel

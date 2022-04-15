@@ -29,8 +29,13 @@ class BoothViewHolderModelMapper :
                 isBooth = booth.isBooth,
                 status = booth.status,
                 maxNumber = booth.maxNumber,
-                distance = distance
-            ))
+                distance = distance,
+                distanceValue = locationUtil.getDistanceValue(
+                    fromLat = input.lat,
+                    fromLng = input.lng,
+                    toLat = booth.bLatitude,
+                    toLng = booth.bLongitude
+            )))
         }
 
         return lstBooth

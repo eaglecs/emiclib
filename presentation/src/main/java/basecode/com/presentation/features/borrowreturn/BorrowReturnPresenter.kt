@@ -28,7 +28,7 @@ class BorrowReturnPresenter(
                     if (data.isNotEmpty()) {
                         val errorCode = data.first().intError.valueOrDefault(-1)
                         if (errorCode == 0) {
-                            view.borrowBookSuccess(copyNumber = copyNumber)
+                            view.borrowBookSuccess()
                             val transactionIds = data.first().strTransIDs.valueOrEmpty()
                             if (transactionIds.isNotEmpty()) {
                                 getCheckOutCurrentLoan(

@@ -1,6 +1,7 @@
 package basecode.com.data.remote
 
 import basecode.com.domain.model.network.response.*
+import basecode.com.domain.util.ConstApp
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -190,13 +191,15 @@ interface ApiService {
     fun getListBooth(): Observable<BoothsResponse>
 
     @GET("api/Cir/CheckOutBook")
-    fun borrowBook(@Query("coppynumber") coppynumber: String): Observable<BorrowReturnBookResponse>
+    fun borrowBook(@Query("coppynumber") coppynumber: String, @Query("lat") lat: Double = ConstApp.lat,
+        @Query("lng") lng: Double = ConstApp.lng): Observable<BorrowReturnBookResponse>
 
     @GET("api/Cir/GetCheckOutCurrentLoanInfor")
     fun getCheckOutCurrentLoan(@Query("transactionIds") transactionIds: String): Observable<BooksDetailResponse>
 
     @GET("api/Cir/CheckInBook")
-    fun returnBook(@Query("coppynumber") coppynumber: String): Observable<BorrowReturnBookResponse>
+    fun returnBook(@Query("coppynumber") coppynumber: String, @Query("lat") lat: Double = ConstApp.lat,
+                   @Query("lng") lng: Double = ConstApp.lng): Observable<BorrowReturnBookResponse>
 
     @GET("api/Cir/GetCheckInCurrentLoanInfor")
     fun getCheckInCurrentLoanInfor(@Query("transactionIds") transactionIds: String): Observable<BooksDetailResponse>

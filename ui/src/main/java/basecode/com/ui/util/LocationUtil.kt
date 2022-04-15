@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import basecode.com.domain.extention.number.roundUp
+import basecode.com.domain.util.ConstApp
 import com.google.android.gms.location.LocationServices
 
 class LocationUtil(private val context: Context) {
@@ -27,8 +28,8 @@ class LocationUtil(private val context: Context) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
-//                    ConstApp.lat = location.latitude
-//                    ConstApp.lng = location.longitude
+                    ConstApp.lat = location.latitude
+                    ConstApp.lng = location.longitude
                     onActionSuccess.invoke(location.latitude, location.longitude)
                 }
             }
@@ -69,14 +70,18 @@ class LocationUtil(private val context: Context) {
 
     }
 
-    fun getDistance(fromLat: Double, fromLng: Double, toLat: Double, toLng: Double): String {
+    fun getDistanceValue(fromLat: Double, fromLng: Double, toLat: Double, toLng: Double): Float{
         val locationDepart = Location("Depart")
         val locationDestination = Location("Destination")
         locationDepart.latitude = fromLat
         locationDepart.longitude = fromLng
         locationDestination.latitude = toLat
         locationDestination.longitude = toLng
-        val distance = locationDepart.distanceTo(locationDestination)
+        return  locationDepart.distanceTo(locationDestination)
+    }
+
+    fun getDistance(fromLat: Double, fromLng: Double, toLat: Double, toLng: Double): String {
+        val distance = getDistanceValue(fromLat, fromLng, toLat, toLng)
         return when {
             distance == 0f -> ""
             distance < 1000 -> "${(distance.toDouble() / 1000).roundUp(1)}km"

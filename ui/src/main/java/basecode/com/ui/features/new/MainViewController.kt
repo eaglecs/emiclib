@@ -22,7 +22,7 @@ import basecode.com.ui.util.GlideUtil
 import basecode.com.ui.util.PermissionUtil
 import basecode.com.ui.util.ScanQRCode
 import com.bluelinelabs.conductor.RouterTransaction
-import kotlinx.android.synthetic.main.layout_header_new_app.view.*
+import kotlinx.android.synthetic.main.layout_header_home_new_app.view.*
 import kotlinx.android.synthetic.main.screen_main.view.*
 import org.koin.standalone.inject
 
@@ -128,17 +128,7 @@ class MainViewController : ViewController(null), MainContract.View {
         }
         view.btnSearchBooth.setOnClickListener {
             if (doubleTouchPrevent.check("btnSearchBooth")) {
-                if (isLogin) {
-                    openScreenBooths()
-                } else {
-                    val bundle =
-                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.ScreenSearchBooth.value)
-                    val loginViewController = LoginViewController(bundle)
-                    router.pushController(
-                        RouterTransaction.with(loginViewController)
-                            .pushChangeHandler(FadeChangeHandler(false))
-                    )
-                }
+                openScreenBooths()
             }
         }
         view.ivLogin.setOnClickListener {

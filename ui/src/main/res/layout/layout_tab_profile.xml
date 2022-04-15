@@ -9,40 +9,7 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_header_screen"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivScanQRCode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/default_padding_margin_x"
-            app:srcCompat="@drawable/ic_qr_code" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextPrimaryTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/text_account"
-            android:textColor="@color/md_blue500"
-            android:textStyle="bold" />
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/ivLogin"
-            android:layout_width="@dimen/height_profile"
-            android:layout_height="@dimen/height_profile"
-            android:layout_gravity="end|center_vertical"
-            android:layout_margin="@dimen/default_padding_margin"
-            android:adjustViewBounds="true"
-            app:civ_border="false"
-            app:civ_border_width="@dimen/default_divider_size"
-            app:civ_circle_color="@color/transparent"
-            tools:srcCompat="@drawable/ic_login" />
-    </FrameLayout>
+    <include layout="@layout/layout_header_new_app" />
 
     <View
         android:layout_width="match_parent"

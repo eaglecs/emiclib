@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_header_new_app" />
+        <include layout="@layout/layout_header_home_new_app" />
 
         <View
             android:layout_width="match_parent"
