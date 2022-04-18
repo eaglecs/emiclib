@@ -35,8 +35,8 @@ ext {
     compileSdkVersion = 30
     buildToolsVersion = "30.0.3"
     targetSdkVersion = 30
-    versionCode = 8
-    versionName ="1.0.1"
+    versionCode = 1
+    versionName ="1.0.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     flavorDimensions = "flavor_name"
     nameApp = "EmicLib"

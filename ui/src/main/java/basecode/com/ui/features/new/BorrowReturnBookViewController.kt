@@ -111,6 +111,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
 
         KBus.subscribe<ResultScanQRCodeBookCodeEventBus>(this) {
             view.edtSearch.setText(it.bookCode)
+            borrowOrReturnBook(view)
         }
     }
 
@@ -231,26 +232,29 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
 
         view.btnEnter.setOnClickListener {
             if (doubleTouchPrevent.check("btnEnter")) {
-                val copyNumber = view.edtSearch.text.toString()
-                if (copyNumber.isEmpty()) {
-                    activity?.apply {
-                        Toasty.error(this, "Bạn chưa nhập mã xếp giá!").show()
-                    }
-                    return@setOnClickListener
-                }
-                if (isLogin) {
-                    handleBook(view)
-                } else {
-                    val bundle =
-                        LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.BorrowReturnBook.value)
-                    val loginViewController = LoginViewController(bundle)
-                    router.pushController(
-                        RouterTransaction.with(loginViewController)
-                            .pushChangeHandler(FadeChangeHandler(false))
-                    )
-                }
-
+                borrowOrReturnBook(view)
             }
+        }
+    }
+
+    private fun borrowOrReturnBook(view: View) {
+        val copyNumber = view.edtSearch.text.toString()
+        if (copyNumber.isEmpty()) {
+            activity?.apply {
+                Toasty.error(this, "Bạn chưa nhập mã xếp giá!").show()
+            }
+            return
+        }
+        if (isLogin) {
+            handleBook(view)
+        } else {
+            val bundle =
+                LoginViewController.BundleOptions.create(LoginSuccessEventBus.Type.BorrowReturnBook.value)
+            val loginViewController = LoginViewController(bundle)
+            router.pushController(
+                RouterTransaction.with(loginViewController)
+                    .pushChangeHandler(FadeChangeHandler(false))
+            )
         }
     }
 
@@ -278,6 +282,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
             7 -> "Thẻ đang bị khóa."
             10 -> "Bạn đọc đã quá hạn ngạch."
             12 -> "Thẻ bạn đọc đã hết hạn."
+            15 -> "Bạn đọc vui lòng mượn sách tại các quầy Booth.(Bạn đọc ở quá xa so với các trạm booth)"
             else -> "Mượn tài liệu về nhà thất bại."
         }
         activity?.let { activity ->
@@ -294,6 +299,7 @@ class BorrowReturnBookViewController(bundle: Bundle) : ViewController(bundle),
             2 -> "Ấn phẩm chưa sẵn sàng phục vụ (bị khoá hoặc chưa đưa ra lưu thông)."
             5 -> "Ấn phẩm này thuộc kho mà cán bộ thư viện không có quyền quản lý."
             6 -> "Bạn đọc không được mượn trả ấn phẩm thuộc những kho mà cán bộ thư viện quản lý."
+            15 -> "Bạn đọc vui lòng trả sách tại các quầy Booth.(Bạn đọc ở quá xa so với các trạm booth)"
             else -> "Trả tài liệu thất bại."
         }
         activity?.let { activity ->
